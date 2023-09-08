@@ -34,12 +34,12 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
             <span className='bullet bullet-dot'></span>
           </span>
         )}
-        {icon && app?.sidebar?.default?.menu?.iconType === 'svg' && (
+        {/* {icon && app?.sidebar?.default?.menu?.iconType === 'svg' && (
           <span className='menu-icon'>
             {' '}
             <KTIcon iconName={icon} className='fs-2' />
           </span>
-        )}
+        )} */}
         {fontIcon && app?.sidebar?.default?.menu?.iconType === 'font' && (
           <i className={clsx('bi fs-3', fontIcon)}></i>
         )}

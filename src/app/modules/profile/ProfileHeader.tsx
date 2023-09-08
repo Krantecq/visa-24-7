@@ -25,9 +25,6 @@ const ProfileHeader: React.FC = () => {
                   <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
                     Max Smith
                   </a>
-                  <a href='#'>
-                    <KTIcon iconName='verify' className='fs-1 text-primary' />
-                  </a>
                 </div>
 
                 <div className='d-flex flex-wrap fw-bold fs-6 mb-4 pe-2'>
@@ -35,22 +32,19 @@ const ProfileHeader: React.FC = () => {
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                   >
-                    <KTIcon iconName='profile-circle' className='fs-4 me-1' />
-                    Developer
+                    Punjab, India
                   </a>
                   <a
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                   >
-                    <KTIcon iconName='geolocation' className='fs-4 me-1' />
-                    SF, Bay Area
+                    max@visa.com
                   </a>
                   <a
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
                   >
-                    <KTIcon iconName='sms' className='fs-4 me-1' />
-                    max@kt.com
+                    Joined: 24/09/2023
                   </a>
                 </div>
               </div>
@@ -73,7 +67,7 @@ const ProfileHeader: React.FC = () => {
                 >
                   Hire Me
                 </a>
-                <div className='me-0'>
+                {/* <div className='me-0'>
                   <button
                     className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
                     data-kt-menu-trigger='click'
@@ -83,17 +77,16 @@ const ProfileHeader: React.FC = () => {
                     <i className='bi bi-three-dots fs-3'></i>
                   </button>
                   <Dropdown1 />
-                </div>
+                </div> */}
               </div>
             </div>
 
             <div className='d-flex flex-wrap flex-stack'>
               <div className='d-flex flex-column flex-grow-1 pe-8'>
                 <div className='d-flex flex-wrap'>
-                  <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
+                  <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3 justify-content-center'>
                     <div className='d-flex align-items-center'>
-                      <KTIcon iconName='arrow-up' className='fs-3 text-success me-2' />
-                      <div className='fs-2 fw-bolder'>4500$</div>
+                      <div className='fs-2 fw-bolder'>₹4500</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>Earnings</div>
@@ -101,35 +94,11 @@ const ProfileHeader: React.FC = () => {
 
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <KTIcon iconName='arrow-down' className='fs-3 text-danger me-2' />
                       <div className='fs-2 fw-bolder'>75</div>
                     </div>
 
-                    <div className='fw-bold fs-6 text-gray-400'>Projects</div>
+                    <div className='fw-bold fs-6 text-gray-400'>VISA Applied</div>
                   </div>
-
-                  <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
-                    <div className='d-flex align-items-center'>
-                      <KTIcon iconName='arrow-up' className='fs-3 text-success me-2' />
-                      <div className='fs-2 fw-bolder'>60%</div>
-                    </div>
-
-                    <div className='fw-bold fs-6 text-gray-400'>Success Rate</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className='d-flex align-items-center w-200px w-sm-300px flex-column mt-3'>
-                <div className='d-flex justify-content-between w-100 mt-auto mb-2'>
-                  <span className='fw-bold fs-6 text-gray-400'>Profile Compleation</span>
-                  <span className='fw-bolder fs-6'>50%</span>
-                </div>
-                <div className='h-5px mx-3 w-100 bg-light mb-3'>
-                  <div
-                    className='bg-success rounded h-5px'
-                    role='progressbar'
-                    style={{width: '50%'}}
-                  ></div>
                 </div>
               </div>
             </div>
@@ -146,7 +115,7 @@ const ProfileHeader: React.FC = () => {
                 }
                 to='/crafted/pages/profile/overview'
               >
-                Overview
+                Activities
               </Link>
             </li>
             <li className='nav-item'>
@@ -157,7 +126,7 @@ const ProfileHeader: React.FC = () => {
                 }
                 to='/crafted/pages/profile/projects'
               >
-                Projects
+                Visa
               </Link>
             </li>
             <li className='nav-item'>
@@ -168,10 +137,10 @@ const ProfileHeader: React.FC = () => {
                 }
                 to='/crafted/pages/profile/campaigns'
               >
-                Campaigns
+                Details
               </Link>
             </li>
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
@@ -192,7 +161,7 @@ const ProfileHeader: React.FC = () => {
               >
                 Connections
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

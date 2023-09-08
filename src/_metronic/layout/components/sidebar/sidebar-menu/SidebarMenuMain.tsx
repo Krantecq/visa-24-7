@@ -16,13 +16,31 @@ const SidebarMenuMain = () => {
         title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
         fontIcon='bi-app-indicator'
       />
-      <SidebarMenuItem to='/builder' icon='switch' title='Layout Builder' fontIcon='bi-layers' />
+      <SidebarMenuItem
+        to='/customers'
+        icon='element-11'
+        title={'Customers'}
+        fontIcon='bi-app-indicator'
+      />
+        <SidebarMenuItem
+        to='/merchants'
+        icon='element-11'
+        title={'Merchants'}
+        fontIcon='bi-app-indicator'
+      />
+      {/* <SidebarMenuItem to='/builder' icon='switch' title='Layout Builder' fontIcon='bi-layers' /> */}
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Crafted</span>
+          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>VISA</span>
         </div>
       </div>
-      <SidebarMenuItemWithSub
+      <SidebarMenuItem
+        to='/crafted/pages/wizards/vertical'
+        icon='element-11'
+        title={'Create New VISA'}
+        fontIcon='bi-app-indicator'
+      />
+      {/* <SidebarMenuItemWithSub
         to='/crafted/pages'
         title='Pages'
         fontIcon='bi-archive'
@@ -56,7 +74,7 @@ const SidebarMenuMain = () => {
           />
           <SidebarMenuItem to='/crafted/pages/wizards/vertical' title='Vertical' hasBullet={true} />
         </SidebarMenuItemWithSub>
-      </SidebarMenuItemWithSub>
+      </SidebarMenuItemWithSub> */}
       <SidebarMenuItemWithSub
         to='/crafted/accounts'
         title='Accounts'
