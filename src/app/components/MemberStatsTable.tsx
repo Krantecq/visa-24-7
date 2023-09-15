@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import {KTIcon, toAbsoluteUrl} from '../../_metronic/helpers'
+import { Link } from 'react-router-dom'
 
 type Props = {
   className: string
@@ -15,6 +16,12 @@ const MemberStatsTable: React.FC<Props> = ({className}) => {
           <span className='card-label fw-bold fs-3 mb-1'>Member Statistics</span>
           <span className='text-muted mt-1 fw-semibold fs-7'>3 New Member</span>
         </h3>
+        <div>
+        <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button>
+        <Link to={'/add-new-merchant'}>
+        <button className='btn btn-primary align-self-center'>Add new Merchant</button>
+        </Link>
+        </div>
       </div>
       {/* end::Header */}
       {/* begin::Body */}

@@ -27,19 +27,21 @@ const AppRoutes: FC = () => {
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
-          {currentUser ? (
-            <>
+          {/* {currentUser ? (
+            <> */}
               <Route path='/*' element={<PrivateRoutes />} />
               <Route index element={<Navigate to='/dashboard' />} />
               <Route index element={<Navigate to='/cutomers' />} />
               <Route index element={<Navigate to='/merchants' />} />
-            </>
+              <Route index element={<Navigate to='/add-new-merchant' />} />
+
+            {/* </>
           ) : (
-            <>
+            <> */}
               <Route path='auth/*' element={<AuthPage />} />
               <Route path='*' element={<Navigate to='/auth' />} />
-            </>
-          )}
+            {/* </>
+          )} */}
         </Route>
       </Routes>
     </BrowserRouter>
