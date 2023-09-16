@@ -14,7 +14,7 @@ const ToolbarClassic = () => {
 
   return (
     <div className='d-flex align-items-center gap-2 gap-lg-3'>
-      {config.app?.toolbar?.filterButton && (
+      {/* {config.app?.toolbar?.filterButton && (
         <div className='m-0'>
           <a
             href='#'
@@ -27,7 +27,7 @@ const ToolbarClassic = () => {
           </a>
           <Dropdown1 />
         </div>
-      )}
+      )} */}
 
       {config.app?.toolbar?.daterangepickerButton && (
         <div
@@ -42,14 +42,14 @@ const ToolbarClassic = () => {
           <KTIcon iconName='calendar-8' className='fs-1 ms-2 me-0' />
         </div>
       )}
-
+{/* 
       {config.app?.toolbar?.secondaryButton && (
         <a href='#' className='btn btn-sm btn-flex btn-light fw-bold'>
           Filter
         </a>
-      )}
+      )} */}
 
-      {config.app?.toolbar?.primaryButton && (
+      {/* {config.app?.toolbar?.primaryButton && (
         <a
           href='#'
           onClick={() => setShowCreateAppModal(true)}
@@ -57,7 +57,7 @@ const ToolbarClassic = () => {
         >
           Create
         </a>
-      )}
+      )} */}
       <CreateAppModal show={showCreateAppModal} handleClose={() => setShowCreateAppModal(false)} />
     </div>
   )
