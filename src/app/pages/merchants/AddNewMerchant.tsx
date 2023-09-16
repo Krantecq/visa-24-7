@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import axios from 'axios';
 
 function AddNewMerchant() {
 
@@ -18,20 +19,43 @@ function AddNewMerchant() {
     panPhoto: null,
   })
 
-  const handleChange = (event) => {
-    const {name, value, type, files} = event.target
-    if (type === 'file') {
+  const [aadharFrontUrl, setAadharFrontUrl] = useState('');
+  const [aadharBackUrl, setAadharBackUrl] = useState('');
+  const [panPhotoUrl, setPanPhotoUrl] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false); // State to track success
+
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
       setFormData({
         ...formData,
-        [name]: files[0], // For file inputs, store the selected file
-      })
+        [name]: files[0],
+      });
+
+      if (name === 'aadharFront') {
+        setAadharFrontUrl('');
+      } else if (name === 'aadharBack') {
+        setAadharBackUrl('');
+      } else if (name === 'panPhoto') {
+        setPanPhotoUrl('');
+      }
     } else {
       setFormData({
         ...formData,
         [name]: value,
-      })
+      });
+
+      if (name === 'aadharFrontUrl') {
+        setAadharFrontUrl(value);
+      } else if (name === 'aadharBackUrl') {
+        setAadharBackUrl(value);
+      } else if (name === 'panPhotoUrl') {
+        setPanPhotoUrl(value);
+      }
+
     }
-  }
+  };
 
   const handleContinue = (event) => {
     event.preventDefault()
@@ -41,15 +65,73 @@ function AddNewMerchant() {
     })
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    // Handle form submission here
-    console.log(formData)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+
+    const aadharFrontUrl = await handleFileUpload(formData.aadharFront);
+    const aadharBackUrl = await handleFileUpload(formData.aadharBack);
+    const panPhotoUrl = await handleFileUpload(formData.panPhoto);
+
+    // Now, you have the URLs in aadharFrontUrl, aadharBackUrl, and panPhotoUrl
+    // You can use them as needed, e.g., send them to your server or display them
+    console.log('Aadhar Front URL:', aadharFrontUrl);
+    console.log('Aadhar Back URL:', aadharBackUrl);
+    console.log('PAN Photo URL:', panPhotoUrl);
+
+    const postData = {
+      merchant_name: formData.fullName,
+      merchant_company_name: formData.companyName,
+      merchant_email_id: formData.email,
+      merchant_phone_number: '9999999999', // Static value
+      merchant_profile_photo: '', // Static value
+      merchant_gst_no: formData.gstIn,
+      merchant_aadhar_no: formData.aadharNo,
+      merchant_pan_no: formData.panNo,
+      merchant_aadhar_front_photo: aadharFrontUrl,
+      merchant_aadhar_back_photo: aadharBackUrl,
+      merchant_pan_photo: panPhotoUrl,
+    };
+
+
+    const response = await axios.post('http://localhost:5003/backend/create_merchant_user', postData);
+
+    if (response?.status === 200) {
+      setIsSuccess(true);
+    } else if (response?.status === 203) {
+      setIsSuccess(false); // Reset to false if not successful
+    }
+    // Assuming your server responds with the file URL
+    console.log(response)
+  };
   const handleBack = (event) => {
     event.preventDefault()
-  setformChange(false)
+    setformChange(false)
   }
+  const handleFileUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // Make a POST request to your server to upload the file
+      const response = await axios.post('http://localhost:5003/backend/upload_image/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      // Assuming your server responds with the file URL
+      const fileUrl = response.data.data;
+      return fileUrl; // Return the file URL
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      return ''; // Return an empty string in case of an error
+    }
+  };
+
+
+
+
   return (
     <div>
       <div className='card-header border-0 pt-5'>
@@ -93,22 +175,6 @@ function AddNewMerchant() {
                     placeholder='Enter Email'
                     required
                   />
-         
-                </div>
-                <div className='mb-3'>
-                  <label htmlFor='password' className='form-label'>
-                    Password
-                  </label>
-                  <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    name='password'
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder='Enter Password'
-                    required
-                  />
                 </div>
                 <div className='mb-3'>
                   <label htmlFor='companyName' className='form-label'>
@@ -141,7 +207,7 @@ function AddNewMerchant() {
                   />
                 </div>
 
-                <button type='submit' className='btn btn-primary mt-3' onClick={()=>setformChange(true)}>
+                <button type='submit' className='btn btn-primary mt-3' onClick={() => setformChange(true)}>
                   Continue
                 </button>
               </form>

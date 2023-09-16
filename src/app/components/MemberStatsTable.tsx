@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom'
 
 type Props = {
   className: string
+  data: any[];
 }
 
-const MemberStatsTable: React.FC<Props> = ({className}) => {
+const MemberStatsTable: React.FC<Props> = ({className,data}) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -48,201 +49,46 @@ const MemberStatsTable: React.FC<Props> = ({className}) => {
                 {/* end::Table head */}
                 {/* begin::Table body */}
                 <tbody>
-                  <tr>
-                    <td>
-                      <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/001-boy.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary mb-1 fs-6'
-                          style={{whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px'}}
-                        >
-                          Brad Simmons
+                  {data.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
+                          <span className='symbol-label'>
+                            <img
+                              src={item.merchant_profile_photo}
+                              alt={item.merchant_profile_photo}
+                              className='h-75 align-self-end'
+                            />
+                          </span>
+                          <a
+                            href='#'
+                            className='text-dark fw-bold text-hover-primary mb-1 fs-6'
+                            style={{ whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px' }}
+                          >
+                            {item.merchant_name}
+                          </a>
+                        </div>
+                      </td>
+                      <td className='text-start'>
+                        <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                          {item.wallet_balance}
                         </a>
-                      </div>
-                    </td>
-                    <td className='text-start'>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                        $200,500
-                      </a>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>20</span>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>Intertico Travels</span>
-
-                      <span className='text-muted fw-semibold d-block fs-7 '>Rajasthan, India</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>24/08/2023</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>N/A</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/001-boy.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary mb-1 fs-6'
-                          style={{whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px'}}
-                        >
-                          Brad Simmons
-                        </a>
-                      </div>
-                    </td>
-                    <td className='text-start'>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                        $200,500
-                      </a>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>20</span>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>Intertico Travels</span>
-
-                      <span className='text-muted fw-semibold d-block fs-7 '>Rajasthan, India</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>24/08/2023</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>N/A</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/001-boy.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary mb-1 fs-6'
-                          style={{whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px'}}
-                        >
-                          Brad Simmons
-                        </a>
-                      </div>
-                    </td>
-                    <td className='text-start'>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                        $200,500
-                      </a>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>20</span>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>Intertico Travels</span>
-
-                      <span className='text-muted fw-semibold d-block fs-7 '>Rajasthan, India</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>24/08/2023</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>N/A</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/001-boy.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary mb-1 fs-6'
-                          style={{whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px'}}
-                        >
-                          Brad Simmons
-                        </a>
-                      </div>
-                    </td>
-                    <td className='text-start'>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                        $200,500
-                      </a>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>20</span>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>Intertico Travels</span>
-
-                      <span className='text-muted fw-semibold d-block fs-7 '>Rajasthan, India</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>24/08/2023</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>N/A</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/001-boy.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary mb-1 fs-6'
-                          style={{whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px'}}
-                        >
-                          Brad Simmons
-                        </a>
-                      </div>
-                    </td>
-                    <td className='text-start'>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                        $200,500
-                      </a>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>20</span>
-                    </td>
-                    <td className='text-start'>
-                      <span className='text-dark fw-bold d-block fs-5'>Intertico Travels</span>
-
-                      <span className='text-muted fw-semibold d-block fs-7 '>Rajasthan, India</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>24/08/2023</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-muted fw-semibold d-block fs-7'>N/A</span>
-                    </td>
-                  </tr>
+                      </td>
+                      <td className='text-start'>
+                        <span className='text-dark fw-bold d-block fs-5'>{item.numberOfVisa}</span>
+                      </td>
+                      <td className='text-start'>
+                        <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
+                        <span className='text-muted fw-semibold d-block fs-7 '>{item.merchant_company_name}</span>
+                      </td>
+                      <td className='text-end'>
+                        <span className='text-muted fw-semibold d-block fs-7'>{item.created_at}</span>
+                      </td>
+                      <td className='text-end'>
+                        <span className='text-muted fw-semibold d-block fs-7'>{item.merchant_api_key}</span>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
                 {/* end::Table body */}
               </table>
