@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AddNewMerchant() {
+
+ const navigate = useNavigate();
 
   const [formChange, setformChange] = useState(false)
   const [formData, setFormData] = useState({
@@ -98,6 +101,7 @@ function AddNewMerchant() {
 
     if (response?.status === 200) {
       setIsSuccess(true);
+      navigate('/merchants')
     } else if (response?.status === 203) {
       setIsSuccess(false); // Reset to false if not successful
     }

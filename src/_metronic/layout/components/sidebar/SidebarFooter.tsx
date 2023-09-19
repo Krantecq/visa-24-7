@@ -13,8 +13,8 @@ const SidebarFooter = () => {
         data-bs-dismiss-='click'
         title='Metronic Docs & Components'
       >
-        <span className='btn-label'>Docs & Components</span>
-        <KTIcon iconName='document' className='btn-icon fs-2 m-0' />
+        <span className='btn-label'>Logout</span>
+        {/* <KTIcon iconName='document' className='btn-icon fs-2 m-0' /> */}
       </a>
     </div>
   )
