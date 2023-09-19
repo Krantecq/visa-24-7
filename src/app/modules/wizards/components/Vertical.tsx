@@ -77,7 +77,7 @@ const Vertical = () => {
 
                 {/* begin::Label*/}
                 <div className='stepper-label'>
-                  <h3 className='stepper-title'>Account Type</h3>
+                  <h3 className='stepper-title'>Personal Info</h3>
 
                   <div className='stepper-desc fw-semibold'>Setup Your Account Details</div>
                 </div>
@@ -104,7 +104,7 @@ const Vertical = () => {
 
                 {/* begin::Label*/}
                 <div className='stepper-label'>
-                  <h3 className='stepper-title'>Account Settings</h3>
+                  <h3 className='stepper-title'>Passport Details</h3>
                   <div className='stepper-desc fw-semibold'>Setup Your Account Settings</div>
                 </div>
                 {/* end::Label*/}
@@ -117,57 +117,6 @@ const Vertical = () => {
             </div>
             {/* end::Step 2*/}
 
-            {/* begin::Step 3*/}
-            <div className='stepper-item' data-kt-stepper-element='nav'>
-              {/* begin::Wrapper*/}
-              <div className='stepper-wrapper'>
-                {/* begin::Icon*/}
-                <div className='stepper-icon w-40px h-40px'>
-                  <i className='stepper-check fas fa-check'></i>
-                  <span className='stepper-number'>3</span>
-                </div>
-                {/* end::Icon*/}
-
-                {/* begin::Label*/}
-                <div className='stepper-label'>
-                  <h3 className='stepper-title'>Business Info</h3>
-                  <div className='stepper-desc fw-semibold'>Your Business Related Info</div>
-                </div>
-                {/* end::Label*/}
-              </div>
-              {/* end::Wrapper*/}
-
-              {/* begin::Line*/}
-              <div className='stepper-line h-40px'></div>
-              {/* end::Line*/}
-            </div>
-            {/* end::Step 3*/}
-
-            {/* begin::Step 4*/}
-            <div className='stepper-item' data-kt-stepper-element='nav'>
-              {/* begin::Wrapper*/}
-              <div className='stepper-wrapper'>
-                {/* begin::Icon*/}
-                <div className='stepper-icon w-40px h-40px'>
-                  <i className='stepper-check fas fa-check'></i>
-                  <span className='stepper-number'>4</span>
-                </div>
-                {/* end::Icon*/}
-
-                {/* begin::Label*/}
-                <div className='stepper-label'>
-                  <h3 className='stepper-title'>Billing Details</h3>
-                  <div className='stepper-desc fw-semibold'>Set Your Payment Methods</div>
-                </div>
-                {/* end::Label*/}
-              </div>
-              {/* end::Wrapper*/}
-
-              {/* begin::Line*/}
-              <div className='stepper-line h-40px'></div>
-              {/* end::Line*/}
-            </div>
-            {/* end::Step 4*/}
 
             {/* begin::Step 5*/}
             <div className='stepper-item' data-kt-stepper-element='nav'>

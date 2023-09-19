@@ -34,6 +34,7 @@ const AppRoutes: FC = () => {
               <Route index element={<Navigate to='/cutomers' />} />
               <Route index element={<Navigate to='/merchants' />} />
               <Route index element={<Navigate to='/add-new-merchant' />} />
+              <Route index element={<Navigate to='/create-visa' />} />
 
             {/* </>
           ) : (
