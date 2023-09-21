@@ -1,8 +1,12 @@
-import React, {FC} from 'react'
+import React, {FC, useState} from 'react'
 import {KTIcon} from '../../../../../_metronic/helpers'
 import {ErrorMessage, Field} from 'formik'
+import DatePicker from 'react-datepicker'; 
+import 'react-datepicker/dist/react-datepicker.css'; 
 
 const Step2: FC = () => {
+  const [issueDate, setIssueDate] = useState(null);
+  const [expiryDate, setExpiryDate] = useState(null);
   return (
     <div className='w-100'>
       <div className='pb-10 pb-lg-12'>
@@ -32,29 +36,40 @@ const Step2: FC = () => {
           <span className='required'>Passport Issue Date</span>
         </label>
 
-        <Field
-          name='businessDescriptor'
+        <DatePicker
+          name='issueDate'
+          selected={issueDate}
+          onChange={(date) => setIssueDate(date)}
           className='form-control form-control-lg form-control-solid'
+          dateFormat='MM/dd/yyyy'
+          placeholderText='Select Issue Date'
         />
+
         <div className='text-danger mt-2'>
-          <ErrorMessage name='businessDescriptor' />
+          <ErrorMessage name='issueDate' />
         </div>
       </div>
+      
       <div className='fv-row mb-10'>
         <label className='d-flex align-items-center form-label'>
           <span className='required'>Passport Expiry Date</span>
         </label>
 
-        <Field
-          name='businessDescriptor'
+        <DatePicker
+          name='expiryDate'
+          selected={expiryDate}
+          onChange={(date) => setExpiryDate(date)}
           className='form-control form-control-lg form-control-solid'
+          dateFormat='MM/dd/yyyy'
+          placeholderText='Select Expiry Date'
         />
+
         <div className='text-danger mt-2'>
-          <ErrorMessage name='businessDescriptor' />
+          <ErrorMessage name='expiryDate' />
         </div>
       </div>
 
-      <div className='mb-3'>
+      <div className='mb-10'>
         <label htmlFor='aadharBack' className='form-label'>
           Upload Passport Front Photo
         </label>
@@ -68,7 +83,7 @@ const Step2: FC = () => {
           required
         />
       </div>
-      <div className='mb-3'>
+      <div className='mb-10'>
         <label htmlFor='aadharBack' className='form-label'>
           Upload Passport Back Photo
         </label>

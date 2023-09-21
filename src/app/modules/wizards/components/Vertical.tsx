@@ -125,7 +125,7 @@ const Vertical = () => {
                 {/* begin::Icon*/}
                 <div className='stepper-icon w-40px h-40px'>
                   <i className='stepper-check fas fa-check'></i>
-                  <span className='stepper-number'>5</span>
+                  <span className='stepper-number'>3</span>
                 </div>
                 {/* end::Icon*/}
 
