@@ -5,7 +5,7 @@ import {Horizontal} from './components/Horizontal'
 
 const wizardsBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Wizards',
+    title: '',
     path: '/crafted/pages/wizards/horizontal',
     isSeparator: false,
     isActive: false,
@@ -21,7 +21,7 @@ const wizardsBreadCrumbs: Array<PageLink> = [
 const WizardsPage = () => (
   <Routes>
     <Route element={<Outlet />}>
-      <Route
+      {/* <Route
         path='horizontal'
         element={
           <>
@@ -29,12 +29,12 @@ const WizardsPage = () => (
             <Horizontal />
           </>
         }
-      />
+      /> */}
       <Route
         path='vertical'
         element={
           <>
-            <PageTitle breadcrumbs={wizardsBreadCrumbs}>Vertical</PageTitle>
+            <PageTitle breadcrumbs={wizardsBreadCrumbs}></PageTitle>
             <Vertical />
           </>
         }

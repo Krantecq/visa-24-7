@@ -41,25 +41,25 @@ const SidebarMenuMain = () => {
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/crafted/pages/wizards/vertical'
+        to='/processed'
         icon='element-11'
         title={'Processed'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/crafted/pages/wizards/vertical'
+        to='/in-process'
         icon='element-11'
         title={'In-Process'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/crafted/pages/wizards/vertical'
+        to='/waiting-for-approval'
         icon='element-11'
         title={'Waiting For Approval'}
         fontIcon='bi-app-indicator'
       />{' '}
       <SidebarMenuItem
-        to='/crafted/pages/wizards/vertical'
+        to='/rejected'
         icon='element-11'
         title={'Rejected'}
         fontIcon='bi-app-indicator'

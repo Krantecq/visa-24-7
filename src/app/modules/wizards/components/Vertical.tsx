@@ -57,11 +57,12 @@ const Vertical = () => {
       ref={stepperRef}
       className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
       id='kt_create_account_stepper'
+  
     >
       {/* begin::Aside*/}
-      <div className='card d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px me-9'>
+      <div className=' d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px me-9' style={{height:'370px'}}>
         {/* begin::Wrapper*/}
-        <div className='card-body px-6 px-lg-10 px-xxl-15 py-20'>
+        <div className='card-body px-6 px-lg-10 px-xxl-15 py-20' style={{position:"fixed"}}>
           {/* begin::Nav*/}
           <div className='stepper-nav'>
             {/* begin::Step 1*/}
@@ -112,32 +113,31 @@ const Vertical = () => {
               {/* end::Wrapper*/}
 
               {/* begin::Line*/}
-              <div className='stepper-line h-40px'></div>
+              {/* <div className='stepper-line h-40px'></div> */}
               {/* end::Line*/}
             </div>
             {/* end::Step 2*/}
 
-
             {/* begin::Step 5*/}
-            <div className='stepper-item' data-kt-stepper-element='nav'>
+            {/* <div className='stepper-item' data-kt-stepper-element='nav'> */}
               {/* begin::Wrapper*/}
-              <div className='stepper-wrapper'>
+              {/* <div className='stepper-wrapper'> */}
                 {/* begin::Icon*/}
-                <div className='stepper-icon w-40px h-40px'>
+                {/* <div className='stepper-icon w-40px h-40px'>
                   <i className='stepper-check fas fa-check'></i>
                   <span className='stepper-number'>3</span>
-                </div>
+                </div> */}
                 {/* end::Icon*/}
 
                 {/* begin::Label*/}
-                <div className='stepper-label'>
+                {/* <div className='stepper-label'>
                   <h3 className='stepper-title'>Completed</h3>
                   <div className='stepper-desc fw-semibold'>Woah, we are here</div>
-                </div>
+                </div> */}
                 {/* end::Label*/}
-              </div>
+              {/* </div> */}
               {/* end::Wrapper*/}
-            </div>
+            {/* </div> */}
             {/* end::Step 5*/}
           </div>
           {/* end::Nav*/}
@@ -146,11 +146,14 @@ const Vertical = () => {
       </div>
       {/* begin::Aside*/}
 
-      <div className='d-flex flex-row-fluid flex-center bg-body rounded'>
+      <div
+        className='d-flex flex-row-fluid flex-center bg-body rounded'
+    
+      >
         <Formik validationSchema={currentSchema} initialValues={initValues} onSubmit={submitStep}>
           {() => (
             <Form className='py-20 w-100 w-xl-700px px-9' noValidate id='kt_create_account_form'>
-              <div className='current' data-kt-stepper-element='content'>
+              <div className='current' data-kt-stepper-element='content' >
                 <Step1 />
               </div>
 

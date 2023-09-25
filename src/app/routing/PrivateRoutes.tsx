@@ -10,6 +10,10 @@ import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import CustomersWrapper from '../pages/customers/CustomersWrapper'
 import MerchantWrapper from '../pages/merchants/MerchantWrapper'
 import AddNewMerchant from '../pages/merchants/AddNewMerchant'
+import ProcessedWrapper from '../pages/processed/ProcessedWrapper'
+import InProcessWrapper from '../pages/In-process/InProcessWrapper'
+import ApprovalWrapper from '../pages/waiting-for-approval/ApprovalWrapper'
+import RejectedWrapper from '../pages/visa-rejected/RejectedWrapper'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -29,7 +33,10 @@ const PrivateRoutes = () => {
         <Route path='customers' element={<CustomersWrapper />} />
         <Route path='merchants' element={<MerchantWrapper />} />
         <Route path='add-new-merchant' element={<AddNewMerchant />} />
-
+        <Route path='processed' element={<ProcessedWrapper />} />
+        <Route path='in-process' element={<InProcessWrapper />} />
+        <Route path='waiting-for-approval' element={< ApprovalWrapper/>} />
+        <Route path='rejected' element={<RejectedWrapper/>} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
         {/* Lazy Modules */}
