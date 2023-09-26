@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
-import {requestPassword} from '../core/_requests'
+import {requestPassword} from '../../core/_requests'
 
 const initialValues = {
   email: 'admin@demo.com',
@@ -114,7 +114,7 @@ export function ForgotPassword() {
             </span>
           )}
         </button>
-        <Link to='/auth/login'>
+        <Link to='/auth/merchant/login'>
           <button
             type='button'
             id='kt_login_password_reset_form_cancel_button'
