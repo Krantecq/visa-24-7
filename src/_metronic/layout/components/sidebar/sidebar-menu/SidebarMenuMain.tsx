@@ -35,7 +35,7 @@ const SidebarMenuMain = () => {
         </div>
       </div>
       <SidebarMenuItem
-        to='/crafted/pages/wizards/vertical'
+        to='/create-new-visa'
         icon='element-11'
         title={'Create New VISA'}
         fontIcon='bi-app-indicator'
