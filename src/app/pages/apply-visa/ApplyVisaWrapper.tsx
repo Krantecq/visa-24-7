@@ -5,7 +5,7 @@ const ApplyVisaWrapper = () => {
 
   return (
     <div>
-      <ApplyVisa/>
+      {/* <ApplyVisa /> */}
     </div>
   )
 }

@@ -10,7 +10,6 @@ export function MenuInner() {
       <MenuItem title={'Apply Visa'} to='/apply-visa' />
 
       <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
-      <MenuItem title='Wallet Bal : ₹ 2300' to='/builder' />
       {/* <MenuInnerWithSub
         title='Crafted'
         to='/crafted'

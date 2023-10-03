@@ -35,7 +35,7 @@ const SidebarMenuMain = () => {
         </div>
       </div>
       <SidebarMenuItem
-        to='/create-new-visa'
+        to='/apply-visa'
         icon='element-11'
         title={'Create New VISA'}
         fontIcon='bi-app-indicator'
@@ -64,7 +64,7 @@ const SidebarMenuMain = () => {
         title={'Rejected'}
         fontIcon='bi-app-indicator'
       />
-      <div className='menu-item'>
+      {/* <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
           <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Settings</span>
         </div>
@@ -86,7 +86,7 @@ const SidebarMenuMain = () => {
         icon='element-11'
         title={'Notifications'}
         fontIcon='bi-app-indicator'
-      />
+      /> */}
       {/* <SidebarMenuItemWithSub
         to='/crafted/pages'
         title='Pages'

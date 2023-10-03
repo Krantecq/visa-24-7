@@ -31,7 +31,8 @@ const PrivateRoutes = () => {
         {/* Redirect to Dashboard after success login/registartion */}
         <Route path='auth/*' element={<Navigate to='/apply-visa' />} />
         {/* Pages */}
-        <Route path='apply-visa' element={<ApplyVisaWrapper />} />
+        {/* <Route path='apply-visa' element={<ApplyVisaWrapper />} /> */}
+        <Route path='apply-visa' element={<NewVisaWrapper />} />
         <Route path='dashboard' element={<DashboardWrapper />} />
         <Route path='customers' element={<CustomersWrapper />} />
         <Route path='merchants' element={<MerchantWrapper />} />
@@ -42,7 +43,6 @@ const PrivateRoutes = () => {
         <Route path='rejected' element={<RejectedWrapper/>} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
-        <Route path='create-new-visa' element={<NewVisaWrapper />} />
 
         {/* Lazy Modules */}
         <Route

@@ -89,17 +89,6 @@ const WaitingForApprovalTable: React.FC<Props> = ({className,title}) => {
             {/* begin::Table head */}
             <thead>
               <tr className='fw-bold text-muted'>
-                <th className='w-25px'>
-                  <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                    <input
-                      className='form-check-input'
-                      type='checkbox'
-                      value='1'
-                      data-kt-check='true'
-                      data-kt-check-target='.widget-9-check'
-                    />
-                  </div>
-                </th>
                 <th className='min-w-150px'>Customers</th>
                 <th className='min-w-140px'>Application Arrival Date</th>
                 <th className='min-w-120px'>Application Departure Date</th>
@@ -113,16 +102,6 @@ const WaitingForApprovalTable: React.FC<Props> = ({className,title}) => {
             <tbody>
               {data.map((row, index) => (
                 <tr key={index}>
-                  <td>
-                    {/* Checkbox */}
-                    <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                      <input
-                        className='form-check-input widget-9-check'
-                        type='checkbox'
-                        value='1'
-                      />
-                    </div>
-                  </td>
                   <td>
                     {/* Avatar and Name */}
                     <div className='d-flex align-items-center'>

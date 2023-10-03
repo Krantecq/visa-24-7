@@ -49,7 +49,7 @@ const ProfileHeader: React.FC = () => {
                 </div>
               </div>
 
-              <div className='d-flex my-4'>
+              {/* <div className='d-flex my-4'>
                 <a href='#' className='btn btn-sm btn-light me-2' id='kt_user_follow_button'>
                   <KTIcon iconName='check' className='fs-3 d-none' />
 
@@ -67,18 +67,7 @@ const ProfileHeader: React.FC = () => {
                 >
                   Hire Me
                 </a>
-                {/* <div className='me-0'>
-                  <button
-                    className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                    data-kt-menu-trigger='click'
-                    data-kt-menu-placement='bottom-end'
-                    data-kt-menu-flip='top-end'
-                  >
-                    <i className='bi bi-three-dots fs-3'></i>
-                  </button>
-                  <Dropdown1 />
-                </div> */}
-              </div>
+              </div> */}
             </div>
 
             <div className='d-flex flex-wrap flex-stack'>
@@ -118,7 +107,7 @@ const ProfileHeader: React.FC = () => {
                 Activities
               </Link>
             </li>
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
@@ -128,7 +117,7 @@ const ProfileHeader: React.FC = () => {
               >
                 Visa
               </Link>
-            </li>
+            </li> */}
             <li className='nav-item'>
               <Link
                 className={
