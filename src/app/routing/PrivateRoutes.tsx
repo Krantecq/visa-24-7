@@ -14,6 +14,7 @@ import ProcessedWrapper from '../pages/processed/ProcessedWrapper'
 import InProcessWrapper from '../pages/In-process/InProcessWrapper'
 import ApprovalWrapper from '../pages/waiting-for-approval/ApprovalWrapper'
 import RejectedWrapper from '../pages/visa-rejected/RejectedWrapper'
+import ApplyVisaWrapper from '../pages/apply-visa/ApplyVisaWrapper'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -27,8 +28,9 @@ const PrivateRoutes = () => {
     <Routes>
       <Route element={<MasterLayout />}>
         {/* Redirect to Dashboard after success login/registartion */}
-        <Route path='auth/*' element={<Navigate to='/dashboard' />} />
+        <Route path='auth/*' element={<Navigate to='/apply-visa' />} />
         {/* Pages */}
+        <Route path='apply-visa' element={<ApplyVisaWrapper />} />
         <Route path='dashboard' element={<DashboardWrapper />} />
         <Route path='customers' element={<CustomersWrapper />} />
         <Route path='merchants' element={<MerchantWrapper />} />
