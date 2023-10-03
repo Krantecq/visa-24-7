@@ -5,12 +5,13 @@
  * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
  */
 
-import {FC} from 'react'
+import React, { FC, useEffect } from 'react';
 import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
 import {PrivateRoutes} from './PrivateRoutes'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {Logout, AuthPage, useAuth} from '../modules/auth'
 import {App} from '../App'
+import Cookies from 'js-cookie';
 
 /**
  * Base URL of the website.
@@ -21,14 +22,26 @@ const {PUBLIC_URL} = process.env
 
 const AppRoutes: FC = () => {
   const {currentUser} = useAuth()
+  const isLoggedIn = Cookies.get('isLoggedIn');
+  // useEffect(() => {
+  //   // Use useEffect to monitor changes in the isLoggedIn cookie
+  //   if (isLoggedIn) {
+  //     // Redirect to the dashboard when isLoggedIn is true
+  //     window.location.href = '/dashboard';
+  //   } else {
+  //     // Redirect to the login page when isLoggedIn is false
+  //     window.location.href = '/auth';
+  //   }
+  // }, []);
+
   return (
     <BrowserRouter basename={PUBLIC_URL}>
       <Routes>
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
-          {/* {currentUser ? (
-            <> */}
+          {isLoggedIn ? (
+            <>
               <Route path='/*' element={<PrivateRoutes />} />
               <Route index element={<Navigate to='/dashboard' />} />
               <Route index element={<Navigate to='/cutomers' />} />
@@ -40,13 +53,13 @@ const AppRoutes: FC = () => {
               <Route index element={<Navigate to='/waiting-for-approval' />} />
               <Route index element={<Navigate to='/rejected' />} />
               <Route index element={<Navigate to='/create-new-visa' />} />
-            {/* </>
+            </>
           ) : (
-            <> */}
+            <>
               <Route path='auth/*' element={<AuthPage />} />
               <Route path='*' element={<Navigate to='/auth' />} />
-            {/* </>
-          )} */}
+            </>
+          )}
         </Route>
       </Routes>
     </BrowserRouter>

@@ -5,6 +5,8 @@ import {LayoutProvider, LayoutSplashScreen} from '../_metronic/layout/core'
 import {MasterInit} from '../_metronic/layout/MasterInit'
 import {AuthInit} from './modules/auth'
 import {ThemeModeProvider} from '../_metronic/partials'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
               <Outlet />
               <MasterInit />
             </AuthInit>
+            <ToastContainer />
           </ThemeModeProvider>
         </LayoutProvider>
       </I18nProvider>

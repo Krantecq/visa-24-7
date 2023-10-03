@@ -1,12 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useState} from 'react'
+import { useState } from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
-import {useFormik} from 'formik'
-import {getUserByToken, login} from '../../core/_requests'
-import {toAbsoluteUrl} from '../../../../../_metronic/helpers'
-import {useAuth} from '../../core/Auth'
+import { Link } from 'react-router-dom'
+import { useFormik } from 'formik'
+import { getUserByToken, login } from '../../core/_requests'
+import { toAbsoluteUrl } from '../../../../../_metronic/helpers'
+import { useAuth } from '../../core/Auth'
+import axios from 'axios'
+import Cookies from 'js-cookie'; 
+import { toast } from 'react-toastify';
+
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -33,28 +37,41 @@ const initialValues = {
 
 export function Login() {
   const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
 
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
-    onSubmit: async (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
+      setLoading(true);
       try {
-        const {data: auth} = await login(values.email, values.password)
-        saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
+        const requestBody = {
+          super_admin_email: values.email,
+          super_admin_password: values.password,
+        };
+        console.log(requestBody);
+        
+        axios.post('http://localhost:5003/backend/login/super_admin', requestBody)
+          .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+              setLoading(false);
+              toast.success(response.data.msg);
+              Cookies.set('isLoggedIn', 'true', { expires: 7 });
+              document.location.reload()
+            } else {
+              setLoading(false);
+              toast.error(response.data.msg);
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
       } catch (error) {
-        console.error(error)
-        saveAuth(undefined)
-        setStatus('The login details are incorrect')
-        setSubmitting(false)
-        setLoading(false)
+        console.error('Error:', error);
       }
     },
-  })
-
+  });
+  
   return (
     <form
       className='form w-100'
@@ -64,7 +81,7 @@ export function Login() {
     >
       {/* begin::Heading */}
       <div className='text-center mb-11'>
-        <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
+        <h1 className='text-dark fw-bolder mb-3'>Sign In Superadmin</h1>
         <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
       </div>
       {/* begin::Heading */}
@@ -141,7 +158,7 @@ export function Login() {
           {...formik.getFieldProps('email')}
           className={clsx(
             'form-control bg-transparent',
-            {'is-invalid': formik.touched.email && formik.errors.email},
+            { 'is-invalid': formik.touched.email && formik.errors.email },
             {
               'is-valid': formik.touched.email && !formik.errors.email,
             }
@@ -207,7 +224,7 @@ export function Login() {
         >
           {!loading && <span className='indicator-label'>Continue</span>}
           {loading && (
-            <span className='indicator-progress' style={{display: 'block'}}>
+            <span className='indicator-progress' style={{ display: 'block' }}>
               Please wait...
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
