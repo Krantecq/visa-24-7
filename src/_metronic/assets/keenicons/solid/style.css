@@ -24,7 +24,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.my-custom-datepicker{
+  background-color: #fff !important;
+}
+.form-control.form-control-solid {
+  background-color: #fff !important;
 
+}
 .ki-abstract-1.ki-solid:before {
   content: '\e900';
 }

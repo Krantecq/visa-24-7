@@ -7,6 +7,8 @@ export function MenuInner() {
   const intl = useIntl()
   return (
     <>
+      <MenuItem title={'Apply Visa'} to='/apply-visa' />
+
       <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
       <MenuItem title='Wallet Bal : ₹ 2300' to='/builder' />
       {/* <MenuInnerWithSub
