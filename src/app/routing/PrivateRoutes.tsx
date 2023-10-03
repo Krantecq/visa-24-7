@@ -14,6 +14,7 @@ import ProcessedWrapper from '../pages/processed/ProcessedWrapper'
 import InProcessWrapper from '../pages/In-process/InProcessWrapper'
 import ApprovalWrapper from '../pages/waiting-for-approval/ApprovalWrapper'
 import RejectedWrapper from '../pages/visa-rejected/RejectedWrapper'
+import NewVisaWrapper from '../pages/New-visa/CreateNewVisa'
 import ApplyVisaWrapper from '../pages/apply-visa/ApplyVisaWrapper'
 
 const PrivateRoutes = () => {
@@ -41,6 +42,8 @@ const PrivateRoutes = () => {
         <Route path='rejected' element={<RejectedWrapper/>} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
+        <Route path='create-new-visa' element={<NewVisaWrapper />} />
+
         {/* Lazy Modules */}
         <Route
           path='crafted/pages/profile/*'

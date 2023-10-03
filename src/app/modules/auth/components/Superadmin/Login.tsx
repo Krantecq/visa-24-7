@@ -4,9 +4,9 @@ import * as Yup from 'yup'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
-import {getUserByToken, login} from '../core/_requests'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
-import {useAuth} from '../core/Auth'
+import {getUserByToken, login} from '../../core/_requests'
+import {toAbsoluteUrl} from '../../../../../_metronic/helpers'
+import {useAuth} from '../../core/Auth'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -190,7 +190,7 @@ export function Login() {
         <div />
 
         {/* begin::Link */}
-        <Link to='/auth/forgot-password' className='link-primary'>
+        <Link to='/auth/superadmin/forgot-password' className='link-primary'>
           Forgot Password ?
         </Link>
         {/* end::Link */}
@@ -218,7 +218,7 @@ export function Login() {
 
       <div className='text-gray-500 text-center fw-semibold fs-6'>
         Not a Member yet?{' '}
-        <Link to='/auth/registration' className='link-primary'>
+        <Link to='/auth/superadmin/registration' className='link-primary'>
           Sign up
         </Link>
       </div>
