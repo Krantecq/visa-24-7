@@ -1,69 +1,41 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { KTIcon } from '../../../../_metronic/helpers';
 import { Step1 } from './steps/Step1';
 import { Step2 } from './steps/Step2';
-import { StepperComponent } from '../../../../_metronic/assets/ts/components';
 import { Form, Formik, FormikValues } from 'formik';
-import { createAccountSchemas, ICreateAccount, inits } from './CreateAccountWizardHelper';
+import { ICreateAccount, inits } from './CreateAccountWizardHelper';
+import { useNavigate } from 'react-router-dom';
 
 const Vertical = () => {
-  const stepperRef = useRef<HTMLDivElement | null>(null);
-  const stepper = useRef<StepperComponent | null>(null);
-  const [currentSchema, setCurrentSchema] = useState(createAccountSchemas[0]);
   const [initValues] = useState<ICreateAccount>(inits);
-
-  const loadStepper = () => {
-    stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement);
-  };
+  const [currentStep, setCurrentStep] = useState(0);
+  const navigate = useNavigate();
 
   const prevStep = () => {
-    if (!stepper.current) {
-      return;
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
     }
-
-    stepper.current.goPrev();
-
-    setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1]);
   };
 
-  const submitStep = (values: ICreateAccount, actions: FormikValues) => {
-    if (!stepper.current) {
-      return;
-    }
-
-    if (stepper.current.currentStepIndex !== stepper.current.totalStepsNumber) {
-      stepper.current.goNext();
+  const nextStep = () => {
+    if (currentStep == 0) {
+      setCurrentStep(currentStep + 1);
     } else {
-      stepper.current.goto(1);
-      actions.resetForm();
+      navigate('/dashboard');
+      
     }
-
-    setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1]);
   };
-
-  useEffect(() => {
-    if (!stepperRef.current) {
-      return;
-    }
-
-    loadStepper();
-  }, [stepperRef]);
 
   return (
-    <div
-      ref={stepperRef}
-      className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
-      id='kt_create_account_stepper'
-    >
-      {/* begin::Aside*/}
+    <div className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'>
       <div className=' d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px me-9' style={{ height: '370px' }}>
         {/* begin::Wrapper*/}
         <div className='card-body px-6 px-lg-10 px-xxl-15 py-20' style={{ position: 'fixed' }}>
           {/* begin::Nav*/}
           <div className='stepper-nav'>
-            {/* begin::Step 1*/}
-            <div className='stepper-item current' data-kt-stepper-element='nav'>
-              {/* begin::Wrapper*/}
+            {/* Step 1 */}
+            <div className={`stepper-item ${currentStep === 0 ? 'current' : ''}`} data-kt-stepper-element='nav'>
+              {/* ... Content for Step 1 ... */}
               <div className='stepper-wrapper'>
                 {/* begin::Icon*/}
                 <div className='stepper-icon w-40px h-40px'>
@@ -80,18 +52,12 @@ const Vertical = () => {
                 </div>
                 {/* end::Label*/}
               </div>
-              {/* end::Wrapper*/}
-
-              {/* begin::Line*/}
-              <div className='stepper-line h-40px'></div>
-              {/* end::Line*/}
             </div>
-            {/* end::Step 1*/}
 
-            {/* begin::Step 2*/}
-            <div className='stepper-item' data-kt-stepper-element='nav'>
-              {/* begin::Wrapper*/}
-              <div className='stepper-wrapper'>
+            {/* Step 2 */}
+            <div className={`stepper-item ${currentStep === 1 ? 'current' : ''}`} data-kt-stepper-element='nav'>
+              {/* ... Content for Step 2 ... */}
+              <div className='stepper-wrapper' style={{ marginTop: 50 }}>
                 {/* begin::Icon*/}
                 <div className='stepper-icon w-40px h-40px'>
                   <i className='stepper-check fas fa-check'></i>
@@ -106,52 +72,41 @@ const Vertical = () => {
                 </div>
                 {/* end::Label*/}
               </div>
-              {/* end::Wrapper*/}
-
-              {/* begin::Line*/}
-              {/* <div className='stepper-line h-40px'></div> */}
-              {/* end::Line*/}
             </div>
-            {/* end::Step 2*/}
           </div>
-          {/* end::Nav*/}
+          {/* end::Nav */}
         </div>
-        {/* end::Wrapper*/}
+        {/* end::Wrapper */}
       </div>
-      {/* begin::Aside*/}
 
-      <div
-        className='d-flex flex-row-fluid flex-center bg-body rounded'
-      >
-        <Formik validationSchema={currentSchema} initialValues={initValues} onSubmit={submitStep}>
+      {/* begin::Aside*/}
+      <div className='d-flex flex-row-fluid flex-center bg-body rounded'>
+
+        <Formik initialValues={initValues} onSubmit={nextStep}>
           {() => (
             <Form className='py-20 w-100 w-xl-700px px-9' noValidate id='kt_create_account_form'>
-              <div className='current' data-kt-stepper-element='content'>
-                <Step1 />
-              </div>
-
-              <div data-kt-stepper-element='content'>
-                <Step2 />
-              </div>
+              {currentStep === 0 && <Step1 />}
+              {currentStep === 1 && <Step2 />}
 
               <div className='d-flex flex-stack pt-10'>
-                <div className='mr-2'>
-                  <button
-                    onClick={prevStep}
-                    type='button'
-                    className='btn btn-lg btn-light-primary me-3'
-                    data-kt-stepper-action='previous'
-                  >
-                    <KTIcon iconName='arrow-left' className='fs-4 me-1' />
-                    Back
-                  </button>
-                </div>
+                {currentStep > 0 && (
+                  <div className='mr-2'>
+                    <button
+                      onClick={prevStep}
+                      type='button'
+                      className='btn btn-lg btn-light-primary me-3'
+                    // data-kt-stepper-action='previous'
+                    >
+                      <KTIcon iconName='arrow-left' className='fs-4 me-1' />
+                      Back
+                    </button>
+                  </div>
+                )}
 
                 <div>
-                  <button type='submit' className='btn btn-lg btn-primary me-3'>
+                  <button type='submit' className='btn btn-lg btn-primary me-3' style={{ justifyContent: 'flex-end' }}>
                     <span className='indicator-label'>
-                      {stepper.current?.currentStepIndex !== stepper.current?.totalStepsNumber! - 1 && 'Continue'}
-                      {stepper.current?.currentStepIndex === stepper.current?.totalStepsNumber! -1 && 'Submit'}
+                      {currentStep === 0 ? 'Continue' : 'Submit'}
                       <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />
                     </span>
                   </button>

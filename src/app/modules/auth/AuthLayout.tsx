@@ -31,23 +31,7 @@ const AuthLayout = () => {
         {/* end::Form */}
 
         {/* begin::Footer */}
-        <div className='d-flex flex-center flex-wrap px-5'>
-          {/* begin::Links */}
-          <div className='d-flex fw-semibold text-primary fs-base'>
-            <a href='#' className='px-5' target='_blank'>
-              Terms
-            </a>
-
-            <a href='#' className='px-5' target='_blank'>
-              Plans
-            </a>
-
-            <a href='#' className='px-5' target='_blank'>
-              Contact Us
-            </a>
-          </div>
-          {/* end::Links */}
-        </div>
+        
         {/* end::Footer */}
       </div>
       {/* end::Body */}
