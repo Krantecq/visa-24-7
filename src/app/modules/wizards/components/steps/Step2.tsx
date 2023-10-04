@@ -1,33 +1,129 @@
-import React, {FC, useState} from 'react'
-import {KTIcon} from '../../../../../_metronic/helpers'
-import {ErrorMessage, Field} from 'formik'
-import DatePicker from 'react-datepicker'; 
-import 'react-datepicker/dist/react-datepicker.css'; 
+import React, { FC, useState } from 'react'
+import { ErrorMessage, Field, useFormikContext } from 'formik'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const Step2: FC = () => {
+import axios from 'axios';
+// Define a prop for Step1
+interface Step2Props {
+  data:  {
+    first_name: string;
+    last_name: string;
+    birth_place: string;
+    birth_detail: string;
+    gender: string;
+    marital_status: string;
+    father_name: string;
+    panUri: string;
+    photoUri: string;
+    // Add other fields here...
+  };
+  data1:any
+}
+
+const Step2: FC<Step2Props> = ({ data,data1 }) => {
+  const formik = useFormikContext<any>();
+
+  const [formData, setFormData] = useState<any>({
+    passport_number: '',
+    passport_issueDate: '',
+    passport_expiryDate: '',
+    passFront: '',
+    passBack: '',
+  });
+
+  
+  // Function to save data to the form and set formDataStep1
+  const handleNext = async () => {
+    const updatedData = {
+      country_code:data1.country_code,
+      entry_process:data1.value,
+      nationality_code:data1.nationality_code,
+      first_name:data.first_name,
+      last_name:data.last_name,
+      birth_place:data.birth_place,
+      birthday_date:data.birth_detail,
+      nationality:data1.nationality_code,
+      passport_number:formik.values.first_name,
+      passport_issue_date:formik.values.last_name,
+      passport_expiry_date:formik.values.accountName,
+      gender:data.gender,
+      marital_status:data.marital_status,
+      application_arrival_date:data1.application_arrival_date,
+      application_departure_date:data1.application_departure_date,
+      application_destination:data1.country_code,
+      fathers_name:data.father_name,
+      passport_front:formData.passFront,
+      passport_back:formData.passBack,
+      pan_card:data.panUri,
+      photo:data.photoUri,
+    }
+
+    const response = await axios.post('http://localhost:5003/backend/create_user_application', updatedData);
+    // Collect data from the form fields
+    console.log('formData', response)
+
+  };
+
+  const handleFrontUpload = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await axios.post('http://localhost:5003/backend/upload_image/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        const imageUri = response.data.data;
+        setFormData((prevData) => ({
+          ...prevData,
+          passFront: imageUri,
+        }));
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
+  };
+
+  const handleBackUpload = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await axios.post('http://localhost:5003/backend/upload_image/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        const imageUri = response.data.data;
+        setFormData((prevData) => ({
+          ...prevData,
+          passBack: imageUri,
+        }));
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
+  };
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
   return (
     <div className='w-100'>
       <div className='pb-10 pb-lg-12'>
         <h2 className='fw-bolder text-dark'>Passport Details</h2>
-
-        <div className='text-gray-400 fw-bold fs-6'>
-          If you need more info, please check out
-          <a href='/dashboard' className='link-primary fw-bolder'>
-            {' '}
-            Help Page
-          </a>
-          .
-        </div>
       </div>
 
       <div className='fv-row mb-10'>
         <label className='form-label required'>Passport Number</label>
 
-        <Field name='businessName' className='form-control form-control-lg form-control-solid' />
+        <Field name='passport_number' className='form-control form-control-lg form-control-solid' />
         <div className='text-danger mt-2'>
-          <ErrorMessage name='businessName' />
+          <ErrorMessage name='passport_number' />
         </div>
       </div>
 
@@ -37,7 +133,7 @@ const Step2: FC = () => {
         </label>
 
         <DatePicker
-          name='issueDate'
+          name='last_name'
           selected={issueDate}
           onChange={(date) => setIssueDate(date)}
           className='form-control form-control-lg form-control-solid'
@@ -46,17 +142,17 @@ const Step2: FC = () => {
         />
 
         <div className='text-danger mt-2'>
-          <ErrorMessage name='issueDate' />
+          <ErrorMessage name='passport_issueDate' />
         </div>
       </div>
-      
+
       <div className='fv-row mb-10'>
         <label className='d-flex align-items-center form-label'>
           <span className='required'>Passport Expiry Date</span>
         </label>
 
         <DatePicker
-          name='expiryDate'
+          name='accountName'
           selected={expiryDate}
           onChange={(date) => setExpiryDate(date)}
           className='form-control form-control-lg form-control-solid'
@@ -65,7 +161,7 @@ const Step2: FC = () => {
         />
 
         <div className='text-danger mt-2'>
-          <ErrorMessage name='expiryDate' />
+          <ErrorMessage name='accountName' />
         </div>
       </div>
 
@@ -76,10 +172,10 @@ const Step2: FC = () => {
         <input
           type='file'
           className='form-control'
-          id='aadharBack'
-          name='aadharBack'
+          id='passFront'
+          name='passFront'
           accept='image/*'
-          // onChange={handleChange}
+          onChange={handleFrontUpload}
           required
         />
       </div>
@@ -90,15 +186,28 @@ const Step2: FC = () => {
         <input
           type='file'
           className='form-control'
-          id='aadharBack'
-          name='aadharBack'
+          id='passBack'
+          name='passBack'
           accept='image/*'
-          // onChange={handleChange}
+          onChange={handleBackUpload}
           required
         />
       </div>
+      <div className='d-flex flex-stack pt-10'>
+        <div>
+          <button
+            type='button'
+            className='btn btn-lg btn-primary me-3'
+            onClick={handleNext}
+            style={{ justifyContent: 'flex-end' }}
+          >
+            <span className='indicator-label'>Apply</span>
+          </button>
+        </div>
+      </div>
     </div>
+
   )
 }
 
-export {Step2}
+export { Step2 }

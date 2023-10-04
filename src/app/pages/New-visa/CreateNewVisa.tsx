@@ -9,6 +9,7 @@ function NewVisaWrapper() {
   const [visaForm, showVisaForm] = useState(false);
   const [visaList, setVisaList] = useState(false); // Initialize as false
   const [apiData, setApiData] = useState(null);
+  const [selectedEntry, setSelectedEntry] = useState(null);
 
   const handleApiDataReceived = (data) => {
     // Handle the API data as needed
@@ -22,13 +23,15 @@ function NewVisaWrapper() {
     setVisaList(true); // Show the VisaTable component
   };
 
-  const handleSelectClick = () => {
+  const handleSelectClick = (selectedEntryData) => {
+    setSelectedEntry(selectedEntryData);
+
     showVisaForm(true); // Set VisaForm visibility to true when the "Select" field is clicked
   };
   return (
     <div>
       {visaForm ? (
-        <Vertical />
+        <Vertical selectedEntry={selectedEntry}/>
       ) : (
         <>
           {visaList ? (
@@ -38,7 +41,7 @@ function NewVisaWrapper() {
               show={(value) => setVisaList(value)}
               visaList={visaList}
               apiData={apiData} // Pass the API data to VisaTable
-              onSelectClick={() => handleSelectClick()}
+              onSelectClick={handleSelectClick}
             />
           ) : (
             <ApplyVisa

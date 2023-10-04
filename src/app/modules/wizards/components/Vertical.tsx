@@ -5,10 +5,16 @@ import { Step2 } from './steps/Step2';
 import { Form, Formik, FormikValues } from 'formik';
 import { ICreateAccount, inits } from './CreateAccountWizardHelper';
 import { useNavigate } from 'react-router-dom';
+interface VerticalProps {
+  selectedEntry: any; // Define the type for selectedEntry
+}
 
-const Vertical = () => {
+
+const Vertical:React.FC<VerticalProps> = ({selectedEntry}) => {
   const [initValues] = useState<ICreateAccount>(inits);
   const [currentStep, setCurrentStep] = useState(0);
+  const [formDataStep1, setFormDataStep1] = useState<any>(null);
+  const [formDataStep2, setFormDataStep2] = useState<any>(null);
   const navigate = useNavigate();
 
   const prevStep = () => {
@@ -85,8 +91,8 @@ const Vertical = () => {
         <Formik initialValues={initValues} onSubmit={nextStep}>
           {() => (
             <Form className='py-20 w-100 w-xl-700px px-9' noValidate id='kt_create_account_form'>
-              {currentStep === 0 && <Step1 />}
-              {currentStep === 1 && <Step2 />}
+              {currentStep === 0 && <Step1 setFormDataStep1={setFormDataStep1}/>}
+              {currentStep === 1 && <Step2 data={formDataStep1} data1={selectedEntry}/>}
 
               <div className='d-flex flex-stack pt-10'>
                 {currentStep > 0 && (
@@ -106,7 +112,7 @@ const Vertical = () => {
                 <div>
                   <button type='submit' className='btn btn-lg btn-primary me-3' style={{ justifyContent: 'flex-end' }}>
                     <span className='indicator-label'>
-                      {currentStep === 0 ? 'Continue' : 'Submit'}
+                      {currentStep >1 ? 'Continue' : 'Submit'}
                       <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />
                     </span>
                   </button>

@@ -7,11 +7,14 @@ type Props = {
   show: (value: boolean) => void;
   visaList: boolean;
   apiData: any;
-  onSelectClick: () => void;// Add a new prop for API data
+  onSelectClick: (entryData: any) => void;// Add a new prop for API data
 };
 
 const VisaTable: React.FC<Props> = ({ className, title, show, visaList, apiData,onSelectClick }) => {
-  console.log(apiData)
+  const handleSelectClick = (entryData) => {
+    // Pass the selected entry data to the parent component
+    onSelectClick(entryData);
+  };
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
       <ApplyVisa visaList={visaList} show={show} onApiDataReceived={function (data: any): void {
@@ -82,7 +85,7 @@ const VisaTable: React.FC<Props> = ({ className, title, show, visaList, apiData,
               </table>
             </div>
             <div className='d-flex justify-content-end' style={{ width: 110, height: 45, margin: 20 }}>
-              <button type='submit' style={{ width: '100%', height: '100%' }} onClick={onSelectClick} className='btn btn-primary'>
+              <button type='submit' style={{ width: '100%', height: '100%' }} onClick={() => handleSelectClick(entry)} className='btn btn-primary'>
                 Select
               </button>
             </div>

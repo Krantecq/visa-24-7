@@ -19,43 +19,48 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
   const [expiryDate, setExpiryDate] = useState(null);
   const [initValues] = useState<ICreateAccount>(inits);
 
+  
   const onSubmit = (values: any) => {
     console.log(values)
 
     const postData = {
       country_code: values.toCountry,
-      nationality_code: values.fromCountry
+      nationality_code: values.fromCountry,      
     }
     axios.post('http://localhost:5003/backend/get_all_possible_visas', postData)
       .then((response) => {
-        console.log(response.data)
-        let main_data: { day: number | null; entryType: string | null; country: string | null; description: string | null; receipt: any | null; value: string | null;}[] = [];
+        console.log(values)
+        let main_data: { day: number | null; entryType: string | null; country: string | null; description: string | null; receipt: any | null; value: string | null; }[] = [];
 
-        for(let i=0;i<response.data.data.length;i++){
-        const apiData = response.data.data[i];
+        for (let i = 0; i < response.data.data.length; i++) {
+          const apiData = response.data.data[i];
 
-        // Extract day, entry type, and country from the description
-        const description = apiData.description;
-        const dayMatch = description.match(/\d+/);
-        const day = dayMatch ? parseInt(dayMatch[0]) : null;
-        const countryTypeMatch = description.match(/(.+?)\s+\d+\s+Days/);
-        const country = countryTypeMatch ? countryTypeMatch[1] : null;
-        const entryTypeMatch = description.match(/Days\s+(\w+)/i);
-        const entryType = entryTypeMatch ? entryTypeMatch[1] : null;
+          // Extract day, entry type, and country from the description
+          const description = apiData.description;
+          const dayMatch = description.match(/\d+/);
+          const day = dayMatch ? parseInt(dayMatch[0]) : null;
+          const countryTypeMatch = description.match(/(.+?)\s+\d+\s+Days/);
+          const country = countryTypeMatch ? countryTypeMatch[1] : null;
+          const entryTypeMatch = description.match(/Days\s+(\w+)/i);
+          const entryType = entryTypeMatch ? entryTypeMatch[1] : null;
 
-        const extractedData = {
-          day: day,
-          entryType: entryType,
-          country: country,
-          description:apiData.description,
-          receipt:apiData.receipt,
-          value:apiData.value
-        };
-        main_data.push(extractedData);
-        // Use the extracted values as needed
-        console.log("Day:", day);
-        console.log("Entry Type:", entryType);
-        console.log("Country:", country);
+          const extractedData = {
+            day: day,
+            entryType: entryType,
+            country: country,
+            description: apiData.description,
+            receipt: apiData.receipt,
+            value: apiData.value,
+            country_code: values.toCountry,
+            nationality_code: values.fromCountry,
+            application_arrival_date:issueDate,
+            application_departure_date:expiryDate
+          };
+          main_data.push(extractedData);
+          // Use the extracted values as needed
+          console.log("Day:", day);
+          console.log("Entry Type:", entryType);
+          console.log("Country:", country);
         }
         onApiDataReceived(main_data);
       })
@@ -610,7 +615,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
                 </label>
 
                 <DatePicker
-                  name='issueDate'
+                  name='accountName'
                   selected={issueDate}
                   onChange={(date) => setIssueDate(date)}
                   className=' form-control form-control-lg form-control-solid border border-1  border-secondary rounded-4'
@@ -620,7 +625,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
                 />
 
                 <div className='text-danger mt-2'>
-                  <ErrorMessage name='issueDate' />
+                  <ErrorMessage name='accountName' />
                 </div>
               </div>
               <div className='fv-row mb-10 w-100'>
@@ -630,7 +635,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
                 </label>
 
                 <DatePicker
-                  name='expiryDate'
+                  name='accountPlan'
                   selected={expiryDate}
                   onChange={(date) => setExpiryDate(date)}
                   className='form-control bg-light form-control-lg form-control-solid border border-1  border-secondary rounded-4 my-custom-datepicker'
@@ -639,7 +644,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
                 />
 
                 <div className='text-danger mt-2'>
-                  <ErrorMessage name='expiryDate' />
+                  <ErrorMessage name='accountPlan' />
                 </div>
               </div>
             </div>

@@ -1,7 +1,6 @@
 import {Route, Routes, Outlet, Navigate} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Vertical} from './components/Vertical'
-import {Horizontal} from './components/Horizontal'
 
 const wizardsBreadCrumbs: Array<PageLink> = [
   {
@@ -35,7 +34,7 @@ const WizardsPage = () => (
         element={
           <>
             <PageTitle breadcrumbs={wizardsBreadCrumbs}></PageTitle>
-            <Vertical />
+            {/* <Vertical /> */}
           </>
         }
       />
