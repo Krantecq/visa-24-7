@@ -40,7 +40,6 @@ const VisaTable: React.FC<Props> = ({ className, title, show, visaList, apiData,
                   <tr className='fw-bold text-dark'>
                     <th style={{ paddingLeft: 10 }} className='min-w-140px'>Entry</th>
                     <th className='min-w-120px'>Validity</th>
-                    <th className='min-w-100px'>Duration</th>
                     <th className='min-w-120px'>Processing Time</th>
                     <th className='min-w-120px'>Price</th>
                   </tr>
@@ -51,21 +50,16 @@ const VisaTable: React.FC<Props> = ({ className, title, show, visaList, apiData,
                     <td style={{ paddingLeft: 10 }}>
                       {/* Date */}
                       <a href='#' className='text-dark fw-medium text-hover-primary d-block fs-30'>
-                        Single
+                        {entry.entryType}
                       </a>
                     </td>
                     <td>
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-medium text-hover-primary d-block fs-30'>
-                        15 days
+                        {entry.day}
                       </a>
                     </td>
-                    <td>
-                      {/* Location 2 */}
-                      <a href='#' className='text-dark fw-medium text-hover-primary d-block fs-30'>
-                        15 days
-                      </a>
-                    </td>
+                   
                     <td>
                       {/* Status */}
                       <span className='text-dark fw-medium text-hover-primary d-block fs-30'>
@@ -76,7 +70,7 @@ const VisaTable: React.FC<Props> = ({ className, title, show, visaList, apiData,
                     <td>
                       {/* Status */}
                       <span className='text-dark fw-medium text-hover-primary d-block fs-30'>
-                        ₹ 3000/-
+                        {(entry.receipt['Visa Fees']?entry.receipt['Visa Fees']:0)+(entry.receipt['Service Fees']?entry.receipt['Service Fees']:0)}
                       </span>
                     </td>
                     <td>

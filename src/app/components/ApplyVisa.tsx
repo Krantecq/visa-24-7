@@ -21,10 +21,6 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
 
   const onSubmit = (values: any) => {
     console.log(values)
-    // Simulate API response with visaList data
-    const apiResponse = {
-      visaList: ['true'], // Replace with the actual data from your API
-    };
 
     const postData = {
       country_code: values.toCountry,
@@ -33,7 +29,35 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
     axios.post('http://localhost:5003/backend/get_all_possible_visas', postData)
       .then((response) => {
         console.log(response.data)
-        onApiDataReceived(response.data.data);
+        let main_data: { day: number | null; entryType: string | null; country: string | null; description: string | null; receipt: any | null; value: string | null;}[] = [];
+
+        for(let i=0;i<response.data.data.length;i++){
+        const apiData = response.data.data[i];
+
+        // Extract day, entry type, and country from the description
+        const description = apiData.description;
+        const dayMatch = description.match(/\d+/);
+        const day = dayMatch ? parseInt(dayMatch[0]) : null;
+        const countryTypeMatch = description.match(/(.+?)\s+\d+\s+Days/);
+        const country = countryTypeMatch ? countryTypeMatch[1] : null;
+        const entryTypeMatch = description.match(/Days\s+(\w+)/i);
+        const entryType = entryTypeMatch ? entryTypeMatch[1] : null;
+
+        const extractedData = {
+          day: day,
+          entryType: entryType,
+          country: country,
+          description:apiData.description,
+          receipt:apiData.receipt,
+          value:apiData.value
+        };
+        main_data.push(extractedData);
+        // Use the extracted values as needed
+        console.log("Day:", day);
+        console.log("Entry Type:", entryType);
+        console.log("Country:", country);
+        }
+        onApiDataReceived(main_data);
       })
       .catch((error) => {
         console.error('Error fetching Atlys data:', error);

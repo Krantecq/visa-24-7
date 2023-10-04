@@ -5,53 +5,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 
 type Props = {
   className: string
-  title: String
+  title: String,
+  data: any[];
 }
 
-const data = [
-  {
-    name: 'Ana Simmons',
-    avatarUrl: '/media/avatars/300-14.jpg',
-    date: '01/09/2023',
-    location1: 'India',
-    location2: '1000',
-    status: 'In-process',
-  },
-  {
-    name: 'Ana Simmons',
-    avatarUrl: '/media/avatars/300-14.jpg',
-    date: '01/09/2023',
-    location1: 'India',
-    location2: '1000',
-    status: 'In-process',
-  },
-  {
-    name: 'Ana Simmons',
-    avatarUrl: '/media/avatars/300-14.jpg',
-    date: '01/09/2023',
-    location1: 'India',
-    location2: '1000',
-    status: 'In-process',
-  },
-  {
-    name: 'Ana Simmons',
-    avatarUrl: '/media/avatars/300-14.jpg',
-    date: '01/09/2023',
-    location1: 'India',
-    location2: '1000',
-    status: 'In-process',
-  },
-  {
-    name: 'Ana Simmons',
-    avatarUrl: '/media/avatars/300-14.jpg',
-    date: '01/09/2023',
-    location1: 'India',
-    location2: '1000',
-    status: 'In-process',
-  },
-]
 
-const ProcessedTable: React.FC<Props> = ({className, title}) => {
+
+const ProcessedTable: React.FC<Props> = ({className, title,data}) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -89,6 +49,7 @@ const ProcessedTable: React.FC<Props> = ({className, title}) => {
             {/* begin::Table head */}
             <thead>
               <tr className='fw-bold text-muted'>
+               
                 <th className='min-w-150px'>Customers</th>
                 <th className='min-w-140px'>Application Arrival Date</th>
                 <th className='min-w-120px'>Application Departure Date</th>
@@ -106,11 +67,11 @@ const ProcessedTable: React.FC<Props> = ({className, title}) => {
                     {/* Avatar and Name */}
                     <div className='d-flex align-items-center'>
                       <div className='symbol symbol-45px me-5'>
-                        <img src={toAbsoluteUrl('/media/avatars/300-14.jpg')} alt='' />
+                        <img src={row.photo} alt='' />
                       </div>
                       <div className='d-flex justify-content-start flex-column'>
                         <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
-                          {row.name}
+                          {row.first_name}
                         </a>
                       </div>
                     </div>
@@ -118,25 +79,25 @@ const ProcessedTable: React.FC<Props> = ({className, title}) => {
                   <td>
                     {/* Date */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.date}
+                      {row.application_arrival_date}
                     </a>
                   </td>
                   <td>
                     {/* Location 1 */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.date}
+                      {row.application_departure_date}
                     </a>
                   </td>
                   <td>
                     {/* Location 2 */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.location2}
+                      {row.visa_amount}
                     </a>
                   </td>
                   <td>
                     {/* Status */}
                     <span className='text-muted fw-semibold text-muted d-block fs-7'>
-                      {row.status}
+                      {row.visa_status}
                     </span>
                   </td>
                   <td>
