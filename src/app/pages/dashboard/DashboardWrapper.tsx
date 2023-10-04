@@ -14,6 +14,7 @@ import merchant from '../../../_metronic/assets/card/merchant.png'
 import wallet from '../../../_metronic/assets/card/wallet.png'
 import { HomeMainCard } from '../../components/HomeMainCard'
 import axios from 'axios';
+import Loader from '../../components/Loader'
 
 type Props = {
   customer_user: string | number
@@ -178,6 +179,7 @@ const DashboardWrapper: FC = () => {
     visa_rejected: '',
     atlys_balance:''
   });
+  const [loading,setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -186,12 +188,15 @@ const DashboardWrapper: FC = () => {
           .then((response) => {
             console.log(response.data)
             setDashData(response.data.data);
+            setLoading(false);
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false);
           });
       } catch (error) {
         console.error('Error:', error);
+        setLoading(false);
       }
     };
 
@@ -201,7 +206,12 @@ const DashboardWrapper: FC = () => {
   return (
     <>
       <PageTitle breadcrumbs={[]}>{intl.formatMessage({ id: 'MENU.DASHBOARD' })}</PageTitle>
+      {/* <DashboardPage {...dashData}/> */}
+      {loading ?
+      <Loader loading={loading} />
+      :
       <DashboardPage {...dashData}/>
+}
     </>
   )
 }
