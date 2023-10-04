@@ -1,4 +1,4 @@
-import { ApplyVisa } from "../../components/ApplyVisa"
+import  ApplyVisa  from "../../components/ApplyVisa"
 
 
 const ApplyVisaWrapper = () => {
