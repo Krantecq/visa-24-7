@@ -1,33 +1,31 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
-import {useIntl} from 'react-intl'
-import {toAbsoluteUrl} from '../../../_metronic/helpers'
-import {PageTitle} from '../../../_metronic/layout/core'
+import { FC } from 'react'
+import { useIntl } from 'react-intl'
+import { toAbsoluteUrl } from '../../../_metronic/helpers'
+import { PageTitle } from '../../../_metronic/layout/core'
 import {
-  ListsWidget2,
-  ListsWidget3,
-  ListsWidget4,
-  ListsWidget6,
-  TablesWidget5,
-  TablesWidget10,
-  MixedWidget8,
-  CardsWidget7,
-  CardsWidget17,
-  ListsWidget26,
-  EngageWidget10,
   StatisticsWidget4,
   StatisticsWidget6,
 } from '../../../_metronic/partials/widgets'
-
+import React, { useState, useEffect } from 'react';
 import icon1 from '../../../_metronic/assets/card/1.png'
 import customer from '../../../_metronic/assets/card/customer.png'
 import merchant from '../../../_metronic/assets/card/merchant.png'
-import payment from '../../../_metronic/assets/card/payment.png'
 import wallet from '../../../_metronic/assets/card/wallet.png'
-import customer2 from '../../../_metronic/assets/card/customer.svg'
-import {HomeMainCard} from '../../components/HomeMainCard'
+import { HomeMainCard } from '../../components/HomeMainCard'
+import axios from 'axios';
 
-const DashboardPage: FC = () => (
+type Props = {
+  customer_user: string | number
+  merchant_user: string | number
+  in_process_visa: string | number
+  not_applied: string | number
+  visa_rejected:string | number
+  atlys_balance:string | number
+}
+
+
+const DashboardPage: FC<Props> = (data) => (
   <>
     {/* begin::Row */}
     <div className='row g-5 g-xl-10'>
@@ -49,7 +47,7 @@ const DashboardPage: FC = () => (
           color='#071537'
           icon={customer}
           textColor='#ffff'
-          count='30'
+          count={data.customer_user}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -59,17 +57,17 @@ const DashboardPage: FC = () => (
           color='#FFC703'
           icon={merchant}
           textColor='#FFFF'
-          count='50'
+          count={data.merchant_user}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Payments Processed'
+          description='No. of Visa Rejected'
           color='#7239EB'
-          icon={wallet}
+          icon={icon1}
           textColor='#FFFF'
-          count='50,000'
+          count={data.visa_rejected}
         />
       </div>
     </div>
@@ -81,7 +79,7 @@ const DashboardPage: FC = () => (
           color='#F0F0F0'
           icon={icon1}
           textColor='#071437'
-          count='23'
+          count={data.in_process_visa}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
@@ -91,7 +89,7 @@ const DashboardPage: FC = () => (
           color='#071537'
           icon={customer}
           textColor='#ffff'
-          count='30'
+          count={data.not_applied}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
@@ -101,7 +99,7 @@ const DashboardPage: FC = () => (
           color='#FFC703'
           icon={merchant}
           textColor='#FFFF'
-          count='12,000'
+          count={data.atlys_balance}
         />
       </div>
     </div>
@@ -172,12 +170,40 @@ const DashboardPage: FC = () => (
 
 const DashboardWrapper: FC = () => {
   const intl = useIntl()
+  const [dashData, setDashData] = useState<Props>({
+    customer_user: '',
+    merchant_user: '',
+    in_process_visa: '',
+    not_applied: '',
+    visa_rejected: '',
+    atlys_balance:''
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make a Get request to your API endpoint
+        axios.get('http://localhost:5003/backend/super_admin_dashboard')
+          .then((response) => {
+            console.log(response.data)
+            setDashData(response.data.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching Atlys data:', error);
+          });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, []);
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.DASHBOARD'})}</PageTitle>
-      <DashboardPage />
+      <PageTitle breadcrumbs={[]}>{intl.formatMessage({ id: 'MENU.DASHBOARD' })}</PageTitle>
+      <DashboardPage {...dashData}/>
     </>
   )
 }
 
-export {DashboardWrapper}
+export { DashboardWrapper }
