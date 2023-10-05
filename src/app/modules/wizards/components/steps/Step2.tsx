@@ -32,7 +32,16 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
     passBack: '',
   });
 
-  
+  function formatDateWithTimezoneToYMD(dateString) {
+    const date = new Date(dateString);
+    if (!isNaN(date.getTime())) {
+      const year = date.getUTCFullYear();
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Month is zero-based
+      const day = String(date.getUTCDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return null; // Invalid date string
+  }
   // Function to save data to the form and set formDataStep1
   const handleNext = async () => {
     const updatedData = {
@@ -45,12 +54,12 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
       birthday_date:data.birth_detail,
       nationality:data1.nationality_code,
       passport_number:formik.values.first_name,
-      passport_issue_date:formik.values.last_name,
-      passport_expiry_date:formik.values.accountName,
+      passport_issue_date:formatDateWithTimezoneToYMD(issueDate),
+      passport_expiry_date:formatDateWithTimezoneToYMD(expiryDate),
       gender:data.gender,
       marital_status:data.marital_status,
-      application_arrival_date:data1.application_arrival_date,
-      application_departure_date:data1.application_departure_date,
+      application_arrival_date:formatDateWithTimezoneToYMD(data1.application_arrival_date),
+      application_departure_date:formatDateWithTimezoneToYMD(data1.application_departure_date),
       application_destination:data1.country_code,
       fathers_name:data.father_name,
       passport_front:formData.passFront,
@@ -60,6 +69,15 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
     }
 
     const response = await axios.post('http://localhost:5003/backend/create_user_application', updatedData);
+
+    if(response.status == 200){
+      let formBody = {
+        super_admin_id:'6507f4b97c2c4102d5024e01',
+        application_id:response.data.data
+      }
+      const response1 = await axios.patch('http://localhost:5003/backend/super_admin/add_applicant',formBody );
+
+    }
     // Collect data from the form fields
     console.log('formData', response)
 

@@ -16,7 +16,7 @@ function ApprovalWrapper() {
         axios.post('http://localhost:5003/backend/super_admin/fetch_visa', postData)
           .then((response) => {
             console.log(response.data)
-            const filteredData = response.data.data.filter(item => item.visa_status === 'Reject');
+            const filteredData = response.data.data.filter(item => item.visa_status === 'Not Issued');
             setVisaStatsData(filteredData);
           })
           .catch((error) => {

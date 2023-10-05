@@ -34,11 +34,11 @@ const DashboardPage: FC<Props> = (data) => (
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Active Projects'
+          description='API Merchants'
           color='#F0F0F0'
           icon={icon1}
           textColor='#071437'
-          count='30'
+          count='2'
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>

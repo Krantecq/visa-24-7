@@ -137,7 +137,7 @@ const Step1: FC<Step1Props> = ({ setFormDataStep1 }) => {
       </div>
       <div className='fv-row mb-10'>
         <label className='d-flex align-items-center form-label'>
-          <span className='required'>Birth Detail</span>
+          <span className='required'>Birth Date</span>
         </label>
 
         <Field
@@ -158,9 +158,9 @@ const Step1: FC<Step1Props> = ({ setFormDataStep1 }) => {
           className='form-select form-select-lg form-select-solid'
         >
           <option></option>
-          <option value='1'>Male</option>
-          <option value='1'>Female</option>
-          <option value='2'>Others</option>
+          <option value='M'>Male</option>
+          <option value='F'>Female</option>
+          <option value='O'>Others</option>
         </Field>
         <div className='text-danger mt-2'>
           <ErrorMessage name='gender' />
@@ -175,8 +175,8 @@ const Step1: FC<Step1Props> = ({ setFormDataStep1 }) => {
           className='form-select form-select-lg form-select-solid'
         >
           <option></option>
-          <option value='1'>Yes</option>
-          <option value='1'>No</option>
+          <option value='single'>Single</option>
+          <option value='married'>Married</option>
         </Field>
         <div className='text-danger mt-2'>
           <ErrorMessage name='marital_status' />
