@@ -4,9 +4,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import axios from 'axios';
+import { KTIcon } from '../../../../../_metronic/helpers';
+import { useNavigate } from 'react-router-dom';
 // Define a prop for Step1
 interface Step2Props {
-  data:  {
+  data: {
     first_name: string;
     last_name: string;
     birth_place: string;
@@ -18,10 +20,13 @@ interface Step2Props {
     photoUri: string;
     // Add other fields here...
   };
-  data1:any
+  data1: any,
+  prevStep: (data: any) => void;
+  
+  showfinalSubmitLoader: (data: any) => void;
 }
 
-const Step2: FC<Step2Props> = ({ data,data1 }) => {
+const Step2: FC<Step2Props> = ({ data, data1, prevStep,showfinalSubmitLoader }) => {
   const formik = useFormikContext<any>();
 
   const [formData, setFormData] = useState<any>({
@@ -31,7 +36,7 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
     passFront: '',
     passBack: '',
   });
-
+  const navigate = useNavigate();
   function formatDateWithTimezoneToYMD(dateString) {
     const date = new Date(dateString);
     if (!isNaN(date.getTime())) {
@@ -44,47 +49,51 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
   }
   // Function to save data to the form and set formDataStep1
   const handleNext = async () => {
+    showfinalSubmitLoader(true);
     const updatedData = {
-      country_code:data1.country_code,
-      entry_process:data1.value,
-      nationality_code:data1.nationality_code,
-      first_name:data.first_name,
-      last_name:data.last_name,
-      birth_place:data.birth_place,
-      birthday_date:data.birth_detail,
-      nationality:data1.nationality_code,
-      passport_number:formik.values.first_name,
-      passport_issue_date:formatDateWithTimezoneToYMD(issueDate),
-      passport_expiry_date:formatDateWithTimezoneToYMD(expiryDate),
-      gender:data.gender,
-      marital_status:data.marital_status,
-      application_arrival_date:formatDateWithTimezoneToYMD(data1.application_arrival_date),
-      application_departure_date:formatDateWithTimezoneToYMD(data1.application_departure_date),
-      application_destination:data1.country_code,
-      fathers_name:data.father_name,
-      passport_front:formData.passFront,
-      passport_back:formData.passBack,
-      pan_card:data.panUri,
-      photo:data.photoUri,
-      visa_amount:(data1.receipt['Visa Fees']?data1.receipt['Visa Fees']:0)+(data1.receipt['Service Fees']?data1.receipt['Service Fees']:0)
+      country_code: data1.country_code,
+      entry_process: data1.value,
+      nationality_code: data1.nationality_code,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      birth_place: data.birth_place,
+      birthday_date: data.birth_detail,
+      nationality: data1.nationality_code,
+      passport_number: formik.values.first_name,
+      passport_issue_date: formatDateWithTimezoneToYMD(issueDate),
+      passport_expiry_date: formatDateWithTimezoneToYMD(expiryDate),
+      gender: data.gender,
+      marital_status: data.marital_status,
+      application_arrival_date: formatDateWithTimezoneToYMD(data1.application_arrival_date),
+      application_departure_date: formatDateWithTimezoneToYMD(data1.application_departure_date),
+      application_destination: data1.country_code,
+      fathers_name: data.father_name,
+      passport_front: formData.passFront,
+      passport_back: formData.passBack,
+      pan_card: data.panUri,
+      photo: data.photoUri,
+      visa_amount: (data1.receipt['Visa Fees'] ? data1.receipt['Visa Fees'] : 0) + (data1.receipt['Service Fees'] ? data1.receipt['Service Fees'] : 0)
     }
 
     const response = await axios.post('http://localhost:5003/backend/create_user_application', updatedData);
 
-    if(response.status == 200){
+    if (response.status == 200) {
       let formBody = {
-        super_admin_id:'6507f4b97c2c4102d5024e01',
-        application_id:response.data.data
+        super_admin_id: '6507f4b97c2c4102d5024e01',
+        application_id: response.data.data
       }
-      const response1 = await axios.patch('http://localhost:5003/backend/super_admin/add_applicant',formBody );
+      const response1 = await axios.patch('http://localhost:5003/backend/super_admin/add_applicant', formBody);
 
-      if(response1.status==200){
-        const response2 = await axios.post('http://localhost:5003/backend/super_admin/apply_visa',{
-          application_id:response.data.data
-        } );
+      if (response1.status == 200) {
+        const response2 = await axios.post('http://localhost:5003/backend/super_admin/apply_visa', {
+          application_id: response.data.data
+        });
 
-        
+
       }
+      showfinalSubmitLoader(false);
+      
+      navigate('/dashboard');
     }
     // Collect data from the form fields
     console.log('formData', response)
@@ -220,14 +229,26 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
         />
       </div>
       <div className='d-flex flex-stack pt-10'>
-        <div>
+
+        <div className='mr-2'>
           <button
+            onClick={prevStep}
             type='button'
-            className='btn btn-lg btn-primary me-3'
-            onClick={handleNext}
-            style={{ justifyContent: 'flex-end' }}
+            className='btn btn-lg btn-light-primary me-3'
+          // data-kt-stepper-action='previous'
           >
-            <span className='indicator-label'>Apply</span>
+            <KTIcon iconName='arrow-left' className='fs-4 me-1' />
+            Back
+          </button>
+        </div>
+
+
+        <div>
+          <button type='button' onClick={handleNext} className='btn btn-lg btn-primary me-3' style={{ justifyContent: 'flex-end' }}>
+            <span className='indicator-label'>
+              Apply
+              <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />
+            </span>
           </button>
         </div>
       </div>

@@ -7,10 +7,12 @@ import { ICreateAccount, inits } from './CreateAccountWizardHelper';
 import { useNavigate } from 'react-router-dom';
 interface VerticalProps {
   selectedEntry: any; // Define the type for selectedEntry
+  
+  showfinalSubmitLoader:(value: boolean) => void;
 }
 
 
-const Vertical:React.FC<VerticalProps> = ({selectedEntry}) => {
+const Vertical:React.FC<VerticalProps> = ({selectedEntry,showfinalSubmitLoader}) => {
   const [initValues] = useState<ICreateAccount>(inits);
   const [currentStep, setCurrentStep] = useState(0);
   const [formDataStep1, setFormDataStep1] = useState<any>(null);
@@ -92,8 +94,8 @@ const Vertical:React.FC<VerticalProps> = ({selectedEntry}) => {
           {() => (
             <Form className='py-20 w-100 w-xl-700px px-9' noValidate id='kt_create_account_form'>
               {currentStep === 0 && <Step1 setFormDataStep1={setFormDataStep1}/>}
-              {currentStep === 1 && <Step2 data={formDataStep1} data1={selectedEntry}/>}
-
+              {currentStep === 1 && <Step2 data={formDataStep1} prevStep={prevStep} showfinalSubmitLoader={showfinalSubmitLoader} data1={selectedEntry}/>}
+{/* 
               <div className='d-flex flex-stack pt-10'>
                 {currentStep > 0 && (
                   <div className='mr-2'>
@@ -117,7 +119,7 @@ const Vertical:React.FC<VerticalProps> = ({selectedEntry}) => {
                     </span>
                   </button>
                 </div>
-              </div>
+              </div> */}
             </Form>
           )}
         </Formik>

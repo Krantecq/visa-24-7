@@ -6,18 +6,19 @@ type Props = {
   title: String;
   show: (value: boolean) => void;
   visaList: boolean;
+  visaListLoader:(value: boolean) => void;
   apiData: any;
   onSelectClick: (entryData: any) => void;// Add a new prop for API data
 };
 
-const VisaTable: React.FC<Props> = ({ className, title, show, visaList, apiData,onSelectClick }) => {
+const VisaTable: React.FC<Props> = ({ className, title, show, visaList,visaListLoader, apiData,onSelectClick }) => {
   const handleSelectClick = (entryData) => {
     // Pass the selected entry data to the parent component
     onSelectClick(entryData);
   };
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
-      <ApplyVisa visaList={visaList} show={show} onApiDataReceived={function (data: any): void {
+      <ApplyVisa visaListLoader={visaListLoader} visaList={visaList} show={show} onApiDataReceived={function (data: any): void {
         throw new Error('Function not implemented.');
       }} />
       {/* Visa card 1 */}

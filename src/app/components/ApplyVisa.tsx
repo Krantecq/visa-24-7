@@ -11,10 +11,11 @@ import axios from 'axios';
 type Props = {
   show: (value: boolean) => void;
   visaList: boolean;
+  visaListLoader:(value: boolean) => void;
   onApiDataReceived: (data: any) => void;
 };
 
-const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
+const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaListLoader }) => {
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
   const [initValues] = useState<ICreateAccount>(inits);
@@ -22,7 +23,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived }) => {
   
   const onSubmit = (values: any) => {
     console.log(values)
-
+    visaListLoader(true)
     const postData = {
       country_code: values.toCountry,
       nationality_code: values.fromCountry,      
