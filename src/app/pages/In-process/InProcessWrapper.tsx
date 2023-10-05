@@ -16,7 +16,7 @@ function InProcessWrapper() {
         axios.post('http://localhost:5003/backend/super_admin/fetch_visa', postData)
           .then((response) => {
             console.log(response.data)
-            const filteredData = response.data.data.filter(item => item.visa_status === 'In-Process');
+            const filteredData = response.data.data.filter(item => item.visa_status === 'Applied');
             setVisaStatsData(filteredData);
           })
           .catch((error) => {

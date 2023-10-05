@@ -66,6 +66,7 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
       passport_back:formData.passBack,
       pan_card:data.panUri,
       photo:data.photoUri,
+      visa_amount:(data1.receipt['Visa Fees']?data1.receipt['Visa Fees']:0)+(data1.receipt['Service Fees']?data1.receipt['Service Fees']:0)
     }
 
     const response = await axios.post('http://localhost:5003/backend/create_user_application', updatedData);
@@ -77,6 +78,13 @@ const Step2: FC<Step2Props> = ({ data,data1 }) => {
       }
       const response1 = await axios.patch('http://localhost:5003/backend/super_admin/add_applicant',formBody );
 
+      if(response1.status==200){
+        const response2 = await axios.post('http://localhost:5003/backend/super_admin/apply_visa',{
+          application_id:response.data.data
+        } );
+
+        
+      }
     }
     // Collect data from the form fields
     console.log('formData', response)
