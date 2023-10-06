@@ -7,10 +7,18 @@ export function MenuInner() {
   const intl = useIntl()
   return (
     <>
-      <MenuItem title={'Apply Visa'} to='/apply-visa' />
+    {/* Super admin flow */}
+      {/* <MenuItem title={'Apply Visa'} to='/apply-visa' />
 
-      <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
-      {/* <MenuInnerWithSub
+      <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' /> */}
+      {/* Merchant flow */}
+      
+      <MenuItem title={'Apply Visa'} to='/merchant/apply-visa' />
+
+      <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/merchant/dashboard' />
+
+
+            {/* <MenuInnerWithSub
         title='Crafted'
         to='/crafted'
         menuPlacement='bottom-start'

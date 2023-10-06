@@ -16,7 +16,7 @@ type Props = {
   onApiDataReceived: (data: any) => void;
 };
 
-const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaListLoader }) => {
+const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaListLoader }) => {
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
   const [initValues] = useState<ICreateAccount>(inits);
@@ -74,28 +74,34 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
 
   return (
     <div>
-      <h1 className='px-9' style={{ marginTop: 15,fontSize:30 }}>
+        
+        {!visaList &&
+        <>
+        
+      <h1 className='px-9' style={{ marginTop: 25,fontSize:35 }}>
         Get a visa to
       </h1>
       
-      <h3 className='mx-9 px-5 pb-3' style={{ marginTop: 15,fontSize:16,borderBottomWidth:1,borderBottom:'3px solid' ,borderColor:'blue', width:170}}>
+      <h3 className='mx-9 px-5 pb-3' style={{ marginTop: 20,fontSize:20,borderBottomWidth:1,borderBottom:'3px solid' ,borderColor:'#007bff', width:170}}>
         Travel Visa 
         <FlightIcon style={{ marginLeft: '7px' }}  />
 
       </h3>
+      </>
+}
       <Formik validationSchema={null} initialValues={initValues} onSubmit={onSubmit}>
         {({ handleSubmit }) => (
-          <Form className='py-10 w-100 px-9' noValidate id='kt_create_account_form' onSubmit={handleSubmit}>
+          <Form className='mt-10 w-100 px-9' noValidate id='kt_create_account_form' onSubmit={handleSubmit}>
             <div className='d-flex flex-row justify-content-between'>
               <div className='fv-row mb-10 w-100'>
                 <RoomIcon style={{ marginRight: '3px' }} />
 
-                <label className='form-label'>From</label>
+                <label  className='form-label fs-4'>From</label>
                 <Field
                   as='select'
                   name='fromCountry'
-                  className='form-select form-select-lg form-select-solid border border-1  border-secondary rounded-4'
-                  style={{ background: '#fff' }}
+                  className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
+                  style={{ background: '#fff', }}
                 >
                   <option value=''>Select a Country...</option>
                   <option value='AF'>Afghanistan</option>
@@ -353,12 +359,12 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
               </div>
               <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%' }}>
                 <FlightIcon style={{ marginRight: '3px' }} />
-                <label className='form-label '>To</label>
+                <label className='form-label fs-4'>To</label>
 
                 <Field
                   as='select'
                   name='toCountry'
-                  className='form-select form-select-lg form-select-solid border border-1  border-secondary rounded-4'
+                  className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
                   style={{ background: '#fff' }}
                 >
                   <option value=''>Select a Country...</option>
@@ -617,7 +623,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
               </div>
 
               <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%', marginRight: '3%' }}>
-                <label className='d-flex align-items-center form-label'>
+                <label className='d-flex align-items-center form-label fs-4'>
                   <CalendarMonthIcon style={{ marginRight: '3px' }} />
                   <span className=''>From</span>
                 </label>
@@ -626,9 +632,9 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
                   name='accountName'
                   selected={issueDate}
                   onChange={(date) => setIssueDate(date)}
-                  className=' form-control form-control-lg form-control-solid border border-1  border-secondary rounded-4'
+                  className=' form-control form-control-lg form-control-solid border border-2  border-secondary rounded-4 mt-2'
                   dateFormat='MM/dd/yyyy'
-                  placeholderText='Select Date'
+                  placeholderText='Departure Date'
                   style={{ backgroundColor: '#fff' }}
                 />
 
@@ -637,7 +643,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
                 </div>
               </div>
               <div className='fv-row mb-10 w-100'>
-                <label className='d-flex align-items-center form-label'>
+                <label className='d-flex align-items-center form-label fs-4'>
                   <CalendarMonthIcon style={{ marginRight: '3px' }} />
                   <span className=''>To</span>
                 </label>
@@ -646,9 +652,9 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
                   name='accountPlan'
                   selected={expiryDate}
                   onChange={(date) => setExpiryDate(date)}
-                  className='form-control bg-light form-control-lg form-control-solid border border-1  border-secondary rounded-4 my-custom-datepicker'
+                  className='form-control form-control-lg form-control-solid border border-2  border-secondary rounded-4 mt-2'
                   dateFormat='MM/dd/yyyy'
-                  placeholderText='Select Date'
+                  placeholderText='Return Date'
                 />
 
                 <div className='text-danger mt-2'>
@@ -667,8 +673,15 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
           </Form>
         )}
       </Formik>
+
+      {!visaList && (
+      <div style={{position:'absolute',width:'100%',height:170,backgroundColor:'#007bff',bottom:0,
+          overflow:'hidden',marginLeft:-30}}>
+
+      </div>
+      )}
     </div>
   );
 };
 
-export default ApplyVisa;
+export default MerchantApplyVisa;
