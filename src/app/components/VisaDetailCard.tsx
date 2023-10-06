@@ -1,4 +1,8 @@
+import { useState } from "react";
 import { Header } from "../../_metronic/layout/components/header/Header";
+import BackIcon from '@mui/icons-material/ArrowBackOutlined'
+import CheckIcon from '@mui/icons-material/VerifiedUserOutlined'
+
 
 type VisaData = {
     country_code: string;
@@ -76,14 +80,132 @@ const getCountryNameByCode = (countryCode) => {
 };
 
 const VisaDetailCard = ({ visaData }: Props) => {
+    const [Detail, seeDetail] = useState(true);
     // Check if visaData is null or an empty array and handle it accordingly
-    if (visaData === null || visaData.length === 0) {
-        return <div>No visa data available</div>;
-    }
+    // if (visaData === null || visaData.length === 0) {
+    //     return <div>No visa data available</div>;
+    // }
 
+    // else 
+    if (Detail) {
+        return (
+            <div>
+                <div onClick={()=>seeDetail(false)} style={{cursor:"pointer"}} className="d-flex items-center">
+                    <BackIcon style={{ color: '#007bff' }} />
+                    <h6 style={{ color: '#007bff', marginLeft: 10 }}>
+                        Go Back to main Dashboard
+                    </h6>
+                </div>
+                <div className="p-10">
+                    <h2>
+                        ZAHIR HASSAN BHAT - N8929436 - Oct 8, 2023
+                    </h2>
+                    <br />
+                    <div className="d-flex">
+                        <h6>
+                            Created On
+                            <p className="pt-2 fs-8">
+                                Oct 5, 2023
+                            </p>
+                        </h6>
+                        <h6 className="px-20">
+                            Applicants
+                            <p className="pt-2 fs-8">
+                                1
+                            </p>
+                        </h6>
+                    </div>
+                </div>
+                <div className="mb-10 mx-10" style={{height:40,width:190,border:"1px solid",borderColor:'#696969',borderRadius:10,alignItems:'center',display:'flex',justifyContent:'center',backgroundColor:'#fff'}}>
+                <h6 className="fs-4">
+                    + Add Application
+                </h6>
+                </div>
+                <div className='card-body'>
+                    <div className='w-full' style={{
+                        borderRadius: 20, borderColor: '#f5f5f5',
+                        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.3)',
+                        marginLeft: 10
+                    }}>
+                        <div style={{ backgroundColor: '#0095E8', width: '100%', height: 50, borderTopRightRadius: 20, borderTopLeftRadius: 20, paddingLeft: 20, alignItems: 'center', display: 'flex' }}>
+                            <h2 style={{ color: 'white' }}>
+                                VISA APPROVED
+                            </h2>
+                        </div>
+
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: 15, marginTop: 15 }}>
+
+                            <div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className="p-10">
+                                <h2>
+                                    Zahir Hassan Bhat
+                                </h2>
+                                <br />
+                                <h6>Submitted On:
+                                    Oct 5, 2023
+                                    at
+                                    1:28 PM
+                                    Passport Number: N8929436
+                                </h6>
+                                <br />
+
+                                <h5>
+                                    United Arab Emirates
+                                </h5>
+                                <p>
+                                    UAE 30 Days Single Entry E-Visa
+                                </p>
+                            </div><div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className="p-10">
+                                <h2>Application Details</h2>
+                                <br />
+
+                                <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+                                    <li >
+                                        ✓ Errors Fixed
+                                    </li>
+                                    <li className="pt-4">
+                                        ✓ Application Complete
+                                    </li>
+                                    <li className="pt-4">
+                                        ✓ Application Paid
+                                    </li>
+                                    <li className="pt-4">
+                                        ✓ Automated QC Passed
+                                    </li>
+                                    <li className="pt-4">
+                                        ✓ Manual QC Passed
+                                    </li>
+                                    <li className="pt-4">
+                                        ✓ Submitted to Immigration
+                                    </li>
+                                    <li className="pt-4">
+                                        ✓ Visa Approved
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className="p-10 ">
+                                <div className="px-10 py-5" style={{ height: 100, width: '100%', backgroundColor: '#007bff', borderRadius: 10, }}>
+                                    <h6 style={{ color: 'white' }}>
+                                        <CheckIcon style={{ marginLeft: -20 }} />
+                                        VISA Approved on
+                                    </h6>
+                                    <h4 style={{ color: 'white' }}>
+                                        October 6, 2023 at 12:46 PM
+                                    </h4>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    {/* end::Table container */}
+                </div>
+            </div>
+        )
+    }
     return (
         <div>
-            {visaData.map((entry, index) => (
+            {visaData?.map((entry, index) => (
                 <div className='w-full mt-5' style={{
                     display: 'flex',
                     backgroundColor: '#fff',
@@ -126,6 +248,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                             type='submit'
                             id='kt_sign_in_submit'
                             className='btn btn-primary'
+                            onClick={()=>seeDetail(true)}
                         >
                             View Group
                         </button>
