@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { KTIcon } from '../../../../_metronic/helpers';
-import { Step1 } from './steps/Step1';
-import { Step2 } from './steps/Step2';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { ICreateAccount, inits } from './CreateAccountWizardHelper';
 import { useNavigate } from 'react-router-dom';
@@ -26,16 +24,18 @@ const inputStyle = {
   boxSizing: 'border-box',     // Include padding and border in the width calculation
 }
 const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoader, visaList, visaListLoader, show }) => {
+  const [applicantForms, setApplicantForms] = useState<any[]>([]);
   const [initValues] = useState<ICreateAccount>(inits);
   const [currentStep, setCurrentStep] = useState(0);
-  const [formDataStep1, setFormDataStep1] = useState<any>(null);
-  const [formDataStep2, setFormDataStep2] = useState<any>(null);
   const navigate = useNavigate();
-
+  const passportFrontFileInputRef = useRef<HTMLInputElement | null>(null);
+  const passportBackFileInputRef = useRef<HTMLInputElement | null>(null);
+  const photoFileInputRef = useRef<HTMLInputElement | null>(null);
   const [passportFrontImageURL, setPassportFrontImageURL] = useState('')
   const [passportBackImageURL, setPassportBackImageURL] = useState('')
   const [photo, setPhoto] = useState('')
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  console.log(selectedEntry)
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
@@ -53,24 +53,21 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
   // Function to handle file selection
   const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
     if (file) {
       const reader = new FileReader();
-
       reader.onload = (e) => {
         // Update the state variable with the image data (base64-encoded)
         if (e.target) {
           setPassportFrontImageURL(e.target.result as string);
         }
       };
-
       reader.readAsDataURL(file);
     }
   };
   const handleImageUpload = () => {
     // Trigger the hidden file input
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
+    if (passportFrontFileInputRef.current) {
+      passportFrontFileInputRef.current.click();
     }
   };
   const handleFileSelectBack = (event: ChangeEvent<HTMLInputElement>) => {
@@ -91,8 +88,8 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
   };
   const handleImageUploadBack = () => {
     // Trigger the hidden file input
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
+    if (passportBackFileInputRef.current) {
+      passportBackFileInputRef.current.click();
     }
   };
 
@@ -114,8 +111,8 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
   };
   const handlePhotoUpload = () => {
     // Trigger the hidden file input
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
+    if (photoFileInputRef.current) {
+      photoFileInputRef.current.click();
     }
   };
 
@@ -173,7 +170,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
                 </p>
                 <input
                   type='file'
-                  ref={fileInputRef}
+                  ref={passportFrontFileInputRef}
                   style={{ display: 'none' }}
                   accept='.jpeg, .jpg, .pdf, .png'
                   onChange={handleFileSelect}
@@ -326,7 +323,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
                 </p>
                 <input
                   type='file'
-                  ref={fileInputRef}
+                  ref={passportBackFileInputRef}
                   style={{ display: 'none' }}
                   accept='.jpeg, .jpg, .pdf, .png'
                   onChange={handleFileSelectBack}
@@ -346,7 +343,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
                     </label>
 
                     <Field
-                      style={inputStyle}
+                      style={{ ...inputStyle, width: '450px' }}
                       name='businessDescriptor'
                       className='form-control form-control-lg form-control-solid'
                     />
@@ -361,7 +358,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
                     </label>
 
                     <Field
-                      style={inputStyle}
+                      style={{ ...inputStyle, width: '450px' }}
                       name='businessDescriptor'
                       className='form-control form-control-lg form-control-solid'
                     />
@@ -374,6 +371,77 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
             </Formik>
           </div>
 
+        </div>
+
+        <h3 className='mt-20'>
+          Upload PAN Card Photo
+        </h3>
+        <p>
+          The destination country requires a passport-sized photo of the traveler. The photo should have a solid light-colored background, like a white wall or door, and be taken in a well lit room. The traveler should have a neutral facial expression and not be wearing any headgear or glasses.
+        </p>
+        <div className='d-flex ' style={{ width: '100%' }}>
+          <div style={{ width: '40%', marginTop: 20, }}  >
+            <h6>
+              Pan Card Photo
+            </h6>
+            {photo ? (
+              <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
+                <div onClick={() => setPassportFrontImageURL('')} style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
+                  <ClearIcon style={{ color: 'red' }} />
+                </div>
+                <img
+                  src={photo}
+                  alt='Uploaded Image'
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                />
+              </div>
+            )
+              :
+              <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', paddingTop: 40, marginTop: 20 }}>
+                <h4 className='mx-10 mt-10'>
+                  PAN Card Photo
+                </h4>
+                <button type='button' onClick={handlePhotoUpload} className='btn btn-lg btn-primary me-3 mt-7' style={{ justifyContent: 'flex-end' }}>
+                  <span className='indicator-label'>
+                    Select Files
+                  </span>
+                </button>
+                <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
+                  Supports JPEG, JPG, PDF, PNG.
+                </p>
+                <input
+                  type='file'
+                  // ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  accept='.jpeg, .jpg, .pdf, .png'
+                  onChange={handlePhotoSelect}
+                />
+              </div>
+            }
+          </div>
+          <div style={{ marginLeft: 50 }}>
+            <Formik initialValues={initValues} onSubmit={nextStep}>
+              {() => (
+                <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
+
+                  <div className='fv-row mb-10'>
+                    <label className='d-flex align-items-center form-label'>
+                      <span className='required'>PAN Number</span>
+                    </label>
+
+                    <Field
+                      style={{ ...inputStyle, width: '450px' }}
+                      name='businessDescriptor'
+                      className='form-control form-control-lg form-control-solid'
+                    />
+                    <div className='text-danger mt-2'>
+                      <ErrorMessage name='businessDescriptor' />
+                    </div>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
         <h3 className='mt-20'>
           Upload Traveler Photo
@@ -413,7 +481,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
                 </p>
                 <input
                   type='file'
-                  ref={fileInputRef}
+                  ref={photoFileInputRef}
                   style={{ display: 'none' }}
                   accept='.jpeg, .jpg, .pdf, .png'
                   onChange={handlePhotoSelect}
@@ -421,7 +489,6 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
               </div>
             }
           </div>
-
         </div>
       </div>
       <div className='d-flex mt-10' style={{ justifyContent: 'flex-end', display: 'flex' }}>
@@ -440,70 +507,81 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
       </div>
       <div className='d-flex'>
         <div className='py-10 px-20' style={{
-          borderRadius: 20, borderColor: '#f5f5f5',
-          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.3)',
+          borderRadius: 15, borderColor: '#696969',
+          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
           marginLeft: 10,
-          backgroundColor: 'white'
+          backgroundColor: 'white',
+          width:'60%'
         }}>
           <div>
-            <h2>
+            <h2 style={{ fontSize: 35 }}>
               Visa Information
             </h2>
-            <p>
+            <p style={{ fontSize: 17, paddingTop: 10, lineHeight: 2, paddingBottom: 10 }}>
               United Arab Emirates - UAE 30 Days Single Entry E-Visa
+              <br />
               Travelers: 1
+              <br />
               Travel Dates: Oct 7, 2023 - Nov 15, 2023
             </p>
           </div>
           <hr />
 
           <div>
-            <h2>
+            <h2 style={{ fontSize: 35, marginTop: 20 }}>
               Expected Visa Approval
             </h2>
-            <p>
+            <h6 style={{ paddingTop: 5, paddingBlock: 10 }}>
               10/12/23, if submitted now!
-            </p>
+            </h6>
           </div>
           <hr />
           <div>
-            <h2>Application Details</h2>
+            <h2 style={{ fontSize: 35, marginTop: 20 }}>
+              Know Before You Pay</h2>
             <br />
 
             <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-              <li >
+              <li style={{ padding: 10 }} >
                 <h3>
                   ✓
                   Auto-validation upon submission
                 </h3>
-
-                Atlys performs automated validation after submission. We will let you know if there are any problems with the application.
+                <p style={{ fontSize: 15, marginLeft: 15 }}>
+                  Atlys performs automated validation after submission. We will let you know if there are any problems with the application.
+                </p>
               </li>
-              <li >
+              <li style={{ padding: 10 }} >
+
                 <h3>
                   ✓ Visa processed within 30 seconds
                 </h3>
 
-                Atlys automatically processes your visa.
+                <p style={{ fontSize: 15, marginLeft: 15 }}>
+                  Atlys automatically processes your visa.
+                </p>
               </li>
-              <li >
+              <li style={{ padding: 10 }} >
+
                 <h3>
                   ✓
                   Non-refundable after you pay
                 </h3>
 
-                If canceled after payment, you will not be refunded.
+                <p style={{ fontSize: 15, marginLeft: 15 }}>
+                  If canceled after payment, you will not be refunded.
+                </p>
               </li>
             </ul>
           </div>
         </div>
         <div className='py-10 px-20' style={{
           borderRadius: 10, borderColor: '#f5f5f5',
-          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)',
+          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
           marginLeft: 70,
           backgroundColor: 'white',
           height: 260,
-          width:300
+          width: 300
 
         }}>
           <h2>Price Details</h2>
