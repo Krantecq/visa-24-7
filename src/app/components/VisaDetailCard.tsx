@@ -31,7 +31,8 @@ type VisaData = {
     visa_status: string;
     visa_amount: string;
     created_at: string;
-
+    updated_at:string;
+    visa_description: string;
     // Add other properties as needed
 };
 
@@ -79,18 +80,29 @@ const getCountryNameByCode = (countryCode) => {
     return countryCodes[countryCode] || "Unknown"; // Default to "Unknown" if the code is not found
 };
 
-const VisaDetailCard = ({ visaData }: Props) => {
-    const [Detail, seeDetail] = useState(true);
-    // Check if visaData is null or an empty array and handle it accordingly
-    // if (visaData === null || visaData.length === 0) {
-    //     return <div>No visa data available</div>;
-    // }
 
-    // else 
-    if (Detail) {
+const VisaDetailCard = ({ visaData }: Props) => {
+    const [Detail, seeDetail] = useState(false);
+    const [selectedVisa, setSelectedVisa] = useState<VisaData | null>(null);
+
+    const handleViewDetailsClick = (entry: VisaData) => {
+        setSelectedVisa(entry);
+    };
+
+    const handleGoBackClick = () => {
+        setSelectedVisa(null);
+    };
+
+    // Check if visaData is null or an empty array and handle it accordingly
+    if (visaData === null || visaData.length === 0) {
+        return <div>No visa data available</div>;
+    }
+
+
+    if (selectedVisa) {
         return (
             <div>
-                <div onClick={()=>seeDetail(false)} style={{cursor:"pointer"}} className="d-flex items-center">
+                <div onClick={handleGoBackClick} style={{ cursor: "pointer" }} className="d-flex items-center">
                     <BackIcon style={{ color: '#007bff' }} />
                     <h6 style={{ color: '#007bff', marginLeft: 10 }}>
                         Go Back to main Dashboard
@@ -98,14 +110,14 @@ const VisaDetailCard = ({ visaData }: Props) => {
                 </div>
                 <div className="p-10">
                     <h2>
-                        ZAHIR HASSAN BHAT - N8929436 - Oct 8, 2023
+                        {selectedVisa.first_name}  {selectedVisa.last_name} - {selectedVisa.passport_number} - {formatDate1(selectedVisa.application_arrival_date)}
                     </h2>
                     <br />
                     <div className="d-flex">
                         <h6>
                             Created On
                             <p className="pt-2 fs-8">
-                                Oct 5, 2023
+                                {formatDate1(selectedVisa.created_at)}
                             </p>
                         </h6>
                         <h6 className="px-20">
@@ -116,10 +128,10 @@ const VisaDetailCard = ({ visaData }: Props) => {
                         </h6>
                     </div>
                 </div>
-                <div className="mb-10 mx-10" style={{height:40,width:190,border:"1px solid",borderColor:'#696969',borderRadius:10,alignItems:'center',display:'flex',justifyContent:'center',backgroundColor:'#fff'}}>
-                <h6 className="fs-4">
-                    + Add Application
-                </h6>
+                <div className="mb-10 mx-10" style={{ height: 40, width: 190, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff' }}>
+                    <h6 className="fs-4">
+                        + Add Application
+                    </h6>
                 </div>
                 <div className='card-body'>
                     <div className='w-full' style={{
@@ -129,7 +141,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                     }}>
                         <div style={{ backgroundColor: '#0095E8', width: '100%', height: 50, borderTopRightRadius: 20, borderTopLeftRadius: 20, paddingLeft: 20, alignItems: 'center', display: 'flex' }}>
                             <h2 style={{ color: 'white' }}>
-                                VISA APPROVED
+                                VISA {selectedVisa.visa_status}
                             </h2>
                         </div>
 
@@ -137,49 +149,87 @@ const VisaDetailCard = ({ visaData }: Props) => {
 
                             <div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className="p-10">
                                 <h2>
-                                    Zahir Hassan Bhat
+                                    {selectedVisa.first_name}  {selectedVisa.last_name}
                                 </h2>
                                 <br />
                                 <h6>Submitted On:
-                                    Oct 5, 2023
-                                    at
-                                    1:28 PM
-                                    Passport Number: N8929436
+                                    {formatDate(selectedVisa.created_at)}
+                                    <br />
+                                    <br />
+                                    Passport Number: {selectedVisa.passport_number}
                                 </h6>
                                 <br />
 
                                 <h5>
-                                    United Arab Emirates
+                                    {getCountryNameByCode(selectedVisa.country_code)}
                                 </h5>
                                 <p>
-                                    UAE 30 Days Single Entry E-Visa
+                                    {selectedVisa.visa_description}
+                                    <br />
+                                    Travel: {formatDate1(selectedVisa.application_arrival_date)} - {formatDate1(selectedVisa.application_departure_date)}
                                 </p>
+                                
                             </div><div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className="p-10">
-                                <h2>Application Details</h2>
+                                <h2>Application Details :</h2>
                                 <br />
 
                                 <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-                                    <li >
-                                        ✓ Errors Fixed
-                                    </li>
-                                    <li className="pt-4">
-                                        ✓ Application Complete
-                                    </li>
-                                    <li className="pt-4">
-                                        ✓ Application Paid
-                                    </li>
-                                    <li className="pt-4">
-                                        ✓ Automated QC Passed
-                                    </li>
-                                    <li className="pt-4">
-                                        ✓ Manual QC Passed
-                                    </li>
-                                    <li className="pt-4">
-                                        ✓ Submitted to Immigration
-                                    </li>
-                                    <li className="pt-4">
-                                        ✓ Visa Approved
-                                    </li>
+                                    {selectedVisa.visa_status === "Processed" && (
+                                        <>
+                                            <li >
+                                                ✓ Errors Fixed
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Application Complete
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Application Paid
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Application Submitted
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Automated QC Passed
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Manual QC Passed
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Submitted to Immigration
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Visa Approved
+                                            </li>
+                                        </>
+                                    )}
+                                    {selectedVisa.visa_status === "Not Issued" && (
+                                        <>
+                                            <li >
+                                                ✓ Errors Fixed
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Application Complete
+                                            </li>
+                                            <li className="pt-4">
+                                                  Application Paid
+                                            </li>
+                                            <li className="pt-4">
+                                                  Application Submitted
+                                            </li>
+                                            <li className="pt-4">
+                                                 Automated QC Passed
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Manual QC Passed
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Submitted to Immigration
+                                            </li>
+                                            <li className="pt-4">
+                                                ✓ Visa Approved
+                                            </li>
+                                        </>
+                                    )}
                                 </ul>
                             </div>
 
@@ -190,7 +240,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         VISA Approved on
                                     </h6>
                                     <h4 style={{ color: 'white' }}>
-                                        October 6, 2023 at 12:46 PM
+                                        {formatDate(selectedVisa.updated_at)}
                                     </h4>
                                 </div>
                             </div>
@@ -248,7 +298,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                             type='submit'
                             id='kt_sign_in_submit'
                             className='btn btn-primary'
-                            onClick={()=>seeDetail(true)}
+                            onClick={() => handleViewDetailsClick(entry)}
                         >
                             View Group
                         </button>
