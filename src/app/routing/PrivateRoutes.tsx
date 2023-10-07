@@ -18,6 +18,7 @@ import NewVisaWrapper from '../pages/New-visa/CreateNewVisa'
 import ApplyVisaWrapper from '../pages/apply-visa/ApplyVisaWrapper'
 import MerchantDashboard from '../pages/merchants/dashboard/Dashboard'
 import MerchantNewVisaWrapper from '../pages/merchants/apply-visa/MerchantNewVisaWrapper'
+import MerchantProfile from '../pages/merchants/profile/MerchantProfile'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -37,7 +38,7 @@ const PrivateRoutes = () => {
         <Route path='apply-visa' element={<NewVisaWrapper />} />
         <Route path='merchant/apply-visa' element={<MerchantNewVisaWrapper />} />
         <Route path='merchant/dashboard' element={<MerchantDashboard />} />
-
+        <Route path='merchant/profile' element={<MerchantProfile />} />
         <Route path='dashboard' element={<DashboardWrapper />} />
         <Route path='customers' element={<CustomersWrapper />} />
         <Route path='merchants' element={<MerchantWrapper />} />

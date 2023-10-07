@@ -56,6 +56,7 @@ const AppRoutes: FC = () => {
               <Route index element={<Navigate to='/waiting-for-approval' />} />
               <Route index element={<Navigate to='/rejected' />} />
               <Route index element={<Navigate to='/create-new-visa' />} />
+              <Route index element={<Navigate to='/merchant/profile' />} />
             </>
           ) : (
             <>
