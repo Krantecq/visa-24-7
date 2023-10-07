@@ -41,7 +41,10 @@ function MerchantNewVisaWrapper() {
           {finalSubmitLoader ?
             <Loader loading={finalSubmitLoader} />
             :
-            <Vertical selectedEntry={selectedEntry} showfinalSubmitLoader={setFinalSubmitLoader} />
+            <Vertical 
+            visaListLoader={setVisalistLoader}
+            show={(value) => setVisaList(value)}
+            visaList={visaList} selectedEntry={selectedEntry} showfinalSubmitLoader={setFinalSubmitLoader} />
           }
         </>
       ) : (

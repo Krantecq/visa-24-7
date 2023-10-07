@@ -79,18 +79,6 @@ const Step1: FC<Step1Props> = ({ setFormDataStep1 }) => {
       }
       </div> */}
       <div>
-        <div className='pb-10 pb-lg-12'>
-          <h2 className='fw-bolder text-dark'>Personal Details</h2>
-
-          <div className='text-gray-400 fw-bold fs-6'>
-            If you need more info, please check out
-            <a href='/dashboard' className='link-primary fw-bolder'>
-              {' '}
-              Help Page
-            </a>
-            .
-          </div>
-        </div>
         <div className='d-flex' style={{justifyContent:'space-between'}}>
         <div className='fv-row mb-10'>
           <label className='form-label required'>First Name</label>
