@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
-import {KTIcon, toAbsoluteUrl} from '../../../helpers'
-import {useLayout} from '../../core'
-import {Header} from './Header'
-import {Navbar} from './Navbar'
+import { Link } from 'react-router-dom'
+import { KTIcon, toAbsoluteUrl } from '../../../helpers'
+import { useLayout } from '../../core'
+import { Header } from './Header'
+import { Navbar } from './Navbar'
 
 export function HeaderWrapper() {
-  const {config, classes} = useLayout()
+  const { config, classes } = useLayout()
   if (!config.app?.header?.display) {
     return null
   }
@@ -73,7 +73,13 @@ export function HeaderWrapper() {
             </Link>
           </div>
         )}
-
+        <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
+          <img
+            alt='Logo'
+            src={toAbsoluteUrl('/media/logos/default.svg')}
+            className='h-20px h-lg-30px app-sidebar-logo-default'
+          />
+        </div>
         <div
           id='kt_app_header_wrapper'
           className='d-flex align-items-stretch justify-content-between flex-lg-grow-1'
