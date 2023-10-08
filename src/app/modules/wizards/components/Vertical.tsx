@@ -13,6 +13,7 @@ import axiosInstance from '../../../helpers/axiosInstance'
 import {CheckCircleOutline, CircleOutlined} from '@mui/icons-material'
 import {colorDarken} from '../../../../_metronic/assets/ts/_utils'
 import Loader from '../../../components/Loader'
+import { Box, Step, StepLabel, Stepper, Theme, Typography, } from '@mui/material'
 
 interface VerticalProps {
   selectedEntry: any // Define the type for selectedEntry
@@ -68,12 +69,33 @@ const Vertical: React.FC<VerticalProps> = ({
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
-
+    fetchwallet();
     // Clean up the event listener when the component unmounts.
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  const fetchwallet = async () => {
+    try {
+      const user_id = Cookies.get('user_id');
+      const postData = {
+        id: user_id
+      }
+      const response = await axiosInstance.post("/backend/fetch_single_merchant_user", postData);
+      console.log("response issss----->",response)
+      if (response.status == 203) {
+        toast.error("Please Logout And Login Again", {
+          position: 'top-center'
+        });
+      }
+      // Assuming the response contains the profile data, update the state with the data
+      setCurrentWallet(response.data.data.wallet_balance);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+      // Handle error (e.g., show an error message)
+    }
+  };
   const additionalFees =
     (selectedEntry.receipt['Visa Fees'] || 0) + (selectedEntry.receipt['Service Fees'] || 0)
   const totalAmount = travelerForms.length * additionalFees
@@ -82,6 +104,7 @@ const Vertical: React.FC<VerticalProps> = ({
     setTravelerForms((prevForms) => [...prevForms, {}])
   }
 
+  const [currentWallet,setCurrentWallet] = useState('');
   function formatDateWithTimezoneToYMD(dateString) {
     const date = new Date(dateString)
     if (!isNaN(date.getTime())) {
@@ -202,6 +225,21 @@ const Vertical: React.FC<VerticalProps> = ({
     }
   }
 
+  const stepsContent = [
+    {
+      title: 'Auto-validation upon submission',
+      description:
+        'Atlys performs automated validation after submission. We will let you know if there are any problems with the application.',
+    },
+    {
+      title: 'Visa processed within 30 seconds',
+      description: 'Atlys automatically processes your visa.',
+    },
+    {
+      title: 'Non-refundable after you pay',
+      description: 'If canceled after payment, you will not be refunded.',
+    },
+  ];
   // Define inline styles for the inactive tab text
   const tabTextStyle = {
     color: '#000', // Text color for the inactive tab
@@ -210,7 +248,7 @@ const Vertical: React.FC<VerticalProps> = ({
     fontSize: 16,
     fontWeight: 'bold',
   }
-
+  // const classes = useStyles();
   return (
     <div style={{backgroundColor: '#fff'}} className='w-full'>
       <MerchantApplyVisa
@@ -238,25 +276,25 @@ const Vertical: React.FC<VerticalProps> = ({
           {travelerForms.map((_, index) => (
             <>
               <div onClick={() => {}} style={{...tabTextStyle}}>
-                <CheckCircleOutline style={{color: '#007bff', marginRight: 8}} />
+                <CheckCircleOutline style={{color: '#332786', marginRight: 8}} />
                 Traveler {index + 1}
               </div>
               <div style={{marginLeft: 20}}>
                 <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#007bff', marginRight: 10}} />
+                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
                   Passport
                 </div>
                 <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#007bff', marginRight: 10}} />
+                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
                   Passport Back
                 </div>
                 <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#007bff', marginRight: 10}} />
-                  Traveler Photo
+                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
+                  Indian PAN Card
                 </div>
                 <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#007bff', marginRight: 10}} />
-                  Indian PAN Card
+                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
+                  Traveler Photo
                 </div>
               </div>
             </>
@@ -297,7 +335,7 @@ const Vertical: React.FC<VerticalProps> = ({
             >
               <h6
                 className='fs-4'
-                style={{color: '#007bff', paddingTop: 5, fontSize: 10}}
+                style={{color: '#332789', paddingTop: 5, fontSize: 10}}
                 onClick={addTravelerForm}
               >
                 + Add Another Traveler
@@ -338,26 +376,20 @@ const Vertical: React.FC<VerticalProps> = ({
               <div>
                 <h2 style={{paddingTop: 10, paddingBottom: 1}}>Application Details</h2>
                 <br />
-
-                <ul style={{listStyleType: 'none', paddingLeft: 0}}>
-                  <li>
-                    <h3 style={{marginTop: -5}}>✓ Auto-validation upon submission</h3>
-                    <p style={{marginLeft: 20}}>
-                      Atlys performs automated validation after submission. We will let you know if
-                      there are any problems with the application.
-                    </p>
-                  </li>
-                  <li>
-                    <h3 style={{marginTop: 10}}>✓ Visa processed within 30 seconds</h3>
-                    <p style={{marginLeft: 20}}> Atlys automatically processes your visa.</p>
-                  </li>
-                  <li>
-                    <h3 style={{marginTop: 10}}>✓ Non-refundable after you pay</h3>
-                    <p style={{marginLeft: 20}}>
-                      If canceled after payment, you will not be refunded.
-                    </p>
-                  </li>
-                </ul>
+                <Stepper orientation="vertical" >
+            {stepsContent.map((step, index) => (
+              <Step key={index}>
+                <StepLabel >
+                  <Box display="flex" flexDirection="column" alignItems="flex-start">
+                    <Typography variant="h6">{step.title}</Typography>
+                    <Typography >
+                      {step.description}
+                    </Typography>
+                  </Box>
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
               </div>
             </div>
             <div
@@ -368,7 +400,8 @@ const Vertical: React.FC<VerticalProps> = ({
                 boxShadow: '4px 4px 15px rgba(0, 0, 0, 0.1)',
                 marginLeft: '10%',
                 backgroundColor: 'white',
-                height: 310,
+                height: 340,
+                marginBottom:20,
                 width: '25%',
               }}
             >
@@ -407,7 +440,7 @@ const Vertical: React.FC<VerticalProps> = ({
                 <hr />
                 <div className='d-flex' style={{justifyContent: 'space-between', width: '100%'}}>
                   <p>Current Wallet Balance</p>
-                  <p>200/-</p>
+                  <p>{currentWallet}/-</p>
                 </div>
               </div>
               <div
@@ -416,8 +449,9 @@ const Vertical: React.FC<VerticalProps> = ({
                 style={{
                   height: 40,
                   width: 190,
+                  marginBottom:20,
                   border: '1px solid',
-                  marginLeft: 10,
+                  marginLeft: 20,
                   borderColor: '#696969',
                   borderRadius: 25,
                   alignItems: 'center',

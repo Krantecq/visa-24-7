@@ -2,6 +2,10 @@ import clsx from 'clsx'
 import { KTIcon, toAbsoluteUrl } from '../../../helpers'
 import { HeaderNotificationsMenu, HeaderUserMenu, Search, ThemeModeSwitcher } from '../../../partials'
 import { useLayout } from '../../core'
+import Cookies from 'js-cookie'
+import { toast } from 'react-toastify'
+import axiosInstance from '../../../../app/helpers/axiosInstance'
+import { useEffect, useState } from 'react'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -10,7 +14,31 @@ const userAvatarClass = 'symbol-35px'
 const btnIconClass = 'fs-2'
 
 const Navbar = () => {
-  const { config } = useLayout()
+  const { config } = useLayout();
+  const [currentWallet,setCurrentWallet] = useState('');
+  useEffect(()=>{
+    fetchwallet();
+  },[])
+  const fetchwallet = async () => {
+    try {
+      const user_id = Cookies.get('user_id');
+      const postData = {
+        id: user_id
+      }
+      const response = await axiosInstance.post("/backend/fetch_single_merchant_user", postData);
+      console.log("response issss----->",response)
+      if (response.status == 203) {
+        toast.error("Please Logout And Login Again", {
+          position: 'top-center'
+        });
+      }
+      // Assuming the response contains the profile data, update the state with the data
+      setCurrentWallet(response.data.data.wallet_balance);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+      // Handle error (e.g., show an error message)
+    }
+  };
   return (
     <div className='app-navbar flex-shrink-0'>
       {/* <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
@@ -50,7 +78,7 @@ const Navbar = () => {
       <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0' style={{backgroundColor:'#f5f5f5',padding:10,borderRadius:10,marginRight:30}}>
       <KTIcon iconName='wallet' className={btnIconClass} />
         
-      <span className='menu-title' style={{fontWeight:'bold',marginLeft:5,}}>200/-</span>
+      <span className='menu-title' style={{fontWeight:'bold',marginLeft:5,}}>{currentWallet} /-</span>
       </div>
       </div>
       <div className={clsx('app-navbar-item', itemClass)}>

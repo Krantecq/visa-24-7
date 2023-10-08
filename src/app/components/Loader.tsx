@@ -1,4 +1,5 @@
 import React, { Component, CSSProperties } from 'react';
+import { toAbsoluteUrl } from '../../_metronic/helpers';
 
 interface LoaderProps {
   loading: boolean;
@@ -46,7 +47,9 @@ class Loader extends Component<LoaderProps> {
     return (
       <div style={{ ...overlayStyle, ...(this.props.loading && activeOverlayStyle) }}>
         <div style={pleaseWaitStyle}>
-          <div style={{alignSelf:'center'}} className='spinner-border spinner-border-lg'></div>
+          <div style={{alignSelf:'center'}} ></div>
+          <img 
+            src={toAbsoluteUrl('/media/loading.gif')} />
           <br />
           Please wait....
         </div>

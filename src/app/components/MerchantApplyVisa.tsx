@@ -100,7 +100,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
               fontSize: 20,
               borderBottomWidth: 1,
               borderBottom: '3px solid',
-              borderColor: '#007bff',
+              borderColor: '#332789',
               width: 170,
             }}
           >

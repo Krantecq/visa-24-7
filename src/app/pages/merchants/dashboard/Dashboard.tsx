@@ -58,7 +58,7 @@ const MerchantDashboard = () => {
     paddingLeft: 8,
     marginTop: 5,
     borderRadius: 7,
-    backgroundColor: '#007bff', // Add some padding to the active tab
+    backgroundColor: '#332789', // Add some padding to the active tab
   };
 
   // Define inline styles for the inactive tab text

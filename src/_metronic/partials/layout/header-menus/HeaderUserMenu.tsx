@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
 import {Languages} from './Languages'
 import {toAbsoluteUrl} from '../../../helpers'
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout} = useAuth()
+  const navigate= useNavigate();
   const handleLogout = async () => {
     try {
       // Make a Get request to your API endpoint
@@ -19,7 +20,7 @@ const HeaderUserMenu: FC = () => {
             // setLoading(false);
             toast.success(response.data.msg);
             Cookies.remove('isLoggedIn');
-            document.location.reload();
+            navigate('\merchant\login')
           } else {
             toast.error(response.data.msg);
           }
@@ -146,11 +147,11 @@ const HeaderUserMenu: FC = () => {
 
       <Languages /> */}
 
-      <div className='menu-item px-5 my-1'>
+      {/* <div className='menu-item px-5 my-1'>
         <Link to='/crafted/account/settings' className='menu-link px-5'>
           Account Settings
         </Link>
-      </div>
+      </div> */}
 
       <div className='menu-item px-5'>
         <a onClick={handleLogout} className='menu-link px-5'>

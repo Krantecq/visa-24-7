@@ -61,15 +61,15 @@ function MerchantNewVisaWrapper() {
             />
           ) : (
             <>
-              {visaListLoader ?
-                <Loader loading={visaListLoader} />
-                :
                 <MerchantApplyVisa
                   show={(value) => setVisaList(value)}
                   visaList={visaList}
                   visaListLoader={setVisalistLoader}
                   onApiDataReceived={handleApiDataReceived}
                 />
+              
+              {visaListLoader &&
+                <Loader loading={visaListLoader} />
               }
             </>
           )}

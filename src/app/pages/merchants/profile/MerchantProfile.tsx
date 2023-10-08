@@ -135,7 +135,7 @@ function MerchantProfile() {
             <div>
               <div className='d-flex'>
                 <div className='fv-row mb-10'>
-                  <label className='form-label' style={{fontWeight: 'bold'}}>
+                  <label className='form-label mx-5' style={{fontWeight: 'bold'}}>
                     Name
                   </label>
                   <Field
@@ -605,13 +605,13 @@ function MerchantProfile() {
             <button
               type='button'
               onClick={handleImageUpload}
-              className='btn btn-lg btn-primary me-3 mt-7'
-              style={{justifyContent: 'flex-end'}}
+              className='btn btn-lg btn-primary me-3 mt-3'
+              style={{justifyContent: 'flex-end',backgroundColor:'#332789'}}
             >
               <span className='indicator-label'>Select Files</span>
             </button>
             <p className='text-bold pt-5 fs-9' style={{color: '#555555'}}>
-              Supports JPEG, JPG, PDF, PNG.
+              Supports JPEG, JPG, PNG.
             </p>
             <input
               type='file'
@@ -662,7 +662,7 @@ function MerchantProfile() {
                 <div className='d-flex justify-content-center'>
                   <button
                     type='submit'
-                    style={{width: 200}}
+                    style={{width: 200,backgroundColor:'#332789'}}
                     className='btn btn-primary'
                     onClick={handleSaveClick}
                   >
@@ -725,16 +725,16 @@ function MerchantProfile() {
               display: 'flex',
               cursor: 'pointer',
               alignItems: 'center',
-              borderBottom: activeWalletTab === tab.label ? '2px solid #007bff' : ' 1px solid #333',
+              borderBottom: activeWalletTab === tab.label ? '2px solid #332789' : ' 1px solid #333',
               fontWeight: activeWalletTab === tab.label ? 'bold' : 'normal',
-              color: activeWalletTab === tab.label ? '#007bff' : '#333',
+              color: activeWalletTab === tab.label ? '#332789' : '#333',
             }}
             onClick={() => handleWalletTabClick(tab.label)}
           >
             <div style={{marginRight: 15}}>{tab.icon}</div>
             <h3
               style={{
-                color: activeWalletTab === tab.label ? '#007bff' : '#333',
+                color: activeWalletTab === tab.label ? '#332789' : '#333',
               }}
             >
               {tab.label}
@@ -821,7 +821,7 @@ function MerchantProfile() {
       icon: <WalletIcon style={{width: 25, height: 25}} />,
       content: loadWalletContent,
     },
-    {label: 'API', icon: <CardIcon style={{width: 25, height: 25}} />, content: apiContent},
+    // {label: 'API', icon: <CardIcon style={{width: 25, height: 25}} />, content: apiContent},
   ]
 
   // Find the active tab's content
@@ -858,14 +858,14 @@ function MerchantProfile() {
                 alignItems: 'center',
                 borderBottom: '1px solid #ccc',
                 fontWeight: activeTab === tab.label ? 'bold' : 'normal',
-                color: activeTab === tab.label ? '#007bff' : '#333',
+                color: activeTab === tab.label ? '#332789' : '#333',
               }}
               onClick={() => handleTabClick(tab.label)}
             >
               <div style={{marginRight: 15}}>{tab.icon}</div>
               <h3
                 style={{
-                  color: activeTab === tab.label ? '#007bff' : '#333',
+                  color: activeTab === tab.label ? '#332789' : '#333',
                 }}
               >
                 {tab.label}
