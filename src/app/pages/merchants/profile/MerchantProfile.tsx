@@ -9,7 +9,8 @@ import ClearIcon from '@mui/icons-material/Delete';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { ICreateAccount, inits } from "../../../modules/wizards/components/CreateAccountWizardHelper";
 import axiosInstance from "../../../helpers/axiosInstance";
-
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify'
 import RoomIcon from '@mui/icons-material/Room'
 function MerchantProfile() {
     const [activeTab, setActiveTab] = useState("Profile");
@@ -644,13 +645,26 @@ function MerchantProfile() {
     };
     const handleSaveClick = async () => {
 
+        const user_id = Cookies.get('user_id');
+
         const postBody = {
             upi_ref_id: formData.upi_ref_id,
-            merchant_id: '123456789',
+            merchant_id: user_id,
             receipt: formData.receipt,
             amount: formData.amount
         }
-        const response = await axiosInstance.post('/backend/upload_receipt',postBody);
+        const response = await axiosInstance.post('/backend/upload_receipt', postBody);
+
+        if (response.status == 200) {
+            toast.success(response.data.msg, {
+                position: "top-center", // Center the toast notification
+            });
+        } else {
+            console.log(response.data)
+            toast.error(response.data.msg, {
+                position: 'top-center'
+            });
+        }
 
         // Call the API when the "Save" button is clicked
     };

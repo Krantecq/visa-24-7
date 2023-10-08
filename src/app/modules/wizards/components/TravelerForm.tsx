@@ -4,10 +4,10 @@ import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { ICreateAccount, inits } from './CreateAccountWizardHelper';
 import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Delete';
-import axios from 'axios';
+import axiosInstance from '../../../helpers/axiosInstance';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-function TravelerForm({ onDataChange }) {
+function TravelerForm({ onDataChange,ind }) {
   const [initValues] = useState<ICreateAccount>(inits);
   const passportFrontFileInputRef = useRef<HTMLInputElement | null>(null);
   const passportBackFileInputRef = useRef<HTMLInputElement | null>(null);
@@ -52,7 +52,7 @@ function TravelerForm({ onDataChange }) {
       formData.append('file', file);
 
       // Make a POST request to your server to upload the file
-      const response = await axios.post('http://localhost:5003/backend/upload_image/upload', formData, {
+      const response = await axiosInstance.post('/backend/upload_image/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -226,7 +226,7 @@ function TravelerForm({ onDataChange }) {
       backgroundColor: 'white'
     }}>
 
-      <h2>Traveller 1 </h2>
+      <h2>Traveller {ind + 1} </h2>
       <hr />
       <br />
       <h3>

@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Delete';
 import MerchantApplyVisa from '../../../components/MerchantApplyVisa';
 import TravelerForm from './TravelerForm';
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify'
+
+
 import axiosInstance from "../../../helpers/axiosInstance";
 import { CheckCircleOutline, CircleOutlined } from '@mui/icons-material';
 import { colorDarken } from '../../../../_metronic/assets/ts/_utils';
@@ -39,8 +43,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
   };
   const [applicantForms, setApplicantForms] = useState<any[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
-
-  const [activeTab, setActiveTab] = useState("All");
+  const [loading,setLoading] = useState(false);
   // const [travelerForms, setTravelerForms] = useState([<TravelerForm key={0} onDataChange={handleTravelerDataChange} />]);
   const navigate = useNavigate();
 
@@ -66,6 +69,11 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+  const additionalFees = (selectedEntry.receipt['Visa Fees'] || 0) + (selectedEntry.receipt['Service Fees'] || 0);
+  const totalAmount = travelerForms.length * additionalFees;
+
+
+
   const addTravelerForm = () => {
     setTravelerForms((prevForms) => [...prevForms, {}]);
   };
@@ -80,9 +88,24 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
     }
     return null; // Invalid date string
   }
+  const formatDate1 = (dateString) => {
+    // Create a Date object from the input date string
+    const date = new Date(dateString);
 
+    // Get the month name as a three-letter abbreviation (e.g., "Oct")
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[date.getMonth()];
+
+    // Get the day and year
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    // Format the date string
+    return `${month} ${day}, ${year}`;
+  };
 
   const handleReviewAndSave = async () => {
+    setLoading(true);
     try {
       for (const travelerForm of travelerForms) {
 
@@ -114,23 +137,39 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
 
         axiosInstance.post('/backend/create_user_application', postData)
           .then((response) => {
-            console.log(response.data.data)
+            const user_id = Cookies.get('user_id');
+
             const data = {
-              merchant_id: "650828b1eaf900fa94918f0f",
+              merchant_id: user_id,
               application_id: response.data.data
             }
             axiosInstance.patch('/backend/add_applicant', data)
               .then((response) => {
-                console.log(response.data.data)
-
-
+                axiosInstance.post('/backend/merchant/apply_visa',data)
+                  .then((response) => {
+                    console.log(response.data.data)
+                    setLoading(false);
+                    navigate('/merchant/dashboard');
+                  })
+                  .catch((error) => {
+                    console.error('Error fetching Atlys data:', error);
+                    setLoading(false);
+                    toast.error(error, {
+                      position: 'top-center'
+                  });
+                  });
               })
               .catch((error) => {
                 console.error('Error fetching Atlys data:', error);
+                setLoading(false);
               });
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false);
+            toast.error(error, {
+              position: 'top-center'
+          });
           });
       }
     } catch (error) {
@@ -168,12 +207,14 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
             top: isFixed ? 80 : 'auto'
           }}
         >
+          {travelerForms.map((_, index) => (
+          <>
           <div
             onClick={() => { }}
             style={{ ...tabTextStyle }}
           >
             <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
-            Traveler 1
+            Traveler {index+1}
           </div>
           <div style={{marginLeft:20}}>
 
@@ -206,6 +247,8 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
             Indian PAN Card
           </div>
           </div>
+          </>
+          ))}
           <div
             onClick={() => { }}
             style={{ ...tabTextStyle }}
@@ -226,131 +269,129 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
           {travelerForms.map((_, index) => (
             <TravelerForm
               key={index}
+              ind={index}
               onDataChange={(newData) => handleTravelerDataChange(newData, index)}
             />
           ))}
           <div className='d-flex mt-10' style={{ justifyContent: 'flex-end', display: 'flex' }}>
 
-            <div className="mb-10 mx-5" style={{ height: 40, paddingLeft: 15, paddingRight: 15, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff' }}>
+            <div className="mb-10 mx-5" style={{ height: 40, paddingLeft: 15, paddingRight: 15, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff',cursor:'pointer' }}>
               <h6 className="fs-4" style={{ color: '#007bff' }} onClick={addTravelerForm}>
                 + Add Another Traveler
               </h6>
             </div>
+          </div>
+          
+      <div className='d-flex'>
+        <div className='py-10 px-20' style={{
+          borderRadius: 15, borderColor: '#696969',
+          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+          marginLeft: 10,
+          backgroundColor: 'white',
+          width: '60%'
+        }}>
+          <div>
+            <h2 style={{ fontSize: 35 }}>
+              Visa Information
+            </h2>
+            <p style={{ fontSize: 17, paddingTop: 10, lineHeight: 2, paddingBottom: 10 }}>
+              {selectedEntry.country_code} - {selectedEntry.description}
+              <br />
+              Travelers: {travelerForms.length}
+              <br />
+              Travel Dates: {formatDate1(selectedEntry.application_arrival_date)} - {formatDate1(selectedEntry.application_departure_date)}
+            </p>
+          </div>
+          <hr />
 
-            <div className="mb-10 mx-5" style={{ height: 40, width: 190, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#007bff' }}>
-              <h6 className="fs-4" style={{ color: 'white' }} onClick={handleReviewAndSave}>
-                Review and Save
-              </h6>
+          <div>
+            <h2 style={{ fontSize: 35, marginTop: 20 }}>
+              Expected Visa Approval
+            </h2>
+            <h6 style={{ paddingTop: 5, paddingBlock: 10 }}>
+              10/12/23, if submitted now!
+            </h6>
+          </div>
+          <hr />
+          <div>
+            <h2 style={{ fontSize: 35, marginTop: 20 }}>
+              Know Before You Pay</h2>
+            <br />
+
+            <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+              <li style={{ padding: 10 }} >
+                <h3>
+                  ✓
+                  Auto-validation upon submission
+                </h3>
+                <p style={{ fontSize: 15, marginLeft: 15 }}>
+                  Atlys performs automated validation after submission. We will let you know if there are any problems with the application.
+                </p>
+              </li>
+              <li style={{ padding: 10 }} >
+
+                <h3>
+                  ✓ Visa processed within 30 seconds
+                </h3>
+
+                <p style={{ fontSize: 15, marginLeft: 15 }}>
+                  Atlys automatically processes your visa.
+                </p>
+              </li>
+              <li style={{ padding: 10 }} >
+
+                <h3>
+                  ✓
+                  Non-refundable after you pay
+                </h3>
+
+                <p style={{ fontSize: 15, marginLeft: 15 }}>
+                  If canceled after payment, you will not be refunded.
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className='py-10 px-10' style={{
+          borderRadius: 10, borderColor: '#f5f5f5',
+          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+          marginLeft: '10%',
+          backgroundColor: 'white',
+          height: 350,
+          width: "25%"
+
+        }}>
+          <h2 style={{ fontSize: 30 }}>Price Details</h2>
+          <br />
+          <div style={{ padding: 10, backgroundColor: 'rgba(0, 123, 255, 0.15)', borderRadius: 10, paddingTop: 20 }}>
+            {travelerForms.map((traveler, index) => (
+              <div key={index} className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
+                <h5>Traveler {index + 1}:</h5>
+                <h5>{(selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) + (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0)}/-</h5>
+              </div>
+            ))}
+
+            <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
+              <h5>Total: </h5>
+              <h5>{totalAmount}/-</h5>
+            </div>
+            <hr />
+            <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
+              <p>Current Wallet Balance</p>
+              <p>200/-</p>
             </div>
           </div>
-          <div className='d-flex'>
-            <div className='py-10 px-20' style={{
-              borderRadius: 15, borderColor: '#696969',
-              boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
-              marginLeft: 10,
-              backgroundColor: 'white',
-              width: '60%'
-            }}>
-              <div>
-                <h2 style={{ fontSize: 35 }}>
-                  Visa Information
-                </h2>
-                <p style={{ fontSize: 17, paddingTop: 10, lineHeight: 2, paddingBottom: 10 }}>
-                  United Arab Emirates - UAE 30 Days Single Entry E-Visa
-                  <br />
-                  Travelers: 1
-                  <br />
-                  Travel Dates: Oct 7, 2023 - Nov 15, 2023
-                </p>
-              </div>
-              <hr />
-
-              <div>
-                <h2 style={{ fontSize: 35, marginTop: 20 }}>
-                  Expected Visa Approval
-                </h2>
-                <h6 style={{ paddingTop: 5, paddingBlock: 10 }}>
-                  10/12/23, if submitted now!
-                </h6>
-              </div>
-              <hr />
-              <div>
-                <h2 style={{ fontSize: 35, marginTop: 20 }}>
-                  Know Before You Pay</h2>
-                <br />
-
-                <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-                  <li style={{ padding: 10 }} >
-                    <h3>
-                      ✓
-                      Auto-validation upon submission
-                    </h3>
-                    <p style={{ fontSize: 15, marginLeft: 15 }}>
-                      Atlys performs automated validation after submission. We will let you know if there are any problems with the application.
-                    </p>
-                  </li>
-                  <li style={{ padding: 10 }} >
-
-                    <h3>
-                      ✓ Visa processed within 30 seconds
-                    </h3>
-
-                    <p style={{ fontSize: 15, marginLeft: 15 }}>
-                      Atlys automatically processes your visa.
-                    </p>
-                  </li>
-                  <li style={{ padding: 10 }} >
-
-                    <h3>
-                      ✓
-                      Non-refundable after you pay
-                    </h3>
-
-                    <p style={{ fontSize: 15, marginLeft: 15 }}>
-                      If canceled after payment, you will not be refunded.
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className='py-10 px-10' style={{
-              borderRadius: 10, borderColor: '#f5f5f5',
-              boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
-              marginLeft: '10%',
-              backgroundColor: 'white',
-              height: 350,
-              width: "25%"
-
-            }}>
-              <h2 style={{ fontSize: 30 }}>Price Details</h2>
-              <br />
-              <div style={{ padding: 10, backgroundColor: 'rgba(0, 123, 255, 0.15)', borderRadius: 10, paddingTop: 20 }}>
-                <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
-                  <h5>Traveler 1: </h5>
-                  <h5>6500/-</h5>
-                </div>
-                <hr />
-
-                <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
-                  <h5>Total: </h5>
-                  <h5>500/-</h5>
-                </div>
-                <hr />
-                <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
-                  <p>Current Wallet Balance</p>
-                  <p>200/-</p>
-                </div>
-              </div>
-              <div className="mb-10 mt-10 mx-10" style={{ height: 40, width: 190, border: "1px solid", borderColor: '#696969', borderRadius: 20, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#007bff' }}>
-                <h6 className="fs-4" style={{ color: 'white' }}>
-                  Review and Save
-                </h6>
-              </div>
-            </div>
+          <div onClick={handleReviewAndSave} className="mb-10 mt-10" style={{ height: 40, width: 190, border: "1px solid",marginLeft:10, borderColor: '#696969', borderRadius: 20, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#007bff',cursor:'pointer' }}>
+            <h6 className="fs-4" style={{ color: 'white' }}>
+              Review and Save
+            </h6>
           </div>
         </div>
       </div>
     </div>
+    </div>
+    </div>
+    
   );
 };
 
