@@ -50,7 +50,7 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
 
           const extractedData = {
             day: day,
-            entryType: entryType,
+            entryType: entryType?entryType:'Single',
             country: country,
             description: apiData.description,
             receipt: apiData.receipt,
