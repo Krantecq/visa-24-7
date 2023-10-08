@@ -11,6 +11,8 @@ import { toast } from 'react-toastify'
 
 
 import axiosInstance from "../../../helpers/axiosInstance";
+import { CheckCircleOutline, CircleOutlined } from '@mui/icons-material';
+import { colorDarken } from '../../../../_metronic/assets/ts/_utils';
 
 interface VerticalProps {
   selectedEntry: any; // Define the type for selectedEntry
@@ -41,6 +43,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
   };
   const [applicantForms, setApplicantForms] = useState<any[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
+  const [loading,setLoading] = useState(false);
   // const [travelerForms, setTravelerForms] = useState([<TravelerForm key={0} onDataChange={handleTravelerDataChange} />]);
   const navigate = useNavigate();
 
@@ -48,14 +51,30 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
     // Initialize with an empty traveler data object
     {},
   ]);
+  const [isFixed, setIsFixed] = useState(false);
 
+  const handleScroll = () => {
+    // Calculate the scroll position.
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    // Adjust the isFixed state based on the scroll position.
+    setIsFixed(scrollY >= 180); // Change 20 to your desired threshold.
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener when the component unmounts.
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const additionalFees = (selectedEntry.receipt['Visa Fees'] || 0) + (selectedEntry.receipt['Service Fees'] || 0);
   const totalAmount = travelerForms.length * additionalFees;
 
 
 
   const addTravelerForm = () => {
-    // Add a new traveler form with an empty data object
     setTravelerForms((prevForms) => [...prevForms, {}]);
   };
 
@@ -86,6 +105,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
   };
 
   const handleReviewAndSave = async () => {
+    setLoading(true);
     try {
       for (const travelerForm of travelerForms) {
 
@@ -128,17 +148,25 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
                 axiosInstance.post('/backend/merchant/apply_visa',data)
                   .then((response) => {
                     console.log(response.data.data)
+                    setLoading(false);
+                    navigate('/merchant/dashboard');
                   })
                   .catch((error) => {
                     console.error('Error fetching Atlys data:', error);
+                    setLoading(false);
+                    toast.error(error, {
+                      position: 'top-center'
+                  });
                   });
               })
               .catch((error) => {
                 console.error('Error fetching Atlys data:', error);
+                setLoading(false);
               });
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false);
             toast.error(error, {
               position: 'top-center'
           });
@@ -149,32 +177,111 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
     }
   };
 
+
+
+  // Define inline styles for the inactive tab text
+  const tabTextStyle = {
+    color: '#000', // Text color for the inactive tab
+    cursor: 'pointer',
+    padding: '8px',
+    fontSize: 18,
+    fontWeight: 'bold'
+  };
+
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
       <MerchantApplyVisa visaListLoader={visaListLoader} visaList={visaList} show={show} onApiDataReceived={function (data: any): void {
         throw new Error('Function not implemented.');
       }} />
 
-      {travelerForms.map((_, index) => (
-        <TravelerForm
-          key={index}
-          onDataChange={(newData) => handleTravelerDataChange(newData, index)}
-        />
-      ))}
-      <div className='d-flex mt-10' style={{ justifyContent: 'flex-end', display: 'flex' }}>
+      <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%', }}>
+        <div
+          style={{
+            width: '20%',
+            padding: '16px',
+            paddingLeft:"10px",
+            position: isFixed ? 'fixed' : 'static',
+            height: '100%',
+            overflowY: 'auto',
+            paddingTop: 20,
+            top: isFixed ? 80 : 'auto'
+          }}
+        >
+          {travelerForms.map((_, index) => (
+          <>
+          <div
+            onClick={() => { }}
+            style={{ ...tabTextStyle }}
+          >
+            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
+            Traveler {index+1}
+          </div>
+          <div style={{marginLeft:20}}>
 
-        <div className="mb-10 mx-5" style={{ height: 40, paddingLeft: 15, paddingRight: 15, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff' }}>
-          <h6 className="fs-4" style={{ color: '#007bff' }} onClick={addTravelerForm}>
-            + Add Another Traveler
-          </h6>
-        </div>
+          <div
+            onClick={() => { }}
+            style={{ ...tabTextStyle }}
+          >
+            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
+            Passport
+          </div>
+          <div
+            onClick={() => { }}
+            style={{ ...tabTextStyle }}
+          >
+            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
+            Passport Back
+          </div>
+          <div
+            onClick={() => { }}
+            style={{ ...tabTextStyle }}
+          >
+            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
+            Traveler Photo
+          </div>
+          <div
+            onClick={() => { }}
+            style={{ ...tabTextStyle }}
+          >
+            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
+            Indian PAN Card
+          </div>
+          </div>
+          </>
+          ))}
+          <div
+            onClick={() => { }}
+            style={{ ...tabTextStyle }}
+          >
+            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
+            Review
+          </div>
+          <div
+            onClick={() => { }}
+            style={{ ...tabTextStyle, color: '#696969' }}
+          >
 
-        <div className="mb-10 mx-5" style={{ height: 40, width: 190, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#007bff' }}>
-          <h6 className="fs-4" style={{ color: 'white' }} onClick={handleReviewAndSave}>
-            Review and Save
-          </h6>
+            <CircleOutlined style={{ color: '#d3d3d3', marginRight: 10 }} />
+            Submit
+          </div>
         </div>
-      </div>
+        <div style={{ width: '80%', marginLeft: isFixed ? '20%' : "0%", }}>
+          {travelerForms.map((_, index) => (
+            <TravelerForm
+              key={index}
+              ind={index}
+              onDataChange={(newData) => handleTravelerDataChange(newData, index)}
+            />
+          ))}
+          <div className='d-flex mt-10' style={{ justifyContent: 'flex-end', display: 'flex' }}>
+
+            <div className="mb-10 mx-5" style={{ height: 40, paddingLeft: 15, paddingRight: 15, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff',cursor:'pointer' }}>
+              <h6 className="fs-4" style={{ color: '#007bff' }} onClick={addTravelerForm}>
+                + Add Another Traveler
+              </h6>
+            </div>
+          </div>
+          
       <div className='d-flex'>
         <div className='py-10 px-20' style={{
           borderRadius: 15, borderColor: '#696969',
@@ -274,7 +381,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
               <p>200/-</p>
             </div>
           </div>
-          <div className="mb-10 mt-10 mx-10" style={{ height: 40, width: 190, border: "1px solid", borderColor: '#696969', borderRadius: 20, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#007bff' }}>
+          <div onClick={handleReviewAndSave} className="mb-10 mt-10" style={{ height: 40, width: 190, border: "1px solid",marginLeft:10, borderColor: '#696969', borderRadius: 20, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#007bff',cursor:'pointer' }}>
             <h6 className="fs-4" style={{ color: 'white' }}>
               Review and Save
             </h6>
@@ -282,6 +389,9 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
         </div>
       </div>
     </div>
+    </div>
+    </div>
+    
   );
 };
 

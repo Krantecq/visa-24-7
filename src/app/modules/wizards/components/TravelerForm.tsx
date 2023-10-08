@@ -7,7 +7,7 @@ import ClearIcon from '@mui/icons-material/Delete';
 import axiosInstance from '../../../helpers/axiosInstance';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-function TravelerForm({ onDataChange }) {
+function TravelerForm({ onDataChange,ind }) {
   const [initValues] = useState<ICreateAccount>(inits);
   const passportFrontFileInputRef = useRef<HTMLInputElement | null>(null);
   const passportBackFileInputRef = useRef<HTMLInputElement | null>(null);
@@ -226,7 +226,7 @@ function TravelerForm({ onDataChange }) {
       backgroundColor: 'white'
     }}>
 
-      <h2>Traveller 1 </h2>
+      <h2>Traveller {ind + 1} </h2>
       <hr />
       <br />
       <h3>
