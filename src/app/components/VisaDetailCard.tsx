@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Header } from "../../_metronic/layout/components/header/Header";
 import BackIcon from '@mui/icons-material/ArrowBackOutlined'
 import CheckIcon from '@mui/icons-material/VerifiedUserOutlined'
+import TravelerForm from "../modules/wizards/components/TravelerForm";
+import ApplicationFormView from "./ApplicationFormView";
 
 
 type VisaData = {
@@ -31,7 +33,7 @@ type VisaData = {
     visa_status: string;
     visa_amount: string;
     created_at: string;
-    updated_at:string;
+    updated_at: string;
     visa_description: string;
     // Add other properties as needed
 };
@@ -84,13 +86,19 @@ const getCountryNameByCode = (countryCode) => {
 const VisaDetailCard = ({ visaData }: Props) => {
     const [Detail, seeDetail] = useState(false);
     const [selectedVisa, setSelectedVisa] = useState<VisaData | null>(null);
-
+    const [viewApplication, setViewApplication] = useState<VisaData | null>(null);
     const handleViewDetailsClick = (entry: VisaData) => {
         setSelectedVisa(entry);
     };
 
+    const handleViewApplicationClick = (entry: VisaData) => {
+        setSelectedVisa(null);
+        setViewApplication(entry);
+    };
+
     const handleGoBackClick = () => {
         setSelectedVisa(null);
+        setViewApplication(null)
     };
 
     // Check if visaData is null or an empty array and handle it accordingly
@@ -128,7 +136,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                         </h6>
                     </div>
                 </div>
-                <div className="mb-10 mx-10" style={{ height: 40, width: 190, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff' }}>
+                <div className="mb-10 mx-10 px-10 py-5" style={{  width: 210, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff' }}>
                     <h6 className="fs-4">
                         + Add Application
                     </h6>
@@ -168,7 +176,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                     <br />
                                     Travel: {formatDate1(selectedVisa.application_arrival_date)} - {formatDate1(selectedVisa.application_departure_date)}
                                 </p>
-                                
+
                             </div><div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className="p-10">
                                 <h2>Application Details :</h2>
                                 <br />
@@ -211,13 +219,13 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                                 ✓ Application Complete
                                             </li>
                                             <li className="pt-4">
-                                                  Application Paid
+                                                Application Paid
                                             </li>
                                             <li className="pt-4">
-                                                  Application Submitted
+                                                Application Submitted
                                             </li>
                                             <li className="pt-4">
-                                                 Automated QC Passed
+                                                Automated QC Passed
                                             </li>
                                             <li className="pt-4">
                                                 ✓ Manual QC Passed
@@ -243,6 +251,11 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         {formatDate(selectedVisa.updated_at)}
                                     </h4>
                                 </div>
+                                <div onClick={()=>handleViewApplicationClick(selectedVisa)} className="mb-10 mx-10 mt-20 px-10 py-5" style={{ border: "2px solid #007bff", cursor: 'pointer', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#fff' }}>
+                                    <h6 className="fs-4" style={{ color: '#007bff' }}>
+                                        View Application
+                                    </h6>
+                                </div>
                             </div>
 
                         </div>
@@ -250,6 +263,19 @@ const VisaDetailCard = ({ visaData }: Props) => {
                     </div>
                     {/* end::Table container */}
                 </div>
+            </div>
+        )
+    }
+    if (viewApplication) {
+        return (
+            <div>
+            <div onClick={handleGoBackClick} style={{ cursor: "pointer" }} className="d-flex items-center">
+                <BackIcon style={{ color: '#007bff' }} />
+                <h6 style={{ color: '#007bff', marginLeft: 10 }}>
+                    Go Back to main Dashboard
+                </h6>
+            </div>
+            <ApplicationFormView ind={0} onDataChange={() => { }} />
             </div>
         )
     }
