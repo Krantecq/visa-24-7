@@ -61,7 +61,21 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
     }
     return null; // Invalid date string
   }
+  const formatDate1 = (dateString) => {
+    // Create a Date object from the input date string
+    const date = new Date(dateString);
 
+    // Get the month name as a three-letter abbreviation (e.g., "Oct")
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[date.getMonth()];
+
+    // Get the day and year
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    // Format the date string
+    return `${month} ${day}, ${year}`;
+};
 
   const handleReviewAndSave = async () => {
     try {
@@ -158,11 +172,11 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
               Visa Information
             </h2>
             <p style={{ fontSize: 17, paddingTop: 10, lineHeight: 2, paddingBottom: 10 }}>
-              United Arab Emirates - UAE 30 Days Single Entry E-Visa
+              {selectedEntry.country_code} - {selectedEntry.description}
               <br />
-              Travelers: 1
+              Travelers: {travelerForms.length}
               <br />
-              Travel Dates: Oct 7, 2023 - Nov 15, 2023
+              Travel Dates: {formatDate1(selectedEntry.application_arrival_date)} - {formatDate1(selectedEntry.application_departure_date)}
             </p>
           </div>
           <hr />
@@ -227,11 +241,12 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
           <h2 style={{ fontSize: 30 }}>Price Details</h2>
           <br />
           <div style={{ padding: 10, backgroundColor: 'rgba(0, 123, 255, 0.15)', borderRadius: 10, paddingTop: 20 }}>
-            <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
-              <h5>Traveler 1: </h5>
-              <h5>6500/-</h5>
-            </div>
-            <hr />
+          {travelerForms.map((traveler, index) => (
+              <div key={index} className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
+                <h5>Traveler {index + 1}:</h5>
+                <h5>{(selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) + (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0)}/-</h5>
+              </div>
+            ))}
 
             <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
               <h5>Total: </h5>

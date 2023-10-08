@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { VisaDetailCard } from "../../../components/VisaDetailCard";
-import axios from "axios";
+import axiosInstance from "../../../helpers/axiosInstance";
+import Cookies from 'js-cookie';
+
 
 const MerchantDashboard = () => {
   const [activeTab, setActiveTab] = useState("All"); // Initialize active tab state
@@ -10,11 +12,13 @@ const MerchantDashboard = () => {
     // Function to fetch data from the API based on the activeTab
     const fetchData = async () => {
       try {
+        const merchant_id = Cookies.get('user_id');
         let postBody = {
-          merchant_id: '650828b1eaf900fa94918f0f'
+          merchant_id: merchant_id
         }
         let data;
-        let response = await axios.post("http://localhost:5003/backend/merchant/fetch_visa", postBody);
+        
+        let response = await axiosInstance.post("/backend/merchant/fetch_visa", postBody);
         if (response.status == 200) {
           if (activeTab === "Processed") {
             data = response.data.data.filter(item => item.visa_status === 'Processed');
