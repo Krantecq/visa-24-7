@@ -28,6 +28,9 @@ function TravelerForm({ onDataChange }) {
     fatherName: '',
     motherName: '',
     panNumber: '',
+    passportNumber:'',
+    passportIssueDate:'',
+    passPortExpiryDate:'',
     passFrontPhoto: '',
     passBackPhoto: '',
     travelerPhoto: '',
@@ -196,6 +199,16 @@ function TravelerForm({ onDataChange }) {
   const handleFieldChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value });
     onDataChange({ ...formData, [fieldName]: value });
+    
+    if(fieldName == 'birthDetail'){
+      setDob(value)
+    }
+    if(fieldName == 'passportIssueDate'){
+      setIssueDate(value)
+    }
+    if(fieldName == 'passPortExpiryDate'){
+      setExpiryDate(value)
+    }
   };
 
   const [issueDate, setIssueDate] = useState(null);
@@ -276,11 +289,11 @@ function TravelerForm({ onDataChange }) {
 
                     <Field
                       style={{ ...inputStyle, width: '450px' }}
-                      name='fatherName'
-                      className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('fatherName', e.target.value)}
+                      name='passportNumber'
+                      className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('passportNumber', e.target.value)}
                     />
                     <div className='text-danger mt-2'>
-                      <ErrorMessage name='fatherName' />
+                      <ErrorMessage name='passportNumber' />
                     </div>
                   </div>
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
@@ -329,9 +342,9 @@ function TravelerForm({ onDataChange }) {
                     </label>
 
                     <DatePicker
-                      name='accountName'
+                      name='birthDetail'
                       selected={dob}
-                      onChange={(date) => setDob(date)}
+                      onChange={(date) => handleFieldChange('birthDetail', date)}
                       className='form-control form-control-lg form-control-solid'
                       dateFormat='MM/dd/yyyy'
                       placeholderText='Select DOB'
@@ -339,7 +352,7 @@ function TravelerForm({ onDataChange }) {
                     />
 
                     <div className='text-danger mt-2'>
-                      <ErrorMessage name='accountName' />
+                      <ErrorMessage name='birthDetail' />
                     </div>
                   </div>
                   </div>
@@ -351,16 +364,16 @@ function TravelerForm({ onDataChange }) {
                       </label>
 
                       <DatePicker
-                        name='last_name'
+                        name='passportIssueDate'
                         selected={issueDate}
-                        onChange={(date) => setIssueDate(date)}
+                        onChange={(date) => handleFieldChange('passportIssueDate', date)}
                         className='form-control form-control-lg form-control-solid'
                         dateFormat='MM/dd/yyyy'
                         placeholderText='Select Issue Date'
                       />
 
                       <div className='text-danger mt-2'>
-                        <ErrorMessage name='passport_issueDate' />
+                        <ErrorMessage name='passportIssueDate' />
                       </div>
                     </div>
                   
@@ -370,16 +383,16 @@ function TravelerForm({ onDataChange }) {
                     </label>
 
                     <DatePicker
-                      name='accountName'
+                      name='passPortExpiryDate'
                       selected={expiryDate}
-                      onChange={(date) => setExpiryDate(date)}
+                      onChange={(date) => handleFieldChange('passPortExpiryDate', date)}
                       className='form-control form-control-lg form-control-solid'
                       dateFormat='MM/dd/yyyy'
                       placeholderText='Select Expiry Date'
                     />
 
                     <div className='text-danger mt-2'>
-                      <ErrorMessage name='accountName' />
+                      <ErrorMessage name='passPortExpiryDate' />
                     </div>
                   </div>
                   </div>
@@ -394,9 +407,8 @@ function TravelerForm({ onDataChange }) {
                         className='form-select form-select-lg form-select-solid' onChange={(e) => handleFieldChange('gender', e.target.value)}
                       >
                         <option></option>
-                        <option value='1'>Male</option>
-                        <option value='1'>Female</option>
-                        <option value='2'>Others</option>
+                        <option value='M'>Male</option>
+                        <option value='F'>Female</option>
                       </Field>
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessType' />
@@ -412,8 +424,13 @@ function TravelerForm({ onDataChange }) {
                         className='form-select form-select-lg form-select-solid' onChange={(e) => handleFieldChange('maritalStatus', e.target.value)}
                       >
                         <option></option>
-                        <option value='1'>Yes</option>
-                        <option value='1'>No</option>
+                        <option value='Single'>Single</option>
+                        <option value='Married'>Married</option>
+                        <option value='Separated'>Separated</option>
+                        <option value='Divorced'>Divorced</option>
+                        <option value='Widowed'>Widowed</option>
+                        <option value='Civil partnership'>Civil partnership</option>
+
                       </Field>
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessType' />

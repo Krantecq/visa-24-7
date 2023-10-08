@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Delete';
 import MerchantApplyVisa from '../../../components/MerchantApplyVisa';
 import TravelerForm from './TravelerForm';
-import axios from 'axios';
-import { Transform } from 'stream';
+
+import axiosInstance from "../../../helpers/axiosInstance";
+
 interface VerticalProps {
   selectedEntry: any; // Define the type for selectedEntry
 
@@ -50,48 +51,73 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
     setTravelerForms((prevForms) => [...prevForms, {}]);
   };
 
+  function formatDateWithTimezoneToYMD(dateString) {
+    const date = new Date(dateString);
+    if (!isNaN(date.getTime())) {
+      const year = date.getUTCFullYear();
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Month is zero-based
+      const day = String(date.getUTCDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return null; // Invalid date string
+  }
 
-  // const handleReviewAndSave = async () => {
-  //   try {
-  //     for (const travelerForm of travelerForms) {
 
-  //       const postBody = {
-  //         country_code:selectedEntry.country_code,
-  //         entry_process:selectedEntry.entryType,
-  //         nationality_code:selectedEntry.nationality_code,
-  //         first_name:travelerForm.firstName,
-  //         last_name:travelerForm.lastName,
-  //         birth_place:travelerForm.birthPlace,
-  //         birthday_date:Transform.birthDetail,
-  //         nationality:selectedEntry.nationality_code,
-  //         passport_number:123123,
-  //         passport_issue_date:,
-  //         passport_expiry_date,
-  //         gender,
-  //         marital_status,
-  //         application_arrival_date,
-  //         application_departure_date,
-  //         application_destination,
-  //         fathers_name,
-  //         passport_front,
-  //         passport_back,
-  //         pan_card,
-  //         photo,
-  //         visa_amount,
-  //         visa_description
-  //       }
+  const handleReviewAndSave = async () => {
+    try {
+      for (const travelerForm of travelerForms) {
 
-  //       // console.log(travelerForm,selectedEntry)
-  //       // Make the POST request for each travelerForm one by one
-  //       // const response = await axios.post('YOUR_API_ENDPOINT', travelerForm);
+        const postData = {
+          country_code: selectedEntry.country_code,
+          entry_process: selectedEntry.value,
+          nationality_code: selectedEntry.nationality_code,
+          first_name: travelerForm.firstName,
+          last_name: travelerForm.lastName,
+          birth_place: travelerForm.birthPlace,
+          birthday_date: formatDateWithTimezoneToYMD(travelerForm.birthDetail),
+          nationality: selectedEntry.nationality_code,
+          passport_number: travelerForm.passportNumber,
+          passport_issue_date: formatDateWithTimezoneToYMD(travelerForm.passportIssueDate),
+          passport_expiry_date: formatDateWithTimezoneToYMD(travelerForm.passPortExpiryDate),
+          gender: travelerForm.gender,
+          marital_status: travelerForm.maritalStatus,
+          application_arrival_date: formatDateWithTimezoneToYMD(selectedEntry.application_arrival_date),
+          application_departure_date: formatDateWithTimezoneToYMD(selectedEntry.application_departure_date),
+          application_destination: selectedEntry.country_code,
+          fathers_name: travelerForm.firstName,
+          passport_front: travelerForm.passFrontPhoto,
+          passport_back: travelerForm.passBackPhoto,
+          pan_card: travelerForm.panPhoto,
+          photo: travelerForm.travelerPhoto,
+          visa_amount: (selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) + (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0),
+          visa_description: selectedEntry.description
+        }
 
-  //       // // Handle the response for each request here
-  //       // console.log('API Response:', response.data);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error while making API calls:', error);
-  //   }
-  // };
+        axiosInstance.post('/backend/create_user_application', postData)
+          .then((response) => {
+            console.log(response.data.data)
+            const data = {
+              merchant_id:"650828b1eaf900fa94918f0f",
+              application_id:response.data.data
+            }
+            axiosInstance.patch('/backend/add_applicant', data)
+            .then((response) => {
+              console.log(response.data.data)
+              
+      
+            })
+            .catch((error) => {
+              console.error('Error fetching Atlys data:', error);
+            });
+          })
+          .catch((error) => {
+            console.error('Error fetching Atlys data:', error);
+          });
+      }
+    } catch (error) {
+      console.error('Error while making API calls:', error);
+    }
+  };
 
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
@@ -114,7 +140,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
         </div>
 
         <div className="mb-10 mx-5" style={{ height: 40, width: 190, border: "1px solid", borderColor: '#696969', borderRadius: 10, alignItems: 'center', display: 'flex', justifyContent: 'center', backgroundColor: '#007bff' }}>
-          <h6 className="fs-4" style={{ color: 'white' }} >
+          <h6 className="fs-4" style={{ color: 'white' }} onClick={handleReviewAndSave}>
             Review and Save
           </h6>
         </div>
