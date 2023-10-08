@@ -268,14 +268,14 @@ const VisaDetailCard = ({ visaData }: Props) => {
     }
     if (viewApplication) {
         return (
-            <div>
+            <div> 
             <div onClick={handleGoBackClick} style={{ cursor: "pointer" }} className="d-flex items-center">
                 <BackIcon style={{ color: '#007bff' }} />
                 <h6 style={{ color: '#007bff', marginLeft: 10 }}>
                     Go Back to main Dashboard
                 </h6>
             </div>
-            <ApplicationFormView ind={0} onDataChange={() => { }} />
+            <ApplicationFormView viewApplication={viewApplication}/>
             </div>
         )
     }
