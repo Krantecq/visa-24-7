@@ -1,109 +1,132 @@
-import React, { FC, useState } from 'react'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
+import React, {FC, useState} from 'react'
+import {ErrorMessage, Field, Form, Formik} from 'formik'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
+import {ICreateAccount, inits} from '../modules/wizards/components/CreateAccountWizardHelper'
 import RoomIcon from '@mui/icons-material/Room'
 import FlightIcon from '@mui/icons-material/Flight'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import axios from 'axios';
-import axiosInstance from "../helpers/axiosInstance";
+import axios from 'axios'
+import axiosInstance from '../helpers/axiosInstance'
 
 // import { DateRangePicker } from 'react-date-range';
 
 type Props = {
-  show: (value: boolean) => void;
-  visaList: boolean;
-  visaListLoader:(value: boolean) => void;
-  onApiDataReceived: (data: any) => void;
-};
+  show: (value: boolean) => void
+  visaList: boolean
+  visaListLoader: (value: boolean) => void
+  onApiDataReceived: (data: any) => void
+}
 
-const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaListLoader }) => {
-  const [issueDate, setIssueDate] = useState(null);
-  const [expiryDate, setExpiryDate] = useState(null);
-  const [initValues] = useState<ICreateAccount>(inits);
+const MerchantApplyVisa: React.FC<Props> = ({
+  show,
+  visaList,
+  onApiDataReceived,
+  visaListLoader,
+}) => {
+  const [issueDate, setIssueDate] = useState(null)
+  const [expiryDate, setExpiryDate] = useState(null)
+  const [initValues] = useState<ICreateAccount>(inits)
 
-  
   const onSubmit = (values: any) => {
     console.log(values)
     visaListLoader(true)
     const postData = {
       country_code: values.toCountry,
-      nationality_code: values.fromCountry,      
+      nationality_code: values.fromCountry,
     }
-    axiosInstance.post('/backend/get_all_possible_visas', postData)
+    axiosInstance
+      .post('/backend/get_all_possible_visas', postData)
       .then((response) => {
         console.log(values)
-        let main_data: { day: number | null; entryType: string | null; country: string | null; description: string | null; receipt: any | null; value: string | null; }[] = [];
+        let main_data: {
+          day: number | null
+          entryType: string | null
+          country: string | null
+          description: string | null
+          receipt: any | null
+          value: string | null
+        }[] = []
 
         for (let i = 0; i < response.data.data.length; i++) {
-          const apiData = response.data.data[i];
+          const apiData = response.data.data[i]
 
           // Extract day, entry type, and country from the description
-          const description = apiData.description;
-          const dayMatch = description.match(/\d+/);
-          const day = dayMatch ? parseInt(dayMatch[0]) : null;
-          const countryTypeMatch = description.match(/(.+?)\s+\d+\s+Days/);
-          const country = countryTypeMatch ? countryTypeMatch[1] : null;
-          const entryTypeMatch = description.match(/Days\s+(\w+)/i);
-          const entryType = entryTypeMatch ? entryTypeMatch[1] : null;
+          const description = apiData.description
+          const dayMatch = description.match(/\d+/)
+          const day = dayMatch ? parseInt(dayMatch[0]) : null
+          const countryTypeMatch = description.match(/(.+?)\s+\d+\s+Days/)
+          const country = countryTypeMatch ? countryTypeMatch[1] : null
+          const entryTypeMatch = description.match(/Days\s+(\w+)/i)
+          const entryType = entryTypeMatch ? entryTypeMatch[1] : null
 
           const extractedData = {
             day: day,
-            entryType: entryType?entryType:'Single',
+            entryType: entryType ? entryType : 'Single',
             country: country,
             description: apiData.description,
             receipt: apiData.receipt,
             value: apiData.value,
             country_code: values.toCountry,
             nationality_code: values.fromCountry,
-            application_arrival_date:issueDate,
-            application_departure_date:expiryDate
-          };
-          main_data.push(extractedData);
+            application_arrival_date: issueDate,
+            application_departure_date: expiryDate,
+          }
+          main_data.push(extractedData)
           // Use the extracted values as needed
-          console.log("Day:", day);
-          console.log("Entry Type:", entryType);
-          console.log("Country:", country);
+          console.log('Day:', day)
+          console.log('Entry Type:', entryType)
+          console.log('Country:', country)
         }
-        onApiDataReceived(main_data);
+        onApiDataReceived(main_data)
       })
       .catch((error) => {
-        console.error('Error fetching Atlys data:', error);
-      });
-
-  };
+        console.error('Error fetching Atlys data:', error)
+      })
+  }
 
   return (
     <div>
-        
-        {!visaList &&
+      {!visaList && (
         <>
-        
-      <h1 className='px-9' style={{ marginTop: 25,fontSize:35 }}>
-        Get a visa to
-      </h1>
-      
-      <h3 className='mx-9 px-5 pb-3' style={{ marginTop: 20,fontSize:20,borderBottomWidth:1,borderBottom:'3px solid' ,borderColor:'#007bff', width:170}}>
-        Travel Visa 
-        <FlightIcon style={{ marginLeft: '7px' }}  />
+          <h1 className='px-9 mt-25' style={{marginTop: 25, fontSize: 50}}>
+            Get a visa to
+          </h1>
 
-      </h3>
-      </>
-}
+          <h3
+            className='mx-9 px-5 pb-3'
+            style={{
+              marginTop: 20,
+              fontSize: 20,
+              borderBottomWidth: 1,
+              borderBottom: '3px solid',
+              borderColor: '#007bff',
+              width: 170,
+            }}
+          >
+            Travel Visa
+            <FlightIcon style={{marginLeft: '7px'}} />
+          </h3>
+        </>
+      )}
       <Formik validationSchema={null} initialValues={initValues} onSubmit={onSubmit}>
-        {({ handleSubmit }) => (
-          <Form className='mt-10 w-100 px-9' noValidate id='kt_create_account_form' onSubmit={handleSubmit}>
+        {({handleSubmit}) => (
+          <Form
+            className='mt-10 w-100 px-9'
+            noValidate
+            id='kt_create_account_form'
+            onSubmit={handleSubmit}
+          >
             <div className='d-flex flex-row justify-content-between'>
               <div className='fv-row mb-10 w-100'>
-                <RoomIcon style={{ marginRight: '3px' }} />
+                <RoomIcon style={{marginRight: '3px'}} />
 
-                <label  className='form-label fs-4'>From</label>
+                <label className='form-label fs-4'>From</label>
                 <Field
                   as='select'
                   name='fromCountry'
                   className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
-                  style={{ background: '#fff', }}
+                  style={{background: '#fff'}}
                 >
                   <option value=''>Select a Country...</option>
                   <option value='AF'>Afghanistan</option>
@@ -353,21 +376,20 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
                   <option value='YE'>Yemen</option>
                   <option value='ZM'>Zambia</option>
                   <option value='ZW'>Zimbabwe</option>
-
                 </Field>
                 <div className='text-danger mt-2'>
                   <ErrorMessage name='businessType' />
                 </div>
               </div>
-              <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%' }}>
-                <FlightIcon style={{ marginRight: '3px' }} />
+              <div className='fv-row mb-10 w-100' style={{marginLeft: '5%'}}>
+                <FlightIcon style={{marginRight: '3px'}} />
                 <label className='form-label fs-4'>To</label>
 
                 <Field
                   as='select'
                   name='toCountry'
                   className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
-                  style={{ background: '#fff' }}
+                  style={{background: '#fff'}}
                 >
                   <option value=''>Select a Country...</option>
                   <option value='AF'>Afghanistan</option>
@@ -617,16 +639,15 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
                   <option value='YE'>Yemen</option>
                   <option value='ZM'>Zambia</option>
                   <option value='ZW'>Zimbabwe</option>
-
                 </Field>
                 <div className='text-danger mt-2'>
                   <ErrorMessage name='businessType' />
                 </div>
               </div>
 
-              <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%', marginRight: '3%' }}>
+              <div className='fv-row mb-10 w-100' style={{marginLeft: '5%', marginRight: '3%'}}>
                 <label className='d-flex align-items-center form-label fs-4'>
-                  <CalendarMonthIcon style={{ marginRight: '3px' }} />
+                  <CalendarMonthIcon style={{marginRight: '3px'}} />
                   <span className=''>From</span>
                 </label>
 
@@ -637,7 +658,7 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
                   className=' form-control form-control-lg form-control-solid border border-2  border-secondary rounded-4 mt-2'
                   dateFormat='MM/dd/yyyy'
                   placeholderText='Departure Date'
-                  style={{ backgroundColor: '#fff' }}
+                  style={{backgroundColor: '#fff'}}
                 />
 
                 <div className='text-danger mt-2'>
@@ -646,7 +667,7 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
               </div>
               <div className='fv-row mb-10 w-100'>
                 <label className='d-flex align-items-center form-label fs-4'>
-                  <CalendarMonthIcon style={{ marginRight: '3px' }} />
+                  <CalendarMonthIcon style={{marginRight: '3px'}} />
                   <span className=''>To</span>
                 </label>
 
@@ -667,7 +688,17 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
 
             {!visaList && (
               <div className='d-flex justify-content-end'>
-                <button type="submit" className='btn btn-primary'>
+                <button
+                  type='submit'
+                  className='btn btn-primary'
+                  style={{
+                    marginRight: 60,
+                    borderRadius: 25,
+                    paddingLeft: 25,
+                    paddingRight: 25,
+                    backgroundColor: '#332786',
+                  }}
+                >
                   Search
                 </button>
               </div>
@@ -677,13 +708,20 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
       </Formik>
 
       {!visaList && (
-      <div style={{position:'absolute',width:'100%',height:170,backgroundColor:'#007bff',bottom:0,
-          overflow:'hidden',marginLeft:-30}}>
-
-      </div>
+        <div
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: 170,
+            backgroundColor: '#332786',
+            bottom: 0,
+            overflow: 'hidden',
+            marginLeft: -30,
+          }}
+        ></div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MerchantApplyVisa;
+export default MerchantApplyVisa
