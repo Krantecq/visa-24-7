@@ -1,21 +1,15 @@
 import { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import ClearIcon from '@mui/icons-material/Delete';
 import axiosInstance from '../helpers/axiosInstance';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ICreateAccount,inits } from '../modules/wizards/components/CreateAccountWizardHelper';
-function ApplicationFormView({ onDataChange,ind }) {
+import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper';
+function ApplicationFormView({ viewApplication }) {
+  console.log(viewApplication)
   const [initValues] = useState<ICreateAccount>(inits);
-  const passportFrontFileInputRef = useRef<HTMLInputElement | null>(null);
-  const passportBackFileInputRef = useRef<HTMLInputElement | null>(null);
-  const photoFileInputRef = useRef<HTMLInputElement | null>(null);
-  const panFileInputRef = useRef<HTMLInputElement | null>(null);
-  const [passportFrontImageURL, setPassportFrontImageURL] = useState('')
-  const [passportBackImageURL, setPassportBackImageURL] = useState('')
-  const [photo, setPhoto] = useState('');
-  const [pan, setPan] = useState('');
+
+
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -27,9 +21,9 @@ function ApplicationFormView({ onDataChange,ind }) {
     fatherName: '',
     motherName: '',
     panNumber: '',
-    passportNumber:'',
-    passportIssueDate:'',
-    passPortExpiryDate:'',
+    passportNumber: '',
+    passportIssueDate: '',
+    passPortExpiryDate: '',
     passFrontPhoto: '',
     passBackPhoto: '',
     travelerPhoto: '',
@@ -45,171 +39,8 @@ function ApplicationFormView({ onDataChange,ind }) {
     width: '90%',               // 100% width
     boxSizing: 'border-box',     // Include padding and border in the width calculation
   }
-  
-  const handleFileUpload = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      // Make a POST request to your server to upload the file
-      const response = await axiosInstance.post('/backend/upload_image/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      // Assuming your server responds with the file URL
-      const fileUrl = response.data.data;
-      return fileUrl; // Return the file URL
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      return ''; // Return an empty string in case of an error
-    }
-  };
-  // Function to handle file selection
-  const handleFileSelect = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        if (e.target) {
-          setPassportFrontImageURL(e.target.result as string);
-
-          try {
-            // Assuming handleFileUpload is an asynchronous function that returns a promise
-            const imageLink = await handleFileUpload(file);
-
-            // Update the form data with the image link
-            setFormData({ ...formData, passFrontPhoto: imageLink });
-            onDataChange({ ...formData, passFrontPhoto: imageLink });
-          } catch (error) {
-            console.error('Error uploading image:', error);
-          }
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImageUpload = () => {
-    // Trigger the hidden file input
-    if (passportFrontFileInputRef.current) {
-      passportFrontFileInputRef.current.click();
-    }
-  };
-  const handleFileSelectBack = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = async (e) => {
-        // Update the state variable with the image data (base64-encoded)
-        if (e.target) {
-          setPassportBackImageURL(e.target.result as string);
-          try {
-            // Assuming handleFileUpload is an asynchronous function that returns a promise
-            const imageLink = await handleFileUpload(file);
-
-            // Update the form data with the image link
-            setFormData({ ...formData, passBackPhoto: imageLink });
-            onDataChange({ ...formData, passBackPhoto: imageLink });
-          } catch (error) {
-            console.error('Error uploading image:', error);
-          }
-        }
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-  const handleImageUploadBack = () => {
-    // Trigger the hidden file input
-    if (passportBackFileInputRef.current) {
-      passportBackFileInputRef.current.click();
-    }
-  };
-
-  const handlePhotoSelect = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = async (e) => {
-        // Update the state variable with the image data (base64-encoded)
-        if (e.target) {
-          setPhoto(e.target.result as string);
-          try {
-            // Assuming handleFileUpload is an asynchronous function that returns a promise
-            const imageLink = await handleFileUpload(file);
-
-            // Update the form data with the image link
-            setFormData({ ...formData, travelerPhoto: imageLink });
-            onDataChange({ ...formData, travelerPhoto: imageLink });
-          } catch (error) {
-            console.error('Error uploading image:', error);
-          }
-        }
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-  const handlePhotoUpload = () => {
-    // Trigger the hidden file input
-    if (photoFileInputRef.current) {
-      photoFileInputRef.current.click();
-    }
-  };
-
-  // Function to handle file selection
-  const handlePanSelect = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        if (e.target) {
-          setPan(e.target.result as string);
-
-          try {
-            // Assuming handleFileUpload is an asynchronous function that returns a promise
-            const imageLink = await handleFileUpload(file);
-
-            // Update the form data with the image link
-            setFormData({ ...formData, panPhoto: imageLink });
-            onDataChange({ ...formData, panPhoto: imageLink });
-          } catch (error) {
-            console.error('Error uploading image:', error);
-          }
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handlePanUpload = () => {
-    // Trigger the hidden file input
-    if (panFileInputRef.current) {
-      panFileInputRef.current.click();
-    }
-  };
 
 
-  const handleFieldChange = (fieldName, value) => {
-    setFormData({ ...formData, [fieldName]: value });
-    onDataChange({ ...formData, [fieldName]: value });
-    
-    if(fieldName == 'birthDetail'){
-      setDob(value)
-    }
-    if(fieldName == 'passportIssueDate'){
-      setIssueDate(value)
-    }
-    if(fieldName == 'passPortExpiryDate'){
-      setExpiryDate(value)
-    }
-  };
 
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
@@ -226,7 +57,7 @@ function ApplicationFormView({ onDataChange,ind }) {
       backgroundColor: 'white'
     }}>
 
-      <h2>Traveller {ind + 1} </h2>
+      <h2>Traveller 1 </h2>
       <hr />
       <br />
       <h3>
@@ -240,41 +71,16 @@ function ApplicationFormView({ onDataChange,ind }) {
           <h6>
             Passport Front Page Image
           </h6>
-          {passportFrontImageURL ? (
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
-              <div onClick={() => setPassportFrontImageURL('')} style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
-                <ClearIcon style={{ color: 'red' }} />
-              </div>
-              <img
-                src={passportFrontImageURL}
-                alt='Uploaded Image'
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
-              />
+          <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
+            <div style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
             </div>
-          )
-            :
+            <img
+              src={viewApplication.passport_front}
+              alt='Uploaded Image'
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+          </div>
 
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', paddingTop: 40, marginTop: 20 }}>
-              <h4 className='mx-10 mt-10'>
-                Passport Front Photo
-              </h4>
-              <button type='button' onClick={handleImageUpload} className='btn btn-lg btn-primary me-3 mt-7' style={{ justifyContent: 'flex-end' }}>
-                <span className='indicator-label'>
-                  Select Files
-                </span>
-              </button>
-              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
-                Supports JPEG, JPG, PDF, PNG.
-              </p>
-              <input
-                type='file'
-                ref={passportFrontFileInputRef}
-                style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
-                onChange={handleFileSelect}
-              />
-            </div>
-          }
         </div>
 
         <div className='d-flex flex-row-fluid flex-center bg-body rounded' style={{ width: '70%', backgroundColor: 'blue' }}>
@@ -290,7 +96,9 @@ function ApplicationFormView({ onDataChange,ind }) {
                     <Field
                       style={{ ...inputStyle, width: '450px' }}
                       name='passportNumber'
-                      className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('passportNumber', e.target.value)}
+                      readOnly
+                      value={viewApplication.passport_number}
+                      className='form-control form-control-lg form-control-solid'
                     />
                     <div className='text-danger mt-2'>
                       <ErrorMessage name='passportNumber' />
@@ -300,7 +108,7 @@ function ApplicationFormView({ onDataChange,ind }) {
                     <div className='fv-row mb-5'>
                       <label className='form-label required'>First Name</label>
 
-                      <Field name='firstName' style={inputStyle} className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('firstName', e.target.value)} />
+                      <Field name='firstName' readOnly value={viewApplication.first_name} style={inputStyle} className='form-control form-control-lg form-control-solid' />
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessName' />
                       </div>
@@ -313,7 +121,8 @@ function ApplicationFormView({ onDataChange,ind }) {
                       <Field
                         style={inputStyle}
                         name='lastName'
-                        className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('lastName', e.target.value)}
+                        readOnly value={viewApplication.last_name}
+                        className='form-control form-control-lg form-control-solid'
                       />
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessDescriptor' />
@@ -329,32 +138,32 @@ function ApplicationFormView({ onDataChange,ind }) {
 
                       <Field
                         style={inputStyle}
+                        readOnly value={viewApplication.birth_place}
                         name='birthPlace'
-                        className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('birthPlace', e.target.value)}
+                        className='form-control form-control-lg form-control-solid'
                       />
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='birthPlace' />
                       </div>
                     </div>
                     <div className='fv-row mb-5'>
-                    <label className='d-flex align-items-center form-label'>
-                      <span className='required'>Date of Birth</span>
-                    </label>
+                      <label className='d-flex align-items-center form-label'>
+                        <span className='required'>Date of Birth</span>
+                      </label>
 
-                    <DatePicker
-                      name='birthDetail'
-                      selected={dob}
-                      onChange={(date) => handleFieldChange('birthDetail', date)}
-                      className='form-control form-control-lg form-control-solid'
-                      dateFormat='MM/dd/yyyy'
-                      placeholderText='Select DOB'
-                      style={inputStyle}
-                    />
+                      <DatePicker
+                        name='birthDetail'
+                        readOnly value={viewApplication.birthday_date}
+                        className='form-control form-control-lg form-control-solid'
+                        dateFormat='MM/dd/yyyy'
+                        placeholderText='Select DOB'
+                        style={inputStyle}
+                      />
 
-                    <div className='text-danger mt-2'>
-                      <ErrorMessage name='birthDetail' />
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='birthDetail' />
+                      </div>
                     </div>
-                  </div>
                   </div>
 
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
@@ -365,8 +174,7 @@ function ApplicationFormView({ onDataChange,ind }) {
 
                       <DatePicker
                         name='passportIssueDate'
-                        selected={issueDate}
-                        onChange={(date) => handleFieldChange('passportIssueDate', date)}
+                        readOnly value={viewApplication.passport_issue_date}
                         className='form-control form-control-lg form-control-solid'
                         dateFormat='MM/dd/yyyy'
                         placeholderText='Select Issue Date'
@@ -376,40 +184,35 @@ function ApplicationFormView({ onDataChange,ind }) {
                         <ErrorMessage name='passportIssueDate' />
                       </div>
                     </div>
-                  
-                  <div className='fv-row mb-5'>
-                    <label className='d-flex align-items-center form-label'>
-                      <span className='required'>Passport Expiry Date</span>
-                    </label>
 
-                    <DatePicker
-                      name='passPortExpiryDate'
-                      selected={expiryDate}
-                      onChange={(date) => handleFieldChange('passPortExpiryDate', date)}
-                      className='form-control form-control-lg form-control-solid'
-                      dateFormat='MM/dd/yyyy'
-                      placeholderText='Select Expiry Date'
-                    />
+                    <div className='fv-row mb-5'>
+                      <label className='d-flex align-items-center form-label'>
+                        <span className='required'>Passport Expiry Date</span>
+                      </label>
 
-                    <div className='text-danger mt-2'>
-                      <ErrorMessage name='passPortExpiryDate' />
+                      <DatePicker
+                        name='passPortExpiryDate'
+                        readOnly value={viewApplication.passport_expiry_date}
+                        className='form-control form-control-lg form-control-solid'
+                        dateFormat='MM/dd/yyyy'
+                        placeholderText='Select Expiry Date'
+                      />
+
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='passPortExpiryDate' />
+                      </div>
                     </div>
-                  </div>
                   </div>
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-10'>
                       <label className='form-label required'>Gender</label>
 
                       <Field
-                        as='select'
                         name='gender'
-                        style={{ ...inputStyle, width: '215px',backgroundColor:'white' }}
-                        className='form-select form-select-lg form-select-solid' onChange={(e) => handleFieldChange('gender', e.target.value)}
-                      >
-                        <option></option>
-                        <option value='M'>Male</option>
-                        <option value='F'>Female</option>
-                      </Field>
+                        readOnly value={viewApplication.gender}
+                        style={{ ...inputStyle, width: '215px', backgroundColor: 'white' }}
+                        className='form-select form-select-lg form-select-solid'
+                      />
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessType' />
                       </div>
@@ -418,20 +221,11 @@ function ApplicationFormView({ onDataChange,ind }) {
                       <label className='form-label required'>Marital Status</label>
 
                       <Field
-                        as='select'
-                        style={{ ...inputStyle, width: '215px',backgroundColor:'white' }}
+                        readOnly value={viewApplication.marital_status}
+                        style={{ ...inputStyle, width: '215px', backgroundColor: 'white' }}
                         name='maritalStatus'
-                        className='form-select form-select-lg form-select-solid' onChange={(e) => handleFieldChange('maritalStatus', e.target.value)}
-                      >
-                        <option></option>
-                        <option value='Single'>Single</option>
-                        <option value='Married'>Married</option>
-                        <option value='Separated'>Separated</option>
-                        <option value='Divorced'>Divorced</option>
-                        <option value='Widowed'>Widowed</option>
-                        <option value='Civil partnership'>Civil partnership</option>
-
-                      </Field>
+                        className='form-select form-select-lg form-select-solid'
+                      />
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessType' />
                       </div>
@@ -455,41 +249,16 @@ function ApplicationFormView({ onDataChange,ind }) {
           <h6>
             Passport Back Page Image
           </h6>
-          {passportBackImageURL ? (
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
-              <div onClick={() => setPassportBackImageURL('')} style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
-                <ClearIcon style={{ color: 'red' }} />
-              </div>
-              <img
-                src={passportBackImageURL}
-                alt='Uploaded Image'
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
-              />
+          <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
+            <div style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
             </div>
-          )
-            :
+            <img
+              src={viewApplication.passport_back}
+              alt='Uploaded Image'
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+          </div>
 
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', paddingTop: 40, marginTop: 20 }}>
-              <h4 className='mx-10 mt-10'>
-                Passport Back Photo
-              </h4>
-              <button type='button' onClick={handleImageUploadBack} className='btn btn-lg btn-primary me-3 mt-7' style={{ justifyContent: 'flex-end' }}>
-                <span className='indicator-label'>
-                  Select Files
-                </span>
-              </button>
-              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
-                Supports JPEG, JPG, PDF, PNG.
-              </p>
-              <input
-                type='file'
-                ref={passportBackFileInputRef}
-                style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
-                onChange={handleFileSelectBack}
-              />
-            </div>
-          }
         </div>
 
         <div className='d-flex flex-row-fluid flex-center bg-body rounded' style={{ width: '70%', backgroundColor: 'blue' }}>
@@ -504,8 +273,9 @@ function ApplicationFormView({ onDataChange,ind }) {
 
                   <Field
                     style={{ ...inputStyle, width: '450px' }}
+                    readOnly value={viewApplication.fathers_name}
                     name='fatherName'
-                    className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('fatherName', e.target.value)}
+                    className='form-control form-control-lg form-control-solid'
                   />
                   <div className='text-danger mt-2'>
                     <ErrorMessage name='fatherName' />
@@ -520,7 +290,8 @@ function ApplicationFormView({ onDataChange,ind }) {
                   <Field
                     style={{ ...inputStyle, width: '450px' }}
                     name='motherName'
-                    className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('motherName', e.target.value)}
+                    readOnly value={viewApplication.fathers_name}
+                    className='form-control form-control-lg form-control-solid'
                   />
                   <div className='text-danger mt-2'>
                     <ErrorMessage name='motherName' />
@@ -544,40 +315,16 @@ function ApplicationFormView({ onDataChange,ind }) {
           <h6>
             Pan Card Photo
           </h6>
-          {pan ? (
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
-              <div onClick={() => setPan('')} style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
-                <ClearIcon style={{ color: 'red' }} />
-              </div>
-              <img
-                src={pan}
-                alt='Uploaded Image'
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
-              />
+          <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
+            <div style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
             </div>
-          )
-            :
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', paddingTop: 40, marginTop: 20 }}>
-              <h4 className='mx-10 mt-10'>
-                PAN Card Photo
-              </h4>
-              <button type='button' onClick={handlePanUpload} className='btn btn-lg btn-primary me-3 mt-7' style={{ justifyContent: 'flex-end' }}>
-                <span className='indicator-label'>
-                  Select Files
-                </span>
-              </button>
-              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
-                Supports JPEG, JPG, PDF, PNG.
-              </p>
-              <input
-                type='file'
-                ref={panFileInputRef}
-                style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
-                onChange={handlePanSelect}
-              />
-            </div>
-          }
+            <img
+              src={viewApplication.pan_card}
+              alt='Uploaded Image'
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+          </div>
+
         </div>
         {/* <div style={{ marginLeft: 50 }}>
           <Formik initialValues={initValues} onSubmit={() => { }}>
@@ -614,40 +361,16 @@ function ApplicationFormView({ onDataChange,ind }) {
           <h6>
             Photo
           </h6>
-          {photo ? (
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
-              <div onClick={() => setPassportFrontImageURL('')} style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
-                <ClearIcon style={{ color: 'red' }} />
-              </div>
-              <img
-                src={photo}
-                alt='Uploaded Image'
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
-              />
+          <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', marginTop: 20 }}>
+            <div style={{ justifyContent: 'flex-end', position: 'absolute', backgroundColor: 'white', padding: 7, borderRadius: 50, cursor: 'pointer' }}>
             </div>
-          )
-            :
-            <div style={{ border: '4px dotted gray', width: "100%", height: 300, borderRadius: '10px', justifyContent: 'center', textAlign: 'center', paddingTop: 40, marginTop: 20 }}>
-              <h4 className='mx-10 mt-10'>
-                Traveller Photo
-              </h4>
-              <button type='button' onClick={handlePhotoUpload} className='btn btn-lg btn-primary me-3 mt-7' style={{ justifyContent: 'flex-end' }}>
-                <span className='indicator-label'>
-                  Select Files
-                </span>
-              </button>
-              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
-                Supports JPEG, JPG, PDF, PNG.
-              </p>
-              <input
-                type='file'
-                ref={photoFileInputRef}
-                style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
-                onChange={handlePhotoSelect}
-              />
-            </div>
-          }
+            <img
+              src={viewApplication.photo}
+              alt='Uploaded Image'
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+          </div>
+
         </div>
       </div>
     </div>
