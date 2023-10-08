@@ -7,6 +7,8 @@ import RoomIcon from '@mui/icons-material/Room'
 import FlightIcon from '@mui/icons-material/Flight'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import axios from 'axios';
+import axiosInstance from "../helpers/axiosInstance";
+
 // import { DateRangePicker } from 'react-date-range';
 
 type Props = {
@@ -29,7 +31,7 @@ const MerchantApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,
       country_code: values.toCountry,
       nationality_code: values.fromCountry,      
     }
-    axios.post('http://localhost:5003/backend/get_all_possible_visas', postData)
+    axiosInstance.post('/backend/get_all_possible_visas', postData)
       .then((response) => {
         console.log(values)
         let main_data: { day: number | null; entryType: string | null; country: string | null; description: string | null; receipt: any | null; value: string | null; }[] = [];

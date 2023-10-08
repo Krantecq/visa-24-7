@@ -8,10 +8,21 @@ import UpiIcon from "@mui/icons-material/TapAndPlay";
 import ClearIcon from '@mui/icons-material/Delete';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import { ICreateAccount, inits } from "../../../modules/wizards/components/CreateAccountWizardHelper";
+import axiosInstance from "../../../helpers/axiosInstance";
 
 import RoomIcon from '@mui/icons-material/Room'
 function MerchantProfile() {
     const [activeTab, setActiveTab] = useState("Profile");
+    const [formData, setFormData] = useState({
+        upi_ref_id: '',
+        receipt: '',
+        amount: ''
+    });
+
+    const handleFieldChange = (fieldName, value) => {
+        setFormData({ ...formData, [fieldName]: value });
+    };
+
 
     const [activeWalletTab, setActiveWalletTab] = useState("Bank Transfer (0% Fee)");
     const [initValues] = useState<ICreateAccount>(inits);
@@ -580,17 +591,45 @@ function MerchantProfile() {
 
         </div>
     )
+    const handleFileUpload = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
 
+            // Make a POST request to your server to upload the file
+            const response = await axiosInstance.post('/backend/upload_image/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            // Assuming your server responds with the file URL
+            const fileUrl = response.data.data;
+            return fileUrl; // Return the file URL
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            return ''; // Return an empty string in case of an error
+        }
+    };
     const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
 
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = (e) => {
+            reader.onload = async (e) => {
                 // Update the state variable with the image data (base64-encoded)
                 if (e.target) {
                     setReceiptImage(e.target.result as string);
+                    try {
+                        // Assuming handleFileUpload is an asynchronous function that returns a promise
+                        const imageLink = await handleFileUpload(file);
+
+                        // Update the form data with the image link
+                        setFormData({ ...formData, receipt: imageLink });
+                    } catch (error) {
+                        console.error('Error uploading image:', error);
+                    }
                 }
             };
 
@@ -602,6 +641,18 @@ function MerchantProfile() {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
+    };
+    const handleSaveClick = async () => {
+
+        const postBody = {
+            upi_ref_id: formData.upi_ref_id,
+            merchant_id: '123456789',
+            receipt: formData.receipt,
+            amount: formData.amount
+        }
+        const response = await axiosInstance.post('/backend/upload_receipt',postBody);
+
+        // Call the API when the "Save" button is clicked
     };
     const uploadReciept = (
 
@@ -653,10 +704,10 @@ function MerchantProfile() {
                             <div>
                                 <div className='fv-row mb-10'>
                                     <label className='form-label required'>Transaction ID</label>
-                                    <Field name='businessName'
-                                        style={{ ...inputStyle, width: '450px' }} className='form-control form-control-lg form-control-solid' />
+                                    <Field name='upi_ref_id'
+                                        style={{ ...inputStyle, width: '450px' }} className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('upi_ref_id', e.target.value)} />
                                     <div className='text-danger mt-2'>
-                                        <ErrorMessage name='businessName' />
+                                        <ErrorMessage name='upi_ref_id' />
                                     </div>
                                 </div>
 
@@ -666,16 +717,16 @@ function MerchantProfile() {
                                     </label>
                                     <Field
                                         style={{ ...inputStyle, width: '450px' }}
-                                        name='businessDescriptor'
-                                        className='form-control form-control-lg form-control-solid'
+                                        name='amount'
+                                        className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('amount', e.target.value)}
                                     />
                                     <div className='text-danger mt-2'>
-                                        <ErrorMessage name='businessDescriptor' />
+                                        <ErrorMessage name='amount' />
                                     </div>
                                 </div>
 
                                 <div className='d-flex justify-content-center'>
-                                    <button type="submit" style={{ width: 200 }} className='btn btn-primary'>
+                                    <button type="submit" style={{ width: 200 }} className='btn btn-primary' onClick={handleSaveClick}>
                                         Save
                                     </button>
                                 </div>
@@ -790,11 +841,11 @@ function MerchantProfile() {
                                 You don't have API Key, Go to Load wallet tab, do the payment and Upload the receipt
                             </p>
 
-                                <div className='d-flex justify-content-center'>
-                                    <button onClick={()=>setActiveTab('Load Wallet')} style={{ width: 200 }} className='btn btn-primary'>
-                                        Go to Wallet
-                                    </button>
-                                </div>
+                            <div className='d-flex justify-content-center'>
+                                <button onClick={() => setActiveTab('Load Wallet')} style={{ width: 200 }} className='btn btn-primary'>
+                                    Go to Wallet
+                                </button>
+                            </div>
                         </div>
                     </Form>
                 )}
