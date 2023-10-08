@@ -4,9 +4,35 @@ import {Link} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
 import {Languages} from './Languages'
 import {toAbsoluteUrl} from '../../../helpers'
+import Cookies from 'js-cookie'; 
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout} = useAuth()
+  const handleLogout = async () => {
+    try {
+      // Make a Get request to your API endpoint
+      axios.get('http://localhost:5003/backend/logout/merchant_user')
+        .then((response) => {
+          if (response.status === 200) {
+            // setLoading(false);
+            toast.success(response.data.msg);
+            Cookies.remove('isLoggedIn');
+            document.location.reload();
+          } else {
+            toast.error(response.data.msg);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching Atlys data:', error);
+          // setLoading(false);
+        });
+    } catch (error) {
+      console.error('Error:', error);
+      // setLoading(false);
+    }
+  };
   return (
     <div
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
@@ -127,7 +153,7 @@ const HeaderUserMenu: FC = () => {
       </div>
 
       <div className='menu-item px-5'>
-        <a onClick={logout} className='menu-link px-5'>
+        <a onClick={handleLogout} className='menu-link px-5'>
           Sign Out
         </a>
       </div>

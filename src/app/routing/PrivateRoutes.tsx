@@ -1,11 +1,11 @@
-import {lazy, FC, Suspense} from 'react'
-import {Route, Routes, Navigate} from 'react-router-dom'
-import {MasterLayout} from '../../_metronic/layout/MasterLayout'
+import { lazy, FC, Suspense } from 'react'
+import { Route, Routes, Navigate } from 'react-router-dom'
+import { MasterLayout } from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
-import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
-import {MenuTestPage} from '../pages/MenuTestPage'
-import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
-import {WithChildren} from '../../_metronic/helpers'
+import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper'
+import { MenuTestPage } from '../pages/MenuTestPage'
+import { getCSSVariableValue } from '../../_metronic/assets/ts/_utils'
+import { WithChildren } from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import CustomersWrapper from '../pages/customers/CustomersWrapper'
 import MerchantWrapper from '../pages/merchants/MerchantWrapper'
@@ -19,6 +19,7 @@ import ApplyVisaWrapper from '../pages/apply-visa/ApplyVisaWrapper'
 import MerchantDashboard from '../pages/merchants/dashboard/Dashboard'
 import MerchantNewVisaWrapper from '../pages/merchants/apply-visa/MerchantNewVisaWrapper'
 import MerchantProfile from '../pages/merchants/profile/MerchantProfile'
+import Cookies from 'js-cookie';
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -28,11 +29,17 @@ const PrivateRoutes = () => {
   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
 
+  const user_type = Cookies.get('user_type');
   return (
     <Routes>
       <Route element={<MasterLayout />}>
         {/* Redirect to Dashboard after success login/registartion */}
-        <Route path='auth/*' element={<Navigate to='/apply-visa' />} />
+        {user_type == 'merchant' ?
+
+          <Route path='auth/*' element={<Navigate to='/merchant/apply-visa' />} />
+          :
+          <Route path='auth/*' element={<Navigate to='/apply-visa' />} />
+        }
         {/* Pages */}
         {/* <Route path='apply-visa' element={<ApplyVisaWrapper />} /> */}
         <Route path='apply-visa' element={<NewVisaWrapper />} />
@@ -45,8 +52,8 @@ const PrivateRoutes = () => {
         <Route path='add-new-merchant' element={<AddNewMerchant />} />
         <Route path='processed' element={<ProcessedWrapper />} />
         <Route path='in-process' element={<InProcessWrapper />} />
-        <Route path='waiting-for-approval' element={< ApprovalWrapper/>} />
-        <Route path='rejected' element={<RejectedWrapper/>} />
+        <Route path='waiting-for-approval' element={< ApprovalWrapper />} />
+        <Route path='rejected' element={<RejectedWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
 
@@ -106,7 +113,7 @@ const PrivateRoutes = () => {
   )
 }
 
-const SuspensedView: FC<WithChildren> = ({children}) => {
+const SuspensedView: FC<WithChildren> = ({ children }) => {
   const baseColor = getCSSVariableValue('--bs-primary')
   TopBarProgress.config({
     barColors: {
@@ -118,4 +125,4 @@ const SuspensedView: FC<WithChildren> = ({children}) => {
   return <Suspense fallback={<TopBarProgress />}>{children}</Suspense>
 }
 
-export {PrivateRoutes}
+export { PrivateRoutes }

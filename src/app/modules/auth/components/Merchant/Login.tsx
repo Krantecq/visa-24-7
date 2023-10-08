@@ -7,6 +7,9 @@ import {useFormik} from 'formik'
 import {getUserByToken, login} from '../../core/_requests'
 import {toAbsoluteUrl} from '../../../../../_metronic/helpers'
 import {useAuth} from '../../core/Auth'
+import axios from 'axios'
+import Cookies from 'js-cookie'; 
+import { toast } from 'react-toastify'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -38,22 +41,45 @@ export function Login() {
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
-    onSubmit: async (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
+      setLoading(true);
       try {
-        const {data: auth} = await login(values.email, values.password)
-        saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
+        const requestBody = {
+          merchant_email_id: values.email,
+          merchant_password: values.password,
+        };
+        console.log(requestBody);
+        
+        axios.post('http://localhost:5003/backend/login/merchant_user', requestBody)
+          .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+              setLoading(false);
+              toast.success(response.data.msg, {
+                position: "top-center", // Center the toast notification
+              });
+              Cookies.set('isLoggedIn', 'true', { expires: 15 });
+              Cookies.set('user_id', response.data.user_id,{ expires: 15 });
+              Cookies.set('user_type', 'merchant',{ expires: 15 });
+
+              setTimeout(() => {
+                document.location.reload()                
+              }, 100);
+            } else {
+              setLoading(false);
+              toast.error(response.data.msg,{
+                position:'top-center'
+              });
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
       } catch (error) {
-        console.error(error)
-        saveAuth(undefined)
-        setStatus('The login details are incorrect')
-        setSubmitting(false)
-        setLoading(false)
+        console.error('Error:', error);
       }
     },
-  })
+  });
 
   return (
     <form

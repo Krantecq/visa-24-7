@@ -43,9 +43,9 @@ const AppRoutes: FC = () => {
           {isLoggedIn ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />
+              <Route index element={<Navigate to='/merchant/apply-visa' />} />
               <Route index element={<Navigate to='/apply-visa' />} />
               <Route index element={<Navigate to='/dashboard' />} />
-              <Route index element={<Navigate to='/merchant/apply-visa' />} />
               <Route index element={<Navigate to='/merchant/dashboard' />} />
               <Route index element={<Navigate to='/cutomers' />} />
               <Route index element={<Navigate to='/merchants' />} />
