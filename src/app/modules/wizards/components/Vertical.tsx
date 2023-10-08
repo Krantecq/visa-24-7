@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Delete';
 import MerchantApplyVisa from '../../../components/MerchantApplyVisa';
 import TravelerForm from './TravelerForm';
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify'
+
 
 import axiosInstance from "../../../helpers/axiosInstance";
 
@@ -46,6 +49,11 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
     {},
   ]);
 
+  const additionalFees = (selectedEntry.receipt['Visa Fees'] || 0) + (selectedEntry.receipt['Service Fees'] || 0);
+  const totalAmount = travelerForms.length * additionalFees;
+
+
+
   const addTravelerForm = () => {
     // Add a new traveler form with an empty data object
     setTravelerForms((prevForms) => [...prevForms, {}]);
@@ -75,7 +83,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
 
     // Format the date string
     return `${month} ${day}, ${year}`;
-};
+  };
 
   const handleReviewAndSave = async () => {
     try {
@@ -109,23 +117,31 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
 
         axiosInstance.post('/backend/create_user_application', postData)
           .then((response) => {
-            console.log(response.data.data)
+            const user_id = Cookies.get('user_id');
+
             const data = {
-              merchant_id:"650828b1eaf900fa94918f0f",
-              application_id:response.data.data
+              merchant_id: user_id,
+              application_id: response.data.data
             }
             axiosInstance.patch('/backend/add_applicant', data)
-            .then((response) => {
-              console.log(response.data.data)
-              
-      
-            })
-            .catch((error) => {
-              console.error('Error fetching Atlys data:', error);
-            });
+              .then((response) => {
+                axiosInstance.post('/backend/merchant/apply_visa',data)
+                  .then((response) => {
+                    console.log(response.data.data)
+                  })
+                  .catch((error) => {
+                    console.error('Error fetching Atlys data:', error);
+                  });
+              })
+              .catch((error) => {
+                console.error('Error fetching Atlys data:', error);
+              });
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            toast.error(error, {
+              position: 'top-center'
+          });
           });
       }
     } catch (error) {
@@ -241,7 +257,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
           <h2 style={{ fontSize: 30 }}>Price Details</h2>
           <br />
           <div style={{ padding: 10, backgroundColor: 'rgba(0, 123, 255, 0.15)', borderRadius: 10, paddingTop: 20 }}>
-          {travelerForms.map((traveler, index) => (
+            {travelerForms.map((traveler, index) => (
               <div key={index} className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
                 <h5>Traveler {index + 1}:</h5>
                 <h5>{(selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) + (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0)}/-</h5>
@@ -250,7 +266,7 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
 
             <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
               <h5>Total: </h5>
-              <h5>500/-</h5>
+              <h5>{totalAmount}/-</h5>
             </div>
             <hr />
             <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
