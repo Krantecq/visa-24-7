@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import axiosInstance from "../../../helpers/axiosInstance";
 import { CheckCircleOutline, CircleOutlined } from '@mui/icons-material';
 import { colorDarken } from '../../../../_metronic/assets/ts/_utils';
+import Loader from '../../../components/Loader';
 
 interface VerticalProps {
   selectedEntry: any; // Define the type for selectedEntry
@@ -390,6 +391,11 @@ const Vertical: React.FC<VerticalProps> = ({ selectedEntry, showfinalSubmitLoade
       </div>
     </div>
     </div>
+    {loading && (
+        <div className="loader-overlay">
+          <Loader loading ={loading} />
+        </div>
+      )}
     </div>
     
   );

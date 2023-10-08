@@ -21,8 +21,14 @@ function MerchantProfile() {
     });
 
     const [formData2, setFormData2] = useState({
-        merchant_phone_number:''
+        merchant_phone_number: '',
+        merchant_email_id: 'xyz@gmail.com',
+        merchant_gst_no: '',
+        merchant_pan_no: '',
+
     });
+
+    const user_id = Cookies.get('user_id');
 
     const handleFieldChange = (fieldName, value) => {
         setFormData({ ...formData, [fieldName]: value });
@@ -32,6 +38,8 @@ function MerchantProfile() {
     const [activeWalletTab, setActiveWalletTab] = useState("Bank Transfer (0% Fee)");
     const [initValues] = useState<ICreateAccount>(inits);
     const [recieptImage, setReceiptImage] = useState('');
+
+    const [loading, setLoading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const handleTabClick = (tabName: string) => {
         setActiveTab(tabName);
@@ -50,18 +58,18 @@ function MerchantProfile() {
         try {
             const user_id = Cookies.get('user_id');
             const postData = {
-                id:user_id
+                id: user_id
             }
-            const response = await axiosInstance.post("/backend/fetch_single_merchant_user",postData);
+            const response = await axiosInstance.post("/backend/fetch_single_merchant_user", postData);
 
-            if(response.status ==203){
+            if (response.status == 203) {
                 toast.error("Please Logout And Login Again", {
                     position: 'top-center'
                 });
             }
             // Assuming the response contains the profile data, update the state with the data
-            setFormData2(response.data.data);
-            console.log(formData2)
+            setFormData2(response.data.data[0]);
+            console.log("profile response", response)
         } catch (error) {
             console.error("Error fetching profile data:", error);
             // Handle error (e.g., show an error message)
@@ -373,6 +381,7 @@ function MerchantProfile() {
                                     <Field
                                         style={inputStyle}
                                         name='businessDescriptor'
+                                        value={formData2?.merchant_email_id}
                                         readOnly
                                         className='form-control form-control-lg form-control-solid'
                                     />
@@ -391,6 +400,7 @@ function MerchantProfile() {
                                     <Field
                                         style={inputStyle}
                                         name='merchant_phone_number'
+                                        value={formData2.merchant_phone_number}
                                         className='form-control form-control-lg form-control-solid'
                                     />
                                     <div className='text-danger mt-2'>
@@ -407,6 +417,7 @@ function MerchantProfile() {
 
                                     <Field
                                         style={{ ...inputStyle, width: '450px' }}
+                                        value={formData2.merchant_gst_no}
                                         readOnly
                                         name='businessDescriptor'
                                         className='form-control form-control-lg form-control-solid'
@@ -422,6 +433,7 @@ function MerchantProfile() {
 
                                     <Field style={{ ...inputStyle, width: '450px' }}
                                         name='businessDescriptor'
+                                        value={formData2.merchant_pan_no}
                                         readOnly
                                         className='form-control form-control-lg form-control-solid'
                                     />
@@ -674,8 +686,7 @@ function MerchantProfile() {
     };
     const handleSaveClick = async () => {
 
-        const user_id = Cookies.get('user_id');
-
+        setLoading(true);
         const postBody = {
             upi_ref_id: formData.upi_ref_id,
             merchant_id: user_id,
@@ -688,11 +699,13 @@ function MerchantProfile() {
             toast.success(response.data.msg, {
                 position: "top-center", // Center the toast notification
             });
+            setLoading(false);
         } else {
             console.log(response.data)
             toast.error(response.data.msg, {
                 position: 'top-center'
             });
+            setLoading(false);
         }
 
         // Call the API when the "Save" button is clicked
@@ -770,7 +783,13 @@ function MerchantProfile() {
 
                                 <div className='d-flex justify-content-center'>
                                     <button type="submit" style={{ width: 200 }} className='btn btn-primary' onClick={handleSaveClick}>
-                                        Save
+                                        {!loading && <span className='indicator-label'>Save</span>}
+                                        {loading && (
+                                            <span className='indicator-progress' style={{ display: 'block' }}>
+                                                Please wait...
+                                                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                                            </span>
+                                        )}
                                     </button>
                                 </div>
 
@@ -916,7 +935,7 @@ function MerchantProfile() {
                         ROYAL TRAVELS
                     </h1>
                     <h5 style={{ fontSize: 20 }}>
-                        aman@gmail.com
+                        {formData2.merchant_email_id}
                     </h5>
                 </div>
             </div>
