@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent, useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import CardIcon from "@mui/icons-material/CreditCard";
 import WalletIcon from "@mui/icons-material/Wallet";
@@ -20,6 +20,10 @@ function MerchantProfile() {
         amount: ''
     });
 
+    const [formData2, setFormData2] = useState({
+        merchant_phone_number:''
+    });
+
     const handleFieldChange = (fieldName, value) => {
         setFormData({ ...formData, [fieldName]: value });
     };
@@ -37,7 +41,32 @@ function MerchantProfile() {
         setActiveWalletTab(tabName);
     };
 
+    useEffect(() => {
+        // Fetch profile data when the component mounts
+        fetchProfileData();
+    }, []);
 
+    const fetchProfileData = async () => {
+        try {
+            const user_id = Cookies.get('user_id');
+            const postData = {
+                id:user_id
+            }
+            const response = await axiosInstance.post("/backend/fetch_single_merchant_user",postData);
+
+            if(response.status ==203){
+                toast.error("Please Logout And Login Again", {
+                    position: 'top-center'
+                });
+            }
+            // Assuming the response contains the profile data, update the state with the data
+            setFormData2(response.data.data);
+            console.log(formData2)
+        } catch (error) {
+            console.error("Error fetching profile data:", error);
+            // Handle error (e.g., show an error message)
+        }
+    };
 
     const inputStyle = {
         border: '2px solid #d3d3d3',    // Border width and color
@@ -67,7 +96,7 @@ function MerchantProfile() {
                 Agency Information
             </h2>
             <hr />
-            <Formik initialValues={initValues} onSubmit={() => { }}>
+            <Formik initialValues={formData2} onSubmit={() => { }}>
                 {() => (
                     <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
                         <div>
@@ -361,7 +390,7 @@ function MerchantProfile() {
 
                                     <Field
                                         style={inputStyle}
-                                        name='businessDescriptor'
+                                        name='merchant_phone_number'
                                         className='form-control form-control-lg form-control-solid'
                                     />
                                     <div className='text-danger mt-2'>
