@@ -35,7 +35,7 @@ const AppRoutes: FC = () => {
   // }, []);
 
   return (
-    <BrowserRouter basename={PUBLIC_URL}>
+    <BrowserRouter >
       <Routes>
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
@@ -60,7 +60,7 @@ const AppRoutes: FC = () => {
             </>
           ) : (
             <>
-              <Route path='auth/*' element={<AuthPage />} />
+              <Route path='*' element={<AuthPage />} />
               <Route path='*' element={<Navigate to='/auth' />} />
             </>
           )}

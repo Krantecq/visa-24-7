@@ -76,7 +76,7 @@ export function HeaderWrapper() {
         <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
           <img
             alt='Logo'
-            src={toAbsoluteUrl('/media/logos/default.svg')}
+            src={toAbsoluteUrl('/media/logos/logo.png')}
             className='h-20px h-lg-30px app-sidebar-logo-default'
           />
         </div>
