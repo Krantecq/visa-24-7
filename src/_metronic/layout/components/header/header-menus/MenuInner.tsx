@@ -11,6 +11,7 @@ export function MenuInner() {
       {/* <MenuItem title={'Apply Visa'} to='/apply-visa' />
 
       <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' /> */}
+      
       {/* Merchant flow */}
       
       <MenuItem title={'Apply Visa'} to='/merchant/apply-visa' />
