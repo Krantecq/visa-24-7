@@ -5,6 +5,8 @@ import { ICreateAccount, inits } from './CreateAccountWizardHelper';
 import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 function TravelerForm({ onDataChange }) {
   const [initValues] = useState<ICreateAccount>(inits);
   const passportFrontFileInputRef = useRef<HTMLInputElement | null>(null);
@@ -69,11 +71,11 @@ function TravelerForm({ onDataChange }) {
       reader.onload = async (e) => {
         if (e.target) {
           setPassportFrontImageURL(e.target.result as string);
-  
+
           try {
             // Assuming handleFileUpload is an asynchronous function that returns a promise
             const imageLink = await handleFileUpload(file);
-  
+
             // Update the form data with the image link
             setFormData({ ...formData, passFrontPhoto: imageLink });
             onDataChange({ ...formData, passFrontPhoto: imageLink });
@@ -85,7 +87,7 @@ function TravelerForm({ onDataChange }) {
       reader.readAsDataURL(file);
     }
   };
-  
+
   const handleImageUpload = () => {
     // Trigger the hidden file input
     if (passportFrontFileInputRef.current) {
@@ -105,7 +107,7 @@ function TravelerForm({ onDataChange }) {
           try {
             // Assuming handleFileUpload is an asynchronous function that returns a promise
             const imageLink = await handleFileUpload(file);
-  
+
             // Update the form data with the image link
             setFormData({ ...formData, passBackPhoto: imageLink });
             onDataChange({ ...formData, passBackPhoto: imageLink });
@@ -138,7 +140,7 @@ function TravelerForm({ onDataChange }) {
           try {
             // Assuming handleFileUpload is an asynchronous function that returns a promise
             const imageLink = await handleFileUpload(file);
-  
+
             // Update the form data with the image link
             setFormData({ ...formData, travelerPhoto: imageLink });
             onDataChange({ ...formData, travelerPhoto: imageLink });
@@ -157,7 +159,7 @@ function TravelerForm({ onDataChange }) {
       photoFileInputRef.current.click();
     }
   };
- 
+
   // Function to handle file selection
   const handlePanSelect = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -166,11 +168,11 @@ function TravelerForm({ onDataChange }) {
       reader.onload = async (e) => {
         if (e.target) {
           setPan(e.target.result as string);
-  
+
           try {
             // Assuming handleFileUpload is an asynchronous function that returns a promise
             const imageLink = await handleFileUpload(file);
-  
+
             // Update the form data with the image link
             setFormData({ ...formData, panPhoto: imageLink });
             onDataChange({ ...formData, panPhoto: imageLink });
@@ -189,12 +191,16 @@ function TravelerForm({ onDataChange }) {
       panFileInputRef.current.click();
     }
   };
- 
+
 
   const handleFieldChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value });
     onDataChange({ ...formData, [fieldName]: value });
   };
+
+  const [issueDate, setIssueDate] = useState(null);
+  const [expiryDate, setExpiryDate] = useState(null);
+  const [dob, setDob] = useState(null);
 
 
 
@@ -263,8 +269,22 @@ function TravelerForm({ onDataChange }) {
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div>
+                  <div className='fv-row mb-5'>
+                    <label className='d-flex align-items-center form-label'>
+                      <span className='required'>Passport Number</span>
+                    </label>
+
+                    <Field
+                      style={{ ...inputStyle, width: '450px' }}
+                      name='fatherName'
+                      className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('fatherName', e.target.value)}
+                    />
+                    <div className='text-danger mt-2'>
+                      <ErrorMessage name='fatherName' />
+                    </div>
+                  </div>
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
-                    <div className='fv-row mb-10'>
+                    <div className='fv-row mb-5'>
                       <label className='form-label required'>First Name</label>
 
                       <Field name='firstName' style={inputStyle} className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('firstName', e.target.value)} />
@@ -272,7 +292,7 @@ function TravelerForm({ onDataChange }) {
                         <ErrorMessage name='businessName' />
                       </div>
                     </div>
-                    <div className='fv-row mb-10'>
+                    <div className='fv-row mb-5'>
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Last Name</span>
                       </label>
@@ -289,7 +309,7 @@ function TravelerForm({ onDataChange }) {
                   </div>
 
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
-                    <div className='fv-row mb-10'>
+                    <div className='fv-row mb-5'>
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Birth Place</span>
                       </label>
@@ -303,22 +323,66 @@ function TravelerForm({ onDataChange }) {
                         <ErrorMessage name='birthPlace' />
                       </div>
                     </div>
-                    <div className='fv-row mb-10'>
-                      <label className='d-flex align-items-center form-label'>
-                        <span className='required'>Birth Detail</span>
-                      </label>
+                    <div className='fv-row mb-5'>
+                    <label className='d-flex align-items-center form-label'>
+                      <span className='required'>Date of Birth</span>
+                    </label>
 
-                      <Field
-                        style={inputStyle}
-                        name='birthDetail'
-                        className='form-control form-control-lg form-control-solid' onChange={(e) => handleFieldChange('birthDetail', e.target.value)}
-                      />
-                      <div className='text-danger mt-2'>
-                        <ErrorMessage name='birthDetail' />
-                      </div>
+                    <DatePicker
+                      name='accountName'
+                      selected={dob}
+                      onChange={(date) => setDob(date)}
+                      className='form-control form-control-lg form-control-solid'
+                      dateFormat='MM/dd/yyyy'
+                      placeholderText='Select DOB'
+                      style={inputStyle}
+                    />
+
+                    <div className='text-danger mt-2'>
+                      <ErrorMessage name='accountName' />
                     </div>
                   </div>
+                  </div>
 
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
+                    <div className='fv-row mb-5'>
+                      <label className='d-flex align-items-center form-label'>
+                        <span className='required'>Passport Issue Date</span>
+                      </label>
+
+                      <DatePicker
+                        name='last_name'
+                        selected={issueDate}
+                        onChange={(date) => setIssueDate(date)}
+                        className='form-control form-control-lg form-control-solid'
+                        dateFormat='MM/dd/yyyy'
+                        placeholderText='Select Issue Date'
+                      />
+
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='passport_issueDate' />
+                      </div>
+                    </div>
+                  
+                  <div className='fv-row mb-5'>
+                    <label className='d-flex align-items-center form-label'>
+                      <span className='required'>Passport Expiry Date</span>
+                    </label>
+
+                    <DatePicker
+                      name='accountName'
+                      selected={expiryDate}
+                      onChange={(date) => setExpiryDate(date)}
+                      className='form-control form-control-lg form-control-solid'
+                      dateFormat='MM/dd/yyyy'
+                      placeholderText='Select Expiry Date'
+                    />
+
+                    <div className='text-danger mt-2'>
+                      <ErrorMessage name='accountName' />
+                    </div>
+                  </div>
+                  </div>
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-10'>
                       <label className='form-label required'>Gender</label>
@@ -326,7 +390,7 @@ function TravelerForm({ onDataChange }) {
                       <Field
                         as='select'
                         name='gender'
-                        style={{ width: 215 }}
+                        style={{ ...inputStyle, width: '215px',backgroundColor:'white' }}
                         className='form-select form-select-lg form-select-solid' onChange={(e) => handleFieldChange('gender', e.target.value)}
                       >
                         <option></option>
@@ -343,7 +407,7 @@ function TravelerForm({ onDataChange }) {
 
                       <Field
                         as='select'
-                        style={{ width: 215 }}
+                        style={{ ...inputStyle, width: '215px',backgroundColor:'white' }}
                         name='maritalStatus'
                         className='form-select form-select-lg form-select-solid' onChange={(e) => handleFieldChange('maritalStatus', e.target.value)}
                       >
