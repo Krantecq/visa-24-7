@@ -154,7 +154,7 @@ export function Login() {
         <div />
 
         {/* begin::Link */}
-        <Link to='/auth/superadmin/forgot-password' className='link-primary'>
+        <Link to='/superadmin/forgot-password' className='link-primary'>
           Forgot Password ?
         </Link>
         {/* end::Link */}

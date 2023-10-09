@@ -152,7 +152,7 @@ export function Login() {
         <div />
 
         {/* begin::Link */}
-        <Link to='/auth/merchant/forgot-password' className='link-primary'>
+        <Link to='/merchant/forgot-password' className='link-primary'>
           Forgot Password ?
         </Link>
         {/* end::Link */}
@@ -180,7 +180,7 @@ export function Login() {
 
       <div className='text-gray-500 text-center fw-semibold fs-6'>
         Not a Member yet?{' '}
-        <Link to='/auth/merchant/registration' className='link-primary'>
+        <Link to='/merchant/registration' className='link-primary'>
           Sign up
         </Link>
       </div>

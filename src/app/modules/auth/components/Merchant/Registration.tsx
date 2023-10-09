@@ -48,6 +48,8 @@ const registrationSchema = Yup.object().shape({
 export function Registration() {
   const [loading, setLoading] = useState(false)
   const {saveAuth, setCurrentUser} = useAuth()
+  const [panPhotoUrl, setPanPhotoUrl] = useState('');
+  const [photo, setPhoto] = useState('');
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
@@ -74,6 +76,26 @@ export function Registration() {
     },
   })
 
+  
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      if (name === 'photo') {
+        setPhoto('');
+      } else if (name === 'panPhotoUrl') {
+        setPanPhotoUrl('');
+      }
+    } else {
+
+      if (name === 'photo') {
+        setPhoto(value);
+      } else if (name === 'panPhotoUrl') {
+        setPanPhotoUrl(value);
+      }
+
+    }
+  };
+
   useEffect(() => {
     PasswordMeterComponent.bootstrap()
   }, [])
@@ -97,8 +119,8 @@ export function Registration() {
 
 
       {/* begin::Form group Firstname */}
-      <div className='fv-row mb-8'>
-        <label className='form-label fw-bolder text-dark fs-6'>First name</label>
+      <div className='fv-row mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>Name</label>
         <input
           placeholder='First name'
           type='text'
@@ -123,11 +145,11 @@ export function Registration() {
         )}
       </div>
       {/* end::Form group */}
-      <div className='fv-row mb-8'>
+      <div className='fv-row mb-5'>
         {/* begin::Form group Lastname */}
-        <label className='form-label fw-bolder text-dark fs-6'>Last name</label>
+        <label className='form-label fw-bolder text-dark fs-6'>Company name</label>
         <input
-          placeholder='Last name'
+          placeholder='Company name'
           type='text'
           autoComplete='off'
           {...formik.getFieldProps('lastname')}
@@ -152,7 +174,7 @@ export function Registration() {
       </div>
 
       {/* begin::Form group Email */}
-      <div className='fv-row mb-8'>
+      <div className='fv-row mb-5'>
         <label className='form-label fw-bolder text-dark fs-6'>Email</label>
         <input
           placeholder='Email'
@@ -176,83 +198,241 @@ export function Registration() {
         )}
       </div>
       {/* end::Form group */}
-
-      {/* begin::Form group Password */}
-      <div className='fv-row mb-8' data-kt-password-meter='true'>
-        <div className='mb-1'>
-          <label className='form-label fw-bolder text-dark fs-6'>Password</label>
-          <div className='position-relative mb-3'>
-            <input
-              type='password'
-              placeholder='Password'
-              autoComplete='off'
-              {...formik.getFieldProps('password')}
-              className={clsx(
-                'form-control bg-transparent',
-                {
-                  'is-invalid': formik.touched.password && formik.errors.password,
-                },
-                {
-                  'is-valid': formik.touched.password && !formik.errors.password,
-                }
-              )}
-            />
-            {formik.touched.password && formik.errors.password && (
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block'>
-                  <span role='alert'>{formik.errors.password}</span>
-                </div>
-              </div>
-            )}
-          </div>
-          {/* begin::Meter */}
-          <div
-            className='d-flex align-items-center mb-3'
-            data-kt-password-meter-control='highlight'
-          >
-            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2'></div>
-            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2'></div>
-            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2'></div>
-            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px'></div>
-          </div>
-          {/* end::Meter */}
-        </div>
-        <div className='text-muted'>
-          Use 8 or more characters with a mix of letters, numbers & symbols.
-        </div>
-      </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group Confirm password */}
       <div className='fv-row mb-5'>
-        <label className='form-label fw-bolder text-dark fs-6'>Confirm Password</label>
+        <label className='form-label fw-bolder text-dark fs-6'>Contact Number</label>
         <input
-          type='password'
-          placeholder='Password confirmation'
+          placeholder='Contact Number'
+          type='email'
           autoComplete='off'
-          {...formik.getFieldProps('changepassword')}
+          {...formik.getFieldProps('email')}
           className={clsx(
             'form-control bg-transparent',
+            {'is-invalid': formik.touched.email && formik.errors.email},
             {
-              'is-invalid': formik.touched.changepassword && formik.errors.changepassword,
-            },
-            {
-              'is-valid': formik.touched.changepassword && !formik.errors.changepassword,
+              'is-valid': formik.touched.email && !formik.errors.email,
             }
           )}
         />
-        {formik.touched.changepassword && formik.errors.changepassword && (
+        {formik.touched.email && formik.errors.email && (
           <div className='fv-plugins-message-container'>
             <div className='fv-help-block'>
-              <span role='alert'>{formik.errors.changepassword}</span>
+              <span role='alert'>{formik.errors.email}</span>
             </div>
           </div>
         )}
       </div>
+      
+      <div className='fv-row mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>GST</label>
+        <input
+          placeholder='GST No.'
+          type='email'
+          autoComplete='off'
+          {...formik.getFieldProps('email')}
+          className={clsx(
+            'form-control bg-transparent',
+            {'is-invalid': formik.touched.email && formik.errors.email},
+            {
+              'is-valid': formik.touched.email && !formik.errors.email,
+            }
+          )}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.email}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className='fv-row mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>PAN</label>
+        <input
+          placeholder='Email'
+          type='email'
+          autoComplete='off'
+          {...formik.getFieldProps('email')}
+          className={clsx(
+            'form-control bg-transparent',
+            {'is-invalid': formik.touched.email && formik.errors.email},
+            {
+              'is-valid': formik.touched.email && !formik.errors.email,
+            }
+          )}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.email}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className='fv-row mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>Country</label>
+        <input
+          placeholder='Country'
+          type='email'
+          autoComplete='off'
+          {...formik.getFieldProps('email')}
+          className={clsx(
+            'form-control bg-transparent',
+            {'is-invalid': formik.touched.email && formik.errors.email},
+            {
+              'is-valid': formik.touched.email && !formik.errors.email,
+            }
+          )}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.email}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className='fv-row mb-5'>
+        {/* begin::Form group Lastname */}
+        <label className='form-label fw-bolder text-dark fs-6'>Address one line</label>
+        <input
+          placeholder='Company name'
+          type='text'
+          autoComplete='off'
+          {...formik.getFieldProps('lastname')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.lastname && formik.errors.lastname,
+            },
+            {
+              'is-valid': formik.touched.lastname && !formik.errors.lastname,
+            }
+          )}
+        />
+        {formik.touched.lastname && formik.errors.lastname && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.lastname}</span>
+            </div>
+          </div>
+        )}
+        {/* end::Form group */}
+      </div>
+      <div className='fv-row mb-5'>
+        {/* begin::Form group Lastname */}
+        <label className='form-label fw-bolder text-dark fs-6'>Address second line</label>
+        <input
+          placeholder='Company name'
+          type='text'
+          autoComplete='off'
+          {...formik.getFieldProps('lastname')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.lastname && formik.errors.lastname,
+            },
+            {
+              'is-valid': formik.touched.lastname && !formik.errors.lastname,
+            }
+          )}
+        />
+        {formik.touched.lastname && formik.errors.lastname && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.lastname}</span>
+            </div>
+          </div>
+        )}
+        {/* end::Form group */}
+      </div>
+      <div className='fv-row mb-5'>
+        {/* begin::Form group Lastname */}
+        <label className='form-label fw-bolder text-dark fs-6'>State</label>
+        <input
+          placeholder='Company name'
+          type='text'
+          autoComplete='off'
+          {...formik.getFieldProps('lastname')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.lastname && formik.errors.lastname,
+            },
+            {
+              'is-valid': formik.touched.lastname && !formik.errors.lastname,
+            }
+          )}
+        />
+        {formik.touched.lastname && formik.errors.lastname && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.lastname}</span>
+            </div>
+          </div>
+        )}
+        {/* end::Form group */}
+      </div>
+      <div className='fv-row mb-5'>
+        {/* begin::Form group Lastname */}
+        <label className='form-label fw-bolder text-dark fs-6'>Zip Code</label>
+        <input
+          placeholder='Company name'
+          type='text'
+          autoComplete='off'
+          {...formik.getFieldProps('lastname')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.lastname && formik.errors.lastname,
+            },
+            {
+              'is-valid': formik.touched.lastname && !formik.errors.lastname,
+            }
+          )}
+        />
+        {formik.touched.lastname && formik.errors.lastname && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.lastname}</span>
+            </div>
+          </div>
+        )}
+        {/* end::Form group */}
+      </div>
+      
+      <div className='mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+                      Upload Profile Photo
+                    </label>
+                    <input
+                      type='file'
+                      className='form-control'
+                      id='aadharFront'
+                      name='photo'
+                      accept='image/*'
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  
+      <div className='mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+                      Upload Pan card Photo
+                    </label>
+                    <input
+                      type='file'
+                      className='form-control'
+                      id='panPhotoUrl'
+                      name='panPhotoUrl'
+                      accept='image/*'
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
       {/* end::Form group */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-8'>
+      <div className='fv-row mb-5'>
         <label className='form-check form-check-inline' htmlFor='kt_login_toc_agree'>
           <input
             className='form-check-input'
@@ -298,7 +478,7 @@ export function Registration() {
             </span>
           )}
         </button>
-        <Link to='/auth/merchant/login'>
+        <Link to='/merchant/login'>
           <button
             type='button'
             id='kt_login_signup_form_cancel_button'

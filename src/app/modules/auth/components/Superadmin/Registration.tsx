@@ -352,7 +352,7 @@ export function Registration() {
             </span>
           )}
         </button>
-        <Link to='/auth/superadmin/login'>
+        <Link to='/superadmin/login'>
           <button
             type='button'
             id='kt_login_signup_form_cancel_button'

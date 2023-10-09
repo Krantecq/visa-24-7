@@ -352,7 +352,7 @@ export function Registration() {
             </span>
           )}
         </button>
-        <Link to='/auth/customer/login'>
+        <Link to='/customer/login'>
           <button
             type='button'
             id='kt_login_signup_form_cancel_button'

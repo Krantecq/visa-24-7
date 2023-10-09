@@ -114,7 +114,7 @@ export function ForgotPassword() {
             </span>
           )}
         </button>
-        <Link to='/auth/customer/login'>
+        <Link to='/customer/login'>
           <button
             type='button'
             id='kt_login_password_reset_form_cancel_button'

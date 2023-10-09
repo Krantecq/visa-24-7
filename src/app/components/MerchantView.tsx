@@ -81,7 +81,7 @@ function MerchantView({viewApplication}) {
         </div>
         <div
           className='d-flex flex-row-fluid flex-center bg-body rounded'
-          style={{width: '70%', backgroundColor: 'blue'}}
+          style={{width: '70%',}}
         >
           <Formik initialValues={initValues} onSubmit={() => {}}>
             {() => (
@@ -564,6 +564,28 @@ function MerchantView({viewApplication}) {
                       </div>
                     </div>
                   </div>
+                  
+              <div
+                // onClick={handleReviewAndSave}
+                className='mt-10'
+                style={{
+                  height: 40,
+                  width: 190,
+                  border: '1px solid',
+                  marginLeft: 20,
+                  borderColor: '#696969',
+                  borderRadius: 25,
+                  alignItems: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  backgroundColor: '#332786',
+                  cursor: 'pointer',
+                }}
+              >
+                <h6 className='fs-4' style={{color: 'white', paddingTop: 7}}>
+                  Save
+                </h6>
+              </div>
               </Form>
             )}
           </Formik>
