@@ -54,13 +54,21 @@ export function Login() {
           .then((response) => {
             console.log(response);
             if (response.status === 200) {
-              setLoading(false);
-              toast.success(response.data.msg);
+              setLoading(false);            
+              toast.success(response.data.msg, {
+                position: "top-center", // Center the toast notification
+              });
               Cookies.set('isLoggedIn', 'true', { expires: 7 });
-              document.location.reload()
+              Cookies.set('user_id', response.data.user_id,{ expires: 15 });
+              Cookies.set('user_type', 'super_admin',{ expires: 15 });
+              setTimeout(() => {
+                window.location.href = '/superadmin/apply-visa'                
+              }, 400);
             } else {
               setLoading(false);
-              toast.error(response.data.msg);
+              toast.error(response.data.msg,{
+                position:'top-center'
+              });
             }
           })
           .catch((error) => {

@@ -1,32 +1,38 @@
-import {useIntl} from 'react-intl'
-import {MenuItem} from './MenuItem'
-import {MenuInnerWithSub} from './MenuInnerWithSub'
-import {MegaMenu} from './MegaMenu'
-
+import { useIntl } from 'react-intl'
+import { MenuItem } from './MenuItem'
+import { MenuInnerWithSub } from './MenuInnerWithSub'
+import { MegaMenu } from './MegaMenu'
+import Cookies from 'js-cookie';
 export function MenuInner() {
   const intl = useIntl()
+
+  const user_type = Cookies.get('user_type');
   return (
     <>
-    {/* Super admin flow */}
-      {/* <MenuItem title={'Apply Visa'} to='/apply-visa' />
+      {/* Super admin flow */}
+      {user_type == 'super_admin' ?
+        <>
+          {/* <MenuItem title={'Apply Visa'} to='/superadmin/apply-visa' />
 
-      <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' /> */}
-      
-      {/* Merchant flow */}
-      
-      <MenuItem title={'Apply Visa'} to='/merchant/apply-visa' />
+          <MenuItem title={intl.formatMessage({ id: 'MENU.DASHBOARD' })} to='/superadmin/dashboard' /> */}
+        </>
+        :
 
-      <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/merchant/dashboard' />
+        <>
+          <MenuItem title={'Apply Visa'} to='/merchant/apply-visa' />
 
+          <MenuItem title={intl.formatMessage({ id: 'MENU.DASHBOARD' })} to='/merchant/dashboard' />
+        </>
+      }
 
-            {/* <MenuInnerWithSub
+      {/* <MenuInnerWithSub
         title='Crafted'
         to='/crafted'
         menuPlacement='bottom-start'
         menuTrigger='click'
       > */}
-        {/* PAGES */}
-        {/* <MenuInnerWithSub
+      {/* PAGES */}
+      {/* <MenuInnerWithSub
           title='Pages'
           to='/crafted/pages'
           fontIcon='bi-archive'
@@ -65,8 +71,8 @@ export function MenuInner() {
           </MenuInnerWithSub>
         </MenuInnerWithSub> */}
 
-        {/* ACCOUNT */}
-        {/* <MenuInnerWithSub
+      {/* ACCOUNT */}
+      {/* <MenuInnerWithSub
           title='Accounts'
           to='/crafted/accounts'
           fontIcon='bi-person'
@@ -78,8 +84,8 @@ export function MenuInner() {
           <MenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
         </MenuInnerWithSub> */}
 
-        {/* ERRORS */}
-        {/* <MenuInnerWithSub
+      {/* ERRORS */}
+      {/* <MenuInnerWithSub
           title='Errors'
           to='/error'
           fontIcon='bi-sticky'
@@ -91,8 +97,8 @@ export function MenuInner() {
           <MenuItem to='/error/500' title='Error 500' hasBullet={true} />
         </MenuInnerWithSub> */}
 
-        {/* Widgets */}
-        {/* <MenuInnerWithSub
+      {/* Widgets */}
+      {/* <MenuInnerWithSub
           title='Widgets'
           to='/crafted/widgets'
           fontIcon='bi-layers'
@@ -110,8 +116,8 @@ export function MenuInner() {
       </MenuInnerWithSub> */}
 
       {/* <MenuInnerWithSub title='Apps' to='/apps' menuPlacement='bottom-start' menuTrigger='click'> */}
-        {/* PAGES */}
-        {/* <MenuInnerWithSub
+      {/* PAGES */}
+      {/* <MenuInnerWithSub
           title='Chat'
           to='/apps/chat'
           icon='message-text-2'

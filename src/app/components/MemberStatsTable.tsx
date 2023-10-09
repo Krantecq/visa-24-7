@@ -2,6 +2,8 @@
 import React from 'react'
 import {KTIcon, toAbsoluteUrl} from '../../_metronic/helpers'
 import { Link } from 'react-router-dom'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+
 
 type Props = {
   className: string
@@ -18,8 +20,10 @@ const MemberStatsTable: React.FC<Props> = ({className,data}) => {
           <span className='text-muted mt-1 fw-semibold fs-7'>3 New Member</span>
         </h3>
         <div>
+          
+        <button className='btn btn-primary align-self-center'>All</button>
         <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button>
-        <Link to={'/add-new-merchant'}>
+        <Link to={'/superadmin/add-new-merchant'}>
         <button className='btn btn-primary align-self-center'>Add new Merchant</button>
         </Link>
         </div>
@@ -39,11 +43,11 @@ const MemberStatsTable: React.FC<Props> = ({className,data}) => {
                   <tr className='fw-bold text-muted'>
                     <th className='min-w-150px'>Agent</th>
                     <th className='min-w-150px'>Wallet Balance</th>
-                    <th className='min-w-150px'>No. Of Visa</th>
-                    <th className='min-w-150px text-start'>Company</th>
+                    <th className='min-w-100px'>No. Of Visa</th>
+                    <th className='min-w-100px text-start'>Company</th>
                     <th className='min-w-150px text-end'>Joining Date</th>
                     <th className='min-w-150px text-end'>API KEY</th>
-                    <th className='min-w-150px text-end'>Action</th>
+                    <th className='min-w-100px text-end'>Action</th>
                   </tr>
                 </thead>
                 {/* end::Table head */}
@@ -86,6 +90,12 @@ const MemberStatsTable: React.FC<Props> = ({className,data}) => {
                       </td>
                       <td className='text-end'>
                         <span className='text-muted fw-semibold d-block fs-7'>{item.merchant_api_key}</span>
+                      </td>
+                      <td className='text-end'>
+                      <div className='d-flex justify-content-center align-items-center flex-shrink-0'>
+                      <VisibilityIcon className='mx-5 cursor-pointer' />
+        <button className='btn btn-primary align-self-center'>Approv</button>
+                    </div>
                       </td>
                     </tr>
                   ))}

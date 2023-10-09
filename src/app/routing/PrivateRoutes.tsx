@@ -38,22 +38,22 @@ const PrivateRoutes = () => {
 
           <Route path='auth/*' element={<Navigate to='/merchant/apply-visa' />} />
           :
-          <Route path='auth/*' element={<Navigate to='/apply-visa' />} />
+          <Route path='auth/*' element={<Navigate to='/superadmin/dashboard' />} />
         }
         {/* Pages */}
         {/* <Route path='apply-visa' element={<ApplyVisaWrapper />} /> */}
-        <Route path='apply-visa' element={<NewVisaWrapper />} />
+        <Route path='superadmin/apply-visa' element={<NewVisaWrapper />} />
         <Route path='merchant/apply-visa' element={<MerchantNewVisaWrapper />} />
         <Route path='merchant/dashboard' element={<MerchantDashboard />} />
         <Route path='merchant/profile' element={<MerchantProfile />} />
-        <Route path='dashboard' element={<DashboardWrapper />} />
-        <Route path='customers' element={<CustomersWrapper />} />
-        <Route path='merchants' element={<MerchantWrapper />} />
-        <Route path='add-new-merchant' element={<AddNewMerchant />} />
-        <Route path='processed' element={<ProcessedWrapper />} />
-        <Route path='in-process' element={<InProcessWrapper />} />
-        <Route path='waiting-for-approval' element={< ApprovalWrapper />} />
-        <Route path='rejected' element={<RejectedWrapper />} />
+        <Route path='superadmin/dashboard' element={<DashboardWrapper />} />
+        <Route path='superadmin/customers' element={<CustomersWrapper />} />
+        <Route path='superadmin/merchants' element={<MerchantWrapper />} />
+        <Route path='superadmin/add-new-merchant' element={<AddNewMerchant />} />
+        <Route path='superadmin/processed' element={<ProcessedWrapper />} />
+        <Route path='superadmin/in-process' element={<InProcessWrapper />} />
+        <Route path='superadmin/waiting-for-approval' element={< ApprovalWrapper />} />
+        <Route path='superadmin/rejected' element={<RejectedWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
 

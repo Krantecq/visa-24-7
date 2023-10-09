@@ -11,19 +11,19 @@ const SidebarMenuMain = () => {
   return (
     <>
       <SidebarMenuItem
-        to='/dashboard'
+        to='/superadmin/dashboard'
         icon='element-11'
         title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/customers'
+        to='/superadmin/customers'
         icon='element-11'
         title={'Customers'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/merchants'
+        to='/superadmin/merchants'
         icon='element-11'
         title={'Merchants'}
         fontIcon='bi-app-indicator'
@@ -34,32 +34,32 @@ const SidebarMenuMain = () => {
           <span className='menu-section text-muted text-uppercase fs-8 ls-1'>VISA</span>
         </div>
       </div>
-      <SidebarMenuItem
+      {/* <SidebarMenuItem
         to='/apply-visa'
         icon='element-11'
         title={'Create New VISA'}
         fontIcon='bi-app-indicator'
-      />
+      /> */}
       <SidebarMenuItem
-        to='/processed'
+        to='/superadmin/processed'
         icon='element-11'
         title={'Processed'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/in-process'
+        to='/superadmin/in-process'
         icon='element-11'
         title={'In-Process'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/waiting-for-approval'
+        to='/superadmin/waiting-for-approval'
         icon='element-11'
         title={'Waiting For Approval'}
         fontIcon='bi-app-indicator'
       />{' '}
       <SidebarMenuItem
-        to='/rejected'
+        to='/superadmin/rejected'
         icon='element-11'
         title={'Rejected'}
         fontIcon='bi-app-indicator'

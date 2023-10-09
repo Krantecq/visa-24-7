@@ -13,14 +13,15 @@ const HeaderUserMenu: FC = () => {
   const navigate= useNavigate();
   const handleLogout = async () => {
     try {
-      // Make a Get request to your API endpoint
       axios.get('http://localhost:5003/backend/logout/merchant_user')
         .then((response) => {
           if (response.status === 200) {
             // setLoading(false);
             toast.success(response.data.msg);
             Cookies.remove('isLoggedIn');
-            navigate('\merchant\login')
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 400);
           } else {
             toast.error(response.data.msg);
           }

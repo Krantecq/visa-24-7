@@ -63,8 +63,8 @@ export function Login() {
               Cookies.set('user_type', 'merchant',{ expires: 15 });
 
               setTimeout(() => {
-                document.location.reload()                
-              }, 100);
+                window.location.href = '/merchant/apply-visa'                
+              }, 400);
             } else {
               setLoading(false);
               toast.error(response.data.msg,{

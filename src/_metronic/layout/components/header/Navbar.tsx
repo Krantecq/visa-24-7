@@ -16,8 +16,12 @@ const btnIconClass = 'fs-2'
 const Navbar = () => {
   const { config } = useLayout();
   const [currentWallet,setCurrentWallet] = useState('');
+  
+  const user_type = Cookies.get('user_type');
   useEffect(()=>{
+    if(user_type == 'merchant'){
     fetchwallet();
+    }
   },[])
   const fetchwallet = async () => {
     try {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MemberStatsTable } from '../../components/MemberStatsTable'
 import axios from 'axios';
+import axiosInstance from '../../helpers/axiosInstance';
 
 function MerchantWrapper() {
   // Define the initial state for memberStatsData
@@ -14,7 +15,7 @@ function MerchantWrapper() {
           // Your POST data goes here
         };
         // Make a POST request to your API endpoint
-        axios.post('http://localhost:5003/backend/fetch_merchant_user', postData)
+        axiosInstance.post('/backend/fetch_merchant_user', postData)
           .then((response) => {
             console.log(response.data)
             setMemberStatsData(response.data.data);

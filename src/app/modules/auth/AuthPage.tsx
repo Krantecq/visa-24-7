@@ -22,7 +22,7 @@ const AuthPage = () => (
       <Route path='customer/login' element={<CustomerLogin />} />
       <Route path='customer/registration' element={<CustomerRegistration />} />
       <Route path='customer/forgot-password' element={<CustomerForgotPassword />} />
-      <Route index element={<MerchantLogin />} />
+      <Route index element={<CustomerLogin />} />
     </Route>
   </Routes>
 );
