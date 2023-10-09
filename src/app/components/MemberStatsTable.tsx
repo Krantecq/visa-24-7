@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import {KTIcon, toAbsoluteUrl} from '../../_metronic/helpers'
+import React, { useState, CSSProperties } from 'react'
+import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
 import { Link } from 'react-router-dom'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import MerchantView from './MerchantView'
+import { CloseOutlined } from '@mui/icons-material'
 
 
 type Props = {
@@ -10,8 +12,41 @@ type Props = {
   data: any[];
 }
 
-const MemberStatsTable: React.FC<Props> = ({className,data}) => {
+const overlayStyle: CSSProperties = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 9999,
+  opacity: 0,
+  visibility: 'hidden',
+  transition: 'opacity 0.3s, visibility 0.3s',
+};
+
+const activeOverlayStyle: CSSProperties = {
+  opacity: 1,
+  visibility: 'visible',
+};
+const contentStyle: CSSProperties = {
+  backgroundColor: '#fff', // Background color for highlighting
+  padding: '10px', // Adjust padding as needed
+  borderRadius: '5px', // Rounded corners for the highlight
+  // textAlign:'center',
+  width:'70%',
+  height:'70%',
+  overflowY:'auto'
+};
+
+
+const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
+  const [visible, setVisible] = useState(false);
   return (
+    <div style={{backgroundColor:'#fff'}} className='w-full'>
     <div className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
@@ -20,12 +55,12 @@ const MemberStatsTable: React.FC<Props> = ({className,data}) => {
           <span className='text-muted mt-1 fw-semibold fs-7'>3 New Member</span>
         </h3>
         <div>
-          
-        <button className='btn btn-primary align-self-center'>All</button>
-        <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button>
-        <Link to={'/superadmin/add-new-merchant'}>
-        <button className='btn btn-primary align-self-center'>Add new Merchant</button>
-        </Link>
+
+          <button className='btn btn-primary align-self-center'>All</button>
+          <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button>
+          <Link to={'/superadmin/add-new-merchant'}>
+            <button className='btn btn-primary align-self-center'>Add new Merchant</button>
+          </Link>
         </div>
       </div>
       {/* end::Header */}
@@ -39,7 +74,7 @@ const MemberStatsTable: React.FC<Props> = ({className,data}) => {
               {/* begin::Table */}
               <table className='table align-middle gs-2 gy-3'>
                 {/* begin::Table head */}
-                <thead className='px-2' style={{background: '#F9F9F9'}}>
+                <thead className='px-2' style={{ background: '#F9F9F9' }}>
                   <tr className='fw-bold text-muted'>
                     <th className='min-w-150px'>Agent</th>
                     <th className='min-w-150px'>Wallet Balance</th>
@@ -92,10 +127,10 @@ const MemberStatsTable: React.FC<Props> = ({className,data}) => {
                         <span className='text-muted fw-semibold d-block fs-7'>{item.merchant_api_key}</span>
                       </td>
                       <td className='text-end'>
-                      <div className='d-flex justify-content-center align-items-center flex-shrink-0'>
-                      <VisibilityIcon className='mx-5 cursor-pointer' />
-        <button className='btn btn-primary align-self-center'>Approv</button>
-                    </div>
+                        <div className='d-flex justify-content-center align-items-center flex-shrink-0'>
+                          <VisibilityIcon onClick={() => setVisible(true)} className='mx-5 cursor-pointer' />
+                          <button className='btn btn-primary align-self-center'>Approv</button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -106,299 +141,26 @@ const MemberStatsTable: React.FC<Props> = ({className,data}) => {
             {/* end::Table */}
           </div>
           {/* end::Tap pane */}
-          {/* begin::Tap pane */}
-          <div className='tab-pane fade' id='kt_table_widget_6_tab_2'>
-            {/* begin::Table container */}
-            <div className='table-responsive'>
-              {/* begin::Table */}
-              <table className='table align-middle gs-0 gy-3'>
-                {/* begin::Table head */}
-                <thead>
-                  <tr>
-                    <th className='p-0 w-50px'></th>
-                    <th className='p-0 min-w-150px'></th>
-                    <th className='p-0 min-w-140px'></th>
-                    <th className='p-0 min-w-120px'></th>
-                  </tr>
-                </thead>
-                {/* end::Table head */}
-                {/* begin::Table body */}
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className='symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/018-girl-9.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                        Jessie Clarcson
-                      </a>
-                      <span className='text-muted fw-semibold d-block'>HTML, CSS Coding</span>
-                    </td>
-                    <td>
-                      <span className='text-muted fw-semibold d-block fs-7'>Paid</span>
-                      <span className='text-dark fw-bold d-block fs-5'>$1,200,000</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-warning fs-7 fw-bold'>+52%</span>
-                    </td>
-                    <td className='text-end'>
-                      <a
-                        href='#'
-                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                      >
-                        <KTIcon iconName='arrow-right' className='fs-2' />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/014-girl-7.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                        Natali Trump
-                      </a>
-                      <span className='text-muted fw-semibold d-block'>UI/UX Designer</span>
-                    </td>
-                    <td>
-                      <span className='text-muted fw-semibold d-block fs-7'>Paid</span>
-                      <span className='text-dark fw-bold d-block fs-5'>$3,400,000</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-success fs-7 fw-bold'>-34%</span>
-                    </td>
-                    <td className='text-end'>
-                      <a
-                        href='#'
-                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                      >
-                        <KTIcon iconName='arrow-right' className='fs-2' />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/001-boy.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                        Brad Simmons
-                      </a>
-                      <span className='text-muted fw-semibold d-block'>Successful Fellas</span>
-                    </td>
-                    <td>
-                      <span className='text-muted fw-semibold d-block fs-7'>Paid</span>
-                      <span className='text-dark fw-bold d-block fs-5'>$200,500</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-primary fs-7 fw-bold'>+28%</span>
-                    </td>
-                    <td className='text-end'>
-                      <a
-                        href='#'
-                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                      >
-                        <KTIcon iconName='arrow-right' className='fs-2' />
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-                {/* end::Table body */}
-              </table>
-            </div>
-            {/* end::Table */}
-          </div>
-          {/* end::Tap pane */}
-          {/* begin::Tap pane */}
-          <div className='tab-pane fade' id='kt_table_widget_6_tab_3'>
-            {/* begin::Table container */}
-            <div className='table-responsive'>
-              {/* begin::Table */}
-              <table className='table align-middle gs-0 gy-3'>
-                {/* begin::Table head */}
-                <thead>
-                  <tr>
-                    <th className='p-0 w-50px'></th>
-                    <th className='p-0 min-w-150px'></th>
-                    <th className='p-0 min-w-140px'></th>
-                    <th className='p-0 min-w-120px'></th>
-                  </tr>
-                </thead>
-                {/* end::Table head */}
-                {/* begin::Table body */}
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className='symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/047-girl-25.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                        Jessie Clarcson
-                      </a>
-                      <span className='text-muted fw-semibold d-block'>HTML, CSS Coding</span>
-                    </td>
-                    <td>
-                      <span className='text-muted fw-semibold d-block fs-7'>Paid</span>
-                      <span className='text-dark fw-bold d-block fs-5'>$1,200,000</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-danger fs-7 fw-bold'>+52%</span>
-                    </td>
-                    <td className='text-end'>
-                      <a
-                        href='#'
-                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                      >
-                        <KTIcon iconName='arrow-right' className='fs-2' />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/014-girl-7.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                        Natali Trump
-                      </a>
-                      <span className='text-muted fw-semibold d-block'>UI/UX Designer</span>
-                    </td>
-                    <td>
-                      <span className='text-muted fw-semibold d-block fs-7'>Paid</span>
-                      <span className='text-dark fw-bold d-block fs-5'>$3,400,000</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-success fs-7 fw-bold'>-34%</span>
-                    </td>
-                    <td className='text-end'>
-                      <a
-                        href='#'
-                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                      >
-                        <KTIcon iconName='arrow-right' className='fs-2' />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/043-boy-18.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                        Kevin Leonard
-                      </a>
-                      <span className='text-muted fw-semibold d-block'>Art Director</span>
-                    </td>
-                    <td>
-                      <span className='text-muted fw-semibold d-block fs-7'>Paid</span>
-                      <span className='text-dark fw-bold d-block fs-5'>$35,600,000</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-info fs-7 fw-bold'>+230%</span>
-                    </td>
-                    <td className='text-end'>
-                      <a
-                        href='#'
-                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                      >
-                        <KTIcon iconName='arrow-right' className='fs-2' />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className='symbol symbol-50px me-2'>
-                        <span className='symbol-label'>
-                          <img
-                            src={toAbsoluteUrl('/media/svg/avatars/001-boy.svg')}
-                            className='h-75 align-self-end'
-                            alt=''
-                          />
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                        Brad Simmons
-                      </a>
-                      <span className='text-muted fw-semibold d-block'>Successful Fellas</span>
-                    </td>
-                    <td>
-                      <span className='text-muted fw-semibold d-block fs-7'>Paid</span>
-                      <span className='text-dark fw-bold d-block fs-5'>$200,500</span>
-                    </td>
-                    <td className='text-end'>
-                      <span className='text-primary fs-7 fw-bold'>+28%</span>
-                    </td>
-                    <td className='text-end'>
-                      <a
-                        href='#'
-                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary'
-                      >
-                        <KTIcon iconName='arrow-right' className='fs-2' />
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-                {/* end::Table body */}
-              </table>
-            </div>
-            {/* end::Table */}
-          </div>
+
           {/* end::Tap pane */}
         </div>
       </div>
+      
       {/* end::Body */}
+    </div>
+    {visible &&
+      <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle),}}>
+        <div style={contentStyle}>
+          
+        <div onClick={()=>setVisible(false)} style={{backgroundColor:'#d3d3d3',padding:10,position:'absolute',right:230,borderRadius:20,cursor:'pointer'}}>
+        <CloseOutlined />
+        </div>
+        <MerchantView viewApplication={visible} />
+        </div>
+        </div>
+      }
     </div>
   )
 }
 
-export {MemberStatsTable}
+export { MemberStatsTable }
