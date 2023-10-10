@@ -7,6 +7,12 @@ import MerchantView from './MerchantView'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
 import axiosInstance from '../helpers/axiosInstance'
 import { toast } from 'react-toastify'
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 type Props = {
@@ -48,6 +54,17 @@ const contentStyle: CSSProperties = {
 const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleVisibilityClick = (item) => {
     setSelectedItem(item); // Set the selected item
     setVisible(true);
@@ -169,10 +186,11 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
                             <VisibilityIcon onClick={() => handleVisibilityClick(item)} className='mx-5 cursor-pointer' />
 
                             <DeleteOutline onClick={() => {
-                              const confirmed = window.confirm('Are you sure you want to delete this item?');
-                              if (confirmed) {
+                               handleClickOpen()
+                              // const confirmed = window.confirm('Are you sure you want to delete this item?');
+                              // if (confirmed) {
                                 // Laxit write here for delete api 
-                              }
+                              // }
                             }} className='mx-5 cursor-pointer' />
                             {item.merchant_approved === false && (
                               // Render the "Approve" button only when the merchant is not approved
@@ -207,6 +225,28 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
           </div>
         </div>
       }
+             <div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="draggable-dialog-title"
+            >
+                <DialogTitle style={{ cursor: 'move',color:'red' }} id="draggable-dialog-title">
+                    Delete
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this item?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose}>Yes</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
     </div>
   )
 }
