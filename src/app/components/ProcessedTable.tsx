@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTIcon, toAbsoluteUrl} from '../../_metronic/helpers'
+import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
 
 type Props = {
   className: string
@@ -11,7 +12,7 @@ type Props = {
 
 
 
-const ProcessedTable: React.FC<Props> = ({className, title,data}) => {
+const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -49,7 +50,7 @@ const ProcessedTable: React.FC<Props> = ({className, title,data}) => {
             {/* begin::Table head */}
             <thead>
               <tr className='fw-bold text-muted'>
-               
+
                 <th className='min-w-150px'>Customers</th>
                 <th className='min-w-140px'>Application Arrival Date</th>
                 <th className='min-w-120px'>Application Departure Date</th>
@@ -102,8 +103,17 @@ const ProcessedTable: React.FC<Props> = ({className, title,data}) => {
                   </td>
                   <td>
                     {/* Action Buttons */}
-                    <div className='d-flex justify-content-end flex-shrink-0'>
+                    <div className='d-flex align-items-center flex-shrink-0'>
+
                       <VisibilityIcon className='mx-5 cursor-pointer' />
+
+                      <DeleteOutline onClick={() => {
+                        const confirmed = window.confirm('Are you sure you want to delete this item?');
+                        if (confirmed) {
+                          // Laxit write here for delete api 
+                        }
+                      }} className='mx-5 cursor-pointer' />
+                      <button className='btn btn-primary align-self-center'>Approv</button>
                     </div>
                   </td>
                 </tr>
@@ -120,4 +130,4 @@ const ProcessedTable: React.FC<Props> = ({className, title,data}) => {
   )
 }
 
-export {ProcessedTable}
+export { ProcessedTable }

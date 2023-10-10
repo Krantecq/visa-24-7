@@ -84,10 +84,18 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
             <span className='card-label fw-bold fs-3 mb-1'>Merchant Statistics</span>
             <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
-          <div>
-
-            <button className='btn btn-primary align-self-center'>All</button>
-            <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button>
+          <div className='d-flex flex-row'>
+            <div className="dropdown mx-5">
+              <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Filter
+              </button>
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item" href="#">All</a></li>
+                <li><a className="dropdown-item" href="#">Waiting For Approval</a></li>
+              </ul>
+            </div>
+            {/* <button className='btn btn-primary align-self-center'>All</button>
+            <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button> */}
             <Link to={'/superadmin/add-new-merchant'}>
               <button className='btn btn-primary align-self-center'>Add new Merchant</button>
             </Link>

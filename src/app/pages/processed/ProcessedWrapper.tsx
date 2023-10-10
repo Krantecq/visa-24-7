@@ -1,9 +1,12 @@
 import { ProcessedTable } from '../../components/ProcessedTable'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import axiosInstance from '../../helpers/axiosInstance';
+import Cookies from 'js-cookie'
 
 function ProcessedWrapper() {
   const [visaStatsData, setVisaStatsData] = useState([]);
+  const user_id = Cookies.get('user_id');
 
   useEffect(() => {
     // Define a function to make the POST request
@@ -13,7 +16,7 @@ function ProcessedWrapper() {
           super_admin_id:'6507f4b97c2c4102d5024e01'          // Your POST data goes here
         };
         // Make a POST request to your API endpoint
-        axios.post('http://localhost:5003/backend/super_admin/fetch_visa', postData)
+        axiosInstance.post('/backend/super_admin/fetch_visa', postData)
           .then((response) => {
             console.log(response.data)
             const filteredData = response.data.data.filter(item => item.visa_status === 'Processed');
