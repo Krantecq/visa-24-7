@@ -45,14 +45,24 @@ const contentStyle: CSSProperties = {
 
 const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
   const [visible, setVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const handleVisibilityClick = (item) => {
+    setSelectedItem(item); // Set the selected item
+    setVisible(true);
+  };
+
+  const handleCloseClick = () => {
+    setSelectedItem(null); // Set the selected item
+    setVisible(false);
+  };
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
       <div className={`card ${className}`}>
         {/* begin::Header */}
         <div className='card-header border-0 pt-5'>
           <h3 className='card-title align-items-start flex-column'>
-            <span className='card-label fw-bold fs-3 mb-1'>Member Statistics</span>
-            <span className='text-muted mt-1 fw-semibold fs-7'>3 New Member</span>
+            <span className='card-label fw-bold fs-3 mb-1'>Merchant Statistics</span>
+            <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
           <div>
 
@@ -128,7 +138,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
                         </td>
                         <td >
                           <div className='d-flex align-items-center flex-shrink-0'>
-                            <VisibilityIcon onClick={() => setVisible(true)} className='mx-5 cursor-pointer' />
+                            <VisibilityIcon onClick={() => handleVisibilityClick(item)} className='mx-5 cursor-pointer' />
 
                             <DeleteOutline onClick={() => {
                               const confirmed = window.confirm('Are you sure you want to delete this item?');
@@ -159,10 +169,10 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
           <div style={contentStyle}>
 
-            <div onClick={() => setVisible(false)} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
+            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
               <CloseOutlined />
             </div>
-            <MerchantView viewApplication={visible} />
+            <MerchantView viewApplication={selectedItem} />
           </div>
         </div>
       }
