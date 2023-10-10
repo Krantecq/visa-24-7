@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import MerchantView from './MerchantView'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
+import axiosInstance from '../helpers/axiosInstance'
+import { toast } from 'react-toastify'
 
 
 type Props = {
@@ -49,6 +51,24 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
   const handleVisibilityClick = (item) => {
     setSelectedItem(item); // Set the selected item
     setVisible(true);
+  };
+
+  const handleApproveClick = async (item) => {
+    const response = await axiosInstance.post('/backend/super_admin/approve_merchant', {
+      merchant_id: item._id
+    })
+
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      // navigate('/merchant/apply-visa')
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+    }
   };
 
   const handleCloseClick = () => {
@@ -124,7 +144,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
                           </a>
                         </td>
                         <td className='text-start'>
-                          <span className='text-dark fw-bold d-block fs-5'>{item.numberOfVisa}</span>
+                          <span className='text-dark fw-bold d-block fs-5'>{item.merchant_applicants.length}</span>
                         </td>
                         <td className='text-start'>
                           <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
@@ -146,7 +166,10 @@ const MemberStatsTable: React.FC<Props> = ({ className, data }) => {
                                 // Laxit write here for delete api 
                               }
                             }} className='mx-5 cursor-pointer' />
-                            <button className='btn btn-primary align-self-center'>Approv</button>
+                            {item.merchant_approved === false && (
+                              // Render the "Approve" button only when the merchant is not approved
+                              <button className='btn btn-primary align-self-center' onClick={()=>handleApproveClick(item)}>Approve</button>
+                            )}
                           </div>
                         </td>
                       </tr>
