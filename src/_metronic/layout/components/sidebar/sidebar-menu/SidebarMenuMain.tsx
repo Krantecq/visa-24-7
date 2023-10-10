@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React from 'react'
-import {useIntl} from 'react-intl'
-import {KTIcon} from '../../../../helpers'
-import {SidebarMenuItemWithSub} from './SidebarMenuItemWithSub'
-import {SidebarMenuItem} from './SidebarMenuItem'
+import { useIntl } from 'react-intl'
+import { KTIcon } from '../../../../helpers'
+import { SidebarMenuItemWithSub } from './SidebarMenuItemWithSub'
+import { SidebarMenuItem } from './SidebarMenuItem'
 
 const SidebarMenuMain = () => {
   const intl = useIntl()
@@ -13,7 +13,7 @@ const SidebarMenuMain = () => {
       <SidebarMenuItem
         to='/superadmin/dashboard'
         icon='element-11'
-        title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
+        title={intl.formatMessage({ id: 'MENU.DASHBOARD' })}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
@@ -62,6 +62,17 @@ const SidebarMenuMain = () => {
         to='/superadmin/rejected'
         icon='element-11'
         title={'Rejected'}
+        fontIcon='bi-app-indicator'
+      />
+      <div className='menu-item'>
+        <div className='menu-content pt-8 pb-2'>
+          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Wallet</span>
+        </div>
+      </div>
+      <SidebarMenuItem
+        to='/superadmin/wallet'
+        icon='element-11'
+        title={'Wallet'}
         fontIcon='bi-app-indicator'
       />
       {/* <div className='menu-item'>
@@ -185,4 +196,4 @@ const SidebarMenuMain = () => {
   )
 }
 
-export {SidebarMenuMain}
+export { SidebarMenuMain }

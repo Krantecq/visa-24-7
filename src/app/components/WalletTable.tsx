@@ -11,10 +11,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import WalletFormView from './WalletFormView'
 type Props = {
   className: string
   title: String,
-  data: any[];
 }
 const overlayStyle: CSSProperties = {
   position: 'fixed',
@@ -46,9 +46,7 @@ const contentStyle: CSSProperties = {
   overflowY: 'auto'
 };
 
-
-
-const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
+const WalletTable: React.FC<Props> = ({ className, title }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -62,8 +60,8 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
     setOpen(false);
   };
 
-  const handleVisibilityClick = (item) => {
-    setSelectedItem(item); // Set the selected item
+  const handleVisibilityClick = () => {
+    // setSelectedItem(item);
     setVisible(true);
   };
   const handleCloseClick = () => {
@@ -108,28 +106,25 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
             <thead>
               <tr className='fw-bold text-muted'>
 
-                <th className='min-w-150px'>Customers</th>
-                <th className='min-w-140px'>Application Arrival Date</th>
-                <th className='min-w-120px'>Application Departure Date</th>
-                <th className='min-w-100px'>Visa Amount</th>
-                <th className='min-w-100px'>Visa Status</th>
+                <th className='min-w-150px'>Email Id</th>
+                <th className='min-w-140px'>Transaction Id</th>
+                <th className='min-w-120px'>Amount</th>
                 <th className='min-w-100px text-end'>Actions</th>
               </tr>
             </thead>
             {/* end::Table head */}
             {/* begin::Table body */}
             <tbody>
-              {data.map((row, index) => (
-                <tr key={index}>
+            <tr>
                   <td>
                     {/* Avatar and Name */}
                     <div className='d-flex align-items-center'>
                       <div className='symbol symbol-45px me-5'>
-                        <img src={row.photo} alt='' />
+                        {/* <img src={row.photo} alt='' /> */}
                       </div>
                       <div className='d-flex justify-content-start flex-column'>
                         <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
-                          {row.first_name}
+                          abcd@gmail.com
                         </a>
                       </div>
                     </div>
@@ -137,32 +132,21 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
                   <td>
                     {/* Date */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.application_arrival_date}
+                      7637462748273468
                     </a>
                   </td>
                   <td>
                     {/* Location 1 */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.application_departure_date}
+                      1000
                     </a>
                   </td>
-                  <td>
-                    {/* Location 2 */}
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.visa_amount}
-                    </a>
-                  </td>
-                  <td>
-                    {/* Status */}
-                    <span className='text-muted fw-semibold text-muted d-block fs-7'>
-                      {row.visa_status}
-                    </span>
-                  </td>
+          
                   <td>
                     {/* Action Buttons */}
-                    <div className='d-flex align-items-center flex-shrink-0'>
+                    <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
 
-                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
+                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick()} />
 
                       <DeleteOutline onClick={() => {
                         handleClickOpen()
@@ -175,7 +159,6 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
                     </div>
                   </td>
                 </tr>
-              ))}
             </tbody>
             {/* end::Table body */}
           </table>
@@ -190,7 +173,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
             <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
               <CloseOutlined />
             </div>
-            <ApplicationFormView viewApplication={selectedItem} />
+            <WalletFormView viewApplication={selectedItem} />
           </div>
         </div>
       }
@@ -220,4 +203,4 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
   )
 }
 
-export { ProcessedTable }
+export { WalletTable }

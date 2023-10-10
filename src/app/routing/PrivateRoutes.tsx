@@ -20,6 +20,7 @@ import MerchantDashboard from '../pages/merchants/dashboard/Dashboard'
 import MerchantNewVisaWrapper from '../pages/merchants/apply-visa/MerchantNewVisaWrapper'
 import MerchantProfile from '../pages/merchants/profile/MerchantProfile'
 import Cookies from 'js-cookie';
+import WalletWrapper from '../pages/wallet/WalletWrapper'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -54,6 +55,7 @@ const PrivateRoutes = () => {
         <Route path='superadmin/in-process' element={<InProcessWrapper />} />
         <Route path='superadmin/waiting-for-approval' element={< ApprovalWrapper />} />
         <Route path='superadmin/rejected' element={<RejectedWrapper />} />
+        <Route path='superadmin/wallet' element={<WalletWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
 
