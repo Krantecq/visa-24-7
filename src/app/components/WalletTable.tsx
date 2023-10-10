@@ -12,9 +12,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import WalletFormView from './WalletFormView'
+import { toast } from 'react-toastify'
+import axiosInstance from '../helpers/axiosInstance'
+
 type Props = {
   className: string
   title: String,
+  data: any[];
 }
 const overlayStyle: CSSProperties = {
   position: 'fixed',
@@ -46,11 +50,29 @@ const contentStyle: CSSProperties = {
   overflowY: 'auto'
 };
 
-const WalletTable: React.FC<Props> = ({ className, title }) => {
+const WalletTable: React.FC<Props> = ({ className, title, data }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const [open, setOpen] = React.useState(false);
+  const handleApproveClick = async (item) => {
+    const response = await axiosInstance.post('/backend/approve_transaction', {
+      wallet_id:item._id,
+      merchant_id: item.merchant_id
+    })
+
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      // navigate('/merchant/apply-visa')
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(!open);
@@ -74,26 +96,7 @@ const WalletTable: React.FC<Props> = ({ className, title }) => {
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
-          <span className='fs-6 text-gray-400 fw-bold'>{title == 'VISA' && '30 days'}</span>
         </h3>
-        {title == 'VISA' && (
-          <div className='d-flex flex-wrap my-2'>
-            <div className='me-4'>
-              <select
-                name='status'
-                data-control='select2'
-                data-hide-search='true'
-                className='form-select form-select-sm form-select-white w-125px'
-                defaultValue='30 Days'
-              >
-                <option value='30 Days'>30 Days</option>
-                <option value='Approved'>In Progress</option>
-                <option value='Declined'>To Do</option>
-                <option value='In Progress'>Completed</option>
-              </select>
-            </div>
-          </div>
-        )}
       </div>
       {/* end::Header */}
       {/* begin::Body */}
@@ -115,7 +118,9 @@ const WalletTable: React.FC<Props> = ({ className, title }) => {
             {/* end::Table head */}
             {/* begin::Table body */}
             <tbody>
-            <tr>
+              {data.map((row, index) => (
+
+                <tr>
                   <td>
                     {/* Avatar and Name */}
                     <div className='d-flex align-items-center'>
@@ -124,7 +129,7 @@ const WalletTable: React.FC<Props> = ({ className, title }) => {
                       </div>
                       <div className='d-flex justify-content-start flex-column'>
                         <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
-                          abcd@gmail.com
+                          {row.merchant_email_id}
                         </a>
                       </div>
                     </div>
@@ -132,16 +137,16 @@ const WalletTable: React.FC<Props> = ({ className, title }) => {
                   <td>
                     {/* Date */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      7637462748273468
+                      {row.upi_ref_id}
                     </a>
                   </td>
                   <td>
                     {/* Location 1 */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      1000
+                      {row.wallet_balance}
                     </a>
                   </td>
-          
+
                   <td>
                     {/* Action Buttons */}
                     <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
@@ -155,10 +160,12 @@ const WalletTable: React.FC<Props> = ({ className, title }) => {
                         // Laxit write here for delete api 
                         // }
                       }} className='mx-5 cursor-pointer' />
-                      <button className='btn btn-primary align-self-center'>Approve</button>
+                      <button className='btn btn-primary align-self-center' onClick={()=>handleApproveClick(row)}>Approve</button>
                     </div>
                   </td>
                 </tr>
+              ))}
+
             </tbody>
             {/* end::Table body */}
           </table>
@@ -177,28 +184,28 @@ const WalletTable: React.FC<Props> = ({ className, title }) => {
           </div>
         </div>
       }
-       <div>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="draggable-dialog-title"
-            >
-                <DialogTitle style={{ cursor: 'move',color:'red' }} id="draggable-dialog-title">
-                    Delete
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this item?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose}>Yes</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move', color: 'red' }} id="draggable-dialog-title">
+            Delete
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this item?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button onClick={handleClose}>Yes</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   )
 }
