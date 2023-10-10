@@ -11,6 +11,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import axiosInstance from '../helpers/axiosInstance'
+import { toast } from 'react-toastify'
+
 type Props = {
   className: string
   title: String,
@@ -70,6 +73,43 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
     setSelectedItem(null); // Set the selected item
     setVisible(false);
   };
+
+  const handleDownloadClick = async (item) => {
+    const response = await axiosInstance.post('/backend/download_visa', {
+      application_id: item._id
+    })
+
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      // navigate('/merchant/apply-visa')
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg.error, {
+        position: 'top-center',
+      })
+    }
+  };
+
+  const handleIssueVisaClick = async (item) => {
+    const response = await axiosInstance.post('/backend/apply_visa', {
+      application_id: item._id
+    })
+
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      // navigate('/merchant/apply-visa')
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+    }
+  };
+
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -164,14 +204,19 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
 
                       <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
 
-                      <DeleteOutline onClick={() => {
-                        handleClickOpen()
-                        // const confirmed = window.confirm('Are you sure you want to delete this item?');
-                        // if (confirmed) {
-                        // Laxit write here for delete api 
-                        // }
-                      }} className='mx-5 cursor-pointer' />
-                      <button className='btn btn-primary align-self-center'>Approv</button>
+                      {row.visa_status === 'Applied' && (
+                        // Render the "Approve" button only when the merchant is not approved
+                        <button className='btn btn-primary align-self-center'>Check Status</button>
+                      )}
+                      {row.visa_status=== 'Waiting' && (
+                        // Render the "Approve" button only when the merchant is not approved
+                        <button className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
+                      )}
+                      {row.visa_status === 'Processed' && (
+                        <button className='btn btn-primary align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
+
+                        // Render the "Approve" button only when the merchant is not approved
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -194,28 +239,28 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
           </div>
         </div>
       }
-       <div>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="draggable-dialog-title"
-            >
-                <DialogTitle style={{ cursor: 'move',color:'red' }} id="draggable-dialog-title">
-                    Delete
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this item?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose}>Yes</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move', color: 'red' }} id="draggable-dialog-title">
+            Delete
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this item?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button onClick={handleClose}>Yes</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   )
 }
