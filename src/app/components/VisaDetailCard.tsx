@@ -96,16 +96,47 @@ const getCountryNameByCode = (countryCode) => {
 }
 
 
-const stepStatuses = [
-    { label: 'Errors Fixed', done: true },
-    { label: 'Application Complete', done: true },
-    { label: 'Application Paid', done: true }, // Example: Not done
-    { label: 'Application Submitted', done: true }, // Example: Not done
-    { label: 'Automated QC Passed', done: true },
-    { label: 'Manual QC Passed', done: true },
-    { label: 'Submitted to Immigration', done: true },
-    { label: 'Visa Approved', done: true },
-];
+const getStepStatuses = (visa_status) => {
+    // Define your default stepStatuses with 'done' set to false for all steps
+    const defaultStepStatuses = [
+        { label: 'Errors Fixed', done: false },
+        { label: 'Application Complete', done: false },
+        { label: 'Application Paid', done: false },
+        { label: 'Application Submitted', done: false },
+        { label: 'Automated QC Passed', done: false },
+        { label: 'Manual QC Passed', done: false },
+        { label: 'Submitted to Immigration', done: false },
+        { label: 'Visa Approved', done: false },
+    ];
+
+    // Use a switch statement or if/else to customize stepStatuses based on visa_status
+    switch (visa_status) {
+        case 'Applied' || 'In process':
+            // Set 'done' to true for steps up to 'Application Submitted'
+            return defaultStepStatuses.map((step, index) =>
+                index <= 3 ? { ...step, done: true } : step
+            );
+        case 'Processed':
+            // Set 'done' to true for steps up to 'Manual QC Passed'
+            return defaultStepStatuses.map((step, index) =>
+                index <= 7 ? { ...step, done: true } : step
+            );
+        case 'Not Issued':
+            // Set 'done' to true for steps up to 'Manual QC Passed' and 'Visa Approved'
+            return defaultStepStatuses.map((step, index) =>
+                index <= 1 ? { ...step, done: true } : step
+            );
+        case 'Waiting':
+            return defaultStepStatuses.map((step, index) =>
+                index <= 2 ? { ...step, done: true } : step
+            );
+        default:
+            return defaultStepStatuses;
+    }
+};
+
+
+
 const VisaDetailCard = ({ visaData }: Props) => {
     const [Detail, seeDetail] = useState(false)
     const [selectedVisa, setSelectedVisa] = useState<VisaData | null>(null)
@@ -130,6 +161,9 @@ const VisaDetailCard = ({ visaData }: Props) => {
     }
 
     if (selectedVisa) {
+
+        const stepStatusesForVisa = getStepStatuses(selectedVisa.visa_status);
+
         return (
             <div>
                 <div
@@ -235,7 +269,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
 
                                 <div style={{ flex: '1', padding: '20px', paddingTop: 0, marginLeft: 20 }}>
                                     <Stepper orientation="vertical">
-                                        {stepStatuses.map((step, index) => (
+                                        {stepStatusesForVisa.map((step, index) => (
                                             <Step key={step.label} completed={step.done}>
                                                 <StepLabel style={{ padding: 0, paddingLeft: 0 }}>
                                                     <Box display="flex" flexDirection="column" alignItems="flex-start">
@@ -277,7 +311,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                             <div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className='p-10 '>
                                 <div
                                     className='px-10 py-5'
-                                    style={{  width: '100%', backgroundColor: '#332789', borderRadius: 10 }}
+                                    style={{ width: '100%', backgroundColor: '#332789', borderRadius: 10 }}
                                 >
                                     <h6 style={{ color: 'white' }}>
                                         <CheckIcon style={{ marginLeft: -20 }} />
@@ -301,7 +335,59 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                     <h6 className='fs-4' style={{ color: '#332789', paddingTop: 7 }}>
                                         View Application
                                     </h6>
+
+
                                 </div>
+                                {selectedVisa.visa_status === 'Proccesed' &&
+                                    <button className='mb-10 mx-10 px-20 py-5' style={{
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        borderRadius: 10,
+                                        alignItems: 'center',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        backgroundColor: '#332789',
+                                        color: '#fff',
+                                        fontSize: "17px",
+                                        whiteSpace:'nowrap'
+
+                                    }}>
+                                        Download
+                                    </button>
+                                }
+                                {selectedVisa.visa_status === 'Not issued' &&
+                                    <button className='mb-10 mx-10 px-20 py-5' style={{
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        borderRadius: 10,
+                                        alignItems: 'center',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        backgroundColor: '#332789',
+                                        color: '#fff',
+                                        fontSize: "17px",
+                                        whiteSpace:'nowrap'
+
+                                    }}>
+                                        Issue Visa
+                                    </button>
+                                }
+                                     {selectedVisa.visa_status === 'In process' || selectedVisa.visa_status === 'Applied' &&
+                                    <button className='mb-10 mx-10 px-20 py-5' style={{
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        borderRadius: 10,
+                                        alignItems: 'center',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        backgroundColor: '#332789',
+                                        color: '#fff',
+                                        fontSize: "17px",
+                                        whiteSpace:'nowrap'
+                                    }}>
+                                        Check Status
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
