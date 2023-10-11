@@ -1,13 +1,13 @@
-import {useEffect, useState, useRef, ChangeEvent} from 'react'
-import {KTIcon} from '../../../../_metronic/helpers'
-import {ErrorMessage, Field, Form, Formik, FormikValues} from 'formik'
-import {ICreateAccount, inits} from './CreateAccountWizardHelper'
-import {useNavigate} from 'react-router-dom'
+import { useEffect, useState, useRef, ChangeEvent } from 'react'
+import { KTIcon } from '../../../../_metronic/helpers'
+import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik'
+import { ICreateAccount, inits } from './CreateAccountWizardHelper'
+import { useNavigate } from 'react-router-dom'
 import ClearIcon from '@mui/icons-material/Delete'
 import axiosInstance from '../../../helpers/axiosInstance'
-import DatePicker from 'react-datepicker'
+import { DatePicker } from 'antd'
 import 'react-datepicker/dist/react-datepicker.css'
-function TravelerForm({onDataChange, ind}) {
+function TravelerForm({ onDataChange, ind }) {
   const [initValues] = useState<ICreateAccount>(inits)
   const passportFrontFileInputRef = useRef<HTMLInputElement | null>(null)
   const passportBackFileInputRef = useRef<HTMLInputElement | null>(null)
@@ -80,8 +80,8 @@ function TravelerForm({onDataChange, ind}) {
             const imageLink = await handleFileUpload(file)
 
             // Update the form data with the image link
-            setFormData({...formData, passFrontPhoto: imageLink})
-            onDataChange({...formData, passFrontPhoto: imageLink})
+            setFormData({ ...formData, passFrontPhoto: imageLink })
+            onDataChange({ ...formData, passFrontPhoto: imageLink })
           } catch (error) {
             console.error('Error uploading image:', error)
           }
@@ -112,8 +112,8 @@ function TravelerForm({onDataChange, ind}) {
             const imageLink = await handleFileUpload(file)
 
             // Update the form data with the image link
-            setFormData({...formData, passBackPhoto: imageLink})
-            onDataChange({...formData, passBackPhoto: imageLink})
+            setFormData({ ...formData, passBackPhoto: imageLink })
+            onDataChange({ ...formData, passBackPhoto: imageLink })
           } catch (error) {
             console.error('Error uploading image:', error)
           }
@@ -145,8 +145,8 @@ function TravelerForm({onDataChange, ind}) {
             const imageLink = await handleFileUpload(file)
 
             // Update the form data with the image link
-            setFormData({...formData, travelerPhoto: imageLink})
-            onDataChange({...formData, travelerPhoto: imageLink})
+            setFormData({ ...formData, travelerPhoto: imageLink })
+            onDataChange({ ...formData, travelerPhoto: imageLink })
           } catch (error) {
             console.error('Error uploading image:', error)
           }
@@ -177,8 +177,8 @@ function TravelerForm({onDataChange, ind}) {
             const imageLink = await handleFileUpload(file)
 
             // Update the form data with the image link
-            setFormData({...formData, panPhoto: imageLink})
-            onDataChange({...formData, panPhoto: imageLink})
+            setFormData({ ...formData, panPhoto: imageLink })
+            onDataChange({ ...formData, panPhoto: imageLink })
           } catch (error) {
             console.error('Error uploading image:', error)
           }
@@ -196,8 +196,8 @@ function TravelerForm({onDataChange, ind}) {
   }
 
   const handleFieldChange = (fieldName, value) => {
-    setFormData({...formData, [fieldName]: value})
-    onDataChange({...formData, [fieldName]: value})
+    setFormData({ ...formData, [fieldName]: value })
+    onDataChange({ ...formData, [fieldName]: value })
 
     if (fieldName == 'birthDetail') {
       setDob(value)
@@ -210,9 +210,9 @@ function TravelerForm({onDataChange, ind}) {
     }
   }
 
-  const [issueDate, setIssueDate] = useState(null)
-  const [expiryDate, setExpiryDate] = useState(null)
-  const [dob, setDob] = useState(null)
+  const [issueDate, setIssueDate] = useState<string | undefined>('');
+  const [expiryDate, setExpiryDate] =useState<string | undefined>('');
+  const [dob, setDob] = useState<string | undefined>('');
 
   return (
     <div
@@ -226,7 +226,7 @@ function TravelerForm({onDataChange, ind}) {
         backgroundColor: 'white',
       }}
     >
-      <h5 style={{fontSize: 30, letterSpacing: 0.3}}>Traveller {ind + 1} </h5>
+      <h5 style={{ fontSize: 30, letterSpacing: 0.3 }}>Traveller {ind + 1} </h5>
       <hr />
       <br />
       <h3>Upload Traveler's Front Passport Page</h3>
@@ -234,8 +234,8 @@ function TravelerForm({onDataChange, ind}) {
         United Arab Emirates requires a scan of the traveler's passport. Upload a clear passport
         image and Atlys will scan and enter all the details directly from the file.
       </p>
-      <div className='d-flex ' style={{width: '100%'}}>
-        <div style={{width: '40%', marginTop: 70}}>
+      <div className='d-flex ' style={{ width: '100%' }}>
+        <div style={{ width: '40%', marginTop: 70 }}>
           <h6>Passport Front Page Image</h6>
           {passportFrontImageURL ? (
             <div
@@ -260,12 +260,12 @@ function TravelerForm({onDataChange, ind}) {
                   cursor: 'pointer',
                 }}
               >
-                <ClearIcon style={{color: 'red'}} />
+                <ClearIcon style={{ color: 'red' }} />
               </div>
               <img
                 src={passportFrontImageURL}
                 alt='Uploaded Image'
-                style={{maxWidth: '100%', maxHeight: '100%'}}
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
               />
             </div>
           ) : (
@@ -286,17 +286,17 @@ function TravelerForm({onDataChange, ind}) {
                 type='button'
                 onClick={handleImageUpload}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{justifyContent: 'flex-end', backgroundColor: '#332786'}}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>
-              <p className='text-bold pt-5 fs-9' style={{color: '#555555'}}>
+              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
                 Supports JPEG, JPG, PDF, PNG.
               </p>
               <input
                 type='file'
                 ref={passportFrontFileInputRef}
-                style={{display: 'none'}}
+                style={{ display: 'none' }}
                 accept='.jpeg, .jpg, .pdf, .png'
                 onChange={handleFileSelect}
               />
@@ -306,9 +306,9 @@ function TravelerForm({onDataChange, ind}) {
 
         <div
           className='d-flex flex-row-fluid flex-center bg-body rounded'
-          style={{width: '70%', backgroundColor: 'blue'}}
+          style={{ width: '70%', backgroundColor: 'blue' }}
         >
-          <Formik initialValues={initValues} onSubmit={() => {}}>
+          <Formik initialValues={initValues} onSubmit={() => { }}>
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div>
@@ -318,7 +318,7 @@ function TravelerForm({onDataChange, ind}) {
                     </label>
 
                     <Field
-                      style={{...inputStyle, width: '450px'}}
+                      style={{ ...inputStyle, width: '450px' }}
                       name='passportNumber'
                       className='form-control form-control-lg form-control-solid'
                       onChange={(e) => handleFieldChange('passportNumber', e.target.value)}
@@ -327,7 +327,7 @@ function TravelerForm({onDataChange, ind}) {
                       <ErrorMessage name='passportNumber' />
                     </div>
                   </div>
-                  <div className='d-flex' style={{justifyContent: 'space-between'}}>
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
                       <label className='form-label required'>First Name</label>
 
@@ -358,7 +358,7 @@ function TravelerForm({onDataChange, ind}) {
                     </div>
                   </div>
 
-                  <div className='d-flex' style={{justifyContent: 'space-between'}}>
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Birth Place</span>
@@ -380,13 +380,13 @@ function TravelerForm({onDataChange, ind}) {
                       </label>
 
                       <DatePicker
-                        name='birthDetail'
-                        selected={dob}
-                        onChange={(date) => handleFieldChange('birthDetail', date)}
-                        className='form-control form-control-lg form-control-solid'
-                        dateFormat='MM/dd/yyyy'
-                        placeholderText='Select DOB'
-                        style={inputStyle}
+                        style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
+                        onChange={(value) => {
+                          if (value) {
+                            handleFieldChange('birthDetail', value.format('DD/MM/YYYY'))
+                          }
+                        }
+                        }
                       />
 
                       <div className='text-danger mt-2'>
@@ -395,19 +395,19 @@ function TravelerForm({onDataChange, ind}) {
                     </div>
                   </div>
 
-                  <div className='d-flex' style={{justifyContent: 'space-between'}}>
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Passport Issue Date</span>
                       </label>
-
                       <DatePicker
-                        name='passportIssueDate'
-                        selected={issueDate}
-                        onChange={(date) => handleFieldChange('passportIssueDate', date)}
-                        className='form-control form-control-lg form-control-solid'
-                        dateFormat='MM/dd/yyyy'
-                        placeholderText='Select Issue Date'
+                        style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
+                        onChange={(value) => {
+                          if (value) {
+                            handleFieldChange('passportIssueDate', value.format('DD/MM/YYYY'))
+                          }
+                        }
+                        }
                       />
 
                       <div className='text-danger mt-2'>
@@ -419,14 +419,14 @@ function TravelerForm({onDataChange, ind}) {
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Passport Expiry Date</span>
                       </label>
-
                       <DatePicker
-                        name='passPortExpiryDate'
-                        selected={expiryDate}
-                        onChange={(date) => handleFieldChange('passPortExpiryDate', date)}
-                        className='form-control form-control-lg form-control-solid'
-                        dateFormat='MM/dd/yyyy'
-                        placeholderText='Select Expiry Date'
+                        style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
+                        onChange={(value) => {
+                          if (value) {
+                            handleFieldChange('passPortExpiryDate', value.format('DD/MM/YYYY'))
+                          }
+                        }
+                        }
                       />
 
                       <div className='text-danger mt-2'>
@@ -434,14 +434,14 @@ function TravelerForm({onDataChange, ind}) {
                       </div>
                     </div>
                   </div>
-                  <div className='d-flex' style={{justifyContent: 'space-between'}}>
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-10'>
                       <label className='form-label required'>Gender</label>
 
                       <Field
                         as='select'
                         name='gender'
-                        style={{...inputStyle, width: '215px', backgroundColor: 'white'}}
+                        style={{ ...inputStyle, width: '215px', backgroundColor: 'white' }}
                         className='form-select form-select-lg form-select-solid'
                         onChange={(e) => handleFieldChange('gender', e.target.value)}
                       >
@@ -458,7 +458,7 @@ function TravelerForm({onDataChange, ind}) {
 
                       <Field
                         as='select'
-                        style={{...inputStyle, width: '215px', backgroundColor: 'white'}}
+                        style={{ ...inputStyle, width: '215px', backgroundColor: 'white' }}
                         name='maritalStatus'
                         className='form-select form-select-lg form-select-solid'
                         onChange={(e) => handleFieldChange('maritalStatus', e.target.value)}
@@ -488,8 +488,8 @@ function TravelerForm({onDataChange, ind}) {
         United Arab Emirates requires a scan of the back page of the traveler's passport. Upload a
         clear passport image and Atlys will scan and enter all the details directly from the file.
       </p>
-      <div className='d-flex ' style={{width: '100%'}}>
-        <div style={{width: '40%', marginTop: 60}}>
+      <div className='d-flex ' style={{ width: '100%' }}>
+        <div style={{ width: '40%', marginTop: 60 }}>
           <h6>Passport Back Page Image</h6>
           {passportBackImageURL ? (
             <div
@@ -514,12 +514,12 @@ function TravelerForm({onDataChange, ind}) {
                   cursor: 'pointer',
                 }}
               >
-                <ClearIcon style={{color: 'red'}} />
+                <ClearIcon style={{ color: 'red' }} />
               </div>
               <img
                 src={passportBackImageURL}
                 alt='Uploaded Image'
-                style={{maxWidth: '100%', maxHeight: '100%'}}
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
               />
             </div>
           ) : (
@@ -540,17 +540,17 @@ function TravelerForm({onDataChange, ind}) {
                 type='button'
                 onClick={handleImageUploadBack}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{justifyContent: 'flex-end', backgroundColor: '#332786'}}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>
-              <p className='text-bold pt-5 fs-9' style={{color: '#555555'}}>
+              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
                 Supports JPEG, JPG, PDF, PNG.
               </p>
               <input
                 type='file'
                 ref={passportBackFileInputRef}
-                style={{display: 'none'}}
+                style={{ display: 'none' }}
                 accept='.jpeg, .jpg, .pdf, .png'
                 onChange={handleFileSelectBack}
               />
@@ -560,9 +560,9 @@ function TravelerForm({onDataChange, ind}) {
 
         <div
           className='d-flex flex-row-fluid flex-center bg-body rounded'
-          style={{width: '70%', backgroundColor: 'blue'}}
+          style={{ width: '70%', backgroundColor: 'blue' }}
         >
-          <Formik initialValues={initValues} onSubmit={() => {}}>
+          <Formik initialValues={initValues} onSubmit={() => { }}>
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div className='fv-row mb-10'>
@@ -571,7 +571,7 @@ function TravelerForm({onDataChange, ind}) {
                   </label>
 
                   <Field
-                    style={{...inputStyle, width: '450px'}}
+                    style={{ ...inputStyle, width: '450px' }}
                     name='fatherName'
                     className='form-control form-control-lg form-control-solid'
                     onChange={(e) => handleFieldChange('fatherName', e.target.value)}
@@ -587,7 +587,7 @@ function TravelerForm({onDataChange, ind}) {
                   </label>
 
                   <Field
-                    style={{...inputStyle, width: '450px'}}
+                    style={{ ...inputStyle, width: '450px' }}
                     name='motherName'
                     className='form-control form-control-lg form-control-solid'
                     onChange={(e) => handleFieldChange('motherName', e.target.value)}
@@ -609,8 +609,8 @@ function TravelerForm({onDataChange, ind}) {
         room. The traveler should have a neutral facial expression and not be wearing any headgear
         or glasses.
       </p>
-      <div className='d-flex ' style={{width: '100%'}}>
-        <div style={{width: '40%', marginTop: 60}}>
+      <div className='d-flex ' style={{ width: '100%' }}>
+        <div style={{ width: '40%', marginTop: 60 }}>
           <h6>Pan Card Photo</h6>
           {pan ? (
             <div
@@ -635,9 +635,9 @@ function TravelerForm({onDataChange, ind}) {
                   cursor: 'pointer',
                 }}
               >
-                <ClearIcon style={{color: 'red'}} />
+                <ClearIcon style={{ color: 'red' }} />
               </div>
-              <img src={pan} alt='Uploaded Image' style={{maxWidth: '100%', maxHeight: '100%'}} />
+              <img src={pan} alt='Uploaded Image' style={{ maxWidth: '100%', maxHeight: '100%' }} />
             </div>
           ) : (
             <div
@@ -657,25 +657,25 @@ function TravelerForm({onDataChange, ind}) {
                 type='button'
                 onClick={handlePanUpload}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{justifyContent: 'flex-end', backgroundColor: '#332786'}}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>
-              <p className='text-bold pt-5 fs-9' style={{color: '#555555'}}>
+              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
                 Supports JPEG, JPG, PDF, PNG.
               </p>
               <input
                 type='file'
                 ref={panFileInputRef}
-                style={{display: 'none'}}
+                style={{ display: 'none' }}
                 accept='.jpeg, .jpg, .pdf, .png'
                 onChange={handlePanSelect}
               />
             </div>
           )}
         </div>
-        <div style={{marginLeft: 50}}>
-          <Formik initialValues={initValues} onSubmit={() => {}}>
+        <div style={{ marginLeft: 50 }}>
+          <Formik initialValues={initValues} onSubmit={() => { }}>
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div className='fv-row mb-10'>
@@ -684,7 +684,7 @@ function TravelerForm({onDataChange, ind}) {
                   </label>
 
                   <Field
-                    style={{...inputStyle, width: '450px'}}
+                    style={{ ...inputStyle, width: '450px' }}
                     name='panNo'
                     className='form-control form-control-lg form-control-solid'
                     onChange={(e) => handleFieldChange('panNo', e.target.value)}
@@ -705,8 +705,8 @@ function TravelerForm({onDataChange, ind}) {
         room. The traveler should have a neutral facial expression and not be wearing any headgear
         or glasses.
       </p>
-      <div className='d-flex ' style={{width: '100%'}}>
-        <div style={{width: '40%', marginTop: 60}}>
+      <div className='d-flex ' style={{ width: '100%' }}>
+        <div style={{ width: '40%', marginTop: 60 }}>
           <h6>Photo</h6>
           {photo ? (
             <div
@@ -731,9 +731,9 @@ function TravelerForm({onDataChange, ind}) {
                   cursor: 'pointer',
                 }}
               >
-                <ClearIcon style={{color: 'red'}} />
+                <ClearIcon style={{ color: 'red' }} />
               </div>
-              <img src={photo} alt='Uploaded Image' style={{maxWidth: '100%', maxHeight: '100%'}} />
+              <img src={photo} alt='Uploaded Image' style={{ maxWidth: '100%', maxHeight: '100%' }} />
             </div>
           ) : (
             <div
@@ -753,17 +753,17 @@ function TravelerForm({onDataChange, ind}) {
                 type='button'
                 onClick={handlePhotoUpload}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{justifyContent: 'flex-end', backgroundColor: '#332786'}}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>
-              <p className='text-bold pt-5 fs-9' style={{color: '#555555'}}>
+              <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
                 Supports JPEG, JPG, PDF, PNG.
               </p>
               <input
                 type='file'
                 ref={photoFileInputRef}
-                style={{display: 'none'}}
+                style={{ display: 'none' }}
                 accept='.jpeg, .jpg, .pdf, .png'
                 onChange={handlePhotoSelect}
               />

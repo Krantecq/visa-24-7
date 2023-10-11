@@ -1,14 +1,15 @@
-import React, {FC, useState} from 'react'
-import {ErrorMessage, Field, Form, Formik} from 'formik'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import {ICreateAccount, inits} from '../modules/wizards/components/CreateAccountWizardHelper'
+import React, { FC, useState } from 'react'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
 import RoomIcon from '@mui/icons-material/Room'
 import FlightIcon from '@mui/icons-material/Flight'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import axios from 'axios'
 import axiosInstance from '../helpers/axiosInstance'
-
+import { DatePicker } from 'antd'
+import moment, { Moment } from 'moment'
+import dayjs, { Dayjs } from 'dayjs';
+import 'dayjs/locale/en';
 // import { DateRangePicker } from 'react-date-range';
 
 type Props = {
@@ -24,8 +25,8 @@ const MerchantApplyVisa: React.FC<Props> = ({
   onApiDataReceived,
   visaListLoader,
 }) => {
-  const [issueDate, setIssueDate] = useState(null)
-  const [expiryDate, setExpiryDate] = useState(null)
+  const [issueDate, setIssueDate] = useState<string | undefined>('');
+  const [expiryDate, setExpiryDate] = useState<string | undefined>('');
   const [initValues] = useState<ICreateAccount>(inits)
 
   const onSubmit = (values: any) => {
@@ -84,12 +85,11 @@ const MerchantApplyVisa: React.FC<Props> = ({
         console.error('Error fetching Atlys data:', error)
       })
   }
-
   return (
     <div>
       {!visaList && (
         <>
-          <h1 className='px-9 mt-25' style={{marginTop: 25, fontSize: 50}}>
+          <h1 className='px-9 mt-25' style={{ marginTop: 25, fontSize: 50 }}>
             Get a visa to
           </h1>
 
@@ -105,12 +105,12 @@ const MerchantApplyVisa: React.FC<Props> = ({
             }}
           >
             Travel Visa
-            <FlightIcon style={{marginLeft: '7px'}} />
+            <FlightIcon style={{ marginLeft: '7px' }} />
           </h3>
         </>
       )}
       <Formik validationSchema={null} initialValues={initValues} onSubmit={onSubmit}>
-        {({handleSubmit}) => (
+        {({ handleSubmit }) => (
           <Form
             className='mt-10 w-100 px-9'
             noValidate
@@ -119,14 +119,14 @@ const MerchantApplyVisa: React.FC<Props> = ({
           >
             <div className='d-flex flex-row justify-content-between'>
               <div className='fv-row mb-10 w-100'>
-                <RoomIcon style={{marginRight: '3px'}} />
+                <RoomIcon style={{ marginRight: '3px' }} />
 
                 <label className='form-label fs-4'>From</label>
                 <Field
                   as='select'
                   name='fromCountry'
                   className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
-                  style={{background: '#fff'}}
+                  style={{ background: '#fff' }}
                 >
                   <option value=''>Select a Country...</option>
                   <option value='AF'>Afghanistan</option>
@@ -381,15 +381,15 @@ const MerchantApplyVisa: React.FC<Props> = ({
                   <ErrorMessage name='businessType' />
                 </div>
               </div>
-              <div className='fv-row mb-10 w-100' style={{marginLeft: '5%'}}>
-                <FlightIcon style={{marginRight: '3px'}} />
+              <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%' }}>
+                <FlightIcon style={{ marginRight: '3px' }} />
                 <label className='form-label fs-4'>To</label>
 
                 <Field
                   as='select'
                   name='toCountry'
                   className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
-                  style={{background: '#fff'}}
+                  style={{ background: '#fff' }}
                 >
                   <option value=''>Select a Country...</option>
                   <option value='AF'>Afghanistan</option>
@@ -645,44 +645,28 @@ const MerchantApplyVisa: React.FC<Props> = ({
                 </div>
               </div>
 
-              <div className='fv-row mb-10 w-100' style={{marginLeft: '5%', marginRight: '3%'}}>
-                <label className='d-flex align-items-center form-label fs-4'>
-                  <CalendarMonthIcon style={{marginRight: '3px'}} />
+              <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%', marginRight: '3%',}}>
+                <div className='d-flex align-items-center'>
+                <label className='d-flex align-items-center form-label fs-4' style={{width:'50%'}}>
+                  <CalendarMonthIcon style={{ marginRight: '3px' }} />
                   <span className=''>From</span>
                 </label>
-
-                <DatePicker
-                  name='accountName'
-                  selected={issueDate}
-                  onChange={(date) => setIssueDate(date)}
-                  className=' form-control form-control-lg form-control-solid border border-2  border-secondary rounded-4 mt-2'
-                  dateFormat='MM/dd/yyyy'
-                  placeholderText='Departure Date'
-                  style={{backgroundColor: '#fff'}}
-                />
-
-                <div className='text-danger mt-2'>
-                  <ErrorMessage name='accountName' />
-                </div>
-              </div>
-              <div className='fv-row mb-10 w-100'>
-                <label className='d-flex align-items-center form-label fs-4'>
-                  <CalendarMonthIcon style={{marginRight: '3px'}} />
+                <label className='d-flex align-items-center form-label fs-4' style={{width:'50%'}}>
+                  <CalendarMonthIcon style={{ marginRight: '3px' }} />
                   <span className=''>To</span>
                 </label>
-
-                <DatePicker
-                  name='accountPlan'
-                  selected={expiryDate}
-                  onChange={(date) => setExpiryDate(date)}
-                  className='form-control form-control-lg form-control-solid border border-2  border-secondary rounded-4 mt-2'
-                  dateFormat='MM/dd/yyyy'
-                  placeholderText='Return Date'
-                />
-
-                <div className='text-danger mt-2'>
-                  <ErrorMessage name='accountPlan' />
                 </div>
+                <DatePicker.RangePicker 
+                style={{backgroundClip:'#fff',width:400,marginTop:8,border:'2px solid #e5e5e5',borderRadius:10,padding:10}}
+                onChange={(value)=>{
+                  if (value && value.length === 2) {
+                    var x = value[0]?.format('DD/MM/YYYY');
+                    var y = value[1]?.format('DD/MM/YYYY');
+                    setIssueDate(x);
+                    setExpiryDate(y);
+                  }
+                }}
+                />
               </div>
             </div>
 
