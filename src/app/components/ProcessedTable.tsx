@@ -13,6 +13,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axiosInstance from '../helpers/axiosInstance'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import Loader from './Loader'
 
 type Props = {
   className: string
@@ -54,6 +56,7 @@ const contentStyle: CSSProperties = {
 const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [issueVisaLoader,setissueVisaLoader] = useState(false);
 
   const [open, setOpen] = React.useState(false);
 
@@ -91,8 +94,10 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
       })
     }
   };
+const navigate = useNavigate();
 
   const handleIssueVisaClick = async (item) => {
+    setissueVisaLoader(true);
     const response = await axiosInstance.post('/backend/apply_visa', {
       application_id: item._id
     })
@@ -101,12 +106,14 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
       })
-      // navigate('/merchant/apply-visa')
+      navigate('/superadmin/processed')
+      setissueVisaLoader(false);
     } else {
       console.log(response.data)
       toast.error(response.data.msg, {
         position: 'top-center',
       })
+      setissueVisaLoader(false);
     }
   };
 
@@ -229,6 +236,9 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
         {/* end::Table container */}
       </div>
       {/* begin::Body */}
+      {issueVisaLoader &&
+      <Loader loading={issueVisaLoader} />
+      }
       {visible &&
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
           <div style={contentStyle}>
