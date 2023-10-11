@@ -89,7 +89,7 @@ function ApplicationFormView({viewApplication}) {
             <img
               src={viewApplication.passport_front}
               alt='Uploaded Image'
-              style={{maxWidth: '100%', maxHeight: '100%', marginTop: 40}}
+              style={{maxWidth: '100%', maxHeight: '100%',}}
             />
           </div>
         </div>
@@ -297,7 +297,7 @@ function ApplicationFormView({viewApplication}) {
             <img
               src={viewApplication.passport_back}
               alt='Uploaded Image'
-              style={{maxWidth: '100%', maxHeight: '100%', marginTop: 40}}
+              style={{maxWidth: '100%', maxHeight: '100%',}}
             />
           </div>
         </div>
@@ -382,7 +382,7 @@ function ApplicationFormView({viewApplication}) {
             <img
               src={viewApplication.pan_card}
               alt='Uploaded Image'
-              style={{maxWidth: '100%', maxHeight: '100%', marginTop: 40}}
+              style={{maxWidth: '100%', maxHeight: '100%',}}
             />
           </div>
         </div>
@@ -444,7 +444,7 @@ function ApplicationFormView({viewApplication}) {
             <img
               src={viewApplication.photo}
               alt='Uploaded Image'
-              style={{maxWidth: '100%', maxHeight: '100%', marginTop: 40}}
+              style={{maxWidth: '100%', maxHeight: '100%', }}
             />
           </div>
         </div>

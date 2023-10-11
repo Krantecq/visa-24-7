@@ -82,7 +82,8 @@ const MerchantApplyVisa: React.FC<Props> = ({
         onApiDataReceived(main_data)
       })
       .catch((error) => {
-        console.error('Error fetching Atlys data:', error)
+        console.error('Error fetching Atlys data:', error) 
+        visaListLoader(false)
       })
   }
   return (
@@ -660,8 +661,8 @@ const MerchantApplyVisa: React.FC<Props> = ({
                 style={{backgroundClip:'#fff',width:400,marginTop:8,border:'2px solid #e5e5e5',borderRadius:10,padding:10}}
                 onChange={(value)=>{
                   if (value && value.length === 2) {
-                    var x = value[0]?.format('DD/MM/YYYY');
-                    var y = value[1]?.format('DD/MM/YYYY');
+                    var x = value[0]?.format('YYYY-MM-DD');
+                    var y = value[1]?.format('YYYY-MM-DD');
                     setIssueDate(x);
                     setExpiryDate(y);
                   }

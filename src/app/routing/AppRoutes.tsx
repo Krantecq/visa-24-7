@@ -45,7 +45,7 @@ const AppRoutes: FC = () => {
               <Route path='/*' element={<PrivateRoutes />} />
               <Route index element={<Navigate to='/merchant/apply-visa' />} />
               <Route index element={<Navigate to='/superadmin/apply-visa' />} />
-              <Route index element={<Navigate to='/dashboard' />} />
+              <Route index element={<Navigate to='/superadmin/dashboard' />} />
               <Route index element={<Navigate to='/merchant/dashboard' />} />
               <Route index element={<Navigate to='/cutomers' />} />
               <Route index element={<Navigate to='/merchants' />} />

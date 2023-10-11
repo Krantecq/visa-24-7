@@ -62,7 +62,7 @@ export function Login() {
               Cookies.set('user_id', response.data.user_id,{ expires: 15 });
               Cookies.set('user_type', 'super_admin',{ expires: 15 });
               setTimeout(() => {
-                window.location.href = '/superadmin/apply-visa'                
+                window.location.href = '/superadmin/dashboard'                
               }, 400);
             } else {
               setLoading(false);

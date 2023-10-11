@@ -30,6 +30,8 @@ const MerchantDashboard = () => {
             data = response.data.data.filter(item => item.visa_status === 'Not Issued');
           }else if (activeTab === "Rejected") {
             data = response.data.data.filter(item => item.visa_status === 'Rejected');
+          }else if (activeTab === "Waiting") {
+            data = response.data.data.filter(item => item.visa_status === 'Waiting');
           }
           setVisaData(data); // Set the fetched data in the state
         }
@@ -109,6 +111,13 @@ const MerchantDashboard = () => {
           style={activeTab === "In-Process" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
         >
           In-Process
+        </div>
+        
+        <div
+          onClick={() => handleTabClick("Waiting")}
+          style={activeTab === "Waiting" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+        >
+          Waiting for Approval
         </div>
         <div
           onClick={() => handleTabClick("Not Issued")}

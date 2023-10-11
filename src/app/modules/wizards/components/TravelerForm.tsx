@@ -383,7 +383,7 @@ function TravelerForm({ onDataChange, ind }) {
                         style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
                         onChange={(value) => {
                           if (value) {
-                            handleFieldChange('birthDetail', value.format('DD/MM/YYYY'))
+                            handleFieldChange('birthDetail', value.format('YYYY-MM-DD'))
                           }
                         }
                         }
@@ -404,7 +404,7 @@ function TravelerForm({ onDataChange, ind }) {
                         style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
                         onChange={(value) => {
                           if (value) {
-                            handleFieldChange('passportIssueDate', value.format('DD/MM/YYYY'))
+                            handleFieldChange('passportIssueDate', value.format('YYYY-MM-DD'))
                           }
                         }
                         }
@@ -423,7 +423,7 @@ function TravelerForm({ onDataChange, ind }) {
                         style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
                         onChange={(value) => {
                           if (value) {
-                            handleFieldChange('passPortExpiryDate', value.format('DD/MM/YYYY'))
+                            handleFieldChange('passPortExpiryDate', value.format('YYYY-MM-DD'))
                           }
                         }
                         }

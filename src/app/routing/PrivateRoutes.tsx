@@ -43,7 +43,7 @@ const PrivateRoutes = () => {
         }
         {/* Pages */}
         {/* <Route path='apply-visa' element={<ApplyVisaWrapper />} /> */}
-        <Route path='superadmin/apply-visa' element={<NewVisaWrapper />} />
+        {/* <Route path='superadmin/apply-visa' element={<NewVisaWrapper />} /> */}
         <Route path='merchant/apply-visa' element={<MerchantNewVisaWrapper />} />
         <Route path='merchant/dashboard' element={<MerchantDashboard />} />
         <Route path='merchant/profile' element={<MerchantProfile />} />
