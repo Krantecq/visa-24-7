@@ -15,14 +15,14 @@ const btnIconClass = 'fs-2'
 
 const Navbar = () => {
   const { config } = useLayout();
-  const [currentWallet,setCurrentWallet] = useState('');
-  
+  const [currentWallet, setCurrentWallet] = useState('');
+
   const user_type = Cookies.get('user_type');
-  useEffect(()=>{
-    if(user_type == 'merchant'){
-    fetchwallet();
+  useEffect(() => {
+    if (user_type == 'merchant') {
+      fetchwallet();
     }
-  },[])
+  }, [])
   const fetchwallet = async () => {
     try {
       const user_id = Cookies.get('user_id');
@@ -30,7 +30,7 @@ const Navbar = () => {
         id: user_id
       }
       const response = await axiosInstance.post("/backend/fetch_single_merchant_user", postData);
-      console.log("response issss----->",response)
+      console.log("response issss----->", response)
       if (response.status == 203) {
         toast.error("Please Logout And Login Again", {
           position: 'top-center'
@@ -77,14 +77,15 @@ const Navbar = () => {
       {/* <div className={clsx('app-navbar-item', itemClass)}>
         <ThemeModeSwitcher toggleBtnClass={clsx('btn-active-light-primary btn-custom')} />
       </div> */}
+      {user_type == 'merchant' &&
+        <div className={clsx('app-navbar-item', itemClass)}>
+          <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0' style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 10, marginRight: 30 }}>
+            <KTIcon iconName='wallet' className={btnIconClass} />
 
-<div className={clsx('app-navbar-item', itemClass)}>
-      <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0' style={{backgroundColor:'#f5f5f5',padding:10,borderRadius:10,marginRight:30}}>
-      <KTIcon iconName='wallet' className={btnIconClass} />
-        
-      <span className='menu-title' style={{fontWeight:'bold',marginLeft:5,}}>{currentWallet} /-</span>
-      </div>
-      </div>
+            <span className='menu-title' style={{ fontWeight: 'bold', marginLeft: 5, }}>{currentWallet} /-</span>
+          </div>
+        </div>
+      }
       <div className={clsx('app-navbar-item', itemClass)}>
         <div
           className={clsx('cursor-pointer symbol', userAvatarClass)}

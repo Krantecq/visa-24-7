@@ -52,7 +52,7 @@ const contentStyle: CSSProperties = {
 };
 
 
-const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
+const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -261,4 +261,4 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
   )
 }
 
-export { MemberStatsTable }
+export { IssueApiTable }

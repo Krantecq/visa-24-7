@@ -21,6 +21,8 @@ import MerchantNewVisaWrapper from '../pages/merchants/apply-visa/MerchantNewVis
 import MerchantProfile from '../pages/merchants/profile/MerchantProfile'
 import Cookies from 'js-cookie';
 import WalletWrapper from '../pages/wallet/WalletWrapper'
+import IssueApiWrapper from '../pages/IssueApi/IssueApiWrapper'
+import ApiSettingWrapper from '../pages/api-setting/ApiSettingWrapper'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -58,7 +60,8 @@ const PrivateRoutes = () => {
         <Route path='superadmin/wallet' element={<WalletWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
-
+        <Route path='superadmin/issueApi' element={<IssueApiWrapper />}/>
+        <Route path='superadmin/apiSetting' element={<ApiSettingWrapper />}/>
         {/* Lazy Modules */}
         <Route
           path='crafted/pages/profile/*'

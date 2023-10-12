@@ -33,7 +33,7 @@ function ApprovalWrapper() {
 
   return (
     <div>
-      <ProcessedTable className='' title={'Visa Rejected'} data={visaStatsData}/>
+      <ProcessedTable className='' title={'Visa Waiting for Approval'} data={visaStatsData}/>
     </div>
   )
 }
