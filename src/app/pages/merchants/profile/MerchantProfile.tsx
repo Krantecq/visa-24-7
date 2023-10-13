@@ -668,9 +668,9 @@ function MerchantProfile() {
                     <ErrorMessage name='amount' />
                   </div>
                 </div>
-                <FormGroup>
+                {/* <FormGroup>
                   <FormControlLabel control={<Switch />} label="Issue for Api" />
-                </FormGroup>
+                </FormGroup> */}
 
                 <div className='pt-5 d-flex justify-content-center'>
                   <button

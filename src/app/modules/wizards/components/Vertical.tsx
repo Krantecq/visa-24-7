@@ -169,7 +169,7 @@ const Vertical: React.FC<VerticalProps> = ({
             selectedEntry.application_departure_date
           ),
           application_destination: selectedEntry.country_code,
-          fathers_name: travelerForm.firstName,
+          fathers_name: travelerForm.fatherName,
           passport_front: travelerForm.passFrontPhoto,
           passport_back: travelerForm.passBackPhoto,
           pan_card: travelerForm.panPhoto,
