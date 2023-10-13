@@ -102,22 +102,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
             <span className='card-label fw-bold fs-3 mb-1'>Merchant Statistics</span>
             <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
-          <div className='d-flex flex-row'>
-            <div className="dropdown mx-5">
-              <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Filter
-              </button>
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">All</a></li>
-                <li><a className="dropdown-item" href="#">Waiting For Approval</a></li>
-              </ul>
-            </div>
-            {/* <button className='btn btn-primary align-self-center'>All</button>
-            <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button> */}
-            <Link to={'/superadmin/add-new-merchant'}>
-              <button className='btn btn-primary align-self-center'>Add new Merchant</button>
-            </Link>
-          </div>
+
         </div>
         {/* end::Header */}
         {/* begin::Body */}
@@ -138,7 +123,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                   :
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead className='px-2' style={{ background: '#332786',color:"#fff"}}>
+                    <thead className='px-2' style={{ background: '#332786', color: "#fff" }}>
                       <tr className='fw-bold'>
                         <th className='min-w-150px'>Agent</th>
                         <th className='min-w-120px'>Wallet Balance</th>
@@ -192,7 +177,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                           </td>
                           <td >
                             <div className='d-flex align-items-center flex-shrink-0'>
-                      
+
 
                               <DeleteOutline onClick={() => {
                                 handleClickOpen()
@@ -201,10 +186,16 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                                 // Laxit write here for delete api 
                                 // }
                               }} className='mx-5 cursor-pointer' />
-                       
-                       
+
+                              {item.has_approve === false && (
+                                // Render the "Approve" button only when the merchant is not approved
                                 <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Issue Api</button>
-                            
+                              )}
+                              {item.merchant_approved === true && (
+                                // Render the "Approve" button only when the merchant is not approved
+                                <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Disable Api</button>
+                              )}
+
                             </div>
                           </td>
                         </tr>
