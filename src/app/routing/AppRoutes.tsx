@@ -48,6 +48,8 @@ const AppRoutes: FC = () => {
               <Route index element={<Navigate to='/superadmin/issueApi' />} />
               <Route index element={<Navigate to='/superadmin/apiSetting' />} />
               <Route index element={<Navigate to='/superadmin/dashboard' />} />
+              <Route index element={<Navigate to='/superadmin/apiPayment'/>} />
+              <Route index element={<Navigate to='/superadmin/apiMerchants'/>} />
               <Route index element={<Navigate to='/merchant/dashboard' />} />
               <Route index element={<Navigate to='/cutomers' />} />
               <Route index element={<Navigate to='/merchants' />} />
@@ -59,6 +61,8 @@ const AppRoutes: FC = () => {
               <Route index element={<Navigate to='/rejected' />} />
               <Route index element={<Navigate to='/create-new-visa' />} />
               <Route index element={<Navigate to='/merchant/profile' />} />
+              <Route index element={<Navigate to='/superadmin/changepassword' />} />
+
             </>
           ) : (
             <>

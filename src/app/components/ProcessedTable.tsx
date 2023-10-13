@@ -56,7 +56,7 @@ const contentStyle: CSSProperties = {
 const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [issueVisaLoader,setissueVisaLoader] = useState(false);
+  const [issueVisaLoader, setissueVisaLoader] = useState(false);
 
   const [open, setOpen] = React.useState(false);
 
@@ -94,7 +94,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
       })
     }
   };
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleIssueVisaClick = async (item) => {
     setissueVisaLoader(true);
@@ -152,15 +152,15 @@ const navigate = useNavigate();
           {/* begin::Table */}
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             {/* begin::Table head */}
-            <thead>
-              <tr className='fw-bold text-muted'>
+            <thead style={{ background: '#332786',color:"#fff"}}>
+              <tr className='fw-bold'>
 
-                <th className='min-w-150px'>Customers</th>
+                <th className='min-w-150px text-center'>Customers</th>
                 <th className='min-w-140px'>Application Arrival Date</th>
                 <th className='min-w-120px'>Application Departure Date</th>
                 <th className='min-w-100px'>Visa Amount</th>
                 <th className='min-w-100px'>Visa Status</th>
-                <th className='min-w-100px text-end'>Actions</th>
+                <th className='min-w-100px text-center'>Actions</th>
               </tr>
             </thead>
             {/* end::Table head */}
@@ -207,15 +207,21 @@ const navigate = useNavigate();
                   </td>
                   <td>
                     {/* Action Buttons */}
-                    <div className='d-flex align-items-center flex-shrink-0'>
+                    <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
 
                       <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
-
+                      <DeleteOutline onClick={() => {
+                        handleClickOpen()
+                        // const confirmed = window.confirm('Are you sure you want to delete this item?');
+                        // if (confirmed) {
+                        // Laxit write here for delete api 
+                        // }
+                      }} />
                       {row.visa_status === 'Applied' && (
                         // Render the "Approve" button only when the merchant is not approved
                         <button className='btn btn-primary align-self-center'>Check Status</button>
                       )}
-                      {row.visa_status=== 'Waiting' && (
+                      {row.visa_status === 'Waiting' && (
                         // Render the "Approve" button only when the merchant is not approved
                         <button className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
                       )}
@@ -237,12 +243,12 @@ const navigate = useNavigate();
       </div>
       {/* begin::Body */}
       {issueVisaLoader &&
-      <Loader loading={issueVisaLoader} />
+        <Loader loading={issueVisaLoader} />
       }
       {visible &&
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
           <div style={contentStyle}>
-            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
+            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 243, borderRadius: 20, cursor: 'pointer' ,    top: '156px'}}>
               <CloseOutlined />
             </div>
             <ApplicationFormView viewApplication={selectedItem} />

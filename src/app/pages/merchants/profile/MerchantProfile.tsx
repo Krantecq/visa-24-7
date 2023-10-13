@@ -385,8 +385,6 @@ function MerchantProfile() {
                   style={{
                     ...inputStyle,
                     width: 700,
-                    border: '1px solid #d3d3d3',
-                    borderRadius: 10,
                   }}
                   readOnly
                   name='businessDescriptor'
@@ -403,8 +401,6 @@ function MerchantProfile() {
                   style={{
                     ...inputStyle,
                     width: 700,
-                    border: '1px solid #d3d3d3',
-                    borderRadius: 10,
                   }}
                   readOnly
                   name='businessDescriptor'
@@ -422,8 +418,6 @@ function MerchantProfile() {
                   style={{
                     ...inputStyle,
                     width: 700,
-                    border: '1px solid #d3d3d3',
-                    borderRadius: 10,
                   }}
                   readOnly
                   name='businessDescriptor'
@@ -436,7 +430,7 @@ function MerchantProfile() {
             </div>
             <div>
               <p style={{ fontSize: 18 }}>
-                Add Atlys as a beneficiary and pay via NEFT/RTGS/IMPS online or at a bank branch. We
+                Add Visa 24/7 as a beneficiary and pay via NEFT/RTGS/IMPS online or at a bank branch. We
                 will process the payment and add the amount to your wallet.
               </p>
             </div>
@@ -759,9 +753,9 @@ function MerchantProfile() {
       <div>{activeWalletTabContent}</div>
     </div>
   )
-  const apiContent = (
+  const transactionContent = (
     <div
-      className='w-full mt-5 mx-10 px-10'
+      className='w-full mt-5 mx-10 pt-5'
       style={{
         backgroundColor: '#fff',
         justifyContent: 'space-between',
@@ -773,53 +767,146 @@ function MerchantProfile() {
         overflow: 'hidden',
       }}
     >
-      <h2 className='pt-10'>API Key</h2>
-      <hr />
-
-      <Formik initialValues={initValues} onSubmit={() => { }}>
-        {() => (
-          <Form
-            className='py-10'
-            style={{ justifyContent: 'center', marginLeft: 150, width: '75%' }}
-            noValidate
-            id='kt_create_account_form'
+      <div className='d-flex align-items-center px-10'>
+        <div className='d-flex align-items-center' style={{ flex: 1 }}>
+          <h2 className='' >Visa 24/7 Wallet</h2>
+          <div
+            className='mx-10 px-5 py-2'
+            style={{
+              border: '2px solid #d3d3d3',
+              borderRadius: 20,
+              alignItems: 'center',
+              display: 'flex',
+              justifyContent: 'center',
+              backgroundColor: '#fff',
+            }}
           >
-            <div className='d-flex'>
-              <div className='fv-row mb-5'>
-                <Field
-                  style={{
-                    ...inputStyle,
-                    width: 700,
-                    border: '1px solid #d3d3d3',
-                    borderRadius: 10,
-                  }}
-                  readOnly
-                  name='businessDescriptor'
-                  className='form-control form-control-lg form-control-solid '
-                />
-                <div className='text-danger mt-2'>
-                  <ErrorMessage name='businessDescriptor' />
-                </div>
-              </div>
-            </div>
-            <div>
-              <p style={{ fontSize: 18 }}>
-                You don't have API Key, Go to Load wallet tab, do the payment and Upload the receipt
-              </p>
+            <h6 className='fs-4' style={{ marginTop: 5 }}>
+              Current Balance:  1000/-
+            </h6>
+          </div>
+        </div>
 
-              <div className='d-flex justify-content-center'>
-                <button
-                  onClick={() => setActiveTab('Load Wallet')}
-                  style={{ width: 200 }}
-                  className='btn btn-primary'
-                >
-                  Go to Wallet
-                </button>
-              </div>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        <div
+          className='px-5 py-2'
+          style={{
+            border: '2px solid #d3d3d3',
+            borderRadius: 20,
+            alignItems: 'center',
+            display: 'flex',
+            marginLeft: 'auto',
+            backgroundColor: '#fff',
+            cursor:'pointer'
+          }}
+        >
+          <h6 className='fs-4' style={{ marginTop: 5 }}>
+            Download CSV
+          </h6>
+        </div>
+      </div>
+
+      <table className='table align-middle gs-10 mt-10'>
+        {/* begin::Table head */}
+        <thead className='px-5' style={{ background: '#332789',color:'#fff' }}>
+          <tr className='fw-bold'>
+            <th className='min-w-150px'>Date/Time</th>
+            <th className='min-w-150px'>Amount</th>
+            <th className='min-w-150px'>Type</th>
+            <th className='min-w-150px'>Status</th>
+          </tr>
+        </thead>
+        {/* end::Table head */}
+        {/* begin::Table body */}
+        <tbody>
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+          
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+
+        </tbody>
+        {/* end::Table body */}
+      </table>
     </div>
   )
 
@@ -834,7 +921,7 @@ function MerchantProfile() {
       icon: <WalletIcon style={{ width: 25, height: 25 }} />,
       content: loadWalletContent,
     },
-    // {label: 'API', icon: <CardIcon style={{width: 25, height: 25}} />, content: apiContent},
+    { label: 'Transactions', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: transactionContent },
   ]
 
   // Find the active tab's content

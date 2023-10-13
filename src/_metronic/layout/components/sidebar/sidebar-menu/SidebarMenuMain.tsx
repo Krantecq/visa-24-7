@@ -22,6 +22,11 @@ const SidebarMenuMain = () => {
         title={'Customers'}
         fontIcon='bi-app-indicator'
       /> */}
+            <div className='menu-item'>
+        <div className='menu-content pt-8 pb-2'>
+          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Merchants</span>
+        </div>
+      </div>
       <SidebarMenuItem
         to='/superadmin/merchants'
         icon='element-11'
@@ -31,7 +36,7 @@ const SidebarMenuMain = () => {
       <SidebarMenuItem
         to='/superadmin/issueApi'
         icon='element-11'
-        title={'Issue Api'}
+        title={'Merchant Api'}
         fontIcon='bi-app-indicator'
       />
       {/* <SidebarMenuItem to='/builder' icon='switch' title='Layout Builder' fontIcon='bi-layers' /> */}
@@ -81,6 +86,12 @@ const SidebarMenuMain = () => {
         title={'Wallet'}
         fontIcon='bi-app-indicator'
       />
+            <SidebarMenuItem
+        to='/superadmin/apiPayment'
+        icon='element-11'
+        title={'Api Payment'}
+        fontIcon='bi-app-indicator'
+      />
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
           <span className='menu-section text-muted text-uppercase fs-8 ls-1'>API</span>
@@ -90,6 +101,12 @@ const SidebarMenuMain = () => {
         to='/superadmin/apisetting'
         icon='element-11'
         title={'API Setting'}
+        fontIcon='bi-app-indicator'
+      />
+            <SidebarMenuItem
+        to='/superadmin/apiMerchants'
+        icon='element-11'
+        title={'Merchants'}
         fontIcon='bi-app-indicator'
       />
       {/* <div className='menu-item'>

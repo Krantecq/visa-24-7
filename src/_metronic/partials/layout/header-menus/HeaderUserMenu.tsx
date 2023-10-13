@@ -69,9 +69,14 @@ const HeaderUserMenu: FC = () => {
             My Profile
           </Link>
           :
+          <>
           <Link to={'/crafted/pages/profile'} className='menu-link px-5'>
             My Profile
           </Link>
+             <Link to={'/superadmin/changepassword'} className='menu-link px-5'>
+             Change Password
+           </Link>
+           </>
         }
       </div>
 

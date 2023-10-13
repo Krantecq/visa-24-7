@@ -138,15 +138,15 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                   :
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead className='px-2' style={{ background: '#F9F9F9' }}>
-                      <tr className='fw-bold text-muted'>
+                    <thead className='px-2' style={{ background: '#332786',color:"#fff"}}>
+                      <tr className='fw-bold'>
                         <th className='min-w-150px'>Agent</th>
                         <th className='min-w-120px'>Wallet Balance</th>
                         <th className='min-w-100px'>No. Of Visa</th>
                         <th className='min-w-100px text-start'>Company</th>
-                        <th className='min-w-150px text-end'>Joining Date</th>
-                        <th className='min-w-150px text-end'>API KEY</th>
-                        <th className='min-w-150px text-end'>Action</th>
+                        <th className='min-w-150px text-start'>Joining Date</th>
+                        <th className='min-w-150px text-start'>API KEY</th>
+                        <th className='min-w-150px text-center'>Action</th>
                       </tr>
                     </thead>
                     {/* end::Table head */}
