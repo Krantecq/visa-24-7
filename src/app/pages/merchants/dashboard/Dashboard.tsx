@@ -34,7 +34,9 @@ const MerchantDashboard = () => {
           } else if (activeTab === "Waiting") {
             data = response.data.data.filter(item => item.visa_status === 'Waiting');
           }
+          if(activeTab != "Analytics"){
           setVisaData(data); // Set the fetched data in the state
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -156,7 +158,7 @@ const MerchantDashboard = () => {
 
       {/* Right-side content */}
       <div style={{ marginLeft: '20%', width: '80%', overflowY: 'auto', padding: '16px' }}>
-        {activeTab == "Analytics" ?
+        {activeTab === "Analytics" ?
           <div>
             <MerchantAnaltytics />
           </div>

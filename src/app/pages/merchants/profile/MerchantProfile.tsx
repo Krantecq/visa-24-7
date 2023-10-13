@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent, useEffect,CSSProperties } from 'react'
+import React, { useState, useRef, ChangeEvent, useEffect, CSSProperties } from 'react'
 import PersonIcon from '@mui/icons-material/Person'
 import CardIcon from '@mui/icons-material/CreditCard'
 import WalletIcon from '@mui/icons-material/Wallet'
@@ -48,7 +48,7 @@ function MerchantProfile() {
   const [activeWalletTab, setActiveWalletTab] = useState('Bank Transfer (0% Fee)')
   const [initValues] = useState<ICreateAccount>(inits)
   const [recieptImage, setReceiptImage] = useState('')
-  const [receiptShow,setReceiptshow] = useState(false);
+  const [receiptShow, setReceiptshow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(true);
 
@@ -124,36 +124,36 @@ function MerchantProfile() {
     backgroundColor: 'white', // Include padding and border in the width calculation
   }
 
-  
-const overlayStyle: CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.7)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 9999,
-  opacity: 0,
-  visibility: 'hidden',
-  transition: 'opacity 0.3s, visibility 0.3s',
-};
 
-const activeOverlayStyle: CSSProperties = {
-  opacity: 1,
-  visibility: 'visible',
-};
-const contentStyle: CSSProperties = {
-  backgroundColor: '#fff', // Background color for highlighting
-  padding: '10px', // Adjust padding as needed
-  borderRadius: '5px', // Rounded corners for the highlight
-  // textAlign:'center',
-  width: '70%',
-  height: '70%',
-  overflowY: 'auto'
-};
+  const overlayStyle: CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999,
+    opacity: 0,
+    visibility: 'hidden',
+    transition: 'opacity 0.3s, visibility 0.3s',
+  };
+
+  const activeOverlayStyle: CSSProperties = {
+    opacity: 1,
+    visibility: 'visible',
+  };
+  const contentStyle: CSSProperties = {
+    backgroundColor: '#fff', // Background color for highlighting
+    padding: '10px', // Adjust padding as needed
+    borderRadius: '5px', // Rounded corners for the highlight
+    // textAlign:'center',
+    width: '70%',
+    height: '70%',
+    overflowY: 'auto'
+  };
 
   const profileContent = (
     <div
@@ -963,8 +963,8 @@ const contentStyle: CSSProperties = {
       </div>
       <hr />
       <div>
-        
-      <Formik initialValues={initValues} onSubmit={() => { }}>
+
+        <Formik initialValues={initValues} onSubmit={() => { }}>
           {() => (
             <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
               <div>
@@ -991,7 +991,7 @@ const contentStyle: CSSProperties = {
                     type='submit'
                     style={{ width: 200, backgroundColor: '#332789' }}
                     className='btn btn-primary'
-                    onClick={()=>{setReceiptshow(true)}}
+                    onClick={() => { setReceiptshow(true) }}
                   >
                     {!loading && <span className='indicator-label'>Issue API</span>}
                     {loading && (
@@ -1002,16 +1002,16 @@ const contentStyle: CSSProperties = {
                     )}
                   </button>
                 </div>
-                {receiptShow && 
-                
-        <div className='loader-overlay' style={{ ...overlayStyle, ...(receiptShow && activeOverlayStyle), }}>
-        <div style={contentStyle}>
+                {receiptShow &&
 
-          <div onClick={() => setReceiptshow(false)} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
-            <CloseOutlined />
-          </div>
-          {uploadReciept}
-          </div>
+                  <div className='loader-overlay' style={{ ...overlayStyle, ...(receiptShow && activeOverlayStyle), }}>
+                    <div style={contentStyle}>
+
+                      <div onClick={() => setReceiptshow(false)} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
+                        <CloseOutlined />
+                      </div>
+                      {uploadReciept}
+                    </div>
                   </div>
                 }
               </div>
