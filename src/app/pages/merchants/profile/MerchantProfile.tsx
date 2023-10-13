@@ -910,6 +910,131 @@ function MerchantProfile() {
     </div>
   )
 
+  const isuueAPIContent = (
+    <div
+      className='w-full mt-5 mx-10 pt-5'
+      style={{
+        backgroundColor: '#fff',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        borderColor: '#d3d3d3',
+        border: '1px solid #d3d3d3',
+        boxShadow: '0px 0px 7px rgba(0, 0, 0, 0.2)',
+        width: '95%',
+        overflow: 'hidden',
+      }}
+    >
+      <div className='d-flex align-items-center px-10'>
+        <div className='d-flex align-items-center' style={{ flex: 1 }}>
+          <h2 className='' >Issue API</h2>
+        </div>
+      </div>
+
+      <table className='table align-middle gs-10 mt-10'>
+        {/* begin::Table head */}
+        <thead className='px-5' style={{ background: '#332789',color:'#fff' }}>
+          <tr className='fw-bold'>
+            <th className='min-w-150px'>Date/Time</th>
+            <th className='min-w-150px'>Amount</th>
+            <th className='min-w-150px'>Type</th>
+            <th className='min-w-150px'>Status</th>
+          </tr>
+        </thead>
+        {/* end::Table head */}
+        {/* begin::Table body */}
+        <tbody>
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+          
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td className='text-start'>
+              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                23 oct
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>
+                500
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                Approved
+              </span>
+            </td>
+          </tr>
+
+        </tbody>
+        {/* end::Table body */}
+      </table>
+    </div>
+  )
+
   const tabs = [
     {
       label: 'Profile',
@@ -922,6 +1047,8 @@ function MerchantProfile() {
       content: loadWalletContent,
     },
     { label: 'Transactions', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: transactionContent },
+    { label: 'Issue API', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: isuueAPIContent },
+  
   ]
 
   // Find the active tab's content
