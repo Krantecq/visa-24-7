@@ -57,6 +57,8 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const [open, setOpen] = React.useState(false);
+  
+  const [disable, setDisable] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(!open);
@@ -193,7 +195,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                               )}
                               {item.merchant_approved === true && (
                                 // Render the "Approve" button only when the merchant is not approved
-                                <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Disable Api</button>
+                                <button className='btn btn-primary align-self-center' onClick={() => setDisable(!disable)}>Disable Api</button>
                               )}
 
                             </div>
@@ -245,6 +247,27 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
               Cancel
             </Button>
             <Button onClick={handleClose}>Yes</Button>
+          </DialogActions>
+        </Dialog>
+        
+        <Dialog
+          open={disable}
+          onClose={handleClose}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move', color: 'red' }} id="draggable-dialog-title">
+            Disable
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to disable this API?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button onClick={handleApproveClick}>Yes</Button>
           </DialogActions>
         </Dialog>
       </div>

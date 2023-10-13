@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent, useEffect } from 'react'
+import React, { useState, useRef, ChangeEvent, useEffect,CSSProperties } from 'react'
 import PersonIcon from '@mui/icons-material/Person'
 import CardIcon from '@mui/icons-material/CreditCard'
 import WalletIcon from '@mui/icons-material/Wallet'
@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom'
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { CloseOutlined } from '@mui/icons-material'
 function MerchantProfile() {
   const [activeTab, setActiveTab] = useState('Profile')
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ function MerchantProfile() {
   const [activeWalletTab, setActiveWalletTab] = useState('Bank Transfer (0% Fee)')
   const [initValues] = useState<ICreateAccount>(inits)
   const [recieptImage, setReceiptImage] = useState('')
-
+  const [receiptShow,setReceiptshow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(true);
 
@@ -122,6 +123,37 @@ function MerchantProfile() {
     boxSizing: 'border-box',
     backgroundColor: 'white', // Include padding and border in the width calculation
   }
+
+  
+const overlayStyle: CSSProperties = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 9999,
+  opacity: 0,
+  visibility: 'hidden',
+  transition: 'opacity 0.3s, visibility 0.3s',
+};
+
+const activeOverlayStyle: CSSProperties = {
+  opacity: 1,
+  visibility: 'visible',
+};
+const contentStyle: CSSProperties = {
+  backgroundColor: '#fff', // Background color for highlighting
+  padding: '10px', // Adjust padding as needed
+  borderRadius: '5px', // Rounded corners for the highlight
+  // textAlign:'center',
+  width: '70%',
+  height: '70%',
+  overflowY: 'auto'
+};
 
   const profileContent = (
     <div
@@ -796,7 +828,7 @@ function MerchantProfile() {
             display: 'flex',
             marginLeft: 'auto',
             backgroundColor: '#fff',
-            cursor:'pointer'
+            cursor: 'pointer'
           }}
         >
           <h6 className='fs-4' style={{ marginTop: 5 }}>
@@ -807,7 +839,7 @@ function MerchantProfile() {
 
       <table className='table align-middle gs-10 mt-10'>
         {/* begin::Table head */}
-        <thead className='px-5' style={{ background: '#332789',color:'#fff' }}>
+        <thead className='px-5' style={{ background: '#332789', color: '#fff' }}>
           <tr className='fw-bold'>
             <th className='min-w-150px'>Date/Time</th>
             <th className='min-w-150px'>Amount</th>
@@ -839,7 +871,7 @@ function MerchantProfile() {
               </span>
             </td>
           </tr>
-          
+
           <tr>
             <td className='text-start'>
               <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
@@ -929,109 +961,64 @@ function MerchantProfile() {
           <h2 className='' >Issue API</h2>
         </div>
       </div>
+      <hr />
+      <div>
+        
+      <Formik initialValues={initValues} onSubmit={() => { }}>
+          {() => (
+            <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
+              <div>
+                <div className='fv-row mb-10'>
+                  <label className='d-flex align-items-center form-label'>
+                    <span className='required'>API Key</span>
+                  </label>
+                  <Field
+                    style={{ ...inputStyle, width: '450px' }}
+                    name='amount'
+                    className='form-control form-control-lg form-control-solid'
+                    onChange={(e) => handleFieldChange('amount', e.target.value)}
+                  />
+                  <div className='text-danger mt-2'>
+                    <ErrorMessage name='amount' />
+                  </div>
+                </div>
+                {/* <FormGroup>
+                  <FormControlLabel control={<Switch />} label="Issue for Api" />
+                </FormGroup> */}
 
-      <table className='table align-middle gs-10 mt-10'>
-        {/* begin::Table head */}
-        <thead className='px-5' style={{ background: '#332789',color:'#fff' }}>
-          <tr className='fw-bold'>
-            <th className='min-w-150px'>Date/Time</th>
-            <th className='min-w-150px'>Amount</th>
-            <th className='min-w-150px'>Type</th>
-            <th className='min-w-150px'>Status</th>
-          </tr>
-        </thead>
-        {/* end::Table head */}
-        {/* begin::Table body */}
-        <tbody>
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+                <div className='pt-5 d-flex justify-content-center'>
+                  <button
+                    type='submit'
+                    style={{ width: 200, backgroundColor: '#332789' }}
+                    className='btn btn-primary'
+                    onClick={()=>{setReceiptshow(true)}}
+                  >
+                    {!loading && <span className='indicator-label'>Issue API</span>}
+                    {loading && (
+                      <span className='indicator-progress' style={{ display: 'block' }}>
+                        Please wait...
+                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                      </span>
+                    )}
+                  </button>
+                </div>
+                {receiptShow && 
+                
+        <div className='loader-overlay' style={{ ...overlayStyle, ...(receiptShow && activeOverlayStyle), }}>
+        <div style={contentStyle}>
 
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
-
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
-
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
-
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
-
-        </tbody>
-        {/* end::Table body */}
-      </table>
+          <div onClick={() => setReceiptshow(false)} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
+            <CloseOutlined />
+          </div>
+          {uploadReciept}
+          </div>
+                  </div>
+                }
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   )
 
@@ -1048,7 +1035,7 @@ function MerchantProfile() {
     },
     { label: 'Transactions', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: transactionContent },
     { label: 'Issue API', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: isuueAPIContent },
-  
+
   ]
 
   // Find the active tab's content
