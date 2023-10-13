@@ -6,10 +6,12 @@ import axiosInstance from '../../helpers/axiosInstance';
 function MerchantWrapper() {
   // Define the initial state for memberStatsData
   const [memberStatsData, setMemberStatsData] = useState([]);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
     // Define a function to make the POST request
     const fetchData = async () => {
+      setLoading(true);
       try {
         const postData = {
           // Your POST data goes here
@@ -19,14 +21,17 @@ function MerchantWrapper() {
           .then((response) => {
             console.log(response.data)
             setMemberStatsData(response.data.data);
+            setLoading(false);
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false);
           });
 
         
       } catch (error) {
         console.error('Error:', error);
+        setLoading(false);
       }
     };
 
@@ -36,7 +41,7 @@ function MerchantWrapper() {
 
   return (
     <div>
-      <MemberStatsTable className='' data={memberStatsData} />
+      <MemberStatsTable className='' data={memberStatsData} loading={loading} />
     </div>
   );
 }

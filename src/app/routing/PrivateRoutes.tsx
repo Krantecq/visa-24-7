@@ -21,6 +21,11 @@ import MerchantNewVisaWrapper from '../pages/merchants/apply-visa/MerchantNewVis
 import MerchantProfile from '../pages/merchants/profile/MerchantProfile'
 import Cookies from 'js-cookie';
 import WalletWrapper from '../pages/wallet/WalletWrapper'
+import IssueApiWrapper from '../pages/IssueApi/IssueApiWrapper'
+import ApiSettingWrapper from '../pages/api-setting/ApiSettingWrapper'
+import ApiPaymentWrapper from '../pages/api-payment/ApiPaymentWrapper'
+import ApiMerchantWrapper from '../pages/api-merchant/ApiMerchantWrapper'
+import { ChangePassword } from '../modules/profile/components/ChangePassword'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -58,6 +63,13 @@ const PrivateRoutes = () => {
         <Route path='superadmin/wallet' element={<WalletWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
+        <Route path='superadmin/issueApi' element={<IssueApiWrapper />}/>
+        <Route path='superadmin/apiSetting' element={<ApiSettingWrapper />}/>
+        <Route path='superadmin/apiPayment' element={<ApiPaymentWrapper />}/>
+        <Route path='superadmin/apiMerchants' element={<ApiMerchantWrapper />}/>
+        <Route path='superadmin/changepassword' element={<ChangePassword/>}/>
+
+
 
         {/* Lazy Modules */}
         <Route

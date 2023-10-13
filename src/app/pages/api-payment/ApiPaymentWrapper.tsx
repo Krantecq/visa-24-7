@@ -1,9 +1,10 @@
 import { ProcessedTable } from '../../components/ProcessedTable'
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../helpers/axiosInstance';
+import { WalletTable } from '../../components/WalletTable';
 
-function ApprovalWrapper() {
-  const [visaStatsData, setVisaStatsData] = useState([]);
+function ApiPaymentWrapper() {
+  const [walletData, setWalletData] = useState([]);
 
   useEffect(() => {
     // Define a function to make the POST request
@@ -11,11 +12,10 @@ function ApprovalWrapper() {
       try {
         
         // Make a POST request to your API endpoint
-        axiosInstance.get('/backend/super_admin/fetch_all_visa')
+        axiosInstance.get('/backend/fetch_wallet_transaction')
           .then((response) => {
             console.log(response.data)
-            const filteredData = response.data.data.filter(item => item.visa_status === 'Waiting');
-            setVisaStatsData(filteredData);
+            setWalletData(response.data.data);
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
@@ -33,9 +33,9 @@ function ApprovalWrapper() {
 
   return (
     <div>
-      <ProcessedTable className='' title={'Visa Waiting for Approval'} data={visaStatsData}/>
+      <WalletTable className='' title={'Api Payment'} data={walletData}/>
     </div>
   )
 }
 
-export default ApprovalWrapper
+export default ApiPaymentWrapper;

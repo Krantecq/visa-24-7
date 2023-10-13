@@ -342,28 +342,51 @@ function MerchantView({ viewApplication }) {
                     </div>
                   </div>
                 </div>
+                <div className='d-flex'>
+                  <div
+                    // onClick={handleReviewAndSave}
+                    className='mt-10'
+                    onClick={handleSaveClick}
+                    style={{
+                      height: 40,
+                      width: 190,
+                      border: '1px solid',
+                      marginLeft: 20,
+                      borderColor: '#696969',
+                      borderRadius: 25,
+                      alignItems: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      backgroundColor: '#332786',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>
+                      Save
+                    </h6>
+                  </div>
 
-                <div
-                  // onClick={handleReviewAndSave}
-                  className='mt-10'
-                  onClick={handleSaveClick}
-                  style={{
-                    height: 40,
-                    width: 190,
-                    border: '1px solid',
-                    marginLeft: 20,
-                    borderColor: '#696969',
-                    borderRadius: 25,
-                    alignItems: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    backgroundColor: '#332786',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>
-                    Save
-                  </h6>
+                  <div
+                    // onClick={handleReviewAndSave}
+                    className='mt-10'
+                    style={{
+                      height: 40,
+                      width: 190,
+                      border: '1px solid',
+                      marginLeft: 20,
+                      borderColor: '#696969',
+                      borderRadius: 25,
+                      alignItems: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      backgroundColor: '#332786',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>
+                      Issue API
+                    </h6>
+                  </div>
                 </div>
               </Form>
             )}

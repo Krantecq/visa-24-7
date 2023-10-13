@@ -106,13 +106,13 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
           {/* begin::Table */}
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             {/* begin::Table head */}
-            <thead>
-              <tr className='fw-bold text-muted'>
+            <thead style={{ background: '#332786',color:"#fff"}}>
+              <tr className='fw-bold'>
 
-                <th className='min-w-150px'>Email Id</th>
+                <th className='min-w-150px text-start px-5'>Email Id</th>
                 <th className='min-w-140px'>Transaction Id</th>
                 <th className='min-w-120px'>Amount</th>
-                <th className='min-w-100px text-end'>Actions</th>
+                <th className='min-w-100px text-end px-5'>Actions</th>
               </tr>
             </thead>
             {/* end::Table head */}

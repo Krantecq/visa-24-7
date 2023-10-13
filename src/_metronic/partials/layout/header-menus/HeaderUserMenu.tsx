@@ -1,16 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
-import {useAuth} from '../../../../app/modules/auth'
-import {Languages} from './Languages'
-import {toAbsoluteUrl} from '../../../helpers'
-import Cookies from 'js-cookie'; 
+import { FC } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../../app/modules/auth'
+import { Languages } from './Languages'
+import { toAbsoluteUrl } from '../../../helpers'
+import Cookies from 'js-cookie';
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const HeaderUserMenu: FC = () => {
-  const {currentUser, logout} = useAuth()
-  const navigate= useNavigate();
+  const { currentUser, logout } = useAuth()
+  const navigate = useNavigate();
+  const user_type = Cookies.get('user_type');
   const handleLogout = async () => {
     try {
       axios.get('http://localhost:5003/backend/logout/merchant_user')
@@ -63,10 +64,20 @@ const HeaderUserMenu: FC = () => {
 
       <div className='menu-item px-5'>
         {/* <Link to={'/crafted/pages/profile'} className='menu-link px-5'> */}
-        
-        <Link to={'/merchant/profile'} className='menu-link px-5'>
-          My Profile
-        </Link>
+        {user_type == "merchant" ?
+          <Link to={'/merchant/profile'} className='menu-link px-5'>
+            My Profile
+          </Link>
+          :
+          <>
+          <Link to={'/crafted/pages/profile'} className='menu-link px-5'>
+            My Profile
+          </Link>
+             <Link to={'/superadmin/changepassword'} className='menu-link px-5'>
+             Change Password
+           </Link>
+           </>
+        }
       </div>
 
       {/* <div className='menu-item px-5'>
@@ -163,4 +174,4 @@ const HeaderUserMenu: FC = () => {
   )
 }
 
-export {HeaderUserMenu}
+export { HeaderUserMenu }

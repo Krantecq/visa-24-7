@@ -52,7 +52,7 @@ const contentStyle: CSSProperties = {
 };
 
 
-const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
+const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -146,7 +146,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                         <th className='min-w-100px text-start'>Company</th>
                         <th className='min-w-150px text-start'>Joining Date</th>
                         <th className='min-w-150px text-start'>API KEY</th>
-                        <th className='min-w-150px text-center'>Action</th>
+                        <th className='min-w-150px text-end'>Action</th>
                       </tr>
                     </thead>
                     {/* end::Table head */}
@@ -192,7 +192,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                           </td>
                           <td >
                             <div className='d-flex align-items-center flex-shrink-0'>
-                              <VisibilityIcon onClick={() => handleVisibilityClick(item)} className='mx-5 cursor-pointer' />
+                      
 
                               <DeleteOutline onClick={() => {
                                 handleClickOpen()
@@ -201,10 +201,10 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                                 // Laxit write here for delete api 
                                 // }
                               }} className='mx-5 cursor-pointer' />
-                              {item.merchant_approved === false && (
-                                // Render the "Approve" button only when the merchant is not approved
-                                <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Approve</button>
-                              )}
+                       
+                       
+                                <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Issue Api</button>
+                            
                             </div>
                           </td>
                         </tr>
@@ -261,4 +261,4 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
   )
 }
 
-export { MemberStatsTable }
+export { IssueApiTable }
