@@ -65,9 +65,14 @@ const inputStyle = {
 
 
 const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
+
+  const [formData, setFormData] = useState({
+    wallet_balance:''
+  })
   const [visible, setVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
   const [initValues] = useState<ICreateAccount>(inits)
+
 
   const [open, setOpen] = React.useState(false);
 
@@ -81,10 +86,15 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
     setOpen(false);
   };
 
-  const handleVisibilityClick = (item) => {
-    setSelectedItem(item); // Set the selected item
+  const handleAddBalanceClick = (item) => {
+    setSelectedItem(item);
     setVisible(true);
   };
+
+  // const handleVisibilityClick = (item) => {
+  //   setSelectedItem(item); // Set the selected item
+  //   setVisible(true);
+  // };
 
   const handleApproveClick = async (item) => {
     const response = await axiosInstance.post('/backend/super_admin/approve_merchant', {
@@ -104,9 +114,33 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
     }
   };
 
+
   const handleCloseClick = () => {
     setSelectedItem(null); // Set the selected item
     setVisible(false);
+  };
+
+  const handleFieldChange = (fieldName, value) => {
+    setFormData({ ...formData, [fieldName]: value })
+  }
+
+  const handleSaveClick = async () => {
+    const response = await axiosInstance.post('/backend/add_api_balance', {
+      api_id: selectedItem._id,
+      amount:formData.wallet_balance
+    })
+
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      // navigate('/merchant/apply-visa')
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+    }
   };
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
@@ -143,7 +177,8 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                         <th className='min-w-150px'>Agent</th>
                         <th className='min-w-200px text-start'>Email</th>
                         <th className='min-w-200px text-start'>Company</th>
-                        <th className='min-w-200px text-start'>Joining Date</th>
+                        <th className='min-w-150px'>API Key</th>
+                        <th className='min-w-200px text-start'>Wallet Balance</th>
                         <th className='min-w-200px text-start'>Action</th>
                       </tr>
                     </thead>
@@ -156,8 +191,8 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
                               <span className='symbol-label'>
                                 <img
-                                  src={item.merchant_profile_photo}
-                                  alt={item.merchant_profile_photo}
+                                  src={item.merchant.merchant_profile_photo}
+                                  alt=''
                                   className='h-75 align-self-end'
                                 />
                               </span>
@@ -166,21 +201,24 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                                 className='text-dark fw-bold text-hover-primary mb-1 fs-6'
                                 style={{ whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px' }}
                               >
-                                {item.merchant_name}
+                                {item.merchant.merchant_name}
                               </a>
                             </div>
                           </td>
                           <td className='text-start'>
                             <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                              {item.merchant_email_id}
+                              {item.merchant.merchant_email_id}
                             </a>
                           </td>
                           <td className='text-start'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
-                            <span className='text-muted fw-semibold d-block fs-7 '>{item.merchant_company_name}</span>
+                            <span className='text-muted fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
                           <td className='text-start'>
-                            <span className='text-muted fw-semibold d-block fs-7'>{item.created_at}</span>
+                            <span className='text-muted fw-semibold d-block fs-7 '>{item.api_key}</span>
+                          </td>
+                          <td className='text-start'>
+                            <span className='text-muted fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>
                           </td>
                           <td className='text-start'>
                             <div className='d-flex align-items-center'>
@@ -188,15 +226,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                                 handleClickOpen()
                               }} className='mx-5 cursor-pointer' />
 
-                              {item.has_api === false && (
-                                // Render the "Approve" button only when the merchant is not approved
-                                <button className='btn btn-primary align-self-center' onClick={() => { setVisible(true) }}>Add Balance</button>
-                              )}
-                              {item.has_api === true && (
-                                // Render the "Approve" button only when the merchant is not approved
-                                <button className='btn btn-primary align-self-center' onClick={() => setDisable(!disable)}>Disable Api</button>
-                              )}
-
+                              <button className='btn btn-primary align-self-center' onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
                             </div>
                           </td>
                         </tr>
@@ -224,10 +254,12 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
               <CloseOutlined />
             </div>
             <div className='px-10 py-10'>
-              <h3>
-                Current Balance: 500
-              </h3>
-              <Formik initialValues={initValues} onSubmit={() => { }}>
+              {selectedItem && (
+                <h3>
+                  Current Balance: {selectedItem.api_wallet_balance}
+                </h3>
+              )}
+              <Formik initialValues={formData} onSubmit={() => { }}>
                 {() => (
                   <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
                     <div className='fv-row mb-10'>
@@ -237,12 +269,13 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
                       <Field
                         style={{ ...inputStyle, width: '450px' }}
-                        readOnly
-                        name='fatherName'
+                        name='wallet_balance'
+                        value={'asd'}
+                        onChange={(e) => handleFieldChange('wallet_balance', e.target.value)}
                         className='form-control form-control-lg form-control-solid'
                       />
                       <div className='text-danger mt-2'>
-                        <ErrorMessage name='fatherName' />
+                        <ErrorMessage name='wallet_balance' />
                       </div>
                     </div>
 
@@ -250,7 +283,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                       <button
                         type='submit'
                         className='btn btn-primary'
-                        onClick={() => { }}
+                        onClick={handleSaveClick}
                         style={{ backgroundColor: '#332789', width: 180 }}
                       >
                         Save

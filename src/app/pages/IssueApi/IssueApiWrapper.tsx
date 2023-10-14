@@ -12,11 +12,9 @@ function IssueApiWrapper() {
       const fetchData = async () => {
         setLoading(true);
         try {
-          const postData = {
-            // Your POST data goes here
-          };
+        
           // Make a POST request to your API endpoint
-          axiosInstance.post('/backend/fetch_merchant_user', postData)
+          axiosInstance.get('/backend/fetch_merchant_api')
             .then((response) => {
               console.log(response.data)
               setMemberStatsData(response.data.data);

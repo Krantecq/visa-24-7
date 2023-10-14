@@ -1,7 +1,7 @@
 import { ProcessedTable } from '../../components/ProcessedTable'
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../helpers/axiosInstance';
-import { WalletTable } from '../../components/WalletTable';
+import { APIWalletTable } from '../../components/APIWalletTable';
 
 function ApiPaymentWrapper() {
   const [walletData, setWalletData] = useState([]);
@@ -12,7 +12,7 @@ function ApiPaymentWrapper() {
       try {
         
         // Make a POST request to your API endpoint
-        axiosInstance.get('/backend/fetch_wallet_transaction')
+        axiosInstance.get('/backend/fetch_issue_api_transaction')
           .then((response) => {
             console.log(response.data)
             setWalletData(response.data.data);
@@ -33,7 +33,7 @@ function ApiPaymentWrapper() {
 
   return (
     <div>
-      <WalletTable className='' title={'Api Payment'} data={walletData}/>
+      <APIWalletTable className='' title={'Api Payment'} data={walletData}/>
     </div>
   )
 }

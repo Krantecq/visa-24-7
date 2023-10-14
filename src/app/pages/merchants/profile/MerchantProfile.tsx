@@ -746,6 +746,33 @@ function MerchantProfile() {
       </div>
     </div>
   )
+  const handleIssueApiClick = async () => {
+    setLoading(true)
+    const postBody = {
+      upi_ref_id: formData.upi_ref_id,
+      merchant_id: user_id,
+      receipt: formData.receipt,
+      amount: formData.amount,
+      type: 'Credit',
+      category: 'API',
+    }
+    const response = await axiosInstance.post('/backend/upload_api_receipt', postBody)
+    console.log('receipt response---->',response)
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      setLoading(false)
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+      setLoading(false)
+    }
+
+    // Call the API when the "Save" button is clicked
+  }
 
   const uploadIssueApiReciept = (
     <div className='d-flex ' style={{ width: '100%' }}>
@@ -861,7 +888,7 @@ function MerchantProfile() {
                     type='submit'
                     style={{ width: 200, backgroundColor: '#332789' }}
                     className='btn btn-primary'
-                    onClick={handleSaveClick}
+                    onClick={handleIssueApiClick}
                   >
                     {!loading && <span className='indicator-label'>Save</span>}
                     {loading && (
@@ -960,21 +987,7 @@ function MerchantProfile() {
       <div className='d-flex align-items-center px-10'>
         <div className='d-flex align-items-center' style={{ flex: 1 }}>
           <h2 className='' >Visa 24/7 Wallet</h2>
-          <div
-            className='mx-10 px-5 py-2'
-            style={{
-              border: '2px solid #d3d3d3',
-              borderRadius: 20,
-              alignItems: 'center',
-              display: 'flex',
-              justifyContent: 'center',
-              backgroundColor: '#fff',
-            }}
-          >
-            <h6 className='fs-4' style={{ marginTop: 5 }}>
-              Current Balance:  1000/-
-            </h6>
-          </div>
+          
         </div>
 
         <div
@@ -1001,6 +1014,7 @@ function MerchantProfile() {
           <tr className='fw-bold'>
             <th className='min-w-150px'>Date/Time</th>
             <th className='min-w-150px'>Amount</th>
+            <th className='min-w-150px'>Category</th>
             <th className='min-w-150px'>Type</th>
             <th className='min-w-150px'>Status</th>
           </tr>
@@ -1018,7 +1032,12 @@ function MerchantProfile() {
           </td>
           <td className='text-start'>
             <span className='text-dark fw-bold d-block fs-6'>
-            {item && (item as { wallet_balance: Number }).wallet_balance}
+            {item && (item as { wallet_balance: Number }).wallet_balance}/-
+            </span>
+          </td>
+          <td className='text-start'>
+            <span className='text-dark fw-bold d-block fs-6'>
+            {item && (item as { category: String }).category}
             </span>
           </td>
           <td className='text-start'>
