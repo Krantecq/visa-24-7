@@ -570,6 +570,8 @@ function MerchantProfile() {
       merchant_id: user_id,
       receipt: formData.receipt,
       amount: formData.amount,
+      type: 'Credit',
+      category: 'Wallet Balance',
     }
     const response = await axiosInstance.post('/backend/upload_receipt', postBody)
     console.log('receipt response---->',response)

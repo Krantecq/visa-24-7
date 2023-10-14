@@ -53,11 +53,12 @@ const contentStyle: CSSProperties = {
 const WalletTable: React.FC<Props> = ({ className, title, data }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
 
   const [open, setOpen] = React.useState(false);
   const handleApproveClick = async (item) => {
     const response = await axiosInstance.post('/backend/approve_transaction', {
-      wallet_id:item._id,
+      wallet_id: item._id,
       merchant_id: item.merchant_id
     })
 
@@ -74,11 +75,13 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
     }
   };
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (item) => {
+    setDeleteSelectedItem(item)
     setOpen(!open);
   };
 
   const handleClose = () => {
+    setDeleteSelectedItem(null)
     setOpen(false);
   };
 
@@ -89,6 +92,40 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
   const handleCloseClick = () => {
     setSelectedItem(null); // Set the selected item
     setVisible(false);
+  };
+
+  const handleDeleteConfirmation = async () => {
+    // Call your API with the selected item here
+    try {
+      if(deleteSelectedItem){
+        const selectedEntry = deleteSelectedItem as { _id: string }; 
+      if(deleteSelectedItem == null){
+        toast.error('Selected entry is null', {
+          position: 'top-center',
+        });
+      }
+      const response = await axiosInstance.post('/backend/decline_transaction', {
+        wallet_id: selectedEntry._id,
+      });
+
+      if (response.status === 200) {
+        toast.success(response.data.msg, {
+          position: 'top-center',
+        });
+        // Handle any additional actions after a successful API call
+      } else {
+        console.log(response.data);
+        toast.error(response.data.msg, {
+          position: 'top-center',
+        });
+      }
+    }
+    } catch (error) {
+      console.error('API error:', error);
+    }
+
+    setSelectedItem(null); // Clear the selected item after the API call
+    setOpen(false); // Close the dialog
   };
   return (
     <div className={`card ${className}`}>
@@ -106,7 +143,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
           {/* begin::Table */}
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             {/* begin::Table head */}
-            <thead style={{ background: '#332786',color:"#fff"}}>
+            <thead style={{ background: '#332786', color: "#fff" }}>
               <tr className='fw-bold'>
 
                 <th className='min-w-150px text-start px-5'>Email Id</th>
@@ -154,13 +191,13 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
                       <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
 
                       <DeleteOutline onClick={() => {
-                        handleClickOpen()
+                        handleClickOpen(row)
                         // const confirmed = window.confirm('Are you sure you want to delete this item?');
                         // if (confirmed) {
                         // Laxit write here for delete api 
                         // }
                       }} className='mx-5 cursor-pointer' />
-                      <button className='btn btn-primary align-self-center' onClick={()=>handleApproveClick(row)}>Approve</button>
+                      <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
                     </div>
                   </td>
                 </tr>
@@ -195,14 +232,14 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this item?
+              Are you sure you want to reject this transaction?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={handleClose}>
               Cancel
             </Button>
-            <Button onClick={handleClose}>Yes</Button>
+            <Button onClick={handleDeleteConfirmation}>Yes</Button>
           </DialogActions>
         </Dialog>
       </div>

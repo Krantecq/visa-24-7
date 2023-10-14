@@ -8,6 +8,8 @@ import { MerchantAnaltytics } from "../../../components/MerchantAnalytics";
 const MerchantDashboard = () => {
   const [activeTab, setActiveTab] = useState("All"); // Initialize active tab state
   const [visaData, setVisaData] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
+
 
   useEffect(() => {
     // Function to fetch data from the API based on the activeTab
@@ -43,7 +45,25 @@ const MerchantDashboard = () => {
       }
     };
 
-    fetchData(); // Call the fetchData function when activeTab changes
+    const fetchDashboardData = async () => {
+      try {
+        const merchant_id = Cookies.get('user_id');
+        let postBody = {
+          merchant_id: merchant_id
+        }
+        let response = await axiosInstance.post("/backend/merchant_dashboard", postBody);
+        if (response.status == 200) {
+          
+          if(activeTab!= "Analytics"){
+            setDashboardData(response.data.data); // Set the fetched data in the state
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+    fetchDashboardData(); // Call the fetchData function when activeTab changes
   }, [activeTab]);
   // Function to handle tab clicks
   const handleTabClick = (tabName) => {
@@ -160,7 +180,7 @@ const MerchantDashboard = () => {
       <div style={{ marginLeft: '20%', width: '80%', overflowY: 'auto', padding: '16px' }}>
         {activeTab === "Analytics" ?
           <div>
-            <MerchantAnaltytics />
+            <MerchantAnaltytics dashboardData={dashboardData}/>
           </div>
           :
           <VisaDetailCard visaData={visaData} />

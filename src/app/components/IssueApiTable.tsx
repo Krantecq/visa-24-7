@@ -128,11 +128,9 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                     <thead className='px-2' style={{ background: '#332786', color: "#fff" }}>
                       <tr className='fw-bold'>
                         <th className='min-w-150px'>Agent</th>
-                        <th className='min-w-120px'>Wallet Balance</th>
-                        <th className='min-w-100px'>No. Of Visa</th>
+                        <th className='min-w-150px text-start'>Email</th>
                         <th className='min-w-100px text-start'>Company</th>
                         <th className='min-w-150px text-start'>Joining Date</th>
-                        <th className='min-w-150px text-start'>API KEY</th>
                         <th className='min-w-150px text-end'>Action</th>
                       </tr>
                     </thead>
@@ -161,11 +159,8 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                           </td>
                           <td className='text-start'>
                             <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                              {item.wallet_balance}
+                              {item.merchant_email_id}
                             </a>
-                          </td>
-                          <td className='text-start'>
-                            <span className='text-dark fw-bold d-block fs-5'>{item.merchant_applicants.length}</span>
                           </td>
                           <td className='text-start'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
@@ -189,11 +184,11 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                                 // }
                               }} className='mx-5 cursor-pointer' />
 
-                              {item.has_approve === false && (
+                              {item.has_api === false && (
                                 // Render the "Approve" button only when the merchant is not approved
                                 <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Issue Api</button>
                               )}
-                              {item.merchant_approved === true && (
+                              {item.has_api === true && (
                                 // Render the "Approve" button only when the merchant is not approved
                                 <button className='btn btn-primary align-self-center' onClick={() => setDisable(!disable)}>Disable Api</button>
                               )}
