@@ -51,6 +51,7 @@ function MerchantProfile() {
   const [receiptShow, setReceiptshow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(true);
+  const [transaction, setTransaction] = useState(null);
 
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -73,6 +74,7 @@ function MerchantProfile() {
   useEffect(() => {
     // Fetch profile data when the component mounts
     fetchProfileData()
+    fetchTransactionData()
   }, [])
 
   const fetchProfileData = async () => {
@@ -90,6 +92,28 @@ function MerchantProfile() {
       }
       // Assuming the response contains the profile data, update the state with the data
       setFormData2(response.data.data)
+      console.log('profile response', response)
+    } catch (error) {
+      console.error('Error fetching profile data:', error)
+      // Handle error (e.g., show an error message)
+    }
+  }
+
+  const fetchTransactionData = async () => {
+    try {
+      const user_id = Cookies.get('user_id')
+      const postData = {
+        merchant_id: user_id,
+      }
+      const response = await axiosInstance.post('/backend/fetch_merchant_transaction', postData)
+
+      if (response.status == 203) {
+        toast.error('Please Logout And Login Again', {
+          position: 'top-center',
+        })
+      }
+      // Assuming the response contains the profile data, update the state with the data
+      setTransaction(response.data.data)
       console.log('profile response', response)
     } catch (error) {
       console.error('Error fetching profile data:', error)
