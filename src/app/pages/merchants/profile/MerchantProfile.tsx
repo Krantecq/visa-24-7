@@ -1175,7 +1175,7 @@ function MerchantProfile() {
       <div className='d-flex' style={{ alignItems: 'center' }}>
         <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png' width={70} height={70} />
         <div className='px-10'>
-          <h1 style={{ fontSize: 20 }}>ROYAL TRAVELS</h1>
+          <h1 style={{ fontSize: 20 }}>{formData2.merchant_name}</h1>
           <h5 style={{ fontSize: 20 }}>{formData2.merchant_email_id}</h5>
         </div>
       </div>

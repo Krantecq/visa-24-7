@@ -66,7 +66,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
 
     if (response.status == 200) {
       
-      const response1 = await axiosInstance.post('/backend/approve_transaction', {
+      const response1 = await axiosInstance.post('/backend/approve_api_transaction', {
         wallet_id: item._id,
         merchant_id: item.merchant_id
       })

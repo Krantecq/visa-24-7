@@ -67,22 +67,25 @@ const inputStyle = {
 const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
   const [formData, setFormData] = useState({
-    wallet_balance: ''
+    walletBalance: ''
   })
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [initValues] = useState<ICreateAccount>(inits)
+  const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
 
 
   const [open, setOpen] = React.useState(false);
 
   const [disable, setDisable] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (item) => {
+    setDeleteSelectedItem(item)
     setOpen(!open);
   };
 
   const handleClose = () => {
+    setDeleteSelectedItem(null)
     setOpen(false);
   };
 
@@ -96,27 +99,40 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   //   setVisible(true);
   // };
 
-  const handleApproveClick = async (item) => {
-    const response = await axiosInstance.post('/backend/super_admin/approve_merchant', {
-      merchant_id: item._id
-    })
+  const handleApproveClick = async () => {
+    try {
+      if(deleteSelectedItem){
+        const selectedEntry = deleteSelectedItem as { _id: string }; 
+      if(deleteSelectedItem == null){
+        toast.error('Selected entry is null', {
+          position: 'top-center',
+        });
+      }
+      const response = await axiosInstance.post('/backend/merchant/delete_api', {
+        api_id: selectedEntry._id,
+      });
 
-    if (response.status == 200) {
-      toast.success(response.data.msg, {
-        position: 'top-center', // Center the toast notification
-      })
-      // navigate('/merchant/apply-visa')
-    } else {
-      console.log(response.data)
-      toast.error(response.data.msg, {
-        position: 'top-center',
-      })
+      if (response.status === 200) {
+        toast.success(response.data.msg, {
+          position: 'top-center',
+        });
+        // Handle any additional actions after a successful API call
+      } else {
+        console.log(response.data);
+        toast.error(response.data.msg, {
+          position: 'top-center',
+        });
+      }
+    }
+    } catch (error) {
+      console.error('API error:', error);
     }
   };
 
 
   const handleCloseClick = () => {
-    setSelectedItem(null); // Set the selected item
+    setSelectedItem(null);
+    setDeleteSelectedItem(null) 
     setVisible(false);
   };
 
@@ -127,7 +143,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const handleSaveClick = async () => {
     const response = await axiosInstance.post('/backend/add_api_balance', {
       api_id: selectedItem._id,
-      amount: formData.wallet_balance
+      amount: formData.walletBalance
     })
 
     if (response.status == 200) {
@@ -214,7 +230,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
                             <span className='text-dark fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
-                          <td className='text-start min-w-50px' style={{whiteSpace:'pre-wrap' }}>
+                          <td className='text-start min-w-50px' style={{ whiteSpace: 'pre-wrap' }}>
                             <span className='text-muted fw-semibold d-block fs-7 '>{item.api_key}</span>
                           </td>
                           <td className='text-start'>
@@ -222,9 +238,9 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                           </td>
                           <td className='text-start'>
                             <div className='d-flex align-items-center'>
-                              <DeleteOutline onClick={() => {
-                                handleClickOpen()
-                              }} className='mx-5 cursor-pointer' />
+                              <DeleteOutline onClick={() =>
+                                handleClickOpen(item)
+                              } className='mx-5 cursor-pointer' />
 
                               <button className='btn btn-primary align-self-center' onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
                             </div>
@@ -270,13 +286,13 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
                       <Field
                         style={{ ...inputStyle, width: '450px' }}
-                        name='wallet_balance'
-                        value={formData.wallet_balance}
+                        name='walletBalance'
+                        value={formData.walletBalance}
                         className='form-control form-control-lg form-control-solid'
-                        onChange={(e) => handleFieldChange('wallet_balance', e.target.value)}
+                        onChange={(e) => handleFieldChange('walletBalance', e.target.value)}
                       />
                       <div className='text-danger mt-2'>
-                        <ErrorMessage name='wallet_balance' />
+                        <ErrorMessage name='walletBalance' />
                       </div>
                     </div>
 
@@ -309,28 +325,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this item?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button onClick={handleClose}>Yes</Button>
-          </DialogActions>
-        </Dialog>
-
-        <Dialog
-          open={disable}
-          onClose={handleClose}
-          aria-labelledby="draggable-dialog-title"
-        >
-          <DialogTitle style={{ cursor: 'move', color: 'red' }} id="draggable-dialog-title">
-            Disable
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to disable this API?
+              Are you sure you want to delete this API?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -340,6 +335,8 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
             <Button onClick={handleApproveClick}>Yes</Button>
           </DialogActions>
         </Dialog>
+
+       
       </div>
     </div>
   )
