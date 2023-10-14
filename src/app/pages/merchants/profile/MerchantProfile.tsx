@@ -37,6 +37,7 @@ function MerchantProfile() {
     merchant_zip_code: '',
     merchant_name: '',
     merchant_id: '',
+    issued_api:[]
   })
 
   const user_id = Cookies.get('user_id')
@@ -1086,24 +1087,25 @@ function MerchantProfile() {
           {() => (
             <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
               <div>
+                {formData2.issued_api.length >0
+                ?
                 <div className='fv-row mb-10'>
                   <label className='d-flex align-items-center form-label'>
                     <span className='required'>API Key</span>
                   </label>
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                  as='textarea'
+                  rows={3}
+                    style={{ ...inputStyle, width: '550px' }}
                     name='amount'
+                    value={formData2.issued_api[0]}
                     className='form-control form-control-lg form-control-solid'
-                    onChange={(e) => handleFieldChange('amount', e.target.value)}
                   />
                   <div className='text-danger mt-2'>
                     <ErrorMessage name='amount' />
                   </div>
                 </div>
-                {/* <FormGroup>
-                  <FormControlLabel control={<Switch />} label="Issue for Api" />
-                </FormGroup> */}
-
+                :
                 <div className='pt-5 d-flex justify-content-center'>
                   <button
                     type='submit'
@@ -1120,6 +1122,7 @@ function MerchantProfile() {
                     )}
                   </button>
                 </div>
+                }
                 {receiptShow &&
 
                   <div className='loader-overlay' style={{ ...overlayStyle, ...(receiptShow && activeOverlayStyle), }}>

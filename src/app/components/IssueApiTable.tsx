@@ -67,7 +67,7 @@ const inputStyle = {
 const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
   const [formData, setFormData] = useState({
-    wallet_balance:''
+    wallet_balance: ''
   })
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
@@ -127,7 +127,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const handleSaveClick = async () => {
     const response = await axiosInstance.post('/backend/add_api_balance', {
       api_id: selectedItem._id,
-      amount:formData.wallet_balance
+      amount: formData.wallet_balance
     })
 
     if (response.status == 200) {
@@ -212,13 +212,13 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                           </td>
                           <td className='text-start'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
-                            <span className='text-muted fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
+                            <span className='text-dark fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-start min-w-50px' style={{whiteSpace:'pre-wrap' }}>
                             <span className='text-muted fw-semibold d-block fs-7 '>{item.api_key}</span>
                           </td>
                           <td className='text-start'>
-                            <span className='text-muted fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>
+                            <span className='text-dark fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>
                           </td>
                           <td className='text-start'>
                             <div className='d-flex align-items-center'>
@@ -262,7 +262,8 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
               <Formik initialValues={formData} onSubmit={() => { }}>
                 {() => (
                   <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
-                    <div className='fv-row mb-10'>
+
+                    <div className='fv-row mb-5'>
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Add Balance</span>
                       </label>
@@ -270,9 +271,9 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                       <Field
                         style={{ ...inputStyle, width: '450px' }}
                         name='wallet_balance'
-                        value={'asd'}
-                        onChange={(e) => handleFieldChange('wallet_balance', e.target.value)}
+                        value={formData.wallet_balance}
                         className='form-control form-control-lg form-control-solid'
+                        onChange={(e) => handleFieldChange('wallet_balance', e.target.value)}
                       />
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='wallet_balance' />
