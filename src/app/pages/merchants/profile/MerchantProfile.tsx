@@ -572,13 +572,12 @@ function MerchantProfile() {
       amount: formData.amount,
     }
     const response = await axiosInstance.post('/backend/upload_receipt', postBody)
-
+    console.log('receipt response---->',response)
     if (response.status == 200) {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
       })
       setLoading(false)
-      navigate('/merchant/apply-visa')
     } else {
       console.log(response.data)
       toast.error(response.data.msg, {

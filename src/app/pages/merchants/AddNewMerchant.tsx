@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useRef, useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik'
 import { Delete } from '@mui/icons-material';
 import { ICreateAccount, inits } from '../../modules/wizards/components/CreateAccountWizardHelper';
 import axiosInstance from '../../helpers/axiosInstance'
 import { toast } from 'react-toastify';
+import BackIcon from '@mui/icons-material/ArrowBackOutlined'
 
 
 const inputStyle = {
@@ -164,7 +165,7 @@ function AddNewMerchant() {
   const handleFieldChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value })
   }
-  
+
   const handleFileUpload = async (file) => {
     try {
       const formData = new FormData();
@@ -192,7 +193,12 @@ function AddNewMerchant() {
     <div className='w-full' style={{ backgroundColor: 'white' }}>
 
       <div className='container' style={{ marginTop: -35 }}>
-        <h5 style={{ fontSize: 30, alignSelf: 'center', display: 'flex', letterSpacing: 0.3 }}>Onboard new Merchant</h5>
+        <div className='d-flex align-items-center pt-3'>
+          <Link to='/superadmin/merchants' >
+            <BackIcon style={{ color: '#332786', width: 30, height: 25, cursor: 'pointer', }} />
+          </Link>
+          <h5 style={{ fontSize: 30, alignSelf: 'center', marginLeft: 10, display: 'flex', letterSpacing: 0.3 }}>Onboard new Merchant</h5>
+        </div>
         <hr />
         <br />
         <div className='d-flex ' style={{ width: '100%' }}>

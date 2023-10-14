@@ -82,8 +82,8 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
     setOpen(false);
   };
 
-  const handleVisibilityClick = () => {
-    // setSelectedItem(item);
+  const handleVisibilityClick = (item) => {
+    setSelectedItem(item);
     setVisible(true);
   };
   const handleCloseClick = () => {
@@ -151,7 +151,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
                     {/* Action Buttons */}
                     <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
 
-                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick()} />
+                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
 
                       <DeleteOutline onClick={() => {
                         handleClickOpen()

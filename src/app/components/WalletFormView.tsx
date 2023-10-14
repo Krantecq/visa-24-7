@@ -42,14 +42,14 @@ function WalletFormView({ viewApplication }) {
     return (
         <div
             className='py-10 px-20'
-            style={{
-                borderRadius: 20,
-                borderColor: '#f5f5f5',
-                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-                marginLeft: 10,
-                marginTop: 20,
-                backgroundColor: 'white',
-            }}
+            // style={{
+            //     borderRadius: 20,
+            //     borderColor: '#f5f5f5',
+            //     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+            //     marginLeft: 10,
+            //     marginTop: 20,
+            //     backgroundColor: 'white',
+            // }}
         >
 
             <div className='d-flex ' style={{ width: '100%' }}>
@@ -63,7 +63,7 @@ function WalletFormView({ viewApplication }) {
                             borderRadius: '10px',
                             justifyContent: 'center',
                             textAlign: 'center',
-                            marginTop: 20,
+                            marginTop: 10,
                         }}
                     >
                         <div
@@ -77,9 +77,9 @@ function WalletFormView({ viewApplication }) {
                             }}
                         ></div>
                         <img
-                            src={viewApplication?.passport_back || ''}
+                            src={viewApplication?.receipt || ''}
                             alt='Uploaded Image'
-                            style={{ maxWidth: '100%', maxHeight: '100%', marginTop: 40 }}
+                            style={{ maxWidth: '100%', maxHeight: '100%',  }}
                         />
                     </div>
                 </div>
@@ -99,7 +99,7 @@ function WalletFormView({ viewApplication }) {
                                     <Field
                                         style={{ ...inputStyle, width: '450px' }}
                                         readOnly
-                                        // value={viewApplication.fathers_name}
+                                        value={viewApplication.upi_ref_id}
                                         name='fatherName'
                                         className='form-control form-control-lg form-control-solid'
                                     />
@@ -117,7 +117,7 @@ function WalletFormView({ viewApplication }) {
                                         style={{ ...inputStyle, width: '450px' }}
                                         name='motherName'
                                         readOnly
-                                        // value={viewApplication.fathers_name}
+                                        value={viewApplication.wallet_balance}
                                         className='form-control form-control-lg form-control-solid'
                                     />
                                     <div className='text-danger mt-2'>
