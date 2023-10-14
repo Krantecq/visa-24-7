@@ -51,7 +51,7 @@ function MerchantProfile() {
   const [receiptShow, setReceiptshow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(true);
-  const [transaction, setTransaction] = useState(null);
+  const [transaction, setTransaction] = useState([]);
 
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -114,7 +114,7 @@ function MerchantProfile() {
       }
       // Assuming the response contains the profile data, update the state with the data
       setTransaction(response.data.data)
-      console.log('profile response', response)
+      console.log('transaction response', response.data)
     } catch (error) {
       console.error('Error fetching profile data:', error)
       // Handle error (e.g., show an error message)
@@ -747,6 +747,139 @@ function MerchantProfile() {
     </div>
   )
 
+  const uploadIssueApiReciept = (
+    <div className='d-flex ' style={{ width: '100%' }}>
+      <div style={{ width: '40%', marginTop: 50, marginBottom: 30 }}>
+        <h6>Receipt</h6>
+        {recieptImage ? (
+          <div
+            style={{
+              border: '4px dotted gray',
+              width: '100%',
+              height: 250,
+              borderRadius: '10px',
+              justifyContent: 'center',
+              textAlign: 'center',
+              marginTop: 20,
+            }}
+          >
+            <div
+              onClick={() => setReceiptImage('')}
+              style={{
+                justifyContent: 'flex-end',
+                position: 'absolute',
+                backgroundColor: 'white',
+                padding: 7,
+                borderRadius: 50,
+                cursor: 'pointer',
+              }}
+            >
+              <ClearIcon style={{ color: 'red' }} />
+            </div>
+            <img
+              src={recieptImage}
+              alt='Uploaded Image'
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+          </div>
+        ) : (
+          <div
+            style={{
+              border: '4px dotted gray',
+              width: '100%',
+              height: 250,
+              borderRadius: '10px',
+              justifyContent: 'center',
+              textAlign: 'center',
+              paddingTop: 40,
+              marginTop: 20,
+            }}
+          >
+            <h4 className='mx-10 mt-10'>Receipt Photo</h4>
+            <button
+              type='button'
+              onClick={handleImageUpload}
+              className='btn btn-lg btn-primary me-3 mt-3'
+              style={{ justifyContent: 'flex-end', backgroundColor: '#332789' }}
+            >
+              <span className='indicator-label'>Select Files</span>
+            </button>
+            <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
+              Supports JPEG, JPG, PNG.
+            </p>
+            <input
+              type='file'
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              accept='.jpeg, .jpg, .pdf, .png'
+              onChange={handleFileSelect}
+            />
+          </div>
+        )}
+      </div>
+      <div
+        className='d-flex flex-row-fluid flex-center bg-body rounded mt-10'
+        style={{ width: '70%', backgroundColor: 'blue' }}
+      >
+        <Formik initialValues={initValues} onSubmit={() => { }}>
+          {() => (
+            <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
+              <div>
+                <div className='fv-row mb-10'>
+                  <label className='form-label required'>Transaction ID</label>
+                  <Field
+                    name='upi_ref_id'
+                    style={{ ...inputStyle, width: '450px' }}
+                    className='form-control form-control-lg form-control-solid'
+                    onChange={(e) => handleFieldChange('upi_ref_id', e.target.value)}
+                  />
+                  <div className='text-danger mt-2'>
+                    <ErrorMessage name='upi_ref_id' />
+                  </div>
+                </div>
+
+                <div className='fv-row mb-10'>
+                  <label className='d-flex align-items-center form-label'>
+                    <span className='required'>Amount</span>
+                  </label>
+                  <Field
+                    style={{ ...inputStyle, width: '450px' }}
+                    name='amount'
+                    className='form-control form-control-lg form-control-solid'
+                    onChange={(e) => handleFieldChange('amount', e.target.value)}
+                  />
+                  <div className='text-danger mt-2'>
+                    <ErrorMessage name='amount' />
+                  </div>
+                </div>
+                {/* <FormGroup>
+                  <FormControlLabel control={<Switch />} label="Issue for Api" />
+                </FormGroup> */}
+
+                <div className='pt-5 d-flex justify-content-center'>
+                  <button
+                    type='submit'
+                    style={{ width: 200, backgroundColor: '#332789' }}
+                    className='btn btn-primary'
+                    onClick={handleSaveClick}
+                  >
+                    {!loading && <span className='indicator-label'>Save</span>}
+                    {loading && (
+                      <span className='indicator-progress' style={{ display: 'block' }}>
+                        Please wait...
+                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                      </span>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+  )
+
   const walletTabs = [
     {
       label: 'Bank Transfer (0% Fee)',
@@ -875,91 +1008,32 @@ function MerchantProfile() {
         {/* end::Table head */}
         {/* begin::Table body */}
         <tbody>
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
+          {transaction.map((item,index)=>(
+            
+          <tr key={index}>
+          <td className='text-start'>
+            <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+            {item && (item as { created_at: string }).created_at}
+            </a>
+          </td>
+          <td className='text-start'>
+            <span className='text-dark fw-bold d-block fs-6'>
+            {item && (item as { wallet_balance: Number }).wallet_balance}
+            </span>
+          </td>
+          <td className='text-start'>
+            <span className='text-dark fw-bold d-block fs-6'>
+            {item && (item as { type: string }).type}
+            </span>
 
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
-
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
-
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
-
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td className='text-start'>
-              <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                23 oct
-              </a>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>
-                500
-              </span>
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-bold d-block fs-6'>Credit</span>
-
-            </td>
-            <td className='text-start'>
-              <span className='text-dark fw-semibold d-block fs-6'>
-                Approved
-              </span>
-            </td>
-          </tr>
+          </td>
+          <td className='text-start'>
+            <span className='text-dark fw-semibold d-block fs-6'>
+            {item && (item as { status: string }).status}
+            </span>
+          </td>
+        </tr>
+          ))}
 
         </tbody>
         {/* end::Table body */}
@@ -1035,7 +1109,7 @@ function MerchantProfile() {
                       <div onClick={() => setReceiptshow(false)} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
                         <CloseOutlined />
                       </div>
-                      {uploadReciept}
+                      {uploadIssueApiReciept}
                     </div>
                   </div>
                 }

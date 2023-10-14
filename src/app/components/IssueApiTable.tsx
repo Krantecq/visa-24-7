@@ -13,6 +13,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
 
 
 type Props = {
@@ -47,17 +49,28 @@ const contentStyle: CSSProperties = {
   borderRadius: '5px', // Rounded corners for the highlight
   // textAlign:'center',
   width: '70%',
-  height: '70%',
+  height: '40%',
   overflowY: 'auto'
 };
+
+const inputStyle = {
+  border: '1.5px solid #d3d3d3', // Border width and color
+  borderRadius: '15px', // Border radius
+  padding: '10px',
+  paddingLeft: '20px', // Padding
+  width: '90%', // 100% width
+  boxSizing: 'border-box', // Include padding and border in the width calculation
+}
+
 
 
 const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [initValues] = useState<ICreateAccount>(inits)
 
   const [open, setOpen] = React.useState(false);
-  
+
   const [disable, setDisable] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -128,10 +141,10 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                     <thead className='px-2' style={{ background: '#332786', color: "#fff" }}>
                       <tr className='fw-bold'>
                         <th className='min-w-150px'>Agent</th>
-                        <th className='min-w-150px text-start'>Email</th>
-                        <th className='min-w-100px text-start'>Company</th>
-                        <th className='min-w-150px text-start'>Joining Date</th>
-                        <th className='min-w-150px text-end'>Action</th>
+                        <th className='min-w-200px text-start'>Email</th>
+                        <th className='min-w-200px text-start'>Company</th>
+                        <th className='min-w-200px text-start'>Joining Date</th>
+                        <th className='min-w-200px text-start'>Action</th>
                       </tr>
                     </thead>
                     {/* end::Table head */}
@@ -166,27 +179,18 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
                             <span className='text-muted fw-semibold d-block fs-7 '>{item.merchant_company_name}</span>
                           </td>
-                          <td className='text-end'>
+                          <td className='text-start'>
                             <span className='text-muted fw-semibold d-block fs-7'>{item.created_at}</span>
                           </td>
-                          <td className='text-end'>
-                            <span className='text-muted fw-semibold d-block fs-7'>{item.merchant_api_key}</span>
-                          </td>
-                          <td >
-                            <div className='d-flex align-items-center flex-shrink-0'>
-
-
+                          <td className='text-start'>
+                            <div className='d-flex align-items-center'>
                               <DeleteOutline onClick={() => {
                                 handleClickOpen()
-                                // const confirmed = window.confirm('Are you sure you want to delete this item?');
-                                // if (confirmed) {
-                                // Laxit write here for delete api 
-                                // }
                               }} className='mx-5 cursor-pointer' />
 
                               {item.has_api === false && (
                                 // Render the "Approve" button only when the merchant is not approved
-                                <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Issue Api</button>
+                                <button className='btn btn-primary align-self-center' onClick={() => { setVisible(true) }}>Add Balance</button>
                               )}
                               {item.has_api === true && (
                                 // Render the "Approve" button only when the merchant is not approved
@@ -219,7 +223,44 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
             <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
               <CloseOutlined />
             </div>
-            <MerchantView viewApplication={selectedItem} />
+            <div className='px-10 py-10'>
+              <h3>
+                Current Balance: 500
+              </h3>
+              <Formik initialValues={initValues} onSubmit={() => { }}>
+                {() => (
+                  <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
+                    <div className='fv-row mb-10'>
+                      <label className='d-flex align-items-center form-label'>
+                        <span className='required'>Add Balance</span>
+                      </label>
+
+                      <Field
+                        style={{ ...inputStyle, width: '450px' }}
+                        readOnly
+                        name='fatherName'
+                        className='form-control form-control-lg form-control-solid'
+                      />
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='fatherName' />
+                      </div>
+                    </div>
+
+                    <div className='d-flex justify-content-center mt-10'>
+                      <button
+                        type='submit'
+                        className='btn btn-primary'
+                        onClick={() => { }}
+                        style={{ backgroundColor: '#332789', width: 180 }}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+
+            </div>
           </div>
         </div>
       }
@@ -244,7 +285,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
             <Button onClick={handleClose}>Yes</Button>
           </DialogActions>
         </Dialog>
-        
+
         <Dialog
           open={disable}
           onClose={handleClose}
