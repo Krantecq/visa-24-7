@@ -15,6 +15,7 @@ import axiosInstance from '../helpers/axiosInstance'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
+import Cookies from 'js-cookie'
 
 type Props = {
   className: string
@@ -58,14 +59,47 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [issueVisaLoader, setissueVisaLoader] = useState(false);
+  const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleApproveClick = async () => {
+    try {
+      if(deleteSelectedItem){
+        const selectedEntry = deleteSelectedItem as { _id: string }; 
+      if(deleteSelectedItem == null){
+        toast.error('Selected entry is null', {
+          position: 'top-center',
+        });
+      }
+      const response = await axiosInstance.post('/backend/delete_application', {
+        application_id: selectedEntry._id,
+      });
+
+      if (response.status === 200) {
+        toast.success(response.data.msg, {
+          position: 'top-center',
+        });
+        // Handle any additional actions after a successful API call
+      } else {
+        console.log(response.data);
+        toast.error(response.data.msg, {
+          position: 'top-center',
+        });
+      }
+    }
+    } catch (error) {
+      console.error('API error:', error);
+    }
+  };
+
+  const handleClickOpen = (item) => {
+    setDeleteSelectedItem(item)
     setOpen(!open);
   };
 
   const handleClose = () => {
+    setDeleteSelectedItem(null)
     setOpen(false);
   };
 
@@ -218,24 +252,24 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                       {/* Action Buttons */}
                       <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
 
-                        <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
-                        <DeleteOutline onClick={() => {
-                          handleClickOpen()
-                          // const confirmed = window.confirm('Are you sure you want to delete this item?');
-                          // if (confirmed) {
-                          // Laxit write here for delete api 
-                          // }
-                        }} />
-                        {row.visa_status === 'Applied' && (
-                          // Render the "Approve" button only when the merchant is not approved
-                          <button className='btn btn-primary align-self-center'>Check Status</button>
-                        )}
-                        {row.visa_status === 'Waiting' && (
-                          // Render the "Approve" button only when the merchant is not approved
-                          <button className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
-                        )}
-                        {row.visa_status === 'Processed' && (
-                          <button className='btn btn-primary align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
+                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
+                      <DeleteOutline onClick={() => 
+                        handleClickOpen(row)
+                        // const confirmed = window.confirm('Are you sure you want to delete this item?');
+                        // if (confirmed) {
+                        // Laxit write here for delete api 
+                        // }
+                      } />
+                      {row.visa_status === 'Applied' && (
+                        // Render the "Approve" button only when the merchant is not approved
+                        <button className='btn btn-primary align-self-center'>Check Status</button>
+                      )}
+                      {row.visa_status === 'Waiting' && (
+                        // Render the "Approve" button only when the merchant is not approved
+                        <button className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
+                      )}
+                      {row.visa_status === 'Processed' && (
+                        <button className='btn btn-primary align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
 
                           // Render the "Approve" button only when the merchant is not approved
                         )}
@@ -283,7 +317,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
             <Button autoFocus onClick={handleClose}>
               Cancel
             </Button>
-            <Button onClick={handleClose}>Yes</Button>
+            <Button onClick={handleApproveClick}>Yes</Button>
           </DialogActions>
         </Dialog>
       </div>
