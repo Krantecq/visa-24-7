@@ -5,10 +5,11 @@ import { WalletTable } from '../../components/WalletTable';
 
 function WalletWrapper() {
   const [walletData, setWalletData] = useState([]);
-
+  const [loading,setLoading] = useState(false);
   useEffect(() => {
     // Define a function to make the POST request
     const fetchData = async () => {
+      setLoading(true);
       try {
         
         // Make a POST request to your API endpoint
@@ -16,9 +17,11 @@ function WalletWrapper() {
           .then((response) => {
             console.log(response.data)
             setWalletData(response.data.data);
+            setLoading(false);
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false);
           });
 
         
@@ -33,7 +36,7 @@ function WalletWrapper() {
 
   return (
     <div>
-      <WalletTable className='' title={'Wallet'} data={walletData}/>
+      <WalletTable className='' title={'Wallet'} data={walletData} loading={loading}/>
     </div>
   )
 }

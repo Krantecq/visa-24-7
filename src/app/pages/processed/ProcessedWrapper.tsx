@@ -6,11 +6,13 @@ import Cookies from 'js-cookie'
 
 function ProcessedWrapper() {
   const [visaStatsData, setVisaStatsData] = useState([]);
+  const [loading,setLoading] = useState(false);
   const user_id = Cookies.get('user_id');
 
   useEffect(() => {
     // Define a function to make the POST request
     const fetchData = async () => {
+      setLoading(true);
       try {
     
         axiosInstance.get('/backend/super_admin/fetch_all_visa')
@@ -18,12 +20,15 @@ function ProcessedWrapper() {
             console.log(response.data)
             const filteredData = response.data.data.filter(item => item.visa_status === 'Processed');
             setVisaStatsData(filteredData);
+            setLoading(false)
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false)
           });
       } catch (error) {
         console.error('Error:', error);
+        setLoading(false)
       }
     };
 
@@ -33,7 +38,7 @@ function ProcessedWrapper() {
 
   return (
     <div>
-      <ProcessedTable className='' title={'Visa Processed'} data={visaStatsData}/>
+      <ProcessedTable className='' title={'Visa Processed'} data={visaStatsData} loading={loading}/>
     </div>
   )
 }

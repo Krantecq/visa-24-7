@@ -19,6 +19,7 @@ type Props = {
   className: string
   title: String,
   data: any[];
+  loading: Boolean
 }
 const overlayStyle: CSSProperties = {
   position: 'fixed',
@@ -50,7 +51,7 @@ const contentStyle: CSSProperties = {
   overflowY: 'auto'
 };
 
-const WalletTable: React.FC<Props> = ({ className, title, data }) => {
+const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
@@ -97,29 +98,29 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
   const handleDeleteConfirmation = async () => {
     // Call your API with the selected item here
     try {
-      if(deleteSelectedItem){
-        const selectedEntry = deleteSelectedItem as { _id: string }; 
-      if(deleteSelectedItem == null){
-        toast.error('Selected entry is null', {
-          position: 'top-center',
+      if (deleteSelectedItem) {
+        const selectedEntry = deleteSelectedItem as { _id: string };
+        if (deleteSelectedItem == null) {
+          toast.error('Selected entry is null', {
+            position: 'top-center',
+          });
+        }
+        const response = await axiosInstance.post('/backend/decline_transaction', {
+          wallet_id: selectedEntry._id,
         });
-      }
-      const response = await axiosInstance.post('/backend/decline_transaction', {
-        wallet_id: selectedEntry._id,
-      });
 
-      if (response.status === 200) {
-        toast.success(response.data.msg, {
-          position: 'top-center',
-        });
-        // Handle any additional actions after a successful API call
-      } else {
-        console.log(response.data);
-        toast.error(response.data.msg, {
-          position: 'top-center',
-        });
+        if (response.status === 200) {
+          toast.success(response.data.msg, {
+            position: 'top-center',
+          });
+          // Handle any additional actions after a successful API call
+        } else {
+          console.log(response.data);
+          toast.error(response.data.msg, {
+            position: 'top-center',
+          });
+        }
       }
-    }
     } catch (error) {
       console.error('API error:', error);
     }
@@ -141,71 +142,80 @@ const WalletTable: React.FC<Props> = ({ className, title, data }) => {
         {/* begin::Table container */}
         <div className='table-responsive'>
           {/* begin::Table */}
-          <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
-            {/* begin::Table head */}
-            <thead style={{ background: '#332786', color: "#fff" }}>
-              <tr className='fw-bold'>
+          {loading ?
+            <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+              <span className='indicator-progress' style={{ display: 'block' }}>
+                Please wait...
+                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+              </span>
+            </div>
+            :
+            <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
+              {/* begin::Table head */}
+              <thead style={{ background: '#332786', color: "#fff" }}>
+                <tr className='fw-bold'>
 
-                <th className='min-w-150px text-start px-5'>Email Id</th>
-                <th className='min-w-140px'>Transaction Id</th>
-                <th className='min-w-120px'>Amount</th>
-                <th className='min-w-100px text-end px-5'>Actions</th>
-              </tr>
-            </thead>
-            {/* end::Table head */}
-            {/* begin::Table body */}
-            <tbody>
-              {data.map((row, index) => (
-
-                <tr>
-                  <td>
-                    {/* Avatar and Name */}
-                    <div className='d-flex align-items-center'>
-                      <div className='symbol symbol-45px me-5'>
-                        {/* <img src={row.photo} alt='' /> */}
-                      </div>
-                      <div className='d-flex justify-content-start flex-column'>
-                        <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
-                          {row.merchant_email_id}
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    {/* Date */}
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.upi_ref_id}
-                    </a>
-                  </td>
-                  <td>
-                    {/* Location 1 */}
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.wallet_balance}
-                    </a>
-                  </td>
-
-                  <td>
-                    {/* Action Buttons */}
-                    <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
-
-                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
-
-                      <DeleteOutline onClick={() => {
-                        handleClickOpen(row)
-                        // const confirmed = window.confirm('Are you sure you want to delete this item?');
-                        // if (confirmed) {
-                        // Laxit write here for delete api 
-                        // }
-                      }} className='mx-5 cursor-pointer' />
-                      <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
-                    </div>
-                  </td>
+                  <th className='min-w-150px text-start px-5'>Email Id</th>
+                  <th className='min-w-140px'>Transaction Id</th>
+                  <th className='min-w-120px'>Amount</th>
+                  <th className='min-w-100px text-end px-5'>Actions</th>
                 </tr>
-              ))}
+              </thead>
+              {/* end::Table head */}
+              {/* begin::Table body */}
+              <tbody>
+                {data.map((row, index) => (
 
-            </tbody>
-            {/* end::Table body */}
-          </table>
+                  <tr>
+                    <td>
+                      {/* Avatar and Name */}
+                      <div className='d-flex align-items-center'>
+                        <div className='symbol symbol-45px me-5'>
+                          {/* <img src={row.photo} alt='' /> */}
+                        </div>
+                        <div className='d-flex justify-content-start flex-column'>
+                          <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
+                            {row.merchant_email_id}
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      {/* Date */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.upi_ref_id}
+                      </a>
+                    </td>
+                    <td>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.wallet_balance}
+                      </a>
+                    </td>
+
+                    <td>
+                      {/* Action Buttons */}
+                      <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
+
+                        <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
+
+                        <DeleteOutline onClick={() => {
+                          handleClickOpen(row)
+                          // const confirmed = window.confirm('Are you sure you want to delete this item?');
+                          // if (confirmed) {
+                          // Laxit write here for delete api 
+                          // }
+                        }} className='mx-5 cursor-pointer' />
+                        <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+
+              </tbody>
+              {/* end::Table body */}
+            </table>
+          }
           {/* end::Table */}
         </div>
         {/* end::Table container */}

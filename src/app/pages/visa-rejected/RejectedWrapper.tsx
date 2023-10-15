@@ -4,10 +4,12 @@ import axios from 'axios';
 
 function RejectedWrapper() {
   const [visaStatsData, setVisaStatsData] = useState([]);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
     // Define a function to make the POST request
     const fetchData = async () => {
+      setLoading(true);
       try {
         const postData = {
           super_admin_id:'6507f4b97c2c4102d5024e01'          // Your POST data goes here
@@ -18,14 +20,17 @@ function RejectedWrapper() {
             console.log(response.data)
             const filteredData = response.data.data.filter(item => item.visa_status === 'Reject');
             setVisaStatsData(filteredData);
+            setLoading(false);
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false);
           });
 
         
       } catch (error) {
         console.error('Error:', error);
+        setLoading(false);
       }
     };
 
@@ -35,7 +40,7 @@ function RejectedWrapper() {
 
   return (
     <div>
-      <ProcessedTable className='' title={'Visa Rejected'} data={visaStatsData}/>
+      <ProcessedTable className='' title={'Visa Rejected'} data={visaStatsData} loading={loading}/>
     </div>
   )
 }

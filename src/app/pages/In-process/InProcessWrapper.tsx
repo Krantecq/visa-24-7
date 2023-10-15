@@ -4,10 +4,12 @@ import axiosInstance from '../../helpers/axiosInstance';
 
 function InProcessWrapper() {
   const [visaStatsData, setVisaStatsData] = useState([]);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
     // Define a function to make the POST request
     const fetchData = async () => {
+      setLoading(true);
       try {
   
         // Make a POST request to your API endpoint
@@ -16,14 +18,17 @@ function InProcessWrapper() {
             console.log(response.data)
             const filteredData = response.data.data.filter(item => item.visa_status === 'Applied');
             setVisaStatsData(filteredData);
+            setLoading(false);
           })
           .catch((error) => {
             console.error('Error fetching Atlys data:', error);
+            setLoading(false);
           });
 
         
       } catch (error) {
         console.error('Error:', error);
+        setLoading(false);
       }
     };
 
@@ -33,7 +38,7 @@ function InProcessWrapper() {
 
   return (
     <div>
-      <ProcessedTable className='' title={'Visa In-Process'} data={visaStatsData}/>
+      <ProcessedTable className='' title={'Visa In-Process'} data={visaStatsData} loading={loading} />
     </div>
   )
 }

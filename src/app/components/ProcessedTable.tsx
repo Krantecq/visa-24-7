@@ -20,6 +20,7 @@ type Props = {
   className: string
   title: String,
   data: any[];
+  loading:Boolean
 }
 const overlayStyle: CSSProperties = {
   position: 'fixed',
@@ -53,7 +54,7 @@ const contentStyle: CSSProperties = {
 
 
 
-const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
+const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [issueVisaLoader, setissueVisaLoader] = useState(false);
@@ -150,93 +151,102 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
         {/* begin::Table container */}
         <div className='table-responsive'>
           {/* begin::Table */}
-          <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
-            {/* begin::Table head */}
-            <thead style={{ background: '#332786',color:"#fff"}}>
-              <tr className='fw-bold'>
+          {loading ?
+            <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+              <span className='indicator-progress' style={{ display: 'block' }}>
+                Please wait...
+                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+              </span>
+            </div>
+            :
+            <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
+              {/* begin::Table head */}
+              <thead style={{ background: '#332786', color: "#fff" }}>
+                <tr className='fw-bold'>
 
-                <th className='min-w-150px text-center'>Customers</th>
-                <th className='min-w-140px'>Application Arrival Date</th>
-                <th className='min-w-120px'>Application Departure Date</th>
-                <th className='min-w-100px'>Visa Amount</th>
-                <th className='min-w-100px'>Visa Status</th>
-                <th className='min-w-100px text-center'>Actions</th>
-              </tr>
-            </thead>
-            {/* end::Table head */}
-            {/* begin::Table body */}
-            <tbody>
-              {data.map((row, index) => (
-                <tr key={index}>
-                  <td>
-                    {/* Avatar and Name */}
-                    <div className='d-flex align-items-center'>
-                      <div className='symbol symbol-45px me-5'>
-                        <img src={row.photo} alt='' />
-                      </div>
-                      <div className='d-flex justify-content-start flex-column'>
-                        <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
-                          {row.first_name}
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    {/* Date */}
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.application_arrival_date}
-                    </a>
-                  </td>
-                  <td>
-                    {/* Location 1 */}
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.application_departure_date}
-                    </a>
-                  </td>
-                  <td>
-                    {/* Location 2 */}
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.visa_amount}
-                    </a>
-                  </td>
-                  <td>
-                    {/* Status */}
-                    <span className='text-muted fw-semibold text-muted d-block fs-7'>
-                      {row.visa_status}
-                    </span>
-                  </td>
-                  <td>
-                    {/* Action Buttons */}
-                    <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
-
-                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
-                      <DeleteOutline onClick={() => {
-                        handleClickOpen()
-                        // const confirmed = window.confirm('Are you sure you want to delete this item?');
-                        // if (confirmed) {
-                        // Laxit write here for delete api 
-                        // }
-                      }} />
-                      {row.visa_status === 'Applied' && (
-                        // Render the "Approve" button only when the merchant is not approved
-                        <button className='btn btn-primary align-self-center'>Check Status</button>
-                      )}
-                      {row.visa_status === 'Waiting' && (
-                        // Render the "Approve" button only when the merchant is not approved
-                        <button className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
-                      )}
-                      {row.visa_status === 'Processed' && (
-                        <button className='btn btn-primary align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
-
-                        // Render the "Approve" button only when the merchant is not approved
-                      )}
-                    </div>
-                  </td>
+                  <th className='min-w-150px text-center'>Customers</th>
+                  <th className='min-w-140px'>Application Arrival Date</th>
+                  <th className='min-w-120px'>Application Departure Date</th>
+                  <th className='min-w-100px'>Visa Amount</th>
+                  <th className='min-w-100px'>Visa Status</th>
+                  <th className='min-w-100px text-center'>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-            {/* end::Table body */}
-          </table>
+              </thead>
+              {/* end::Table head */}
+              {/* begin::Table body */}
+              <tbody>
+                {data.map((row, index) => (
+                  <tr key={index}>
+                    <td>
+                      {/* Avatar and Name */}
+                      <div className='d-flex align-items-center'>
+                        <div className='symbol symbol-45px me-5'>
+                          <img src={row.photo} alt='' />
+                        </div>
+                        <div className='d-flex justify-content-start flex-column'>
+                          <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
+                            {row.first_name}
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      {/* Date */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.application_arrival_date}
+                      </a>
+                    </td>
+                    <td>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.application_departure_date}
+                      </a>
+                    </td>
+                    <td>
+                      {/* Location 2 */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.visa_amount}
+                      </a>
+                    </td>
+                    <td>
+                      {/* Status */}
+                      <span className='text-muted fw-semibold text-muted d-block fs-7'>
+                        {row.visa_status}
+                      </span>
+                    </td>
+                    <td>
+                      {/* Action Buttons */}
+                      <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
+
+                        <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
+                        <DeleteOutline onClick={() => {
+                          handleClickOpen()
+                          // const confirmed = window.confirm('Are you sure you want to delete this item?');
+                          // if (confirmed) {
+                          // Laxit write here for delete api 
+                          // }
+                        }} />
+                        {row.visa_status === 'Applied' && (
+                          // Render the "Approve" button only when the merchant is not approved
+                          <button className='btn btn-primary align-self-center'>Check Status</button>
+                        )}
+                        {row.visa_status === 'Waiting' && (
+                          // Render the "Approve" button only when the merchant is not approved
+                          <button className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
+                        )}
+                        {row.visa_status === 'Processed' && (
+                          <button className='btn btn-primary align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
+
+                          // Render the "Approve" button only when the merchant is not approved
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              {/* end::Table body */}
+            </table>
+          }
           {/* end::Table */}
         </div>
         {/* end::Table container */}
@@ -248,7 +258,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data }) => {
       {visible &&
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
           <div style={contentStyle}>
-            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 243, borderRadius: 20, cursor: 'pointer' ,    top: '156px'}}>
+            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 243, borderRadius: 20, cursor: 'pointer', top: '156px' }}>
               <CloseOutlined />
             </div>
             <ApplicationFormView viewApplication={selectedItem} />
