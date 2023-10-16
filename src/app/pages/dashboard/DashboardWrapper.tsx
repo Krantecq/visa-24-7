@@ -23,6 +23,10 @@ type Props = {
   not_applied: string | number
   visa_rejected:string | number
   atlys_balance:string | number
+  api:string | number
+  processed:string | number
+  waiting:string | number
+
 }
 
 
@@ -34,11 +38,11 @@ const DashboardPage: FC<Props> = (data) => (
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='API Merchants'
+          description='Total API'
           color='#F0F0F0'
           icon={icon1}
           textColor='#071437'
-          count='2'
+          count={data.api}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -90,7 +94,7 @@ const DashboardPage: FC<Props> = (data) => (
           color='#071537'
           icon={customer}
           textColor='#ffff'
-          count={data.not_applied}
+          count={data.waiting}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
@@ -177,7 +181,10 @@ const DashboardWrapper: FC = () => {
     in_process_visa: '',
     not_applied: '',
     visa_rejected: '',
-    atlys_balance:''
+    atlys_balance:'',
+    api:'',
+    processed:'',
+    waiting:'',
   });
   const [loading,setLoading] = useState(true);
   useEffect(() => {

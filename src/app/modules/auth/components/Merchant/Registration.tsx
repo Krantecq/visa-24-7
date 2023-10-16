@@ -66,7 +66,7 @@ export function Registration() {
     // 
     try {
       
-      axios.post('http://localhost:5003/backend/create_merchant_user', formData)
+      axiosInstance.post('/backend/register_merchant_user', formData)
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -74,12 +74,12 @@ export function Registration() {
             toast.success(response.data.msg, {
               position: "top-center", // Center the toast notification
             });
-            Cookies.set('isLoggedIn', 'true', { expires: 15 });
-            Cookies.set('user_id', response.data.user_id,{ expires: 15 });
-            Cookies.set('user_type', 'merchant',{ expires: 15 });
+            // Cookies.set('isLoggedIn', 'true', { expires: 15 });
+            // Cookies.set('user_id', response.data.user_id,{ expires: 15 });
+            // Cookies.set('user_type', 'merchant',{ expires: 15 });
 
             setTimeout(() => {
-              window.location.href = '/merchant/apply-visa'                
+              window.location.href = '/merchant/login'                
             }, 400);
           } else {
             setLoading(false);
@@ -147,18 +147,18 @@ export function Registration() {
 
   const handleSaveClick = async () => {
     setLoading(true);
-    const response = await axiosInstance.post('/backend/create_merchant_user', formData)
+    const response = await axiosInstance.post('/backend/register_merchant_user', formData)
     if (response.status === 200) {
       setLoading(false);
       toast.success(response.data.msg, {
         position: "top-center", // Center the toast notification
       });
-      Cookies.set('isLoggedIn', 'true', { expires: 15 });
-      Cookies.set('user_id', response.data.user_id,{ expires: 15 });
-      Cookies.set('user_type', 'merchant',{ expires: 15 });
+      // Cookies.set('isLoggedIn', 'true', { expires: 15 });
+      // Cookies.set('user_id', response.data.user_id,{ expires: 15 });
+      // Cookies.set('user_type', 'merchant',{ expires: 15 });
 
       setTimeout(() => {
-        window.location.href = '/merchant/apply-visa'                
+        window.location.href = '/merchant/login'                
       }, 400);
     } else {
       setLoading(false);
@@ -373,21 +373,7 @@ export function Registration() {
         {/* end::Form group */}
       </div>
       
-      <div className='fv-row mb-5'>
-        {/* begin::Form group Lastname */}
-        <label className='form-label fw-bolder text-dark fs-6'>Wallet</label>
-        <input
-          placeholder='Wallet'
-          type='text'
-          value={formData.wallet_balance}
-          onChange={(e) => handleFieldChange('wallet_balance', e.target.value)}
-          autoComplete='off'
-          className={clsx(
-            'form-control bg-transparent',  
-          )}
-        />
-        {/* end::Form group */}
-      </div>
+    
 
       <div className='mb-5'>
         <label className='form-label fw-bolder text-dark fs-6'>
