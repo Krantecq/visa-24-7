@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Instance = axios.create({
-  baseURL: 'http://165.232.186.7:5003',
+  baseURL: 'https://fine-red-eagle-robe.cyclic.app',
   credentials: "include",
   withCredentials: true,
 });
