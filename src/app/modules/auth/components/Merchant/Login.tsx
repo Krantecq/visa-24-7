@@ -10,6 +10,7 @@ import {useAuth} from '../../core/Auth'
 import axios from 'axios'
 import Cookies from 'js-cookie'; 
 import { toast } from 'react-toastify'
+import axiosInstance from '../../../../helpers/axiosInstance'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -50,7 +51,7 @@ export function Login() {
         };
         console.log(requestBody);
         
-        axios.post('http://localhost:5003/backend/login/merchant_user', requestBody)
+        axiosInstance.post('/backend/login/merchant_user', requestBody)
           .then((response) => {
             console.log(response);
             if (response.status === 200) {

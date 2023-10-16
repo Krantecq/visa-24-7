@@ -7,6 +7,7 @@ import { toAbsoluteUrl } from '../../../helpers'
 import Cookies from 'js-cookie';
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import axiosInstance from '../../../../app/helpers/axiosInstance'
 
 const HeaderUserMenu: FC = () => {
   const { currentUser, logout } = useAuth()
@@ -14,7 +15,7 @@ const HeaderUserMenu: FC = () => {
   const user_type = Cookies.get('user_type');
   const handleLogout = async () => {
     try {
-      axios.get('http://localhost:5003/backend/logout/merchant_user')
+      axiosInstance.get('/backend/logout/merchant_user')
         .then((response) => {
           if (response.status === 200) {
             // setLoading(false);

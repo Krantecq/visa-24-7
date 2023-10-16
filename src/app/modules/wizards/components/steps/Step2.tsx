@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import { KTIcon } from '../../../../../_metronic/helpers';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../../../helpers/axiosInstance';
 // Define a prop for Step1
 interface Step2Props {
   data: {
@@ -75,17 +76,17 @@ const Step2: FC<Step2Props> = ({ data, data1, prevStep,showfinalSubmitLoader }) 
       visa_amount: (data1.receipt['Visa Fees'] ? data1.receipt['Visa Fees'] : 0) + (data1.receipt['Service Fees'] ? data1.receipt['Service Fees'] : 0)
     }
 
-    const response = await axios.post('http://localhost:5003/backend/create_user_application', updatedData);
+    const response = await axiosInstance.post('/backend/create_user_application', updatedData);
 
     if (response.status == 200) {
       let formBody = {
         super_admin_id: '6507f4b97c2c4102d5024e01',
         application_id: response.data.data
       }
-      const response1 = await axios.patch('http://localhost:5003/backend/super_admin/add_applicant', formBody);
+      const response1 = await axiosInstance.patch('/backend/super_admin/add_applicant', formBody);
 
       if (response1.status == 200) {
-        const response2 = await axios.post('http://localhost:5003/backend/super_admin/apply_visa', {
+        const response2 = await axiosInstance.post('/backend/super_admin/apply_visa', {
           application_id: response.data.data
         });
 
@@ -107,7 +108,7 @@ const Step2: FC<Step2Props> = ({ data, data1, prevStep,showfinalSubmitLoader }) 
       try {
         const formData = new FormData();
         formData.append('file', file);
-        const response = await axios.post('http://localhost:5003/backend/upload_image/upload', formData, {
+        const response = await axiosInstance.post('/backend/upload_image/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -130,7 +131,7 @@ const Step2: FC<Step2Props> = ({ data, data1, prevStep,showfinalSubmitLoader }) 
       try {
         const formData = new FormData();
         formData.append('file', file);
-        const response = await axios.post('http://localhost:5003/backend/upload_image/upload', formData, {
+        const response = await axiosInstance.post('/backend/upload_image/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

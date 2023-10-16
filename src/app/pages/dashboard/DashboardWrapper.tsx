@@ -15,6 +15,7 @@ import wallet from '../../../_metronic/assets/card/wallet.png'
 import { HomeMainCard } from '../../components/HomeMainCard'
 import axios from 'axios';
 import Loader from '../../components/Loader'
+import axiosInstance from '../../helpers/axiosInstance'
 
 type Props = {
   customer_user: string | number
@@ -191,7 +192,7 @@ const DashboardWrapper: FC = () => {
     const fetchData = async () => {
       try {
         // Make a Get request to your API endpoint
-        axios.get('http://localhost:5003/backend/super_admin_dashboard')
+        axiosInstance.get('/backend/super_admin_dashboard')
           .then((response) => {
             console.log(response.data)
             setDashData(response.data.data);
