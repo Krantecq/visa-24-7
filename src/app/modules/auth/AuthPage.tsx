@@ -9,9 +9,12 @@ import { ForgotPassword as MerchantForgotPassword } from './components/Merchant/
 import { Login as CustomerLogin } from './components/Customer/Login'; 
 import { Registration as CustomerRegistration } from './components/Customer/Registration'; 
 import { ForgotPassword as CustomerForgotPassword } from './components/Customer/ForgotPassword'; 
+import { LandingPage } from './components/LandingPage';
 
 const AuthPage = () => (
   <Routes>
+    
+    <Route index element={<LandingPage />} />
     <Route element={<AuthLayout />}>
       <Route path='superadmin/login' element={<SuperadminLogin />} />
       <Route path='superadmin/registration' element={<SuperadminRegistration />} />
@@ -22,7 +25,6 @@ const AuthPage = () => (
       <Route path='customer/login' element={<CustomerLogin />} />
       <Route path='customer/registration' element={<CustomerRegistration />} />
       <Route path='customer/forgot-password' element={<CustomerForgotPassword />} />
-      <Route index element={<CustomerLogin />} />
     </Route>
   </Routes>
 );

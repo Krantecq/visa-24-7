@@ -199,10 +199,10 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                 <tr className='fw-bold'>
 
                   <th className='min-w-150px text-center'>Customers</th>
-                  <th className='min-w-140px'>Application Arrival Date</th>
-                  <th className='min-w-120px'>Application Departure Date</th>
-                  <th className='min-w-100px'>Visa Amount</th>
-                  <th className='min-w-100px'>Visa Status</th>
+                  <th className='min-w-140px text-center'>Application Arrival Date</th>
+                  <th className='min-w-120px text-center'>Application Departure Date</th>
+                  <th className='min-w-100px text-center'>Visa Amount</th>
+                  <th className='min-w-100px text-center'>Visa Status</th>
                   <th className='min-w-100px text-center'>Actions</th>
                 </tr>
               </thead>
@@ -211,7 +211,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
               <tbody>
                 {data.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    <td className='text-center'>
                       {/* Avatar and Name */}
                       <div className='d-flex align-items-center'>
                         <div className='symbol symbol-45px me-5'>
@@ -224,31 +224,31 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td className='text-center'>
                       {/* Date */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
                         {row.application_arrival_date}
                       </a>
                     </td>
-                    <td>
+                    <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
                         {row.application_departure_date}
                       </a>
                     </td>
-                    <td>
+                    <td className='text-center'>
                       {/* Location 2 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
                         {row.visa_amount}
                       </a>
                     </td>
-                    <td>
+                    <td className='text-center'>
                       {/* Status */}
                       <span className='text-muted fw-semibold text-muted d-block fs-7'>
                         {row.visa_status}
                       </span>
                     </td>
-                    <td>
+                    <td className='text-center'>
                       {/* Action Buttons */}
                       <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
 

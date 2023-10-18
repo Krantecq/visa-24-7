@@ -159,10 +159,10 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
             <thead style={{ background: '#332786', color: "#fff" }}>
               <tr className='fw-bold'>
 
-                <th className='min-w-150px text-start px-5'>Email Id</th>
-                <th className='min-w-140px'>Transaction Id</th>
-                <th className='min-w-120px'>Amount</th>
-                <th className='min-w-100px text-end px-5'>Actions</th>
+                <th className='min-w-150px text-center'>Email Id</th>
+                <th className='min-w-140px text-center'>Transaction Id</th>
+                <th className='min-w-120px text-center'>Amount</th>
+                <th className='min-w-100px text-center'>Actions</th>
               </tr>
             </thead>
             {/* end::Table head */}
@@ -171,7 +171,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
               {data.map((row, index) => (
 
                 <tr>
-                  <td>
+                  <td className='text-center'>
                     {/* Avatar and Name */}
                     <div className='d-flex align-items-center'>
                       <div className='symbol symbol-45px me-5'>
@@ -184,20 +184,20 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <td className='text-center'>
                     {/* Date */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
                       {row.upi_ref_id}
                     </a>
                   </td>
-                  <td>
+                  <td className='text-center'>
                     {/* Location 1 */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
                       {row.wallet_balance}
                     </a>
                   </td>
 
-                  <td>
+                  <td className='text-center'>
                     {/* Action Buttons */}
                     <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
 

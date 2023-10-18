@@ -286,6 +286,7 @@ function AddNewMerchant() {
 
                         <Field
                           name='merchantName'
+                          placeholder="Merchant Name"
                           value={formData.merchant_name}
                           onChange={(e) => handleFieldChange('merchant_name', e.target.value)}
                           style={inputStyle}
@@ -302,6 +303,7 @@ function AddNewMerchant() {
 
                         <Field
                           style={inputStyle}
+                          placeholder="Company Name"
                           name='merchant_company_name'
                           value={formData.merchant_company_name}
                           onChange={(e) => handleFieldChange('merchant_company_name', e.target.value)}
@@ -317,6 +319,7 @@ function AddNewMerchant() {
                       <label className='form-label fs-4 mx-5'>Country</label>
                       <Field
                         style={inputStyle}
+                        placeholder="Country"
                         name='merchant_country'
                         value={formData.merchant_country}
                         onChange={(e) => handleFieldChange('merchant_country', e.target.value)}
@@ -334,6 +337,7 @@ function AddNewMerchant() {
 
                         <Field
                           style={inputStyle}
+                          placeholder="Email"
                           value={formData.merchant_email_id}
                           onChange={(e) => handleFieldChange('merchant_email_id', e.target.value)}
                           name='merchant_email_id'
@@ -350,6 +354,7 @@ function AddNewMerchant() {
 
                         <Field
                           style={inputStyle}
+                          placeholder="Contact Number"
                           value={formData.merchant_phone_number}
                           onChange={(e) => handleFieldChange('merchant_phone_number', e.target.value)}
                           name='merchant_phone_number'
@@ -363,12 +368,13 @@ function AddNewMerchant() {
 
                     <div className='fv-row mb-10'>
                       <label className='d-flex align-items-center form-label mx-5'>
-                        <span className='required'>Address one line</span>
+                        <span className='required'>Address first line</span>
                       </label>
 
                       <Field
                         style={{ ...inputStyle, width: '450px' }}
                         name='merchant_address_one_line'
+                        placeholder="Address first line"
                         value={formData.merchant_address_one_line}
                         onChange={(e) => handleFieldChange('merchant_address_one_line', e.target.value)}
                         className='form-control form-control-lg form-control-solid'
@@ -386,6 +392,7 @@ function AddNewMerchant() {
                       <Field
                         style={{ ...inputStyle, width: '450px' }}
                         name='merchant_address_second_line'
+                        placeholder="Address second line"
                         value={formData.merchant_address_second_line}
                         onChange={(e) => handleFieldChange('merchant_address_second_line', e.target.value)}
                         className='form-control form-control-lg form-control-solid'
@@ -487,6 +494,7 @@ function AddNewMerchant() {
                     <Field
                       style={{ ...inputStyle, width: '450px' }}
                       name='merchant_pan_no'
+                      placeholder="PAN Number"
                       value={formData.merchant_pan_no}
                       onChange={(e) => handleFieldChange('merchant_pan_no', e.target.value)}
                       className='form-control form-control-lg form-control-solid'
@@ -504,6 +512,7 @@ function AddNewMerchant() {
                     <Field
                       style={{ ...inputStyle, width: '450px' }}
                       name='merchant_gst_no'
+                      placeholder="GST"
                       value={formData.merchant_gst_no}
                       onChange={(e) => handleFieldChange('merchant_gst_no', e.target.value)}
                       className='form-control form-control-lg form-control-solid'
@@ -521,6 +530,7 @@ function AddNewMerchant() {
 
                       <Field
                         style={inputStyle}
+                        placeholder="State"
                         value={formData.merchant_state}
                         onChange={(e) => handleFieldChange('merchant_state', e.target.value)}
                         name='merchant_state'
@@ -537,6 +547,7 @@ function AddNewMerchant() {
 
                       <Field
                         style={inputStyle}
+                        placeholder="Zip code"
                         value={formData.merchant_zip_code}
                         onChange={(e) => handleFieldChange('merchant_zip_code', e.target.value)}
                         name='merchant_zip_code'
@@ -556,6 +567,7 @@ function AddNewMerchant() {
                       <Field
                         style={inputStyle}
                         value={formData.wallet_balance}
+                        placeholder="Wallet"
                         onChange={(e) => handleFieldChange('wallet_balance', e.target.value)}
                         name='wallet_balance'
                         className='form-control form-control-lg form-control-solid'

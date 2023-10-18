@@ -13,6 +13,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import moment from 'moment'
 
 
 type Props = {
@@ -55,9 +56,20 @@ const contentStyle: CSSProperties = {
 const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
+  const [filter, setFilter] = useState('all');
   const [open, setOpen] = React.useState(false);
 
+  console.log(data)
+  const getFilteredData = () => {
+    if (filter === 'waitingForApproval') {
+      return data.filter((item) => item.merchant_approved === false);
+    } else {
+      return data; // Show all items by default
+    }
+  };
+  const handleFilterClick = (filterType) => {
+    setFilter(filterType);
+  };
   const handleClickOpen = () => {
     setOpen(!open);
   };
@@ -108,8 +120,8 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                 Filter
               </button>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">All</a></li>
-                <li><a className="dropdown-item" href="#">Waiting For Approval</a></li>
+                <li><a className="dropdown-item" href="#" onClick={() => handleFilterClick('all')}>All</a></li>
+                <li><a className="dropdown-item" href="#" onClick={() => handleFilterClick('waitingForApproval')}>Waiting For Approval</a></li>
               </ul>
             </div>
             {/* <button className='btn btn-primary align-self-center'>All</button>
@@ -140,21 +152,20 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                     {/* begin::Table head */}
                     <thead className='px-2' style={{ background: '#332786',color:"#fff"}}>
                       <tr className='fw-bold'>
-                        <th className='min-w-150px'>Agent</th>
-                        <th className='min-w-120px'>Wallet Balance</th>
-                        <th className='min-w-100px'>No. Of Visa</th>
-                        <th className='min-w-100px text-start'>Company</th>
-                        <th className='min-w-150px text-start'>Joining Date</th>
-                        <th className='min-w-150px text-start'>API KEY</th>
+                        <th className='min-w-150px text-center'>Agent</th>
+                        <th className='min-w-120px text-center'>Wallet Balance</th>
+                        <th className='min-w-100px text-center'>No. Of Visa</th>
+                        <th className='min-w-100px text-center'>Company</th>
+                        <th className='min-w-150px text-center'>Joining Date</th>
                         <th className='min-w-150px text-center'>Action</th>
                       </tr>
                     </thead>
                     {/* end::Table head */}
                     {/* begin::Table body */}
                     <tbody>
-                      {data.map((item, index) => (
+                      {getFilteredData().map((item, index) => (
                         <tr key={index}>
-                          <td>
+                          <td className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
                               <span className='symbol-label'>
                                 <img
@@ -172,26 +183,25 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                               </a>
                             </div>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
                               {item.wallet_balance}
                             </a>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.merchant_applicants.length}</span>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
                             <span className='text-muted fw-semibold d-block fs-7 '>{item.merchant_company_name}</span>
                           </td>
-                          <td className='text-end'>
-                            <span className='text-muted fw-semibold d-block fs-7'>{item.created_at}</span>
+                          <td className='text-center'>
+                            <span className='text-muted fw-semibold d-block fs-7'>
+                              {moment(item.created_at).format('DD MMM YYYY hh:mm a')}
+                              </span>
                           </td>
-                          <td className='text-end'>
-                            <span className='text-muted fw-semibold d-block fs-7'>{item.merchant_api_key}</span>
-                          </td>
-                          <td >
-                            <div className='d-flex align-items-center flex-shrink-0'>
+                          <td className='text-center' >
+                            <div className='d-flex align-items-center'>
                               <VisibilityIcon onClick={() => handleVisibilityClick(item)} className='mx-5 cursor-pointer' />
 
                               <DeleteOutline onClick={() => {

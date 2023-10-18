@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, CSSProperties } from 'react'
 import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import MerchantView from './MerchantView'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
@@ -73,6 +73,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [initValues] = useState<ICreateAccount>(inits)
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
+  const [loadingButton, setloadingButton] = useState(false);
 
 
   const [open, setOpen] = React.useState(false);
@@ -101,29 +102,29 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
   const handleApproveClick = async () => {
     try {
-      if(deleteSelectedItem){
-        const selectedEntry = deleteSelectedItem as { _id: string }; 
-      if(deleteSelectedItem == null){
-        toast.error('Selected entry is null', {
-          position: 'top-center',
+      if (deleteSelectedItem) {
+        const selectedEntry = deleteSelectedItem as { _id: string };
+        if (deleteSelectedItem == null) {
+          toast.error('Selected entry is null', {
+            position: 'top-center',
+          });
+        }
+        const response = await axiosInstance.post('/backend/merchant/delete_api', {
+          api_id: selectedEntry._id,
         });
-      }
-      const response = await axiosInstance.post('/backend/merchant/delete_api', {
-        api_id: selectedEntry._id,
-      });
 
-      if (response.status === 200) {
-        toast.success(response.data.msg, {
-          position: 'top-center',
-        });
-        // Handle any additional actions after a successful API call
-      } else {
-        console.log(response.data);
-        toast.error(response.data.msg, {
-          position: 'top-center',
-        });
+        if (response.status === 200) {
+          toast.success(response.data.msg, {
+            position: 'top-center',
+          });
+          // Handle any additional actions after a successful API call
+        } else {
+          console.log(response.data);
+          toast.error(response.data.msg, {
+            position: 'top-center',
+          });
+        }
       }
-    }
     } catch (error) {
       console.error('API error:', error);
     }
@@ -132,7 +133,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
   const handleCloseClick = () => {
     setSelectedItem(null);
-    setDeleteSelectedItem(null) 
+    setDeleteSelectedItem(null)
     setVisible(false);
   };
 
@@ -141,6 +142,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   }
 
   const handleSaveClick = async () => {
+    setloadingButton(true)
     const response = await axiosInstance.post('/backend/add_api_balance', {
       api_id: selectedItem._id,
       amount: formData.walletBalance
@@ -150,7 +152,8 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
       })
-      // navigate('/merchant/apply-visa')
+      handleCloseClick();
+      window.location.reload();
     } else {
       console.log(response.data)
       toast.error(response.data.msg, {
@@ -190,12 +193,12 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                     {/* begin::Table head */}
                     <thead className='px-2' style={{ background: '#332786', color: "#fff" }}>
                       <tr className='fw-bold'>
-                        <th className='min-w-150px'>Agent</th>
-                        <th className='min-w-200px text-start'>Email</th>
-                        <th className='min-w-200px text-start'>Company</th>
-                        <th className='min-w-150px'>API Key</th>
-                        <th className='min-w-200px text-start'>Wallet Balance</th>
-                        <th className='min-w-200px text-start'>Action</th>
+                        <th className='min-w-150px text-center'>Agent</th>
+                        <th className='min-w-200px text-center'>Email</th>
+                        <th className='min-w-200px text-center'>Company</th>
+                        <th className='min-w-150px text-center'>API Key</th>
+                        <th className='min-w-200px text-center'>Wallet Balance</th>
+                        <th className='min-w-200px text-center'>Action</th>
                       </tr>
                     </thead>
                     {/* end::Table head */}
@@ -203,7 +206,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                     <tbody>
                       {data.map((item, index) => (
                         <tr key={index}>
-                          <td>
+                          <td className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
                               <span className='symbol-label'>
                                 <img
@@ -221,22 +224,22 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                               </a>
                             </div>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
                               {item.merchant.merchant_email_id}
                             </a>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
                             <span className='text-dark fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
-                          <td className='text-start min-w-50px' style={{ whiteSpace: 'pre-wrap' }}>
+                          <td className='text-center min-w-50px' style={{ whiteSpace: 'pre-wrap' }}>
                             <span className='text-muted fw-semibold d-block fs-7 '>{item.api_key}</span>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <span className='text-dark fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <div className='d-flex align-items-center'>
                               <DeleteOutline onClick={() =>
                                 handleClickOpen(item)
@@ -303,7 +306,14 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                         onClick={handleSaveClick}
                         style={{ backgroundColor: '#332789', width: 180 }}
                       >
-                        Save
+
+                        {!loadingButton && <span className='indicator-label'>Save</span>}
+                        {loadingButton && (
+                          <span className='indicator-progress' style={{ display: 'block' }}>
+                            Please wait...
+                            <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                          </span>
+                        )}
                       </button>
                     </div>
                   </Form>
@@ -336,7 +346,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
           </DialogActions>
         </Dialog>
 
-       
+
       </div>
     </div>
   )
