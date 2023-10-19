@@ -198,6 +198,7 @@ export function Registration() {
   }, [])
 
   return (
+    <div style={{  maxHeight: '100vh', flex: 1 }}>
     <form
       className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
       noValidate
@@ -210,7 +211,7 @@ export function Registration() {
         <h1 className='text-dark fw-bolder mb-3'>Sign Up</h1>
         {/* end::Title */}
 
-        <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
+        {/* <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div> */}
       </div>
       {/* end::Heading */}
 
@@ -276,7 +277,7 @@ export function Registration() {
       </div>
 
       <div className='fv-row mb-5'>
-        <label className='form-label fw-bolder text-dark fs-6'>GST</label>
+        <label className='form-label fw-bolder text-dark fs-6'>GST No.</label>
         <input
           placeholder='GST No.'
           type='email'
@@ -289,7 +290,7 @@ export function Registration() {
         />
       </div>
       <div className='fv-row mb-5'>
-        <label className='form-label fw-bolder text-dark fs-6'>PAN</label>
+        <label className='form-label fw-bolder text-dark fs-6'>PAN No.</label>
         <input
           placeholder='PAN No.'
           type='email'
@@ -314,9 +315,9 @@ export function Registration() {
       </div>
       <div className='fv-row mb-5'>
         {/* begin::Form group Lastname */}
-        <label className='form-label fw-bolder text-dark fs-6'>Address one line</label>
+        <label className='form-label fw-bolder text-dark fs-6'>Address first line</label>
         <input
-          placeholder='Company name'
+          placeholder='Address first line'
           type='text'
           autoComplete='off'
           value={formData.merchant_address_one_line}
@@ -331,7 +332,7 @@ export function Registration() {
         {/* begin::Form group Lastname */}
         <label className='form-label fw-bolder text-dark fs-6'>Address second line</label>
         <input
-          placeholder='Company name'
+          placeholder='Address second line'
           type='text'
           autoComplete='off'
           value={formData.merchant_address_second_line}
@@ -409,7 +410,7 @@ export function Registration() {
       {/* end::Form group */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-5'>
+      {/* <div className='fv-row mb-5'>
         <label className='form-check form-check-inline' htmlFor='kt_login_toc_agree'>
           <input
             className='form-check-input'
@@ -428,7 +429,7 @@ export function Registration() {
             .
           </span>
         </label>
-      </div>
+      </div> */}
       {/* end::Form group */}
 
       {/* begin::Form group */}
@@ -460,5 +461,6 @@ export function Registration() {
       </div>
       {/* end::Form group */}
     </form>
+    </div>
   )
 }

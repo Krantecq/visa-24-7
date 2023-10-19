@@ -17,6 +17,8 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { CloseOutlined } from '@mui/icons-material'
+import Papa from 'papaparse';
+import moment from 'moment'
 function MerchantProfile() {
   const [activeTab, setActiveTab] = useState('Profile')
   const [formData, setFormData] = useState({
@@ -37,6 +39,7 @@ function MerchantProfile() {
     merchant_zip_code: '',
     merchant_name: '',
     merchant_id: '',
+    merchant_profile_photo:'',
     issued_api:[]
   })
 
@@ -123,6 +126,7 @@ function MerchantProfile() {
   }
 
   const handleSave = async () => {
+    setLoading(true);
     const user_id = Cookies.get('user_id')
     setFormData2({ ...formData2, ['merchant_id']: user_id })
 
@@ -132,10 +136,12 @@ function MerchantProfile() {
       toast.error(response.data.msg, {
         position: 'top-center',
       })
+      setLoading(false);
     } else {
       toast.success(response.data.msg, {
         position: 'top-center',
       })
+      setLoading(false);
     }
   }
 
@@ -271,7 +277,7 @@ function MerchantProfile() {
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                    style={{ ...inputStyle,  }}
                     value={formData2.merchant_gst_no}
                     readOnly
                     name='businessDescriptor'
@@ -290,7 +296,7 @@ function MerchantProfile() {
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                    style={{ ...inputStyle, width: '300px' }}
                     name='businessDescriptor'
                     value={formData2.merchant_pan_no}
                     readOnly
@@ -416,7 +422,13 @@ function MerchantProfile() {
                   onClick={handleSave}
                   style={{ backgroundColor: '#332789' }}
                 >
-                  Save
+                {!loading && <span className='indicator-label'>Save</span>}
+                {loading && (
+                  <span className='indicator-progress' style={{ display: 'block' }}>
+                    Please wait...
+                    <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                  </span>
+                )}
                 </button>
               </div>
             </div>
@@ -971,6 +983,21 @@ function MerchantProfile() {
       <div>{activeWalletTabContent}</div>
     </div>
   )
+  function convertToCSV(data) {
+    const csv = Papa.unparse(data);
+    return csv;
+  }
+
+  function handleDownloadCSV() {
+    const csvData = convertToCSV(transaction); // Use your transaction data here
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'transactions.csv'; // Set the file name
+    a.click();
+    URL.revokeObjectURL(url);
+  }
   const transactionContent = (
     <div
       className='w-full mt-5 mx-10 pt-5'
@@ -1002,6 +1029,7 @@ function MerchantProfile() {
             backgroundColor: '#fff',
             cursor: 'pointer'
           }}
+          onClick={handleDownloadCSV}
         >
           <h6 className='fs-4' style={{ marginTop: 5 }}>
             Download CSV
@@ -1028,7 +1056,7 @@ function MerchantProfile() {
           <tr key={index}>
           <td className='text-start'>
             <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-            {item && (item as { created_at: string }).created_at}
+            {item && moment((item as any).created_at).format('DD MMM YYYY hh:mm a')}
             </a>
           </td>
           <td className='text-start'>
@@ -1091,7 +1119,7 @@ function MerchantProfile() {
                 ?
                 <div className='fv-row mb-10'>
                   <label className='d-flex align-items-center form-label'>
-                    <span className='required'>API Key</span>
+                    <span className='required mx-5'>API Key</span>
                   </label>
                   <Field
                   as='textarea'
@@ -1173,7 +1201,7 @@ function MerchantProfile() {
       }}
     >
       <div className='d-flex' style={{ alignItems: 'center' }}>
-        <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png' width={70} height={70} />
+        <img src={formData2.merchant_profile_photo} alt='Profile photo' width={70} height={70} />
         <div className='px-10'>
           <h1 style={{ fontSize: 20 }}>{formData2.merchant_name}</h1>
           <h5 style={{ fontSize: 20 }}>{formData2.merchant_email_id}</h5>

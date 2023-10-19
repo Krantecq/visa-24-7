@@ -55,7 +55,7 @@ const ProfileDetails: React.FC = () => {
         <form onSubmit={formik.handleSubmit} noValidate className='form'>
           <div className='card-body border-top p-9'>
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label fw-bold fs-6'>Avatar</label>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>Profile Picture</label>
               <div className='col-lg-8'>
                 <div
                   className='image-input image-input-outline'

@@ -126,6 +126,7 @@ export function Login() {
         <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
         <input
           type='password'
+          placeholder='Password'
           autoComplete='off'
           {...formik.getFieldProps('password')}
           className={clsx(

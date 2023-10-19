@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../../app/modules/auth'
 import { Languages } from './Languages'
@@ -8,8 +8,10 @@ import Cookies from 'js-cookie';
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import axiosInstance from '../../../../app/helpers/axiosInstance'
-
-const HeaderUserMenu: FC = () => {
+type Props = {
+  profile:any;
+}
+const HeaderUserMenu: React.FC<Props> = ({profile}) => {
   const { currentUser, logout } = useAuth()
   const navigate = useNavigate();
   const user_type = Cookies.get('user_type');
@@ -45,17 +47,17 @@ const HeaderUserMenu: FC = () => {
       <div className='menu-item px-3'>
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>
-            <img alt='Logo' src={toAbsoluteUrl('/media/avatars/300-3.jpg')} />
+            <img alt='Logo' src={profile.merchant_profile_photo} />
           </div>
 
           <div className='d-flex flex-column'>
             <div className='fw-bolder d-flex align-items-center fs-5'>
-              User Name
+              {profile ? profile.merchant_name : 'User'}
               {/* <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span> */}
             </div>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
               {/* {currentUser?.email} */}
-              xyz@gmail.com
+              {profile.merchant_email_id}
             </a>
           </div>
         </div>

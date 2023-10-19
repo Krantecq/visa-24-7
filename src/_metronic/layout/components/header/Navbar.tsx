@@ -16,11 +16,23 @@ const btnIconClass = 'fs-2'
 const Navbar = () => {
   const { config } = useLayout();
   const [currentWallet, setCurrentWallet] = useState('');
+  const [profile,setProfile] = useState({
+    merchant_email_id: '',
+    merchant_name: '',
+    merchant_profile_photo:''
+  })
 
   const user_type = Cookies.get('user_type');
   useEffect(() => {
     if (user_type == 'merchant') {
       fetchwallet();
+      fetchProfileData()
+      const intervalId = setInterval(fetchwallet, 7000); // 5000 milliseconds (5 seconds)
+
+      // Clean up the interval when the component unmounts
+      return () => {
+        clearInterval(intervalId);
+      };
     }
   }, [])
   const fetchwallet = async () => {
@@ -43,6 +55,27 @@ const Navbar = () => {
       // Handle error (e.g., show an error message)
     }
   };
+  const fetchProfileData = async () => {
+    try {
+      const user_id = Cookies.get('user_id')
+      const postData = {
+        id: user_id,
+      }
+      const response = await axiosInstance.post('/backend/fetch_single_merchant_user', postData)
+
+      if (response.status == 203) {
+        toast.error('Please Logout And Login Again', {
+          position: 'top-center',
+        })
+      }
+      // Assuming the response contains the profile data, update the state with the data
+      setProfile(response.data.data)
+      console.log('profile response header', response)
+    } catch (error) {
+      console.error('Error fetching profile data:', error)
+      // Handle error (e.g., show an error message)
+    }
+  }
   return (
     <div className='app-navbar flex-shrink-0'>
       {/* <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
@@ -93,9 +126,9 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img src={toAbsoluteUrl('/media/avatars/300-3.jpg')} alt='' />
+          <img src={profile.merchant_profile_photo} alt='Profile' />
         </div>
-        <HeaderUserMenu />
+        <HeaderUserMenu profile={profile} />
       </div>
 
       {config.app?.header?.default?.menu?.display && (
