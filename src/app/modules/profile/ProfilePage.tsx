@@ -1,13 +1,9 @@
 import {Navigate, Routes, Route, Outlet} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {Overview} from './components/Overview'
-import {Projects} from './components/Projects'
-import {Campaigns} from './components/Campaigns'
-import {Documents} from './components/Documents'
-import {Connections} from './components/Connections'
 import {ProfileHeader} from './ProfileHeader'
 import axiosInstance from '../../helpers/axiosInstance'
 import Cookies from 'js-cookie'
+import { ProfileDetails } from '../accounts/components/settings/cards/ProfileDetails'
 
 const fetchData = async () => {
   try {
@@ -60,51 +56,15 @@ const ProfilePage = () => (
       }
     >
       <Route
-        path='overview'
+        path='details'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Overview</PageTitle>
-            <Overview />
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Details</PageTitle>
+            <ProfileDetails />
           </>
         }
       />
-      <Route
-        path='projects'
-        element={
-          <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Projects</PageTitle>
-            <Projects />
-          </>
-        }
-      />
-      <Route
-        path='campaigns'
-        element={
-          <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Campaigns</PageTitle>
-            <Campaigns />
-          </>
-        }
-      />
-      <Route
-        path='documents'
-        element={
-          <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Documents</PageTitle>
-            <Documents />
-          </>
-        }
-      />
-      <Route
-        path='connections'
-        element={
-          <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Connections</PageTitle>
-            <Connections />
-          </>
-        }
-      />
-      <Route index element={<Navigate to='/crafted/pages/profile/overview' />} />
+      <Route index element={<Navigate to='/crafted/pages/profile/details' />} />
     </Route>
   </Routes>
 )
