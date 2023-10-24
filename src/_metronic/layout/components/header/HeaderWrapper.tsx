@@ -5,13 +5,14 @@ import { KTIcon, toAbsoluteUrl } from '../../../helpers'
 import { useLayout } from '../../core'
 import { Header } from './Header'
 import { Navbar } from './Navbar'
-
+import Cookies from 'js-cookie'
 export function HeaderWrapper() {
   const { config, classes } = useLayout()
   if (!config.app?.header?.display) {
     return null
   }
 
+  const user_type = Cookies.get('user_type');
   return (
     <div id='kt_app_header' className='app-header'>
       <div
@@ -73,6 +74,7 @@ export function HeaderWrapper() {
             </Link>
           </div>
         )}
+        {user_type=="merchant" &&
         <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
           <img
             alt='Logo'
@@ -80,6 +82,7 @@ export function HeaderWrapper() {
             className='h-20px h-lg-30px app-sidebar-logo-default'
           />
         </div>
+        }
         <div
           id='kt_app_header_wrapper'
           className='d-flex align-items-stretch justify-content-between flex-lg-grow-1'

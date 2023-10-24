@@ -91,7 +91,7 @@ export function Registration() {
         <h1 className='text-dark fw-bolder mb-3'>Sign Up</h1>
         {/* end::Title */}
 
-        <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
+        {/* <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div> */}
       </div>
       {/* end::Heading */}
 

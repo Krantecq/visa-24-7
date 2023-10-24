@@ -19,7 +19,10 @@ const Navbar = () => {
   const [profile,setProfile] = useState({
     merchant_email_id: '',
     merchant_name: '',
-    merchant_profile_photo:''
+    merchant_profile_photo:'',
+    super_admin_profile_photo:'',
+    super_admin_name:'',
+    super_admin_email:''
   })
 
   const user_type = Cookies.get('user_type');
@@ -34,7 +37,34 @@ const Navbar = () => {
         clearInterval(intervalId);
       };
     }
+    else{
+      fetchData();
+    }
   }, [])
+  const fetchData = async () => {
+    try {
+      const user_id = Cookies.get('user_id')
+
+      // Make a POST request to your API endpoint
+      axiosInstance.post('/backend/fetch_super_admin', {
+        id: user_id
+      })
+        .then((response) => {
+          console.log('profile response-->',response.data.data)
+          const responseData = response.data.data;
+          setProfile(responseData[0])
+          // Update the formData state with the fetched data
+
+        })
+        .catch((error) => {
+          console.error('Error fetching VISA 247 data:', error);
+        });
+
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   const fetchwallet = async () => {
     try {
       const user_id = Cookies.get('user_id');
@@ -126,7 +156,7 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img src={profile.merchant_profile_photo} alt='Profile' />
+          <img src={profile.merchant_profile_photo || profile.super_admin_profile_photo} alt='Profile' />
         </div>
         <HeaderUserMenu profile={profile} />
       </div>

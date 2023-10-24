@@ -52,12 +52,12 @@ const HeaderUserMenu: React.FC<Props> = ({profile}) => {
 
           <div className='d-flex flex-column'>
             <div className='fw-bolder d-flex align-items-center fs-5'>
-              {profile ? profile.merchant_name : 'User'}
+              {profile ? profile.merchant_name || profile.super_admin_name : 'User'}
               {/* <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span> */}
             </div>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
               {/* {currentUser?.email} */}
-              {profile.merchant_email_id}
+              {profile.merchant_email_id || profile.super_admin_email}
             </a>
           </div>
         </div>

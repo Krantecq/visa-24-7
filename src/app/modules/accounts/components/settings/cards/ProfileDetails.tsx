@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toAbsoluteUrl } from '../../../../../../_metronic/helpers'
 import { IProfileDetails, profileDetailsInitValues as initialValues } from '../SettingsModel'
 import * as Yup from 'yup'
-import { useFormik } from 'formik'
+import { ErrorMessage, Field, Form, Formik, useFormik } from 'formik'
+import axiosInstance from '../../../../../helpers/axiosInstance'
+import Cookies from 'js-cookie'
+import { DatePicker } from 'antd'
 
 const profileDetailsSchema = Yup.object().shape({
   fName: Yup.string().required('First name is required'),
@@ -20,7 +23,7 @@ const inputStyle = {
   borderRadius: '25px', // Border radius
   padding: '10px',
   paddingLeft: '20px', // Padding
-  width: 280, // 100% width
+  width: 380, // 100% width
   boxSizing: 'border-box',
   backgroundColor: 'white', // Include padding and border in the width calculation
 }
@@ -31,7 +34,46 @@ const ProfileDetails: React.FC = () => {
     const updatedData = Object.assign(data, fieldsToUpdate)
     setData(updatedData)
   }
+  const [formData, setFormData] = useState({
+    super_admin_name: '',
+    super_admin_email: '',
+    super_admin_phone_number:"",
+    super_admin_profile_photo:"",
+    created_at:''
+  });
 
+  useEffect(() => {
+    fetchData();
+  }, [])
+  const fetchData = async () => {
+    try {
+      const user_id = Cookies.get('user_id')
+
+      // Make a POST request to your API endpoint
+      axiosInstance.post('/backend/fetch_super_admin', {
+        id: user_id
+      })
+        .then((response) => {
+          console.log('profile response-->',response.data.data)
+          const responseData = response.data.data;
+          setFormData(responseData[0])
+          // Update the formData state with the fetched data
+
+        })
+        .catch((error) => {
+          console.error('Error fetching VISA 247 data:', error);
+        });
+
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleFieldChange = (fieldName, value) => {
+    setFormData({ ...formData, [fieldName]: value })
+
+  }
   const [loading, setLoading] = useState(false)
   const formik = useFormik<IProfileDetails>({
     initialValues,
@@ -64,121 +106,71 @@ const ProfileDetails: React.FC = () => {
                 >
                   <div
                     className='image-input-wrapper w-125px h-125px'
-                    style={{ backgroundImage: `url(${toAbsoluteUrl(data.avatar)})` }}
+                    style={{ backgroundImage: `url(${formData.super_admin_profile_photo})` }}
                   ></div>
                 </div>
               </div>
             </div>
 
-            <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Full Name</label>
+           
+          <Formik initialValues={initialValues} onSubmit={() => { }}>
+            {() => (
+              <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
+                <div>
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
+                    <div className='fv-row mb-5'>
+                      <label className='form-label required'>Name</label>
 
-              <div className='col-lg-8'>
-                <div className='row'>
-                  <div className='col-lg-6 fv-row'>
-                    <input
-                      style={{
-                        border: '2px solid #d3d3d3',
-                        borderRadius: '25px',
-                        padding: '10px',
-                        paddingLeft: '20px',
-                        width: 280,
-                        boxSizing: 'border-box',
-                        backgroundColor: 'white'
-                      }}
-                      type='text'
-                      className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                      placeholder='First name'
-                      {...formik.getFieldProps('fName')}
-                    />
-                    {formik.touched.fName && formik.errors.fName && (
-                      <div className='fv-plugins-message-container'>
-                        <div className='fv-help-block'>{formik.errors.fName}</div>
+                      <Field
+                        name='super_admin_name'
+                        style={inputStyle}
+                        value={formData.super_admin_name}
+                        className='form-control form-control-lg form-control-solid'
+                        onChange={(e) => handleFieldChange('super_admin_name', e.target.value)}
+                      />
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='businessName' />
                       </div>
-                    )}
+                    </div>
                   </div>
 
-                  <div className='col-lg-6 fv-row'>
-                    <input
-                          style={{
-                            border: '2px solid #d3d3d3',
-                            borderRadius: '25px',
-                            padding: '10px',
-                            paddingLeft: '20px',
-                            width: 280,
-                            boxSizing: 'border-box',
-                            backgroundColor: 'white'
-                          }}
-                      type='text'
-                      className='form-control form-control-lg form-control-solid'
-                      placeholder='Last name'
-                      {...formik.getFieldProps('lName')}
-                    />
-                    {formik.touched.lName && formik.errors.lName && (
-                      <div className='fv-plugins-message-container'>
-                        <div className='fv-help-block'>{formik.errors.lName}</div>
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
+                    <div className='fv-row mb-5'>
+                      <label className='form-label required'>Email</label>
+
+                      <Field
+                        name='super_admin_email'
+                        style={inputStyle}
+                        value={formData.super_admin_email}
+                        className='form-control form-control-lg form-control-solid'
+                        onChange={(e) => handleFieldChange('super_admin_email', e.target.value)}
+                      />
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='businessName' />
                       </div>
-                    )}
+                    </div>
+                  </div>
+
+                  <div className='d-flex' style={{ justifyContent: 'space-between' }}>
+                    <div className='fv-row mb-5'>
+                      <label className='form-label required'>Contact</label>
+
+                      <Field
+                        name='super_admin_phone_number'
+                        style={inputStyle}
+                        value={formData.super_admin_phone_number}
+                        className='form-control form-control-lg form-control-solid'
+                        onChange={(e) => handleFieldChange('super_admin_phone_number', e.target.value)}
+                      />
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='businessName' />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Email</label>
-
-              <div className='col-lg-8 fv-row'>
-                <input
-                      style={{
-                        border: '2px solid #d3d3d3',
-                        borderRadius: '25px',
-                        padding: '10px',
-                        paddingLeft: '20px',
-                        width: 280,
-                        boxSizing: 'border-box',
-                        backgroundColor: 'white'
-                      }}
-                  type='text'
-                  className='form-control form-control-lg form-control-solid'
-                  placeholder='Email Address'
-                  {...formik.getFieldProps('Email')}
-                />
-                {formik.touched.company && formik.errors.company && (
-                  <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.company}</div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label fw-bold fs-6'>
-                <span className='required'>Contact Phone</span>
-              </label>
-
-              <div className='col-lg-8 fv-row'>
-                <input
-                      style={{
-                        border: '2px solid #d3d3d3',
-                        borderRadius: '25px',
-                        padding: '10px',
-                        paddingLeft: '20px',
-                        width: 280,
-                        boxSizing: 'border-box',
-                        backgroundColor: 'white'
-                      }}
-                  type='tel'
-                  className='form-control form-control-lg form-control-solid'
-                  placeholder='Phone number'
-                  {...formik.getFieldProps('contactPhone')}
-                />
-                {formik.touched.contactPhone && formik.errors.contactPhone && (
-                  <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.contactPhone}</div>
-                  </div>
-                )}
-              </div>
-            </div>
+              </Form>
+            )}
+          </Formik>
           </div>
 
           <div className='card-footer d-flex justify-content-end py-6 px-9'>

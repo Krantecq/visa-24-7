@@ -29,14 +29,14 @@ const ProfileHeader: React.FC = () => {
         id: user_id
       })
         .then((response) => {
-          console.log(response.data.data)
+          console.log('profile response-->',response.data.data)
           const responseData = response.data.data;
           setFormData(responseData[0])
           // Update the formData state with the fetched data
 
         })
         .catch((error) => {
-          console.error('Error fetching Atlys data:', error);
+          console.error('Error fetching VISA 247 data:', error);
         });
 
 

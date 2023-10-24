@@ -26,8 +26,8 @@ const loginSchema = Yup.object().shape({
 })
 
 const initialValues = {
-  email: 'admin@demo.com',
-  password: 'demo',
+  email: '',
+  password: '',
 }
 
 /*
@@ -91,8 +91,7 @@ export function Login() {
       {/* begin::Heading */}
       <div className='text-center mb-11'>
         <h1 className='text-dark fw-bolder mb-3'>Sign In Superadmin</h1>
-        <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
-      </div>
+       </div>
       {/* begin::Heading */}
 
       {/* end::Separator */}
@@ -127,6 +126,7 @@ export function Login() {
       <div className='fv-row mb-3'>
         <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
         <input
+          placeholder='Password'
           type='password'
           autoComplete='off'
           {...formik.getFieldProps('password')}

@@ -30,7 +30,7 @@ const AuthLayout = () => {
 
       <div
         className='d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2'
-        style={{ backgroundImage: `url(${toAbsoluteUrl('/media/misc/authpagebackground.png')}` }}
+        style={{ backgroundImage: `url(${toAbsoluteUrl('/media/misc/background.png')}` }}
       >
       </div>
     </div>
