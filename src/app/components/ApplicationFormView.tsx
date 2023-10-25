@@ -59,8 +59,8 @@ function ApplicationFormView({viewApplication}) {
       <br />
       <h3>Upload Traveler's Front Passport Page</h3>
       <p>
-        United Arab Emirates requires a scan of the traveler's passport. Upload a clear passport
-        image and Atlys will scan and enter all the details directly from the file.
+      The destination country requires a scan of the traveler's passport. Upload a clear passport
+        image and Visa 24/7 will scan and enter all the details directly from the file.
       </p>
       <div className='d-flex ' style={{width: '100%'}}>
         <div style={{width: '40%', marginTop: 70}}>
@@ -267,8 +267,8 @@ function ApplicationFormView({viewApplication}) {
 
       <h3>Upload Traveler's Back Passport Page</h3>
       <p>
-        United Arab Emirates requires a scan of the back page of the traveler's passport. Upload a
-        clear passport image and Atlys will scan and enter all the details directly from the file.
+      The destination country requires a scan of the back page of the traveler's passport. Upload a
+        clear passport image and Visa 24/7 will scan and enter all the details directly from the file.
       </p>
       <div className='d-flex ' style={{width: '100%'}}>
         <div style={{width: '40%', marginTop: 50}}>

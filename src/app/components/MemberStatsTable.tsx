@@ -58,6 +58,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [filter, setFilter] = useState('all');
   const [open, setOpen] = React.useState(false);
+  const [id,setId] = useState(null);
 
   console.log(data)
   const getFilteredData = () => {
@@ -70,8 +71,9 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
   const handleFilterClick = (filterType) => {
     setFilter(filterType);
   };
-  const handleClickOpen = () => {
+  const handleClickOpen = (item) => {
     setOpen(!open);
+    setId(item._id);
   };
 
   const handleClose = () => {
@@ -93,6 +95,25 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
         position: 'top-center', // Center the toast notification
       })
       // navigate('/merchant/apply-visa')
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    const response = await axiosInstance.post('/backend/delete_merchant_user', {
+      merchant_id: id
+    })
+
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      handleClose();
+      window.location.reload();
     } else {
       console.log(response.data)
       toast.error(response.data.msg, {
@@ -205,7 +226,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                               <VisibilityIcon onClick={() => handleVisibilityClick(item)} className='mx-5 cursor-pointer' />
 
                               <DeleteOutline onClick={() => {
-                                handleClickOpen()
+                                handleClickOpen(item)
                                 // const confirmed = window.confirm('Are you sure you want to delete this item?');
                                 // if (confirmed) {
                                 // Laxit write here for delete api 
@@ -263,7 +284,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
             <Button autoFocus onClick={handleClose}>
               Cancel
             </Button>
-            <Button onClick={handleClose}>Yes</Button>
+            <Button onClick={()=>handleDeleteClick()}>Yes</Button>
           </DialogActions>
         </Dialog>
       </div>

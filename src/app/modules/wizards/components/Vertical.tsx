@@ -229,11 +229,11 @@ const Vertical: React.FC<VerticalProps> = ({
     {
       title: 'Auto-validation upon submission',
       description:
-        'Atlys performs automated validation after submission. We will let you know if there are any problems with the application.',
+        'Visa 24/7 performs automated validation after submission. We will let you know if there are any problems with the application.',
     },
     {
       title: 'Visa processed within 30 seconds',
-      description: 'Atlys automatically processes your visa.',
+      description: 'Visa 24/7 automatically processes your visa.',
     },
     {
       title: 'Non-refundable after you pay',

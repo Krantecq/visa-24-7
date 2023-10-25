@@ -6,7 +6,7 @@ import { MerchantAnaltytics } from "../../../components/MerchantAnalytics";
 
 
 const MerchantDashboard = () => {
-  const [activeTab, setActiveTab] = useState("All"); // Initialize active tab state
+  const [activeTab, setActiveTab] = useState("Analytics"); // Initialize active tab state
   const [visaData, setVisaData] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
 

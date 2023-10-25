@@ -23,6 +23,7 @@ const {PUBLIC_URL} = process.env
 const AppRoutes: FC = () => {
   const {currentUser} = useAuth()
   const isLoggedIn = Cookies.get('isLoggedIn');
+  const user_type = Cookies.get('user_type');
   // useEffect(() => {
   //   // Use useEffect to monitor changes in the isLoggedIn cookie
   //   if (isLoggedIn) {
@@ -43,25 +44,32 @@ const AppRoutes: FC = () => {
           {isLoggedIn ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />
-              <Route index element={<Navigate to='/merchant/apply-visa' />} />
+              {user_type =="super_admin" ?
+              <>
               <Route index element={<Navigate to='/superadmin/apply-visa' />} />
               <Route index element={<Navigate to='/superadmin/issueApi' />} />
               <Route index element={<Navigate to='/superadmin/apiSetting' />} />
               <Route index element={<Navigate to='/superadmin/dashboard' />} />
               <Route index element={<Navigate to='/superadmin/apiPayment'/>} />
               <Route index element={<Navigate to='/superadmin/apiMerchants'/>} />
-              <Route index element={<Navigate to='/merchant/dashboard' />} />
-              <Route index element={<Navigate to='/cutomers' />} />
               <Route index element={<Navigate to='/merchants' />} />
               <Route index element={<Navigate to='/add-new-merchant' />} />
-              <Route index element={<Navigate to='/create-visa' />} />
+              <Route index element={<Navigate to='/superadmin/changepassword' />} />
               <Route index element={<Navigate to='/processed' />} />
               <Route index element={<Navigate to='/in-process' />} />
               <Route index element={<Navigate to='/waiting-for-approval' />} />
               <Route index element={<Navigate to='/rejected' />} />
+              </>
+              :
+              <>
+              <Route index element={<Navigate to='/merchant/apply-visa' />} />
+              <Route index element={<Navigate to='/merchant/dashboard' />} />
+              <Route index element={<Navigate to='/cutomers' />} />
+              <Route index element={<Navigate to='/create-visa' />} />
               <Route index element={<Navigate to='/create-new-visa' />} />
               <Route index element={<Navigate to='/merchant/profile' />} />
-              <Route index element={<Navigate to='/superadmin/changepassword' />} />
+              </>
+            }
 
             </>
           ) : (

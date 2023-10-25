@@ -20,7 +20,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#F0F0F0'
           icon={icon1}
           textColor='#071437'
-          count={dashboardData.wallet_balance}
+          count={dashboardData?.wallet_balance}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -30,7 +30,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#071537'
           icon={customer}
           textColor='#ffff'
-          count={dashboardData.total_visa}
+          count={dashboardData?.total_visa}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -40,7 +40,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#FFC703'
           icon={merchant}
           textColor='#FFFF'
-          count={dashboardData.approved_visa}
+          count={dashboardData?.approved_visa}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -50,7 +50,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#7239EB'
           icon={icon1}
           textColor='#FFFF'
-          count={dashboardData.in_process_visa}
+          count={dashboardData?.in_process_visa}
         />
       </div>
     </div>
@@ -62,7 +62,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#F0F0F0'
           icon={icon1}
           textColor='#071437'
-          count={dashboardData.waiting_visa}
+          count={dashboardData?.waiting_visa}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
@@ -72,7 +72,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#071537'
           icon={customer}
           textColor='#ffff'
-          count={dashboardData.not_issued_visa}
+          count={dashboardData?.not_issued_visa}
         />
       </div>
     </div>

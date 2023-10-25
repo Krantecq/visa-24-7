@@ -20,7 +20,7 @@ const HomeMainCard = ({className, description, color, icon, textColor, count}: P
       <div className='card-title d-flex flex-column align-items-baseline'>
         <span className='fw-bold  me-2 lh-1 ls-n2' style={{fontSize: '35px', color: textColor}}>
           {' '}
-          {description === ('Payments Processed' || 'Atlys Wallet Balance') ? <>₹{' '}</> : null}
+          {description === ('Payments Processed' || 'Visa 24/7 Wallet Balance') ? <>₹{' '}</> : null}
           {count}
         </span>
         <span className=' opacity-75 pt-1 fw-semibold fs-6' style={{color: textColor}}>

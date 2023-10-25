@@ -101,7 +101,7 @@ const DashboardPage: FC<Props> = (data) => (
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Atlys Wallet Balance'
+          description='Visa 24/7 Wallet Balance'
           color='#FFC703'
           icon={merchant}
           textColor='#FFFF'
@@ -109,7 +109,7 @@ const DashboardPage: FC<Props> = (data) => (
         />
       </div>
     </div>
-    <div className='row g-5 g-xl-8'>
+    {/* <div className='row g-5 g-xl-8'>
       <div className='col-xl-4'>
         <StatisticsWidget4
           className='card-xl-stretch mb-xl-8'
@@ -170,7 +170,7 @@ const DashboardPage: FC<Props> = (data) => (
           progress='76%'
         />
       </div>
-    </div>
+    </div> */}
   </>
 )
 

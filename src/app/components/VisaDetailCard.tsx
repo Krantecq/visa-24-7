@@ -191,7 +191,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                         </h6>
                     </div>
                 </div>
-                <div
+                {/* <div
                     className='mb-10 mx-10 px-5 py-5'
                     style={{
                         width: 210,
@@ -207,7 +207,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                     <h6 className='fs-4' style={{ marginTop: 5 }}>
                         + Add Application
                     </h6>
-                </div>
+                </div> */}
                 <div className='card-body'>
                     <div
                         className='w-full'
@@ -309,7 +309,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                             </div>
 
                             <div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className='p-10 '>
-                                <div
+                                {/* <div
                                     className='px-10 py-5'
                                     style={{ width: '100%', backgroundColor: '#332789', borderRadius: 10 }}
                                 >
@@ -318,7 +318,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         VISA Approved on
                                     </h6>
                                     <h4 style={{ color: 'white' }}>{formatDate(selectedVisa.updated_at)}</h4>
-                                </div>
+                                </div> */}
                                 <div
                                     onClick={() => handleViewApplicationClick(selectedVisa)}
                                     className='mb-10 mx-10 mt-20 px-10 py-5'
