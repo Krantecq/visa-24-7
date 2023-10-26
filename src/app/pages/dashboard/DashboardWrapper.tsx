@@ -23,7 +23,6 @@ type Props = {
   in_process_visa: string | number
   not_applied: string | number
   visa_rejected:string | number
-  atlys_balance:string | number
   api:string | number
   processed:string | number
   waiting:string | number
@@ -98,16 +97,7 @@ const DashboardPage: FC<Props> = (data) => (
           count={data.waiting}
         />
       </div>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
-        <HomeMainCard
-          className='mb-5 mb-xl-10'
-          description='Visa 24/7 Wallet Balance'
-          color='#FFC703'
-          icon={merchant}
-          textColor='#FFFF'
-          count={data.atlys_balance}
-        />
-      </div>
+      
     </div>
     {/* <div className='row g-5 g-xl-8'>
       <div className='col-xl-4'>
@@ -182,7 +172,6 @@ const DashboardWrapper: FC = () => {
     in_process_visa: '',
     not_applied: '',
     visa_rejected: '',
-    atlys_balance:'',
     api:'',
     processed:'',
     waiting:'',
