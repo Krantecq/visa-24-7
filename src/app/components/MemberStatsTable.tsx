@@ -1,24 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, CSSProperties } from 'react'
-import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
-import { Link } from 'react-router-dom'
+import React, {useState, CSSProperties} from 'react'
+import {KTIcon, toAbsoluteUrl} from '../../_metronic/helpers'
+import {Link} from 'react-router-dom'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import MerchantView from './MerchantView'
-import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
+import {CloseOutlined, DeleteOutline} from '@mui/icons-material'
 import axiosInstance from '../helpers/axiosInstance'
-import { toast } from 'react-toastify'
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {toast} from 'react-toastify'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import moment from 'moment'
-
 
 type Props = {
   className: string
-  data: any[];
+  data: any[]
   loading: boolean
 }
 
@@ -36,12 +35,12 @@ const overlayStyle: CSSProperties = {
   opacity: 0,
   visibility: 'hidden',
   transition: 'opacity 0.3s, visibility 0.3s',
-};
+}
 
 const activeOverlayStyle: CSSProperties = {
   opacity: 1,
   visibility: 'visible',
-};
+}
 const contentStyle: CSSProperties = {
   backgroundColor: '#fff', // Background color for highlighting
   padding: '10px', // Adjust padding as needed
@@ -49,45 +48,44 @@ const contentStyle: CSSProperties = {
   // textAlign:'center',
   width: '70%',
   height: '70%',
-  overflowY: 'auto'
-};
+  overflowY: 'auto',
+}
 
-
-const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
-  const [visible, setVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [filter, setFilter] = useState('all');
-  const [open, setOpen] = React.useState(false);
-  const [id,setId] = useState(null);
+const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
+  const [visible, setVisible] = useState(false)
+  const [selectedItem, setSelectedItem] = useState(null)
+  const [filter, setFilter] = useState('all')
+  const [open, setOpen] = React.useState(false)
+  const [id, setId] = useState(null)
 
   console.log(data)
   const getFilteredData = () => {
     if (filter === 'waitingForApproval') {
-      return data.filter((item) => item.merchant_approved === false);
+      return data.filter((item) => item.merchant_approved === false)
     } else {
-      return data; // Show all items by default
+      return data // Show all items by default
     }
-  };
+  }
   const handleFilterClick = (filterType) => {
-    setFilter(filterType);
-  };
+    setFilter(filterType)
+  }
   const handleClickOpen = (item) => {
-    setOpen(!open);
-    setId(item._id);
-  };
+    setOpen(!open)
+    setId(item._id)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleVisibilityClick = (item) => {
-    setSelectedItem(item); // Set the selected item
-    setVisible(true);
-  };
+    setSelectedItem(item) // Set the selected item
+    setVisible(true)
+  }
 
   const handleApproveClick = async (item) => {
     const response = await axiosInstance.post('/backend/super_admin/approve_merchant', {
-      merchant_id: item._id
+      merchant_id: item._id,
     })
 
     if (response.status == 200) {
@@ -101,33 +99,33 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
         position: 'top-center',
       })
     }
-  };
+  }
 
   const handleDeleteClick = async () => {
     const response = await axiosInstance.post('/backend/delete_merchant_user', {
-      merchant_id: id
+      merchant_id: id,
     })
 
     if (response.status == 200) {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
       })
-      handleClose();
-      window.location.reload();
+      handleClose()
+      window.location.reload()
     } else {
       console.log(response.data)
       toast.error(response.data.msg, {
         position: 'top-center',
       })
     }
-  };
+  }
 
   const handleCloseClick = () => {
-    setSelectedItem(null); // Set the selected item
-    setVisible(false);
-  };
+    setSelectedItem(null) // Set the selected item
+    setVisible(false)
+  }
   return (
-    <div style={{ backgroundColor: '#fff' }} className='w-full'>
+    <div style={{backgroundColor: '#fff'}} className='w-full'>
       <div className={`card ${className}`}>
         {/* begin::Header */}
         <div className='card-header border-0 pt-5'>
@@ -136,13 +134,30 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
             <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
           <div className='d-flex flex-row'>
-            <div className="dropdown mx-5">
-              <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div className='dropdown mx-5'>
+              <button
+                className='btn btn-secondary dropdown-toggle'
+                type='button'
+                data-bs-toggle='dropdown'
+                aria-expanded='false'
+              >
                 Filter
               </button>
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#" onClick={() => handleFilterClick('all')}>All</a></li>
-                <li><a className="dropdown-item" href="#" onClick={() => handleFilterClick('waitingForApproval')}>Waiting For Approval</a></li>
+              <ul className='dropdown-menu'>
+                <li>
+                  <a className='dropdown-item' href='#' onClick={() => handleFilterClick('all')}>
+                    All
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className='dropdown-item'
+                    href='#'
+                    onClick={() => handleFilterClick('waitingForApproval')}
+                  >
+                    Waiting For Approval
+                  </a>
+                </li>
               </ul>
             </div>
             {/* <button className='btn btn-primary align-self-center'>All</button>
@@ -161,26 +176,37 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
               {/* begin::Table container */}
               <div className='table-responsive'>
                 {/* begin::Table */}
-                {loading ?
-                  <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                    <span className='indicator-progress' style={{ display: 'block' }}>
+                {loading ? (
+                  <div
+                    style={{
+                      height: 300,
+                      overflowX: 'hidden',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      display: 'flex',
+                    }}
+                  >
+                    <span className='indicator-progress' style={{display: 'block'}}>
                       Please wait...
                       <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                     </span>
                   </div>
-                  :
+                ) : (
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead className='px-2' style={{ background: '#332786',color:"#fff"}}>
+                    <thead className='px-2' style={{background: '#332786', color: '#fff'}}>
                       <tr className='fw-bold'>
-                        <th className='min-w-150px text-center'>Agent</th>
-                        <th className='min-w-120px text-center'>Wallet Balance</th>
-                        <th className='min-w-100px text-center'>No. Of Visa</th>
-                        <th className='min-w-100px text-center'>Company</th>
-                        <th className='min-w-150px text-center'>Joining Date</th>
+                        <th className='min-w-150px text-start' style={{paddingLeft: '20px'}}>
+                          Agent
+                        </th>
+                        <th className='min-w-120px text-start'>Wallet Balance</th>
+                        <th className='min-w-100px text-start'>No. Of Visa</th>
+                        <th className='min-w-100px text-start'>Company</th>
+                        <th className='min-w-150px text-start'>Joining Date</th>
                         <th className='min-w-150px text-center'>Action</th>
                       </tr>
                     </thead>
+
                     {/* end::Table head */}
                     {/* begin::Table body */}
                     <tbody>
@@ -198,43 +224,63 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                               <a
                                 href='#'
                                 className='text-dark fw-bold text-hover-primary mb-1 fs-6'
-                                style={{ whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px' }}
+                                style={{
+                                  whiteSpace: 'nowrap',
+                                  paddingLeft: '5px',
+                                  paddingTop: '5px',
+                                }}
                               >
                                 {item.merchant_name}
                               </a>
                             </div>
                           </td>
-                          <td className='text-center'>
+                          <td className='text-start'>
                             <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
                               {item.wallet_balance}
                             </a>
                           </td>
-                          <td className='text-center'>
-                            <span className='text-dark fw-bold d-block fs-5'>{item.merchant_applicants.length}</span>
+                          <td className='text-start'>
+                            <span className='text-dark fw-bold d-block fs-5'>
+                              {item.merchant_applicants.length}
+                            </span>
                           </td>
-                          <td className='text-center'>
+                          <td className='text-start'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
-                            <span className='text-muted fw-semibold d-block fs-7 '>{item.merchant_company_name}</span>
+                            <span className='text-muted fw-semibold d-block fs-7 '>
+                              {item.merchant_company_name}
+                            </span>
                           </td>
-                          <td className='text-center'>
+                          <td className='text-start'>
                             <span className='text-muted fw-semibold d-block fs-7'>
                               {moment(item.created_at).format('DD MMM YYYY hh:mm a')}
-                              </span>
+                            </span>
                           </td>
-                          <td className='text-center' >
-                            <div className='d-flex align-items-center'>
-                              <VisibilityIcon onClick={() => handleVisibilityClick(item)} className='mx-5 cursor-pointer' />
+                          <td className='text-center'>
+                            <div className='d-flex justify-content-center align-items-center'>
+                              <VisibilityIcon
+                                onClick={() => handleVisibilityClick(item)}
+                                className='mx-5 cursor-pointer'
+                              />
 
-                              <DeleteOutline onClick={() => {
-                                handleClickOpen(item)
-                                // const confirmed = window.confirm('Are you sure you want to delete this item?');
-                                // if (confirmed) {
-                                // Laxit write here for delete api 
-                                // }
-                              }} className='mx-5 cursor-pointer' />
+                              <DeleteOutline
+                                onClick={() => {
+                                  handleClickOpen(item)
+                                  // const confirmed = window.confirm('Are you sure you want to delete this item?');
+                                  // if (confirmed) {
+                                  // Laxit write here for delete api
+                                  // }
+                                }}
+                                className='mx-5 cursor-pointer'
+                              />
+
                               {item.merchant_approved === false && (
                                 // Render the "Approve" button only when the merchant is not approved
-                                <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(item)}>Approve</button>
+                                <button
+                                  className='btn btn-primary align-self-center'
+                                  onClick={() => handleApproveClick(item)}
+                                >
+                                  Approve
+                                </button>
                               )}
                             </div>
                           </td>
@@ -243,7 +289,7 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
                     </tbody>
                     {/* end::Table body */}
                   </table>
-                }
+                )}
               </div>
               {/* end::Table */}
             </div>
@@ -255,36 +301,42 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
 
         {/* end::Body */}
       </div>
-      {visible &&
-        <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
+      {visible && (
+        <div
+          className='loader-overlay'
+          style={{...overlayStyle, ...(visible && activeOverlayStyle)}}
+        >
           <div style={contentStyle}>
-
-            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 230, borderRadius: 20, cursor: 'pointer' }}>
+            <div
+              onClick={() => handleCloseClick()}
+              style={{
+                backgroundColor: '#d3d3d3',
+                padding: 10,
+                position: 'absolute',
+                right: 230,
+                borderRadius: 20,
+                cursor: 'pointer',
+              }}
+            >
               <CloseOutlined />
             </div>
             <MerchantView viewApplication={selectedItem} />
           </div>
         </div>
-      }
+      )}
       <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="draggable-dialog-title"
-        >
-          <DialogTitle style={{ cursor: 'move', color: 'red' }} id="draggable-dialog-title">
+        <Dialog open={open} onClose={handleClose} aria-labelledby='draggable-dialog-title'>
+          <DialogTitle style={{cursor: 'move', color: 'red'}} id='draggable-dialog-title'>
             Delete
           </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Are you sure you want to delete this item?
-            </DialogContentText>
+            <DialogContentText>Are you sure you want to delete this item?</DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={handleClose}>
               Cancel
             </Button>
-            <Button onClick={()=>handleDeleteClick()}>Yes</Button>
+            <Button onClick={() => handleDeleteClick()}>Yes</Button>
           </DialogActions>
         </Dialog>
       </div>
@@ -292,4 +344,4 @@ const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
   )
 }
 
-export { MemberStatsTable }
+export {MemberStatsTable}
