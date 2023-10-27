@@ -172,7 +172,7 @@ const VisaTable: React.FC<Props> = ({
                       <td>
                         {/* Status */}
                         <span className='text-dark fw-medium text-hover-primary d-block fs-30'>
-                          {((entry.receipt['Visa Fees'] ? entry.receipt['Visa Fees'] : 0)*((parseFloat(markup_percentage)?(1+(parseFloat(markup_percentage)/100)):1))) +
+                          {Math.ceil((entry.receipt['Visa Fees'] ? entry.receipt['Visa Fees'] : 0)*((parseFloat(markup_percentage)?(1+(parseFloat(markup_percentage)/100)):1))) +
                             (entry.receipt['Service Fees'] ? entry.receipt['Service Fees'] : 0)}
                           <a href='javascript:void(0);'>
                             <InfoIcon
@@ -209,7 +209,7 @@ const VisaTable: React.FC<Props> = ({
                               </h1>
                             </div>
                             {entry.receipt['Visa Fees'] && (
-                              <h6>Visa Fees : {entry.receipt['Visa Fees']}</h6>
+                              <h6>Visa Fees : {Math.ceil(entry.receipt['Visa Fees'])}</h6>
                             )}
                             <hr />
                             {entry.receipt['Service Fees'] && (

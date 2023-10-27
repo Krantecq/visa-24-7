@@ -59,7 +59,9 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
             application_arrival_date:issueDate,
             application_departure_date:expiryDate
           };
+          if(day){
           main_data.push(extractedData);
+          }
           // Use the extracted values as needed
           console.log("Day:", day);
           console.log("Entry Type:", entryType);

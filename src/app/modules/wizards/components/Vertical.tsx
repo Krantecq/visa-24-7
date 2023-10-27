@@ -183,10 +183,10 @@ const Vertical: React.FC<VerticalProps> = ({
           pan_card: travelerForm.panPhoto,
           photo: travelerForm.travelerPhoto,
           visa_amount:
-            (selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) +
+            Math.ceil(selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) +
             (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0),
           markup_visa_amount:
-            ((selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) * ((parseFloat(markup_percentage) ? (1 + (parseFloat(markup_percentage) / 100)) : 1))) +
+            Math.ceil((selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) * ((parseFloat(markup_percentage) ? (1 + (parseFloat(markup_percentage) / 100)) : 1))) +
             (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0),
           visa_description: selectedEntry.description,
         }
@@ -207,6 +207,17 @@ const Vertical: React.FC<VerticalProps> = ({
                   .post('/backend/merchant/apply_visa', data)
                   .then((response) => {
                     console.log(response.data.data)
+                    if (response.status == 200) {
+                      toast.success(response.data.msg, {
+                        position: 'top-center', // Center the toast notification
+                      })
+                      // navigate('/merchant/apply-visa')
+                    } else {
+                      console.log(response.data)
+                      toast.error(response.data.msg, {
+                        position: 'top-center',
+                      })
+                    }
                     setLoading(false)
                     navigate('/merchant/dashboard')
                   })
