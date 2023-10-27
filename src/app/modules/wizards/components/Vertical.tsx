@@ -1,17 +1,17 @@
-import {useEffect, useState, useRef, ChangeEvent} from 'react'
-import {KTIcon} from '../../../../_metronic/helpers'
-import {ErrorMessage, Field, Form, Formik, FormikValues} from 'formik'
-import {ICreateAccount, inits} from './CreateAccountWizardHelper'
-import {useNavigate} from 'react-router-dom'
+import { useEffect, useState, useRef, ChangeEvent } from 'react'
+import { KTIcon } from '../../../../_metronic/helpers'
+import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik'
+import { ICreateAccount, inits } from './CreateAccountWizardHelper'
+import { useNavigate } from 'react-router-dom'
 import ClearIcon from '@mui/icons-material/Delete'
 import MerchantApplyVisa from '../../../components/MerchantApplyVisa'
 import TravelerForm from './TravelerForm'
 import Cookies from 'js-cookie'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import axiosInstance from '../../../helpers/axiosInstance'
-import {CheckCircleOutline, CircleOutlined} from '@mui/icons-material'
-import {colorDarken} from '../../../../_metronic/assets/ts/_utils'
+import { CheckCircleOutline, CircleOutlined } from '@mui/icons-material'
+import { colorDarken } from '../../../../_metronic/assets/ts/_utils'
 import Loader from '../../../components/Loader'
 import { Box, Step, StepLabel, Stepper, Theme, Typography, } from '@mui/material'
 
@@ -83,7 +83,7 @@ const Vertical: React.FC<VerticalProps> = ({
         id: user_id
       }
       const response = await axiosInstance.post("/backend/fetch_single_merchant_user", postData);
-      console.log("response issss----->",response)
+      console.log("response issss----->", response)
       if (response.status == 203) {
         toast.error("Please Logout And Login Again", {
           position: 'top-center'
@@ -96,15 +96,22 @@ const Vertical: React.FC<VerticalProps> = ({
       // Handle error (e.g., show an error message)
     }
   };
+  const markup_percentage = localStorage.getItem('markup_percentage') ?? '1';
+
   const additionalFees =
-    (selectedEntry.receipt['Visa Fees'] || 0) + (selectedEntry.receipt['Service Fees'] || 0)
+    ((selectedEntry.receipt['Visa Fees']
+      ? selectedEntry.receipt['Visa Fees']
+      : 0) * ((parseFloat(markup_percentage) ? (1 + (parseFloat(markup_percentage) / 100)) : 1))) +
+    (selectedEntry.receipt['Service Fees']
+      ? selectedEntry.receipt['Service Fees']
+      : 0)
   const totalAmount = travelerForms.length * additionalFees
 
   const addTravelerForm = () => {
     setTravelerForms((prevForms) => [...prevForms, {}])
   }
 
-  const [currentWallet,setCurrentWallet] = useState('');
+  const [currentWallet, setCurrentWallet] = useState('');
   function formatDateWithTimezoneToYMD(dateString) {
     const date = new Date(dateString)
     if (!isNaN(date.getTime())) {
@@ -144,6 +151,7 @@ const Vertical: React.FC<VerticalProps> = ({
     return `${month} ${day}, ${year}`
   }
 
+
   const handleReviewAndSave = async () => {
     setLoading(true)
     try {
@@ -176,6 +184,9 @@ const Vertical: React.FC<VerticalProps> = ({
           photo: travelerForm.travelerPhoto,
           visa_amount:
             (selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) +
+            (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0),
+          markup_visa_amount:
+            ((selectedEntry.receipt['Visa Fees'] ? selectedEntry.receipt['Visa Fees'] : 0) * ((parseFloat(markup_percentage) ? (1 + (parseFloat(markup_percentage) / 100)) : 1))) +
             (selectedEntry.receipt['Service Fees'] ? selectedEntry.receipt['Service Fees'] : 0),
           visa_description: selectedEntry.description,
         }
@@ -250,7 +261,7 @@ const Vertical: React.FC<VerticalProps> = ({
   }
   // const classes = useStyles();
   return (
-    <div style={{backgroundColor: '#fff'}} className='w-full'>
+    <div style={{ backgroundColor: '#fff' }} className='w-full'>
       <MerchantApplyVisa
         visaListLoader={visaListLoader}
         visaList={visaList}
@@ -260,7 +271,7 @@ const Vertical: React.FC<VerticalProps> = ({
         }}
       />
 
-      <div className='d-flex' style={{justifyContent: 'space-between', width: '100%'}}>
+      <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
         <div
           style={{
             width: '20%',
@@ -275,40 +286,40 @@ const Vertical: React.FC<VerticalProps> = ({
         >
           {travelerForms.map((_, index) => (
             <>
-              <div onClick={() => {}} style={{...tabTextStyle}}>
-                <CheckCircleOutline style={{color: '#332786', marginRight: 8}} />
+              <div onClick={() => { }} style={{ ...tabTextStyle }}>
+                <CheckCircleOutline style={{ color: '#332786', marginRight: 8 }} />
                 Traveler {index + 1}
               </div>
-              <div style={{marginLeft: 20}}>
-                <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
+              <div style={{ marginLeft: 20 }}>
+                <div onClick={() => { }} style={{ ...tabTextStyle }}>
+                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
                   Passport
                 </div>
-                <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
+                <div onClick={() => { }} style={{ ...tabTextStyle }}>
+                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
                   Passport Back
                 </div>
-                <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
+                <div onClick={() => { }} style={{ ...tabTextStyle }}>
+                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
                   Indian PAN Card
                 </div>
-                <div onClick={() => {}} style={{...tabTextStyle}}>
-                  <CheckCircleOutline style={{color: '#332786', marginRight: 10}} />
+                <div onClick={() => { }} style={{ ...tabTextStyle }}>
+                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
                   Traveler Photo
                 </div>
               </div>
             </>
           ))}
-          <div onClick={() => {}} style={{...tabTextStyle}}>
-            <CheckCircleOutline style={{color: '#007bff', marginRight: 10}} />
+          <div onClick={() => { }} style={{ ...tabTextStyle }}>
+            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
             Review
           </div>
-          <div onClick={() => {}} style={{...tabTextStyle, color: '#696969'}}>
-            <CircleOutlined style={{color: '#d3d3d3', marginRight: 10}} />
+          <div onClick={() => { }} style={{ ...tabTextStyle, color: '#696969' }}>
+            <CircleOutlined style={{ color: '#d3d3d3', marginRight: 10 }} />
             Submit
           </div>
         </div>
-        <div style={{width: '80%', marginLeft: isFixed ? '20%' : '0%'}}>
+        <div style={{ width: '80%', marginLeft: isFixed ? '20%' : '0%' }}>
           {travelerForms.map((_, index) => (
             <TravelerForm
               key={index}
@@ -316,7 +327,7 @@ const Vertical: React.FC<VerticalProps> = ({
               onDataChange={(newData) => handleTravelerDataChange(newData, index)}
             />
           ))}
-          <div className='d-flex mt-10' style={{justifyContent: 'flex-end', display: 'flex'}}>
+          <div className='d-flex mt-10' style={{ justifyContent: 'flex-end', display: 'flex' }}>
             <div
               className='mb-10 mx-5'
               style={{
@@ -335,7 +346,7 @@ const Vertical: React.FC<VerticalProps> = ({
             >
               <h6
                 className='fs-4'
-                style={{color: '#332789', paddingTop: 5, fontSize: 10}}
+                style={{ color: '#332789', paddingTop: 5, fontSize: 10 }}
                 onClick={addTravelerForm}
               >
                 + Add Another Traveler
@@ -357,7 +368,7 @@ const Vertical: React.FC<VerticalProps> = ({
             >
               <div>
                 <h2>Visa Information</h2>
-                <p style={{paddingTop: 5, lineHeight: 2, paddingBottom: 5}}>
+                <p style={{ paddingTop: 5, lineHeight: 2, paddingBottom: 5 }}>
                   {selectedEntry.country_code} - {selectedEntry.description}
                   <br />
                   Travelers: {travelerForms.length}
@@ -368,28 +379,28 @@ const Vertical: React.FC<VerticalProps> = ({
               </div>
               <hr />
 
-              <div style={{paddingTop: 10, paddingBottom: 1}}>
+              <div style={{ paddingTop: 10, paddingBottom: 1 }}>
                 <h2>Expected Visa Approval</h2>
                 <p>10/12/23, if submitted now!</p>
               </div>
               <hr />
               <div>
-                <h2 style={{paddingTop: 10, paddingBottom: 1}}>Application Details</h2>
+                <h2 style={{ paddingTop: 10, paddingBottom: 1 }}>Application Details</h2>
                 <br />
                 <Stepper orientation="vertical" >
-            {stepsContent.map((step, index) => (
-              <Step key={index}>
-                <StepLabel >
-                  <Box display="flex" flexDirection="column" alignItems="flex-start">
-                    <Typography variant="h6">{step.title}</Typography>
-                    <Typography >
-                      {step.description}
-                    </Typography>
-                  </Box>
-                </StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+                  {stepsContent.map((step, index) => (
+                    <Step key={index}>
+                      <StepLabel >
+                        <Box display="flex" flexDirection="column" alignItems="flex-start">
+                          <Typography variant="h6">{step.title}</Typography>
+                          <Typography >
+                            {step.description}
+                          </Typography>
+                        </Box>
+                      </StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
               </div>
             </div>
             <div
@@ -401,11 +412,11 @@ const Vertical: React.FC<VerticalProps> = ({
                 marginLeft: '10%',
                 backgroundColor: 'white',
                 height: 340,
-                marginBottom:20,
+                marginBottom: 20,
                 width: '25%',
               }}
             >
-              <h2 style={{fontSize: 20, marginBottom: 20}}>Price Details</h2>
+              <h2 style={{ fontSize: 20, marginBottom: 20 }}>Price Details</h2>
               <div
                 style={{
                   padding: 20,
@@ -418,13 +429,13 @@ const Vertical: React.FC<VerticalProps> = ({
                   <div
                     key={index}
                     className='d-flex'
-                    style={{justifyContent: 'space-between', width: '100%'}}
+                    style={{ justifyContent: 'space-between', width: '100%' }}
                   >
                     <h5>Traveler {index + 1}:</h5>
                     <h5>
-                      {(selectedEntry.receipt['Visa Fees']
+                      {((selectedEntry.receipt['Visa Fees']
                         ? selectedEntry.receipt['Visa Fees']
-                        : 0) +
+                        : 0) * ((parseFloat(markup_percentage) ? (1 + (parseFloat(markup_percentage) / 100)) : 1))) +
                         (selectedEntry.receipt['Service Fees']
                           ? selectedEntry.receipt['Service Fees']
                           : 0)}
@@ -433,12 +444,12 @@ const Vertical: React.FC<VerticalProps> = ({
                   </div>
                 ))}
 
-                <div className='d-flex' style={{justifyContent: 'space-between', width: '100%'}}>
+                <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
                   <h5>Total: </h5>
                   <h5>{totalAmount}/-</h5>
                 </div>
                 <hr />
-                <div className='d-flex' style={{justifyContent: 'space-between', width: '100%'}}>
+                <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
                   <p>Current Wallet Balance</p>
                   <p>{currentWallet}/-</p>
                 </div>
@@ -449,7 +460,7 @@ const Vertical: React.FC<VerticalProps> = ({
                 style={{
                   height: 40,
                   width: 190,
-                  marginBottom:20,
+                  marginBottom: 20,
                   border: '1px solid',
                   marginLeft: 20,
                   borderColor: '#696969',
@@ -461,7 +472,7 @@ const Vertical: React.FC<VerticalProps> = ({
                   cursor: 'pointer',
                 }}
               >
-                <h6 className='fs-4' style={{color: 'white', paddingTop: 7}}>
+                <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>
                   Review and Save
                 </h6>
               </div>
@@ -478,4 +489,4 @@ const Vertical: React.FC<VerticalProps> = ({
   )
 }
 
-export {Vertical}
+export { Vertical }

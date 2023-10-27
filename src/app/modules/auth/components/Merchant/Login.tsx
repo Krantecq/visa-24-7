@@ -63,6 +63,8 @@ export function Login() {
               Cookies.set('user_id', response.data.user_id,{ expires: 15 });
               Cookies.set('user_type', 'merchant',{ expires: 15 });
 
+              localStorage.setItem('markup_percentage', response.data.user_markup_percentage);
+
               setTimeout(() => {
                 window.location.href = '/merchant/apply-visa'                
               }, 400);

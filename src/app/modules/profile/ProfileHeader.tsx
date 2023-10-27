@@ -110,13 +110,13 @@ const ProfileHeader: React.FC = () => {
             <div className='d-flex flex-wrap flex-stack'>
               <div className='d-flex flex-column flex-grow-1 pe-8'>
                 <div className='d-flex flex-wrap'>
-                  <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
+                  {/* <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
                       <div className='fs-2 fw-bolder'>75</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>VISA Applied</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

@@ -26,6 +26,7 @@ const VisaTable: React.FC<Props> = ({
     // Pass the selected entry data to the parent component
     onSelectClick(entryData)
   }
+  const markup_percentage = localStorage.getItem('markup_percentage')??'1';
 
   const [expandedCardIndex, setExpandedCardIndex] = useState(-1)
 
@@ -171,7 +172,7 @@ const VisaTable: React.FC<Props> = ({
                       <td>
                         {/* Status */}
                         <span className='text-dark fw-medium text-hover-primary d-block fs-30'>
-                          {(entry.receipt['Visa Fees'] ? entry.receipt['Visa Fees'] : 0) +
+                          {((entry.receipt['Visa Fees'] ? entry.receipt['Visa Fees'] : 0)*((parseFloat(markup_percentage)?(1+(parseFloat(markup_percentage)/100)):1))) +
                             (entry.receipt['Service Fees'] ? entry.receipt['Service Fees'] : 0)}
                           <a href='javascript:void(0);'>
                             <InfoIcon

@@ -89,6 +89,16 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
     }
   };
 
+  const getFilteredData = () => {
+    if (filter === 'waitingForApproval') {
+      return data.filter((item) => item.status === 'In-processed')
+    } if (filter === 'history') {
+      return data.filter((item) => item.status != 'In-processed')
+    }else {
+      return data // Show all items by default
+    }
+  }
+
   const handleClickOpen = (item) => {
     setDeleteSelectedItem(item)
     setOpen(!open);
@@ -202,13 +212,14 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                 <th className='min-w-150px text-center'>Email Id</th>
                 <th className='min-w-140px text-center'>Transaction Id</th>
                 <th className='min-w-120px text-center'>Amount</th>
+                <th className='min-w-120px text-center'>Status</th>
                 <th className='min-w-100px text-center'>Actions</th>
               </tr>
             </thead>
             {/* end::Table head */}
             {/* begin::Table body */}
             <tbody>
-              {data.map((row, index) => (
+              {getFilteredData().map((row, index) => (
 
                 <tr>
                   <td className='text-center'>
@@ -238,6 +249,12 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                   </td>
 
                   <td className='text-center'>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.status}
+                      </a>
+                    </td>
+                  <td className='text-center'>
                     {/* Action Buttons */}
                     <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
 
@@ -250,7 +267,11 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                         // Laxit write here for delete api 
                         // }
                       }} className='mx-5 cursor-pointer' />
-                      <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Issue API</button>
+                      {row.status === 'In-processed' && (
+                          // Render the "Approve" button only when the merchant is not approved
+                          <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Issue API</button>
+
+                        )}
                     </div>
                   </td>
                 </tr>

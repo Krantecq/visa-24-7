@@ -19,7 +19,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { CloseOutlined } from '@mui/icons-material'
 import Papa from 'papaparse';
 import moment from 'moment'
-import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 import { Slider } from 'antd'
 function MerchantProfile() {
@@ -62,6 +61,8 @@ function MerchantProfile() {
   const [transaction, setTransaction] = useState([]);
 
   const [commission, setCommission] = useState(0);
+  const [upperLimit, setUpperLimit] = useState(0);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName)
@@ -83,8 +84,29 @@ function MerchantProfile() {
     // Fetch profile data when the component mounts
     fetchProfileData()
     fetchTransactionData()
+    fetchCommission()
   }, [])
 
+  const fetchCommission = async () => {
+    try {
+      const markup_percentage = localStorage.getItem('markup_percentage')??'1';
+      const markup_percentageAsNumber = parseFloat(markup_percentage); // Convert the string to a number
+
+      const response = await axiosInstance.get('/backend/fetch_setting')
+      if (response.status == 203) {
+        toast.error('Please Logout And Login Again', {
+          position: 'top-center',
+        })
+      }
+
+      setUpperLimit(parseFloat(response.data.data.merchant_percantage))
+      
+      setCommission(markup_percentageAsNumber)
+    } catch (error) {
+      console.error('Error fetching profile data:', error)
+      // Handle error (e.g., show an error message)
+    }
+  }
   const fetchProfileData = async () => {
     try {
       const user_id = Cookies.get('user_id')
@@ -126,6 +148,31 @@ function MerchantProfile() {
     } catch (error) {
       console.error('Error fetching profile data:', error)
       // Handle error (e.g., show an error message)
+    }
+  }
+
+  const saveCommission = async () => {
+    setLoading(true);
+    const user_id = Cookies.get('user_id')
+
+    const response = await axiosInstance.patch('/backend/set_markup_percentage', {
+      merchant_id:user_id,
+      markup_percentage:commission.toString()
+    })
+    console.log(response.data.data)
+    if (response.status == 203) {
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+      setLoading(false);
+    } else {
+      localStorage.removeItem('markup_percentage');
+      localStorage.setItem('markup_percentage',commission.toString());
+
+      toast.success(response.data.msg, {
+        position: 'top-center',
+      })
+      setLoading(false);
     }
   }
 
@@ -1222,8 +1269,11 @@ function MerchantProfile() {
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessDescriptor' />
                       </div>
+                      
                     </div>
+                    
                   </div>
+                  
                   <div className='text-danger mt-2'>
                     <ErrorMessage name='amount' />
                   </div>
@@ -1231,8 +1281,8 @@ function MerchantProfile() {
                 <div style={{ width: 300 }}>
                   <Slider
                     min={0}
-                    max={10} // Maximum value for the slider
-                    step={1} // Step size for the slider
+                    max={upperLimit} // Maximum value for the slider
+                    step={0.1} // Step size for the slider
                     onChange={(e) => setCommission(e)}
                     railStyle={{
                       height: 5, // Adjust the line stroke width by changing the height
@@ -1247,6 +1297,22 @@ function MerchantProfile() {
                     }}
                   />
                 </div>
+                <div className='pt-5 d-flex justify-content-center'>
+                    <button
+                      type='submit'
+                      style={{ width: 200, backgroundColor: '#332789' }}
+                      className='btn btn-primary'
+                      onClick={() => saveCommission() }
+                    >
+                      {!loading && <span className='indicator-label'>Set Commission</span>}
+                      {loading && (
+                        <span className='indicator-progress' style={{ display: 'block' }}>
+                          Please wait...
+                          <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                        </span>
+                      )}
+                    </button>
+                  </div>
               </div>
             </Form>
           )}

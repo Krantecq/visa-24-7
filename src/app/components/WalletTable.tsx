@@ -130,6 +130,16 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
     setSelectedItem(null); // Clear the selected item after the API call
     setOpen(false); // Close the dialog
   };
+
+  const getFilteredData = () => {
+    if (filter === 'waitingForApproval') {
+      return data.filter((item) => item.status === 'In-processed')
+    } if (filter === 'history') {
+      return data.filter((item) => item.status != 'In-processed')
+    }else {
+      return data // Show all items by default
+    }
+  }
   const handleFilterClick = (filterType) => {
     setFilter(filterType)
   }
@@ -141,40 +151,40 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
         </h3>
         <div className='dropdown mx-5'>
-              <button
-                className='btn btn-secondary dropdown-toggle'
-                type='button'
-                data-bs-toggle='dropdown'
-                aria-expanded='false'
+          <button
+            className='btn btn-secondary dropdown-toggle'
+            type='button'
+            data-bs-toggle='dropdown'
+            aria-expanded='false'
+          >
+            Filter
+          </button>
+          <ul className='dropdown-menu'>
+            <li>
+              <a className='dropdown-item' href='#' onClick={() => handleFilterClick('all')}>
+                All
+              </a>
+            </li>
+            <li>
+              <a
+                className='dropdown-item'
+                href='#'
+                onClick={() => handleFilterClick('waitingForApproval')}
               >
-                Filter
-              </button>
-              <ul className='dropdown-menu'>
-                <li>
-                  <a className='dropdown-item' href='#' onClick={() => handleFilterClick('all')}>
-                    All
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className='dropdown-item'
-                    href='#'
-                    onClick={() => handleFilterClick('waitingForApproval')}
-                  >
-                    Waiting For Approval
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className='dropdown-item'
-                    href='#'
-                    onClick={() => handleFilterClick('history')}
-                  >
-                    History
-                  </a>
-                </li>
-              </ul>
-            </div>
+                Waiting For Approval
+              </a>
+            </li>
+            <li>
+              <a
+                className='dropdown-item'
+                href='#'
+                onClick={() => handleFilterClick('history')}
+              >
+                History
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
       {/* end::Header */}
       {/* begin::Body */}
@@ -198,13 +208,14 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                   <th className='min-w-150px text-center'>Email Id</th>
                   <th className='min-w-140px text-center'>Transaction Id</th>
                   <th className='min-w-120px text-center'>Amount</th>
+                  <th className='min-w-120px text-center'>Status</th>
                   <th className='min-w-100px text-center'>Actions</th>
                 </tr>
               </thead>
               {/* end::Table head */}
               {/* begin::Table body */}
               <tbody>
-                {data.map((row, index) => (
+                {getFilteredData().map((row, index) => (
 
                   <tr>
                     <td className='text-center'>
@@ -234,6 +245,13 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                     </td>
 
                     <td className='text-center'>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.status}
+                      </a>
+                    </td>
+
+                    <td className='text-center'>
                       {/* Action Buttons */}
                       <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
 
@@ -246,7 +264,12 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                           // Laxit write here for delete api 
                           // }
                         }} className='mx-5 cursor-pointer' />
-                        <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
+
+                        {row.status === 'In-processed' && (
+                          // Render the "Approve" button only when the merchant is not approved
+                          <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
+
+                        )}
                       </div>
                     </td>
                   </tr>
