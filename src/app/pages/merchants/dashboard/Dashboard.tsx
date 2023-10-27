@@ -13,55 +13,7 @@ const MerchantDashboard = () => {
 
   useEffect(() => {
     // Function to fetch data from the API based on the activeTab
-    const fetchData = async () => {
-      try {
-        const merchant_id = Cookies.get('user_id');
-        let postBody = {
-          merchant_id: merchant_id
-        }
-        let data;
-
-        let response = await axiosInstance.post("/backend/merchant/fetch_visa", postBody);
-        if (response.status == 200) {
-          if (activeTab === "Processed") {
-            data = response.data.data.filter(item => item.visa_status === 'Processed');
-          } else if (activeTab === "In-Process") {
-            data = response.data.data.filter(item => item.visa_status === 'Applied');
-          } else if (activeTab === "All") {
-            data = response.data.data
-          } else if (activeTab === "Not Issued") {
-            data = response.data.data.filter(item => item.visa_status === 'Not Issued');
-          } else if (activeTab === "Rejected") {
-            data = response.data.data.filter(item => item.visa_status === 'Rejected');
-          } else if (activeTab === "Waiting") {
-            data = response.data.data.filter(item => item.visa_status === 'Waiting');
-          }
-          if(activeTab != "Analytics"){
-          setVisaData(data); // Set the fetched data in the state
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    const fetchDashboardData = async () => {
-      try {
-        const merchant_id = Cookies.get('user_id');
-        let postBody = {
-          merchant_id: merchant_id
-        }
-        let response = await axiosInstance.post("/backend/merchant_dashboard", postBody);
-        if (response.status == 200) {
-          
-          if(activeTab!= "Analytics"){
-            setDashboardData(response.data.data); // Set the fetched data in the state
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    
     fetchData();
     fetchDashboardData(); // Call the fetchData function when activeTab changes
   }, [activeTab]);
@@ -69,7 +21,55 @@ const MerchantDashboard = () => {
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
   };
+  const fetchData = async () => {
+    try {
+      const merchant_id = Cookies.get('user_id');
+      let postBody = {
+        merchant_id: merchant_id
+      }
+      let data;
 
+      let response = await axiosInstance.post("/backend/merchant/fetch_visa", postBody);
+      if (response.status == 200) {
+        if (activeTab === "Processed") {
+          data = response.data.data.filter(item => item.visa_status === 'Processed');
+        } else if (activeTab === "In-Process") {
+          data = response.data.data.filter(item => item.visa_status === 'Applied');
+        } else if (activeTab === "All") {
+          data = response.data.data
+        } else if (activeTab === "Not Issued") {
+          data = response.data.data.filter(item => item.visa_status === 'Not Issued');
+        } else if (activeTab === "Rejected") {
+          data = response.data.data.filter(item => item.visa_status === 'Rejected');
+        } else if (activeTab === "Waiting") {
+          data = response.data.data.filter(item => item.visa_status === 'Waiting');
+        }
+        if(activeTab != "Analytics"){
+        setVisaData(data); // Set the fetched data in the state
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchDashboardData = async () => {
+    try {
+      const merchant_id = Cookies.get('user_id');
+      let postBody = {
+        merchant_id: merchant_id
+      }
+      let response = await axiosInstance.post("/backend/merchant_dashboard", postBody);
+      if (response.status == 200) {
+        
+        // if(activeTab!= "Analytics"){
+          setDashboardData(response.data.data); // Set the fetched data in the state
+        // }
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   // Define inline styles for the active tab text
   const activeTabTextStyle = {
     color: '#332789', // Text color for the active tab

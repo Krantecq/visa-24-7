@@ -31,7 +31,9 @@ const MerchantApplyVisa: React.FC<Props> = ({
 
   const onSubmit = (values: any) => {
     console.log(values)
-    visaListLoader(true)
+    visaListLoader(true);
+    setSelectedFromCountry(values.fromCountry);
+    setSelectedToCountry(values.toCountry);
     const postData = {
       country_code: values.toCountry,
       nationality_code: values.fromCountry,
@@ -86,6 +88,19 @@ const MerchantApplyVisa: React.FC<Props> = ({
         visaListLoader(false)
       })
   }
+    
+  const [selectedFromCountry, setSelectedFromCountry] = useState(''); // Initialize with a default value for "From" country
+  const [selectedToCountry, setSelectedToCountry] = useState(''); // Initialize with a default value for "To" country
+
+  // const handleFromCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectedValue = event.target.value;
+  //   setSelectedFromCountry(selectedValue);
+  // };
+
+  // const handleToCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectedValue = event.target.value;
+  //   setSelectedToCountry(selectedValue);
+  // };
   return (
     <div>
       {!visaList && (
@@ -126,6 +141,8 @@ const MerchantApplyVisa: React.FC<Props> = ({
                 <Field
                   as='select'
                   name='fromCountry'
+                  defaultValue={selectedFromCountry}
+                  // onChange={handleFromCountryChange}
                   className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
                   style={{ background: '#fff' }}
                 >
@@ -389,6 +406,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
                 <Field
                   as='select'
                   name='toCountry'
+                  defaultValue={selectedToCountry}
                   className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
                   style={{ background: '#fff' }}
                 >

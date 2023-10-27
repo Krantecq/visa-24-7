@@ -147,7 +147,7 @@ const ProfileHeader: React.FC = () => {
                 Visa
               </Link>
             </li> */}
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
@@ -157,7 +157,7 @@ const ProfileHeader: React.FC = () => {
               >
                 Details
               </Link>
-            </li>
+            </li> */}
             {/* <li className='nav-item'>
               <Link
                 className={

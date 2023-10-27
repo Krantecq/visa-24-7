@@ -55,6 +55,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
 
+  const [filter, setFilter] = useState('all')
   const [open, setOpen] = React.useState(false);
   const handleApproveClick = async (item) => {
     const response = await axiosInstance.post('/backend/merchant/issue_api', {
@@ -140,6 +141,9 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
     setSelectedItem(null); // Clear the selected item after the API call
     setOpen(false); // Close the dialog
   };
+  const handleFilterClick = (filterType) => {
+    setFilter(filterType)
+  }
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -147,6 +151,42 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
         <h3 className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
         </h3>
+
+        <div className='dropdown mx-5'>
+              <button
+                className='btn btn-secondary dropdown-toggle'
+                type='button'
+                data-bs-toggle='dropdown'
+                aria-expanded='false'
+              >
+                Filter
+              </button>
+              <ul className='dropdown-menu'>
+                <li>
+                  <a className='dropdown-item' href='#' onClick={() => handleFilterClick('all')}>
+                    All
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className='dropdown-item'
+                    href='#'
+                    onClick={() => handleFilterClick('waitingForApproval')}
+                  >
+                    Waiting For Approval
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className='dropdown-item'
+                    href='#'
+                    onClick={() => handleFilterClick('history')}
+                  >
+                    History
+                  </a>
+                </li>
+              </ul>
+            </div>
       </div>
       {/* end::Header */}
       {/* begin::Body */}

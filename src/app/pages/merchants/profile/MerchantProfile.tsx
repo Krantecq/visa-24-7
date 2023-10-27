@@ -19,6 +19,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { CloseOutlined } from '@mui/icons-material'
 import Papa from 'papaparse';
 import moment from 'moment'
+import RangeSlider from 'react-range-slider-input';
+import 'react-range-slider-input/dist/style.css';
+import { Slider } from 'antd'
 function MerchantProfile() {
   const [activeTab, setActiveTab] = useState('Profile')
   const [formData, setFormData] = useState({
@@ -39,8 +42,9 @@ function MerchantProfile() {
     merchant_zip_code: '',
     merchant_name: '',
     merchant_id: '',
-    merchant_profile_photo:'',
-    issued_api:[]
+    merchant_profile_photo: '',
+    issued_api: [],
+    commission: [0, 50]
   })
 
   const user_id = Cookies.get('user_id')
@@ -57,7 +61,7 @@ function MerchantProfile() {
   const [checked, setChecked] = React.useState(true);
   const [transaction, setTransaction] = useState([]);
 
-
+  const [commission, setCommission] = useState(0);
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName)
@@ -277,7 +281,7 @@ function MerchantProfile() {
                   </label>
 
                   <Field
-                    style={{ ...inputStyle,  }}
+                    style={{ ...inputStyle, }}
                     value={formData2.merchant_gst_no}
                     readOnly
                     name='businessDescriptor'
@@ -422,13 +426,13 @@ function MerchantProfile() {
                   onClick={handleSave}
                   style={{ backgroundColor: '#332789' }}
                 >
-                {!loading && <span className='indicator-label'>Save</span>}
-                {loading && (
-                  <span className='indicator-progress' style={{ display: 'block' }}>
-                    Please wait...
-                    <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                  </span>
-                )}
+                  {!loading && <span className='indicator-label'>Save</span>}
+                  {loading && (
+                    <span className='indicator-progress' style={{ display: 'block' }}>
+                      Please wait...
+                      <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                    </span>
+                  )}
                 </button>
               </div>
             </div>
@@ -611,7 +615,7 @@ function MerchantProfile() {
       category: 'Wallet Balance',
     }
     const response = await axiosInstance.post('/backend/upload_receipt', postBody)
-    console.log('receipt response---->',response)
+    console.log('receipt response---->', response)
     if (response.status == 200) {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
@@ -770,7 +774,7 @@ function MerchantProfile() {
       category: 'API',
     }
     const response = await axiosInstance.post('/backend/upload_api_receipt', postBody)
-    console.log('receipt response---->',response)
+    console.log('receipt response---->', response)
     if (response.status == 200) {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
@@ -1015,7 +1019,7 @@ function MerchantProfile() {
       <div className='d-flex align-items-center px-10'>
         <div className='d-flex align-items-center' style={{ flex: 1 }}>
           <h2 className='' >Visa 24/7 Wallet</h2>
-          
+
         </div>
 
         <div
@@ -1051,36 +1055,36 @@ function MerchantProfile() {
         {/* end::Table head */}
         {/* begin::Table body */}
         <tbody>
-          {transaction.map((item,index)=>(
-            
-          <tr key={index}>
-          <td className='text-start'>
-            <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-            {item && moment((item as any).created_at).format('DD MMM YYYY hh:mm a')}
-            </a>
-          </td>
-          <td className='text-start'>
-            <span className='text-dark fw-bold d-block fs-6'>
-            {item && (item as { wallet_balance: Number }).wallet_balance}/-
-            </span>
-          </td>
-          <td className='text-start'>
-            <span className='text-dark fw-bold d-block fs-6'>
-            {item && (item as { category: String }).category}
-            </span>
-          </td>
-          <td className='text-start'>
-            <span className='text-dark fw-bold d-block fs-6'>
-            {item && (item as { type: string }).type}
-            </span>
+          {transaction.map((item, index) => (
 
-          </td>
-          <td className='text-start'>
-            <span className='text-dark fw-semibold d-block fs-6'>
-            {item && (item as { status: string }).status}
-            </span>
-          </td>
-        </tr>
+            <tr key={index}>
+              <td className='text-start'>
+                <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                  {item && moment((item as any).created_at).format('DD MMM YYYY hh:mm a')}
+                </a>
+              </td>
+              <td className='text-start'>
+                <span className='text-dark fw-bold d-block fs-6'>
+                  {item && (item as { wallet_balance: Number }).wallet_balance}/-
+                </span>
+              </td>
+              <td className='text-start'>
+                <span className='text-dark fw-bold d-block fs-6'>
+                  {item && (item as { category: String }).category}
+                </span>
+              </td>
+              <td className='text-start'>
+                <span className='text-dark fw-bold d-block fs-6'>
+                  {item && (item as { type: string }).type}
+                </span>
+
+              </td>
+              <td className='text-start'>
+                <span className='text-dark fw-semibold d-block fs-6'>
+                  {item && (item as { status: string }).status}
+                </span>
+              </td>
+            </tr>
           ))}
 
         </tbody>
@@ -1115,41 +1119,41 @@ function MerchantProfile() {
           {() => (
             <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
               <div>
-                {formData2.issued_api.length >0
-                ?
-                <div className='fv-row mb-10'>
-                  <label className='d-flex align-items-center form-label'>
-                    <span className='required mx-5'>API Key</span>
-                  </label>
-                  <Field
-                  as='textarea'
-                  rows={3}
-                    style={{ ...inputStyle, width: '550px' }}
-                    name='amount'
-                    value={formData2.issued_api[0]}
-                    className='form-control form-control-lg form-control-solid'
-                  />
-                  <div className='text-danger mt-2'>
-                    <ErrorMessage name='amount' />
+                {formData2.issued_api.length > 0
+                  ?
+                  <div className='fv-row mb-10'>
+                    <label className='d-flex align-items-center form-label'>
+                      <span className='required mx-5'>API Key</span>
+                    </label>
+                    <Field
+                      as='textarea'
+                      rows={3}
+                      style={{ ...inputStyle, width: '550px' }}
+                      name='amount'
+                      value={formData2.issued_api[0]}
+                      className='form-control form-control-lg form-control-solid'
+                    />
+                    <div className='text-danger mt-2'>
+                      <ErrorMessage name='amount' />
+                    </div>
                   </div>
-                </div>
-                :
-                <div className='pt-5 d-flex justify-content-center'>
-                  <button
-                    type='submit'
-                    style={{ width: 200, backgroundColor: '#332789' }}
-                    className='btn btn-primary'
-                    onClick={() => { setReceiptshow(true) }}
-                  >
-                    {!loading && <span className='indicator-label'>Issue API</span>}
-                    {loading && (
-                      <span className='indicator-progress' style={{ display: 'block' }}>
-                        Please wait...
-                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                      </span>
-                    )}
-                  </button>
-                </div>
+                  :
+                  <div className='pt-5 d-flex justify-content-center'>
+                    <button
+                      type='submit'
+                      style={{ width: 200, backgroundColor: '#332789' }}
+                      className='btn btn-primary'
+                      onClick={() => { setReceiptshow(true) }}
+                    >
+                      {!loading && <span className='indicator-label'>Issue API</span>}
+                      {loading && (
+                        <span className='indicator-progress' style={{ display: 'block' }}>
+                          Please wait...
+                          <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                        </span>
+                      )}
+                    </button>
+                  </div>
                 }
                 {receiptShow &&
 
@@ -1163,6 +1167,86 @@ function MerchantProfile() {
                     </div>
                   </div>
                 }
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+  )
+
+  const commissionContent = (
+    <div
+      className='w-full mt-5 mx-10 pt-5'
+      style={{
+        backgroundColor: '#fff',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        borderColor: '#d3d3d3',
+        border: '1px solid #d3d3d3',
+        boxShadow: '0px 0px 7px rgba(0, 0, 0, 0.2)',
+        width: '95%',
+        overflow: 'hidden',
+      }}
+    >
+      <div className='d-flex align-items-center px-10'>
+        <div className='d-flex align-items-center' style={{ flex: 1 }}>
+          <h2 className='' >Merchant Commission</h2>
+        </div>
+      </div>
+      <hr />
+      <div>
+
+        <Formik initialValues={initValues} onSubmit={() => { }}>
+          {() => (
+            <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
+              <div>
+                <div className='fv-row mb-10'>
+                  <label className='d-flex align-items-center form-label'>
+                    <span className='required mx-5'>Commisionss</span>
+                  </label>
+
+                  <div className='d-flex'>
+                    <div className='fv-row mb-2'>
+                      <Field
+                        style={{
+                          ...inputStyle,
+                          width: 500,
+                        }}
+                        value={commission}
+                        readOnly
+                        placeholder='Commission'
+                        name='commission'
+                        className='form-control form-control-lg form-control-solid '
+                      />
+                      <div className='text-danger mt-2'>
+                        <ErrorMessage name='businessDescriptor' />
+                      </div>
+                    </div>
+                  </div>
+                  <div className='text-danger mt-2'>
+                    <ErrorMessage name='amount' />
+                  </div>
+                </div>
+                <div style={{ width: 300 }}>
+                  <Slider
+                    min={0}
+                    max={10} // Maximum value for the slider
+                    step={1} // Step size for the slider
+                    onChange={(e) => setCommission(e)}
+                    railStyle={{
+                      height: 5, // Adjust the line stroke width by changing the height
+                      backgroundColor: 'lightgray', // Customize the rail color
+                    }}
+                    trackStyle={{
+                      backgroundColor: 'blue', // Customize the track color
+                    }}
+                    handleStyle={{
+                      borderColor: 'blue', // Customize the handle border color
+                      backgroundColor: 'white', // Customize the handle background color
+                    }}
+                  />
+                </div>
               </div>
             </Form>
           )}
@@ -1185,6 +1269,7 @@ function MerchantProfile() {
     { label: 'Transactions', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: transactionContent },
     { label: 'Issue API', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: isuueAPIContent },
 
+    { label: 'Commisions', icon: <WalletIcon style={{ width: 25, height: 25 }} />, content: commissionContent },
   ]
 
   // Find the active tab's content

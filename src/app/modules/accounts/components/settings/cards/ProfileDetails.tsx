@@ -6,6 +6,7 @@ import { ErrorMessage, Field, Form, Formik, useFormik } from 'formik'
 import axiosInstance from '../../../../../helpers/axiosInstance'
 import Cookies from 'js-cookie'
 import { DatePicker } from 'antd'
+import { toast } from 'react-toastify'
 
 const profileDetailsSchema = Yup.object().shape({
   fName: Yup.string().required('First name is required'),
@@ -34,7 +35,10 @@ const ProfileDetails: React.FC = () => {
     const updatedData = Object.assign(data, fieldsToUpdate)
     setData(updatedData)
   }
+
+  const user_id = Cookies.get('user_id')
   const [formData, setFormData] = useState({
+    super_admin_id: user_id,
     super_admin_name: '',
     super_admin_email: '',
     super_admin_phone_number:"",
@@ -74,6 +78,34 @@ const ProfileDetails: React.FC = () => {
     setFormData({ ...formData, [fieldName]: value })
 
   }
+
+  const handleSaveClick = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.post('/backend//update_super_admin', formData)
+    console.log('resposne is-->',response);
+    if (response.status == 200) {
+      toast.success(response.data.msg, {
+        position: 'top-center', // Center the toast notification
+      })
+      setLoading(false);
+      // navigate('/merchant/apply-visa')
+    } else {
+      console.log(response.data)
+      toast.error(response.data.msg, {
+        position: 'top-center',
+      })
+      setLoading(false);
+    }
+      } catch (error) {
+        console.log(error);
+      toast.error('Something went wrong', {
+        position: 'top-center',
+      })
+      setLoading(false);
+      }
+    
+  }
   const [loading, setLoading] = useState(false)
   const formik = useFormik<IProfileDetails>({
     initialValues,
@@ -94,7 +126,7 @@ const ProfileDetails: React.FC = () => {
   return (
     <div className='card mb-5 mb-xl-10'>
       <div id='kt_account_profile_details' className='collapse show'>
-        <form onSubmit={formik.handleSubmit} noValidate className='form'>
+        <form onSubmit={()=>{}} noValidate className='form'>
           <div className='card-body border-top p-9'>
             <div className='row mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>Profile Picture</label>
@@ -174,7 +206,7 @@ const ProfileDetails: React.FC = () => {
           </div>
 
           <div className='card-footer d-flex justify-content-end py-6 px-9'>
-            <button type='submit' className='btn btn-primary' disabled={loading}>
+            <button onClick={handleSaveClick} className='btn btn-primary' disabled={loading}>
               {!loading && 'Save Changes'}
               {loading && (
                 <span className='indicator-progress' style={{ display: 'block' }}>
