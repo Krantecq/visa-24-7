@@ -92,6 +92,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
       })
+      window.location.reload();
       // navigate('/merchant/apply-visa')
     } else {
       console.log(response.data)

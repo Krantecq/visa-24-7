@@ -80,6 +80,8 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
         toast.success(response.data.msg, {
           position: 'top-center',
         });
+
+        window.location.reload();
         // Handle any additional actions after a successful API call
       } else {
         console.log(response.data);
@@ -141,6 +143,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
       })
+      window.location.reload();
       navigate('/superadmin/processed')
       setissueVisaLoader(false);
     } else {

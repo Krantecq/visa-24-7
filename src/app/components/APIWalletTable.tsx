@@ -75,6 +75,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
         toast.success(response.data.msg, {
           position: 'top-center', // Center the toast notification
         })
+        window.location.reload();
       }else{
         toast.error(response.data.msg, {
           position: 'top-center',
@@ -136,6 +137,8 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
         toast.success(response.data.msg, {
           position: 'top-center',
         });
+
+        window.location.reload();
         // Handle any additional actions after a successful API call
       } else {
         console.log(response.data);

@@ -10,6 +10,7 @@ import { Login as CustomerLogin } from './components/Customer/Login';
 import { Registration as CustomerRegistration } from './components/Customer/Registration'; 
 import { ForgotPassword as CustomerForgotPassword } from './components/Customer/ForgotPassword'; 
 import { LandingPage } from './components/LandingPage';
+import { ChangePassword } from './components/Merchant/ChangePassword';
 
 const AuthPage = () => (
   <Routes>
@@ -22,6 +23,7 @@ const AuthPage = () => (
       <Route path='merchant/login' element={<MerchantLogin />} />
       <Route path='merchant/registration' element={<MerchantRegistration />} />
       <Route path='merchant/forgot-password' element={<MerchantForgotPassword />} />
+      <Route path='merchant/change-password' element={<ChangePassword />} />
       <Route path='customer/login' element={<CustomerLogin />} />
       <Route path='customer/registration' element={<CustomerRegistration />} />
       <Route path='customer/forgot-password' element={<CustomerForgotPassword />} />
