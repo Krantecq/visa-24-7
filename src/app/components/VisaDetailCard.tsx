@@ -5,6 +5,9 @@ import CheckIcon from '@mui/icons-material/VerifiedUserOutlined'
 import TravelerForm from '../modules/wizards/components/TravelerForm'
 import ApplicationFormView from './ApplicationFormView'
 import { Box, Step, StepLabel, Stepper } from '@mui/material'
+import jsPDF from 'jspdf';
+import html2pdf from 'html2pdf.js';
+import { toAbsoluteUrl } from '../../_metronic/helpers'
 
 type VisaData = {
     country_code: string
@@ -95,7 +98,6 @@ const getCountryNameByCode = (countryCode) => {
     return countryCodes[countryCode] || 'Unknown' // Default to "Unknown" if the code is not found
 }
 
-
 const getStepStatuses = (visa_status) => {
     // Define your default stepStatuses with 'done' set to false for all steps
     const defaultStepStatuses = [
@@ -135,9 +137,312 @@ const getStepStatuses = (visa_status) => {
     }
 };
 
-
-
 const VisaDetailCard = ({ visaData }: Props) => {
+    function generateDynamicInvoice(data) {
+        return `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <title>Company Invoice - Bootdey.com</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+            <style type="text/css">
+                body {
+                    margin-top: 20px;
+                    color: #484b51;
+                }
+        
+                .text-secondary-d1 {
+                    color: #728299!important;
+                }
+        
+                .page-content.container {
+                    max-width: 100%;
+                }
+        
+                .page-header {
+                    margin: 0 0 1rem;
+                    padding-bottom: 1rem;
+                    padding-top: 0.5rem;
+                    border-bottom: 1px dotted #e2e2e2;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -ms-flex-pack: justify;
+                    justify-content: space-between;
+                    -ms-flex-align: center;
+                    align-items: center;
+                }
+        
+                .page-title {
+                    padding: 0;
+                    margin: 0;
+                    font-size: 1.75rem;
+                    font-weight: 300;
+                }
+        
+                .brc-default-l1 {
+                    border-color: #dce9f0!important;
+                }
+        
+                .ml-n1, .mx-n1 {
+                    margin-left: -0.25rem!important;
+                }
+        
+                .mr-n1, .mx-n1 {
+                    margin-right: -0.25rem!important;
+                }
+        
+                .mb-4, .my-4 {
+                    margin-bottom: 1.5rem!important;
+                }
+        
+                hr {
+                    margin-top: 1rem;
+                    margin-bottom: 1rem;
+                    border: 0;
+                    border-top: 1px solid rgba(0, 0, 0, 0.1);
+                }
+        
+                .text-grey-m2 {
+                    color: #888a8d!important;
+                }
+        
+                .text-success-m2 {
+                    color: #86bd68!important;
+                }
+        
+                .font-bolder, .text-600 {
+                    font-weight: 600!important;
+                }
+        
+                .text-110 {
+                    font-size: 110%!important;
+                }
+        
+                .text-blue {
+                    color: #478fcc!important;
+                }
+        
+                .pb-25, .py-25 {
+                    padding-bottom: 0.75rem!important;
+                }
+        
+                .pt-25, .py-25 {
+                    padding-top: 0.75rem!important;
+                }
+        
+                .bgc-default-tp1 {
+                    background-color: rgba(121, 169, 197, .92)!important;
+                }
+        
+                .bgc-default-l4, .bgc-h-default-l4:hover {
+                    background-color: #f3f8fa!important;
+                }
+        
+                .page-header .page-tools {
+                    -ms-flex-item-align: end;
+                    align-self: flex-end;
+                }
+        
+                .btn-light {
+                    color: #757984;
+                    background-color: #f5f6f9;
+                    border-color: #dddfe4;
+                }
+        
+                .w-2 {
+                    width: 1rem;
+                }
+        
+                .text-120 {
+                    font-size: 120%!important;
+                }
+        
+                .text-primary-m1 {
+                    color: #4087d4!important;
+                }
+        
+                .text-danger-m1 {
+                    color: #dd4949!important;
+                }
+        
+                .text-blue-m2 {
+                    color: #68a3d5!important;
+                }
+        
+                .text-150 {
+                    font-size: 150%!important;
+                }
+        
+                .text-60 {
+                    font-size: 60%!important;
+                }
+        
+                .text-grey-m1 {
+                    color: #7b7d81!important;
+                }
+        
+                .align-bottom {
+                    vertical-align: bottom!important;
+                }
+        
+                .container {
+                    max-width: 100%;
+                }
+        
+                .col-left {
+                    float: left;
+                    width: 48%; /* Adjust as needed */
+                }
+        
+                .col-right {
+                    float: right;
+                    width: 48%; /* Adjust as needed */
+                }
+                .total-section {
+                    float: right;
+                    width: 48%;
+                    margin-top: 20px;
+                    margin-right:20px;
+                    text-align: right;
+                }
+                .clear {
+                    clear: both;
+                }
+                .logo-container {
+                    text-align: center;
+                    margin-top: 10px;
+                    padding-bottom: 1rem;
+                    padding-top: 0.5rem;
+                    border-bottom: 1px dotted #e2e2e2;
+                }
+        
+                .logo {
+                    max-width: 100px; /* Adjust the width as needed */
+                }
+            </style>
+        </head>
+        <body>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <div class="page-content container">
+            <div class="page-header text-blue-d2">
+                <h1 class="page-title text-secondary-d1">
+                    Invoice
+                    <small class="page-info">
+                        <i class="fa fa-angle-double-right text-80"></i>
+                        ID: #${data._id}
+                    </small>
+                </h1>
+            </div>
+            <div class="logo-container">
+            <img src=${toAbsoluteUrl('/media/logos/logo.png')} alt="Company Logo" class="logo">
+            </div>
+            <div class="container px-0">
+                <div class="row mt-4">
+                    <div class="col-left">
+                        <span class="text-sm text-grey-m2 align-middle">To:</span>
+                        <span class="text-600 text-110 text-blue align-middle">${data.first_name} ${data.last_name}</span>
+                        <div class="my-1">
+                        <b class="text-600">${getCountryNameByCode(data.country_code)}</b>
+                        </div>
+                        <div class="my-1">
+                            <b class="text-500">${data.passport_number}</b>
+                        </div>
+                    </div>
+                    <div class="col-right">
+                        <div class="text-grey-m2">
+                            <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
+                                Invoice
+                            </div>
+                            <div class="my-2">
+                                <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+                                <span class="text-600 text-90">ID:</span>
+                                #${data._id}
+                            </div>
+                            <div class="my-2">
+                                <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+                                <span class="text-600 text-90">Issue Date:</span>
+                                ${formatDate(data.created_at)}
+                            </div>
+                            <div class="my-2">
+                                <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+                                <span class="text-600 text-90">Status:</span>
+                                <span class="badge badge-warning badge-pill px-25">${data.visa_status}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="mt-4">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Visa type</th>
+                                <th>Qty</th>
+                                <th>Entry Process</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>${data.visa_description}</td>
+                                <td>1</td>
+                                <td>${data.entry_process}</td>
+                                <td>${data.markup_visa_amount}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="total-section">
+            <div>
+                <span>SubTotal :   </span>
+                <span>${data.markup_visa_amount}</span>
+            </div>
+            <div>
+                <span>Visa Fee (0%) :   </span>
+                <span> 0 </span>
+            </div>
+            <div>
+                <span>Total Amount :  </span>
+                <span>${data.markup_visa_amount}</span>
+            </div>
+            </div>
+           
+        </div>
+        </body>
+        </html>
+        `
+        
+    }
+
+    const generateAndDownloadPDF = (data) => {
+        // Generate dynamic invoice content using data (similar to the earlier example)
+        const dynamicInvoiceContent = generateDynamicInvoice(data);
+
+        const contentDiv = document.createElement('div');
+        contentDiv.innerHTML = dynamicInvoiceContent;
+        // Create new jsPDF instance
+        const pdf = new jsPDF();
+
+        // Set up the PDF content from the HTML string
+        const options = {
+            margin: 10,
+            filename: `visa_${data._id}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Generate PDF from HTML content
+        html2pdf()
+            .from(contentDiv)
+            .set(options)
+            .save();
+    };
+
     const [Detail, seeDetail] = useState(false)
     const [selectedVisa, setSelectedVisa] = useState<VisaData | null>(null)
     const [viewApplication, setViewApplication] = useState<VisaData | null>(null)
@@ -192,22 +497,22 @@ const VisaDetailCard = ({ visaData }: Props) => {
                     </div>
                 </div>
                 {/* <div
-                    className='mb-10 mx-10 px-5 py-5'
-                    style={{
-                        width: 210,
-                        border: '1px solid',
-                        borderColor: '#696969',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        backgroundColor: '#fff',
-                    }}
-                >
-                    <h6 className='fs-4' style={{ marginTop: 5 }}>
-                        + Add Application
-                    </h6>
-                </div> */}
+                    className='mb-10 mx-10 px-5 py-5'
+                    style={{
+                        width: 210,
+                        border: '1px solid',
+                        borderColor: '#696969',
+                        borderRadius: 10,
+                        alignItems: 'center',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        backgroundColor: '#fff',
+                    }}
+                >
+                    <h6 className='fs-4' style={{ marginTop: 5 }}>
+                        + Add Application
+                    </h6>
+                </div> */}
                 <div className='card-body'>
                     <div
                         className='w-full'
@@ -281,44 +586,44 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                     </Stepper>
                                 </div>
                                 {/* <ul style={{listStyleType: 'none', paddingLeft: 0}}>
-                  {selectedVisa.visa_status === 'Processed' && (
-                    <>
-                      <li>✓ Errors Fixed</li>
-                      <li className='pt-4'>✓ Application Complete</li>
-                      <li className='pt-4'>✓ Application Paid</li>
-                      <li className='pt-4'>✓ Application Submitted</li>
-                      <li className='pt-4'>✓ Automated QC Passed</li>
-                      <li className='pt-4'>✓ Manual QC Passed</li>
-                      <li className='pt-4'>✓ Submitted to Immigration</li>
-                      <li className='pt-4'>✓ Visa Approved</li>
-                    </>
-                  )}
-                  {selectedVisa.visa_status === 'Not Issued' && (
-                    <>
-                      <li>✓ Errors Fixed</li>
-                      <li className='pt-4'>✓ Application Complete</li>
-                      <li className='pt-4'>Application Paid</li>
-                      <li className='pt-4'>Application Submitted</li>
-                      <li className='pt-4'>Automated QC Passed</li>
-                      <li className='pt-4'>✓ Manual QC Passed</li>
-                      <li className='pt-4'>✓ Submitted to Immigration</li>
-                      <li className='pt-4'>✓ Visa Approved</li>
-                    </>
-                  )}
-                </ul> */}
+                  {selectedVisa.visa_status === 'Processed' && (
+                    <>
+                      <li>✓ Errors Fixed</li>
+                      <li className='pt-4'>✓ Application Complete</li>
+                      <li className='pt-4'>✓ Application Paid</li>
+                      <li className='pt-4'>✓ Application Submitted</li>
+                      <li className='pt-4'>✓ Automated QC Passed</li>
+                      <li className='pt-4'>✓ Manual QC Passed</li>
+                      <li className='pt-4'>✓ Submitted to Immigration</li>
+                      <li className='pt-4'>✓ Visa Approved</li>
+                    </>
+                  )}
+                  {selectedVisa.visa_status === 'Not Issued' && (
+                    <>
+                      <li>✓ Errors Fixed</li>
+                      <li className='pt-4'>✓ Application Complete</li>
+                      <li className='pt-4'>Application Paid</li>
+                      <li className='pt-4'>Application Submitted</li>
+                      <li className='pt-4'>Automated QC Passed</li>
+                      <li className='pt-4'>✓ Manual QC Passed</li>
+                      <li className='pt-4'>✓ Submitted to Immigration</li>
+                      <li className='pt-4'>✓ Visa Approved</li>
+                    </>
+                  )}
+                </ul> */}
                             </div>
 
                             <div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className='p-10 '>
                                 {/* <div
-                                    className='px-10 py-5'
-                                    style={{ width: '100%', backgroundColor: '#332789', borderRadius: 10 }}
-                                >
-                                    <h6 style={{ color: 'white' }}>
-                                        <CheckIcon style={{ marginLeft: -20 }} />
-                                        VISA Approved on
-                                    </h6>
-                                    <h4 style={{ color: 'white' }}>{formatDate(selectedVisa.updated_at)}</h4>
-                                </div> */}
+                                    className='px-10 py-5'
+                                    style={{ width: '100%', backgroundColor: '#332789', borderRadius: 10 }}
+                                >
+                                    <h6 style={{ color: 'white' }}>
+                                        <CheckIcon style={{ marginLeft: -20 }} />
+                                        VISA Approved on
+                                    </h6>
+                                    <h4 style={{ color: 'white' }}>{formatDate(selectedVisa.updated_at)}</h4>
+                                </div> */}
                                 <div
                                     onClick={() => handleViewApplicationClick(selectedVisa)}
                                     className='mb-10 mx-10 mt-20 px-10 py-5'
@@ -336,7 +641,6 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         View Application
                                     </h6>
 
-
                                 </div>
                                 {selectedVisa.visa_status === 'Proccesed' &&
                                     <button className='mb-10 mx-10 px-20 py-5' style={{
@@ -349,7 +653,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         backgroundColor: '#332789',
                                         color: '#fff',
                                         fontSize: "17px",
-                                        whiteSpace:'nowrap'
+                                        whiteSpace: 'nowrap'
 
                                     }}>
                                         Download
@@ -366,13 +670,13 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         backgroundColor: '#332789',
                                         color: '#fff',
                                         fontSize: "17px",
-                                        whiteSpace:'nowrap'
+                                        whiteSpace: 'nowrap'
 
                                     }}>
                                         Issue Visa
                                     </button>
                                 }
-                                     {selectedVisa.visa_status === 'In process' || selectedVisa.visa_status === 'Applied' &&
+                                {selectedVisa.visa_status === 'In process' || selectedVisa.visa_status === 'Applied' &&
                                     <button className='mb-10 mx-10 px-20 py-5' style={{
                                         border: 'none',
                                         cursor: 'pointer',
@@ -383,7 +687,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         backgroundColor: '#332789',
                                         color: '#fff',
                                         fontSize: "17px",
-                                        whiteSpace:'nowrap'
+                                        whiteSpace: 'nowrap'
                                     }}>
                                         Check Status
                                     </button>
@@ -435,7 +739,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
 
                         <h5 style={{ marginTop: 20 }}>{getCountryNameByCode(entry.country_code)}</h5>
                         <p>
-                            UAE 30 Days Single Entry E-Visa {entry.entry_process}:{' '}
+                        {entry.visa_description} {entry.entry_process}:{' '}
                             {formatDate1(entry.application_arrival_date)} -{' '}
                             {formatDate1(entry.application_departure_date)}
                         </p>
@@ -446,7 +750,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                         <br />
                         <h6>{entry.visa_status}</h6>
                     </div>
-                    <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <div style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <button
                             type='submit'
                             id='kt_sign_in_submit'
@@ -455,6 +759,15 @@ const VisaDetailCard = ({ visaData }: Props) => {
                             style={{ backgroundColor: '#332786' }}
                         >
                             View Group
+                        </button>
+                        <button
+                            type='submit'
+                            id='kt_sign_in_submit'
+                            className='btn btn-primary'
+                            onClick={() => generateAndDownloadPDF(entry)}
+                            style={{ backgroundColor: '#332786', marginTop: 20 }}
+                        >
+                            Download Invoice
                         </button>
                     </div>
                 </div>
