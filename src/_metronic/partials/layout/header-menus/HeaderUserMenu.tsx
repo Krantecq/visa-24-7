@@ -47,7 +47,7 @@ const HeaderUserMenu: React.FC<Props> = ({profile}) => {
       <div className='menu-item px-3'>
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>
-            <img alt='Logo' src={profile.merchant_profile_photo} />
+            <img alt='Logo' src={profile.merchant_profile_photo || profile.super_admin_profile_photo} />
           </div>
 
           <div className='d-flex flex-column'>

@@ -198,7 +198,7 @@ function MerchantProfile() {
 
   const inputStyle = {
     border: '2px solid #d3d3d3', // Border width and color
-    borderRadius: '25px', // Border radius
+    borderRadius: '10px', // Border radius
     padding: '10px',
     paddingLeft: '20px', // Padding
     width: 280, // 100% width
@@ -259,7 +259,7 @@ function MerchantProfile() {
             <div>
               <div className='d-flex'>
                 <div className='fv-row mb-10'>
-                  <label className='form-label mx-5' style={{ fontWeight: 'bold' }}>
+                  <label className='form-label mx-1' style={{ fontWeight: 'bold' }}>
                     Name
                   </label>
                   <Field
@@ -275,7 +275,7 @@ function MerchantProfile() {
                 </div>
                 <div className='fv-row mb-10 mx-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span className='required'>Email</span>
@@ -297,7 +297,7 @@ function MerchantProfile() {
               <div className='d-flex'>
                 <div className='fv-row mb-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span>Contact Number</span>
@@ -321,7 +321,7 @@ function MerchantProfile() {
               <div className='d-flex'>
                 <div className='fv-row mb-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span className='required'>GST Number</span>
@@ -340,14 +340,14 @@ function MerchantProfile() {
                 </div>
                 <div className='fv-row mb-10 mx-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span className='required'>PAN Card</span>
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '300px' }}
+                    style={{ ...inputStyle, width: '285px' }}
                     name='businessDescriptor'
                     value={formData2.merchant_pan_no}
                     readOnly
@@ -363,14 +363,14 @@ function MerchantProfile() {
               <div className='d-flex'>
                 <div className='fv-row mb-5'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span>Address Line 1</span>
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: 700 }}
+                    style={{ ...inputStyle, width: "590px" }}
                     value={formData2?.merchant_address_one_line}
                     name='merchant_address_one_line'
                     onChange={(e) =>
@@ -386,14 +386,14 @@ function MerchantProfile() {
               <div className='d-flex'>
                 <div className='fv-row mb-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span>Address Line 2</span>
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: 700 }}
+                    style={{ ...inputStyle, width: "590px" }}
                     value={formData2.merchant_address_second_line}
                     name='merchant_address_second_line'
                     onChange={(e) =>
@@ -410,7 +410,7 @@ function MerchantProfile() {
               <div className='d-flex'>
                 <div className='fv-row mb-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span>Country</span>
@@ -429,7 +429,7 @@ function MerchantProfile() {
                 </div>
                 <div className='fv-row mb-10 mx-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span>State</span>
@@ -448,7 +448,7 @@ function MerchantProfile() {
                 </div>
                 <div className='fv-row mb-10'>
                   <label
-                    className='d-flex align-items-center form-label mx-5'
+                    className='d-flex align-items-center form-label mx-1'
                     style={{ fontWeight: 'bold' }}
                   >
                     <span>Zip Code</span>
@@ -471,7 +471,7 @@ function MerchantProfile() {
                   type='submit'
                   className='btn btn-primary'
                   onClick={handleSave}
-                  style={{ backgroundColor: '#332789' }}
+                  style={{ backgroundColor: '#327113' }}
                 >
                   {!loading && <span className='indicator-label'>Save</span>}
                   {loading && (
@@ -504,7 +504,7 @@ function MerchantProfile() {
                 <Field
                   style={{
                     ...inputStyle,
-                    width: 700,
+                    width: "590px",
                   }}
                   readOnly
                   name='businessDescriptor'
@@ -520,7 +520,7 @@ function MerchantProfile() {
                 <Field
                   style={{
                     ...inputStyle,
-                    width: 700,
+                    width: "590px",
                   }}
                   readOnly
                   name='businessDescriptor'
@@ -537,7 +537,7 @@ function MerchantProfile() {
                 <Field
                   style={{
                     ...inputStyle,
-                    width: 700,
+                    width: "590px",
                   }}
                   readOnly
                   name='businessDescriptor'
@@ -575,7 +575,7 @@ function MerchantProfile() {
                 <Field
                   style={{
                     ...inputStyle,
-                    width: 700,
+                    width: "590px",
                     border: '1px solid #d3d3d3',
                     borderRadius: 10,
                   }}
@@ -731,7 +731,7 @@ function MerchantProfile() {
               type='button'
               onClick={handleImageUpload}
               className='btn btn-lg btn-primary me-3 mt-3'
-              style={{ justifyContent: 'flex-end', backgroundColor: '#332789' }}
+              style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
             >
               <span className='indicator-label'>Select Files</span>
             </button>
@@ -790,7 +790,7 @@ function MerchantProfile() {
                 <div className='pt-5 d-flex justify-content-center'>
                   <button
                     type='submit'
-                    style={{ width: 200, backgroundColor: '#332789' }}
+                    style={{ width: 200, backgroundColor: '#327113' }}
                     className='btn btn-primary'
                     onClick={handleSaveClick}
                   >
@@ -891,7 +891,7 @@ function MerchantProfile() {
               type='button'
               onClick={handleImageUpload}
               className='btn btn-lg btn-primary me-3 mt-3'
-              style={{ justifyContent: 'flex-end', backgroundColor: '#332789' }}
+              style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
             >
               <span className='indicator-label'>Select Files</span>
             </button>
@@ -950,7 +950,7 @@ function MerchantProfile() {
                 <div className='pt-5 d-flex justify-content-center'>
                   <button
                     type='submit'
-                    style={{ width: 200, backgroundColor: '#332789' }}
+                    style={{ width: 200, backgroundColor: '#327113' }}
                     className='btn btn-primary'
                     onClick={handleIssueApiClick}
                   >
@@ -1013,16 +1013,16 @@ function MerchantProfile() {
               display: 'flex',
               cursor: 'pointer',
               alignItems: 'center',
-              borderBottom: activeWalletTab === tab.label ? '2px solid #332789' : ' 1px solid #333',
+              borderBottom: activeWalletTab === tab.label ? '2px solid #327113' : ' 1px solid #333',
               fontWeight: activeWalletTab === tab.label ? 'bold' : 'normal',
-              color: activeWalletTab === tab.label ? '#332789' : '#333',
+              color: activeWalletTab === tab.label ? '#327113' : '#333',
             }}
             onClick={() => handleWalletTabClick(tab.label)}
           >
             <div style={{ marginRight: 15 }}>{tab.icon}</div>
             <h3
               style={{
-                color: activeWalletTab === tab.label ? '#332789' : '#333',
+                color: activeWalletTab === tab.label ? '#327113' : '#333',
               }}
             >
               {tab.label}
@@ -1065,7 +1065,7 @@ function MerchantProfile() {
     >
       <div className='d-flex align-items-center px-10'>
         <div className='d-flex align-items-center' style={{ flex: 1 }}>
-          <h2 className='' >Visa 24/7 Wallet</h2>
+          <h2 className='' >Visa 247 Wallet</h2>
 
         </div>
 
@@ -1090,7 +1090,7 @@ function MerchantProfile() {
 
       <table className='table align-middle gs-10 mt-10'>
         {/* begin::Table head */}
-        <thead className='px-5' style={{ background: '#332789', color: '#fff' }}>
+        <thead className='px-5' style={{ background: '#327113', color: '#fff' }}>
           <tr className='fw-bold'>
             <th className='min-w-150px'>Date/Time</th>
             <th className='min-w-150px'>Amount</th>
@@ -1188,7 +1188,7 @@ function MerchantProfile() {
                   <div className='pt-5 d-flex justify-content-center'>
                     <button
                       type='submit'
-                      style={{ width: 200, backgroundColor: '#332789' }}
+                      style={{ width: 200, backgroundColor: '#327113' }}
                       className='btn btn-primary'
                       onClick={() => { setReceiptshow(true) }}
                     >
@@ -1300,7 +1300,7 @@ function MerchantProfile() {
                 <div className='pt-5 d-flex justify-content-center'>
                     <button
                       type='submit'
-                      style={{ width: 200, backgroundColor: '#332789' }}
+                      style={{ width: 200, backgroundColor: '#327113' }}
                       className='btn btn-primary'
                       onClick={() => saveCommission() }
                     >
@@ -1372,14 +1372,14 @@ function MerchantProfile() {
                 alignItems: 'center',
                 borderBottom: '1px solid #ccc',
                 fontWeight: activeTab === tab.label ? 'bold' : 'normal',
-                color: activeTab === tab.label ? '#332789' : '#333',
+                color: activeTab === tab.label ? '#327113' : '#333',
               }}
               onClick={() => handleTabClick(tab.label)}
             >
               <div style={{ marginRight: 15 }}>{tab.icon}</div>
               <h3
                 style={{
-                  color: activeTab === tab.label ? '#332789' : '#333',
+                  color: activeTab === tab.label ? '#327113' : '#333',
                 }}
               >
                 {tab.label}

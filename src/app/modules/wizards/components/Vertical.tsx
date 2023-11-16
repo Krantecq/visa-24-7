@@ -431,7 +431,7 @@ const Vertical: React.FC<VerticalProps> = ({
               <div
                 style={{
                   padding: 20,
-                  backgroundColor: 'rgba(0, 123, 255, 0.15)',
+                  backgroundColor: 'rgb(50 113 19 / 22%)',
                   borderRadius: 10,
                   paddingTop: 30,
                 }}
@@ -479,7 +479,7 @@ const Vertical: React.FC<VerticalProps> = ({
                   alignItems: 'center',
                   display: 'flex',
                   justifyContent: 'center',
-                  backgroundColor: '#332786',
+                  backgroundColor: '#327113',
                   cursor: 'pointer',
                 }}
               >

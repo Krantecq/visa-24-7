@@ -38,7 +38,7 @@ const DashboardPage: FC<Props> = (data) => (
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Total API'
+          description='Total Partners'
           color='#F0F0F0'
           icon={icon1}
           textColor='#071437'
@@ -49,19 +49,19 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Individual Customers'
-          color='#071537'
+          color='#F0F0F0'
           icon={customer}
-          textColor='#ffff'
+          textColor='#071437'
           count={data.customer_user}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Registered Merchants'
-          color='#FFC703'
+          description='Total Retailers'
+          color='#F0F0F0'
           icon={merchant}
-          textColor='#FFFF'
+          textColor='#071437'
           count={data.merchant_user}
         />
       </div>
@@ -69,9 +69,9 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa Rejected'
-          color='#7239EB'
+          color='#F0F0F0'
           icon={icon1}
-          textColor='#FFFF'
+          textColor='#071437'
           count={data.visa_rejected}
         />
       </div>
@@ -91,9 +91,9 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa Waiting for Approval'
-          color='#071537'
+          color='#F0F0F0'
           icon={customer}
-          textColor='#ffff'
+          textColor='#071437'
           count={data.waiting}
         />
       </div>

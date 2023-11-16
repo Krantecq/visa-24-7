@@ -31,10 +31,10 @@ function ApplicationFormView({viewApplication}) {
 
   const inputStyle = {
     border: '1.5px solid #d3d3d3', // Border width and color
-    borderRadius: '15px', // Border radius
+    borderRadius: '10px', // Border radius
     padding: '10px',
     paddingLeft: '20px', // Padding
-    width: '90%', // 100% width
+    width: '100%', // 100% width
     boxSizing: 'border-box', // Include padding and border in the width calculation
   }
 
@@ -103,12 +103,12 @@ function ApplicationFormView({viewApplication}) {
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div>
                   <div className='fv-row mb-5'>
-                    <label className='d-flex align-items-center form-label'>
+                    <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                       <span className='required'>Passport Number</span>
                     </label>
 
                     <Field
-                      style={{...inputStyle, width: '450px'}}
+                      style={{...inputStyle, width: '100%'}}
                       name='passportNumber'
                       readOnly
                       value={viewApplication.passport_number}
@@ -120,7 +120,7 @@ function ApplicationFormView({viewApplication}) {
                   </div>
                   <div className='d-flex' style={{justifyContent: 'space-between'}}>
                     <div className='fv-row mb-5'>
-                      <label className='form-label required'>First Name</label>
+                      <label style={{marginLeft:"5px"}} className='form-label required'>First Name</label>
 
                       <Field
                         name='firstName'
@@ -134,7 +134,7 @@ function ApplicationFormView({viewApplication}) {
                       </div>
                     </div>
                     <div className='fv-row mb-5'>
-                      <label className='d-flex align-items-center form-label'>
+                      <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                         <span className='required'>Last Name</span>
                       </label>
 
@@ -153,7 +153,7 @@ function ApplicationFormView({viewApplication}) {
 
                   <div className='d-flex' style={{justifyContent: 'space-between'}}>
                     <div className='fv-row mb-5'>
-                      <label className='d-flex align-items-center form-label'>
+                      <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                         <span className='required'>Birth Place</span>
                       </label>
 
@@ -169,7 +169,7 @@ function ApplicationFormView({viewApplication}) {
                       </div>
                     </div>
                     <div className='fv-row mb-5'>
-                      <label className='d-flex align-items-center form-label'>
+                      <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                         <span className='required'>Date of Birth</span>
                       </label>
 
@@ -189,9 +189,9 @@ function ApplicationFormView({viewApplication}) {
                     </div>
                   </div>
 
-                  <div className='d-flex' style={{justifyContent: 'space-between'}}>
+                  <div className='d-flex' style={{justifyContent: 'space-between', gap:"20px"}}>
                     <div className='fv-row mb-5'>
-                      <label className='d-flex align-items-center form-label'>
+                      <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                         <span className='required'>Passport Issue Date</span>
                       </label>
 
@@ -210,7 +210,7 @@ function ApplicationFormView({viewApplication}) {
                     </div>
 
                     <div className='fv-row mb-5'>
-                      <label className='d-flex align-items-center form-label'>
+                      <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                         <span className='required'>Passport Expiry Date</span>
                       </label>
 
@@ -230,7 +230,7 @@ function ApplicationFormView({viewApplication}) {
                   </div>
                   <div className='d-flex' style={{justifyContent: 'space-between'}}>
                     <div className='fv-row mb-10'>
-                      <label className='form-label required'>Gender</label>
+                      <label style={{marginLeft:"5px"}} className='form-label required'>Gender</label>
 
                       <Field
                         name='gender'
@@ -244,7 +244,7 @@ function ApplicationFormView({viewApplication}) {
                       </div>
                     </div>
                     <div className='fv-row mb-10'>
-                      <label className='form-label required'>Marital Status</label>
+                      <label style={{marginLeft:"5px"}} className='form-label required'>Marital Status</label>
 
                       <Field
                         readOnly
@@ -310,7 +310,7 @@ function ApplicationFormView({viewApplication}) {
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div className='fv-row mb-10'>
-                  <label className='d-flex align-items-center form-label'>
+                  <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                     <span className='required'>Father's Name</span>
                   </label>
 
@@ -327,7 +327,7 @@ function ApplicationFormView({viewApplication}) {
                 </div>
 
                 <div className='fv-row mb-10'>
-                  <label className='d-flex align-items-center form-label'>
+                  <label style={{marginLeft:"5px"}} className='d-flex align-items-center form-label'>
                     <span className='required'>Mother's Name</span>
                   </label>
 

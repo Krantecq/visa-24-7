@@ -7,6 +7,17 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
 function WalletFormView({ viewApplication }) {
     console.log(viewApplication)
+    const handleDownload = () => {
+        const imageUrl = viewApplication?.receipt || '';
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const [initValues] = useState<ICreateAccount>(inits)
 
     const [formData, setFormData] = useState({
@@ -31,7 +42,7 @@ function WalletFormView({ viewApplication }) {
 
     const inputStyle = {
         border: '1.5px solid #d3d3d3', // Border width and color
-        borderRadius: '15px', // Border radius
+        borderRadius: '10px', // Border radius
         padding: '10px',
         paddingLeft: '20px', // Padding
         width: '90%', // 100% width
@@ -124,6 +135,21 @@ function WalletFormView({ viewApplication }) {
                                         <ErrorMessage name='motherName' />
                                     </div>
                                 </div>
+
+                                <button
+                                onClick={handleDownload}
+                                style={{
+                                    position: 'relative',
+                                    color: '#fff',
+                                    border: 'none',
+                                    backgroundColor: '#327113',
+                                    padding: '10px 20px',
+                                    borderRadius: '10px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Download Receipt
+                            </button>
                             </Form>
                         )}
                     </Formik>

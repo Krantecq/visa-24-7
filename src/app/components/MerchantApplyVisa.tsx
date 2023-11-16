@@ -118,7 +118,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
               fontSize: 20,
               borderBottomWidth: 1,
               borderBottom: '3px solid',
-              borderColor: '#332789',
+              borderColor: '#327113',
               width: 170,
             }}
           >
@@ -701,7 +701,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
                     borderRadius: 25,
                     paddingLeft: 25,
                     paddingRight: 25,
-                    backgroundColor: '#332786',
+                    backgroundColor: '#327113',
                   }}
                 >
                   Search
@@ -718,7 +718,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
             position: 'absolute',
             width: '100%',
             height: 170,
-            backgroundColor: '#332786',
+            backgroundColor: '#327113',
             bottom: 0,
             overflow: 'hidden',
             marginLeft: -30,

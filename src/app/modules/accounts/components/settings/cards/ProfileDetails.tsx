@@ -21,7 +21,7 @@ const profileDetailsSchema = Yup.object().shape({
 })
 const inputStyle = {
   border: '2px solid #d3d3d3', // Border width and color
-  borderRadius: '25px', // Border radius
+  borderRadius: '10px', // Border radius
   padding: '10px',
   paddingLeft: '20px', // Padding
   width: 380, // 100% width
@@ -128,7 +128,7 @@ const ProfileDetails: React.FC = () => {
       <div id='kt_account_profile_details' className='collapse show'>
         <form onSubmit={()=>{}} noValidate className='form'>
           <div className='card-body border-top p-9'>
-            <div className='row mb-6'>
+            <div className='col mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>Profile Picture</label>
               <div className='col-lg-8'>
                 <div
@@ -137,8 +137,8 @@ const ProfileDetails: React.FC = () => {
                   style={{ backgroundImage: `url(${toAbsoluteUrl('/media/avatars/blank.png')})` }}
                 >
                   <div
-                    className='image-input-wrapper w-125px h-125px'
-                    style={{ backgroundImage: `url(${formData.super_admin_profile_photo})` }}
+                    className='image-input-wrapper w-200px h-200px'
+                    style={{ backgroundImage: `url(${formData.super_admin_profile_photo})`, backgroundSize:"contain" }}
                   ></div>
                 </div>
               </div>
@@ -151,7 +151,7 @@ const ProfileDetails: React.FC = () => {
                 <div>
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
-                      <label className='form-label required'>Name</label>
+                      <label style={{marginLeft:"10px"}} className='form-label required'>Name</label>
 
                       <Field
                         name='super_admin_name'
@@ -168,7 +168,7 @@ const ProfileDetails: React.FC = () => {
 
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
-                      <label className='form-label required'>Email</label>
+                      <label style={{marginLeft:"10px"}} className='form-label required'>Email</label>
 
                       <Field
                         name='super_admin_email'
@@ -185,7 +185,7 @@ const ProfileDetails: React.FC = () => {
 
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
-                      <label className='form-label required'>Contact</label>
+                      <label style={{marginLeft:"10px"}} className='form-label required'>Contact</label>
 
                       <Field
                         name='super_admin_phone_number'
@@ -206,7 +206,7 @@ const ProfileDetails: React.FC = () => {
           </div>
 
           <div className='card-footer d-flex justify-content-end py-6 px-9'>
-            <button onClick={handleSaveClick} className='btn btn-primary' disabled={loading}>
+            <button style={{backgroundColor:"#327113"}} onClick={handleSaveClick} className='btn btn-primary' disabled={loading}>
               {!loading && 'Save Changes'}
               {loading && (
                 <span className='indicator-progress' style={{ display: 'block' }}>

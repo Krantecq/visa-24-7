@@ -22,6 +22,7 @@ import MerchantProfile from '../pages/merchants/profile/MerchantProfile'
 import Cookies from 'js-cookie';
 import WalletWrapper from '../pages/wallet/WalletWrapper'
 import IssueApiWrapper from '../pages/IssueApi/IssueApiWrapper'
+import TestingWrapper from '../pages/testing/TestingWrapper'
 import ApiSettingWrapper from '../pages/api-setting/ApiSettingWrapper'
 import ApiPaymentWrapper from '../pages/api-payment/ApiPaymentWrapper'
 import ApiMerchantWrapper from '../pages/api-merchant/ApiMerchantWrapper'
@@ -64,6 +65,7 @@ const PrivateRoutes = () => {
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
         <Route path='superadmin/issueApi' element={<IssueApiWrapper />}/>
+        <Route path='superadmin/testing' element={<TestingWrapper />}/>
         <Route path='superadmin/apiSetting' element={<ApiSettingWrapper />}/>
         <Route path='superadmin/apiPayment' element={<ApiPaymentWrapper />}/>
         <Route path='superadmin/apiMerchants' element={<ApiMerchantWrapper />}/>

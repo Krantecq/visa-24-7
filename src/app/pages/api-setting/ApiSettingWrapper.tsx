@@ -91,15 +91,15 @@ function ApiSettingWrapper() {
 
           <Formik initialValues={initValues} onSubmit={() => { }}>
             {() => (
-              <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
-                <div className='fv-row mb-10 w-100'>
+              <Form className='py-10 w-100 d-flex flex-row flex-wrap' noValidate id='kt_create_account_form'>
+                <div className='w-100 d-flex flex-column mx-auto mb-10'>
 
                   <label className='form-label fs-4'>All Countries</label>
                   <Field
                     as='select'
                     name='fromCountry'
                     className='form-select form-select-lg form-select-solid border border-2  border-secondary rounded-4 mt-2'
-                    style={{ background: '#fff' }}
+                    style={{ background: '#fff', width:"40%" }}
                   >
                     <option value=''>All Countries</option>
 
@@ -108,13 +108,13 @@ function ApiSettingWrapper() {
                     <ErrorMessage name='businessType' />
                   </div>
                 </div>
-                <div className='fv-row mb-10'>
+                <div className='w-100 d-flex flex-column mx-auto mb-10'>
                   <label className='d-flex align-items-center form-label'>
                     <span className='required'>All Country percentage</span>
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                    style={{ ...inputStyle, width:"40%" }}
                     onChange={(e) => handleFieldChange('api_percentage', e.target.value)}
                     value={formData.api_percentage}
                     name='api_percentage'
@@ -125,13 +125,13 @@ function ApiSettingWrapper() {
                   </div>
                 </div>
 
-                <div className='fv-row mb-10'>
+                <div className='w-100 d-flex flex-column mx-auto mb-10'>
                   <label className='d-flex align-items-center form-label'>
                     <span className='required'>Merchant percentage</span>
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                    style={{ ...inputStyle, width:"40%" }}
                     onChange={(e) => handleFieldChange('merchant_percantage', e.target.value)}
                     name='merchant_percantage'
                     value={formData.merchant_percantage}
@@ -142,13 +142,13 @@ function ApiSettingWrapper() {
                   </div>
                 </div>
 
-                <div className='fv-row mb-10'>
+                <div className='w-100 d-flex flex-column mx-auto mb-10'>
                   <label className='d-flex align-items-center form-label'>
                     <span className='required'>API percentage</span>
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                    style={{ ...inputStyle, width:"40%" }}
                     onChange={(e) => handleFieldChange('panel_api_percantage', e.target.value)}
                     name='panel_api_percantage'
                     value={formData.panel_api_percantage}
@@ -164,7 +164,7 @@ function ApiSettingWrapper() {
                     type='submit'
                     className='btn btn-primary'
                     onClick={handleSave}
-                    style={{ backgroundColor: '#332789', width: 180 }}
+                    style={{ backgroundColor: '#327113', width: 180, marginLeft:"150px" }}
                   >
                     Save
                   </button>

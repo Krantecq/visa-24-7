@@ -206,7 +206,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
             :
             <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
               {/* begin::Table head */}
-              <thead style={{ background: '#332786', color: "#fff" }}>
+              <thead style={{ background: '#327113', color: "#fff" }}>
                 <tr className='fw-bold'>
 
                   <th className='min-w-150px text-center'>Email Id</th>
@@ -270,8 +270,8 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                         }} className='mx-5 cursor-pointer' />
 
                         {row.status === 'In-processed' && (
-                          // Render the "Approve" button only when the merchant is not approved
-                          <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
+                          // Render the "" button only when the merchant is not approved
+                          <button style={{background:"#327113"}} className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
 
                         )}
                       </div>

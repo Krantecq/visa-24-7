@@ -36,7 +36,7 @@
         }
 
         @include menu-link-default-state(
-          $title-color: $gray-300,
+          $title-color: #000,
           $icon-color: #7f8194,
           $bullet-color: #7f8194,
           $arrow-color: var(--#{$prefix}gray-700),
@@ -44,7 +44,7 @@
         );
 
         @include menu-link-hover-state(
-          $title-color: var(--#{$prefix}primary-inverse),
+          $title-color: #7f8194,
           $icon-color: var(--#{$prefix}primary-inverse),
           $bullet-color: var(--#{$prefix}primary-inverse),
           $arrow-color: var(--#{$prefix}primary-inverse),

@@ -48,6 +48,7 @@ const AppRoutes: FC = () => {
               <>
               <Route index element={<Navigate to='/superadmin/apply-visa' />} />
               <Route index element={<Navigate to='/superadmin/issueApi' />} />
+              <Route index element={<Navigate to='/superadmin/testing' />} />
               <Route index element={<Navigate to='/superadmin/apiSetting' />} />
               <Route index element={<Navigate to='/superadmin/dashboard' />} />
               <Route index element={<Navigate to='/superadmin/apiPayment'/>} />

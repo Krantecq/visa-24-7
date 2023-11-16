@@ -131,7 +131,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
         {/* begin::Header */}
         <div className='card-header border-0 pt-5'>
           <h3 className='card-title align-items-start flex-column'>
-            <span className='card-label fw-bold fs-3 mb-1'>Merchant Statistics</span>
+            <span className='card-label fw-bold fs-3 mb-1'>Retailer Statistics</span>
             <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
           <div className='d-flex flex-row'>
@@ -164,7 +164,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
             {/* <button className='btn btn-primary align-self-center'>All</button>
             <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button> */}
             <Link to={'/superadmin/add-new-merchant'}>
-              <button className='btn btn-primary align-self-center'>Add new Merchant</button>
+              <button style={{backgroundColor:"#327113"}} className='btn btn-primary align-self-center'>Add new Retailer</button>
             </Link>
           </div>
         </div>
@@ -195,7 +195,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                 ) : (
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead className='px-2' style={{background: '#332786', color: '#fff'}}>
+                    <thead className='px-2' style={{background: '#327113', color: '#fff'}}>
                       <tr className='fw-bold'>
                         <th className='min-w-150px text-start' style={{paddingLeft: '20px'}}>
                           Agent

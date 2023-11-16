@@ -43,7 +43,7 @@ function TravelerForm({ onDataChange, ind }) {
     borderRadius: '15px', // Border radius
     padding: '10px',
     paddingLeft: '20px', // Padding
-    width: '90%', // 100% width
+    width: '100%', // 100% width
     boxSizing: 'border-box', // Include padding and border in the width calculation
   }
   const handleFileUpload = async (file) => {
@@ -286,7 +286,7 @@ function TravelerForm({ onDataChange, ind }) {
                 type='button'
                 onClick={handleImageUpload}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>
@@ -318,7 +318,7 @@ function TravelerForm({ onDataChange, ind }) {
                     </label>
 
                     <Field
-                      style={{ ...inputStyle, width: '450px' }}
+                      style={{ ...inputStyle, width: '500px' }}
                       name='passportNumber'
                       className='form-control form-control-lg form-control-solid'
                       onChange={(e) => handleFieldChange('passportNumber', e.target.value)}
@@ -380,7 +380,7 @@ function TravelerForm({ onDataChange, ind }) {
                       </label>
 
                       <DatePicker
-                        style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
+                        style={{ backgroundClip: '#fff', width: 230, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
                         onChange={(value) => {
                           if (value) {
                             handleFieldChange('birthDetail', value.format('YYYY-MM-DD'))
@@ -401,7 +401,7 @@ function TravelerForm({ onDataChange, ind }) {
                         <span className='required'>Passport Issue Date</span>
                       </label>
                       <DatePicker
-                        style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
+                        style={{ backgroundClip: '#fff', width: 230, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
                         onChange={(value) => {
                           if (value) {
                             handleFieldChange('passportIssueDate', value.format('YYYY-MM-DD'))
@@ -420,7 +420,7 @@ function TravelerForm({ onDataChange, ind }) {
                         <span className='required'>Passport Expiry Date</span>
                       </label>
                       <DatePicker
-                        style={{ backgroundClip: '#fff', width: 220, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
+                        style={{ backgroundClip: '#fff', width: 230, marginTop: 2, border: '1.5px solid #d3d3d3', borderRadius: 15, padding: 10 }}
                         onChange={(value) => {
                           if (value) {
                             handleFieldChange('passPortExpiryDate', value.format('YYYY-MM-DD'))
@@ -441,7 +441,7 @@ function TravelerForm({ onDataChange, ind }) {
                       <Field
                         as='select'
                         name='gender'
-                        style={{ ...inputStyle, width: '215px', backgroundColor: 'white' }}
+                        style={{ ...inputStyle, width: '230px', backgroundColor: 'white' }}
                         className='form-select form-select-lg form-select-solid'
                         onChange={(e) => handleFieldChange('gender', e.target.value)}
                       >
@@ -458,7 +458,7 @@ function TravelerForm({ onDataChange, ind }) {
 
                       <Field
                         as='select'
-                        style={{ ...inputStyle, width: '215px', backgroundColor: 'white' }}
+                        style={{ ...inputStyle, width: '230px', backgroundColor: 'white' }}
                         name='maritalStatus'
                         className='form-select form-select-lg form-select-solid'
                         onChange={(e) => handleFieldChange('maritalStatus', e.target.value)}
@@ -540,7 +540,7 @@ function TravelerForm({ onDataChange, ind }) {
                 type='button'
                 onClick={handleImageUploadBack}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>
@@ -657,7 +657,7 @@ function TravelerForm({ onDataChange, ind }) {
                 type='button'
                 onClick={handlePanUpload}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>
@@ -753,7 +753,7 @@ function TravelerForm({ onDataChange, ind }) {
                 type='button'
                 onClick={handlePhotoUpload}
                 className='btn btn-lg btn-primary me-3 mt-7'
-                style={{ justifyContent: 'flex-end', backgroundColor: '#332786' }}
+                style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>
               </button>

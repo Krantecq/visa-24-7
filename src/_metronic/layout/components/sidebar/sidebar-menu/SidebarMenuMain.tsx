@@ -30,13 +30,19 @@ const SidebarMenuMain = () => {
       <SidebarMenuItem
         to='/superadmin/merchants'
         icon='element-11'
-        title={'Merchants'}
+        title={'Retailers'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
         to='/superadmin/issueApi'
         icon='element-11'
-        title={'Merchant Api'}
+        title={'Partners'}
+        fontIcon='bi-app-indicator'
+      />
+      <SidebarMenuItem
+        to='/superadmin/testing'
+        icon='element-11'
+        title={'Testing'}
         fontIcon='bi-app-indicator'
       />
       {/* <SidebarMenuItem to='/builder' icon='switch' title='Layout Builder' fontIcon='bi-layers' /> */}

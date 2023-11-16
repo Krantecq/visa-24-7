@@ -667,7 +667,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         alignItems: 'center',
                                         display: 'flex',
                                         justifyContent: 'center',
-                                        backgroundColor: '#332789',
+                                        backgroundColor: '#327113',
                                         color: '#fff',
                                         fontSize: "17px",
                                         whiteSpace: 'nowrap'
@@ -756,16 +756,16 @@ const VisaDetailCard = ({ visaData }: Props) => {
                             id='kt_sign_in_submit'
                             className='btn btn-primary'
                             onClick={() => handleViewDetailsClick(entry)}
-                            style={{ backgroundColor: '#332786' }}
+                            style={{ backgroundColor: '#327113' }}
                         >
-                            View Group
+                            Track Application
                         </button>
                         <button
                             type='submit'
                             id='kt_sign_in_submit'
                             className='btn btn-primary'
                             onClick={() => generateAndDownloadPDF(entry)}
-                            style={{ backgroundColor: '#332786', marginTop: 20 }}
+                            style={{ backgroundColor: '#327113', marginTop: 20 }}
                         >
                             Download Invoice
                         </button>

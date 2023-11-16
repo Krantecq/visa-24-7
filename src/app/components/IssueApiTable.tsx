@@ -167,7 +167,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
         {/* begin::Header */}
         <div className='card-header border-0 pt-5'>
           <h3 className='card-title align-items-start flex-column'>
-            <span className='card-label fw-bold fs-3 mb-1'>Merchant Statistics</span>
+            <span className='card-label fw-bold fs-3 mb-1'>Partner Statistics</span>
             <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
 
@@ -191,7 +191,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                   :
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead className='px-2' style={{ background: '#332786', color: "#fff" }}>
+                    <thead className='px-2' style={{ background: '#327113', color: "#fff" }}>
                       <tr className='fw-bold'>
                         <th className='min-w-150px text-center'>Agent</th>
                         <th className='min-w-200px text-center'>Email</th>

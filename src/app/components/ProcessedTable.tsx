@@ -198,7 +198,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
             :
             <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
               {/* begin::Table head */}
-              <thead style={{ background: '#332786', color: "#fff" }}>
+              <thead style={{ background: '#327113', color: "#fff" }}>
                 <tr className='fw-bold'>
 
                   <th className='min-w-150px text-center'>Customers</th>
@@ -269,7 +269,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                       )}
                       {row.visa_status === 'Waiting' && (
                         // Render the "Approve" button only when the merchant is not approved
-                        <button className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
+                        <button style={{background:"#327113"}} className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
                       )}
                       {row.visa_status === 'Processed' && (
                         <button className='btn btn-primary align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
