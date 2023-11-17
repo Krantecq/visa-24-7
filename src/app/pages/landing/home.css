@@ -126,7 +126,7 @@ body::-webkit-scrollbar-thumb {
   display: none;
   flex-direction: column;
   position: absolute;
-  top: 80px;
+  top: 65px;
   left: 0;
   background-color: #fff;
   width: 100%;
@@ -322,6 +322,16 @@ body::-webkit-scrollbar-thumb {
     position: relative;
 }
 
+.journey-from{
+  width: 100%;
+  padding: 10px 5px;
+  border-radius: 10px;
+  background: transparent;
+  color: #dad9d9;
+  margin-left: -15px;
+  border:none;
+}
+
 .page1 .search-conti1{
   display: none;
 }
@@ -501,8 +511,40 @@ body::-webkit-scrollbar-thumb {
     overflow-y: hidden;
 }
 
+.dropdwon1{
+  width: 20%;
+  margin-left: -15px;
+}
+
+.dropdwon2{
+  width: 20%;
+  margin-left: 15px;
+}
+
 .vacation .cards::-webkit-scrollbar {
     display: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select{
+  font-size: 16px;
+  overflow: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  outline: none; /* Remove the default focus outline */
+  cursor: pointer;
+}
+select::-webkit-scrollbar {
+  display: none;
+}
+select option {
+  color: #cccccc;
+  background: #000000f7;
+  width: 200px;
+  border-radius: 15px;
 }
 
 .vacation .card-vac {
@@ -578,6 +620,19 @@ body::-webkit-scrollbar-thumb {
     overflow-x: scroll;
     overflow-y: hidden;
     padding: 40px 10px;
+}
+
+.page2 .conti1{
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  align-items: center;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding: 40px 10px;
 }
 
 .page2 .conti::-webkit-scrollbar {
@@ -788,7 +843,7 @@ body::-webkit-scrollbar-thumb {
 
 .page4 .testimonial-front{
     position: absolute;
-    top: 25%;
+    top: 28%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -817,7 +872,7 @@ body::-webkit-scrollbar-thumb {
 
 .testimonial {
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 600px;
@@ -1114,9 +1169,15 @@ footer{
 @media (max-width: 768px) {
   .page1 .bgimg {
     background-size: contain;
-    height: 56%;
+    height: 133%;
     width: 125%;
-  }
+    top: 100px;
+    position: relative;
+}
+
+.page2 .conti1{
+  visibility: hidden;
+}
 
   .page1 .search-bar{
     display: none;
@@ -1138,8 +1199,12 @@ footer{
 }
 
   .page1 h1 {
-    top: 17%;
+    top: 55%;
     font-size: 27px;
+  }
+
+  .page1 .search-bar1 {
+    top: 85%;
   }
 
   .vacation h1 {
@@ -1151,7 +1216,7 @@ footer{
     padding-left: 26px;
     padding-top: 20px;
     position: relative;
-    top: -350px;
+    top: 80px;
   }
 
   .vacation .card-vac {
@@ -1160,11 +1225,12 @@ footer{
 
   .page2 {
     padding-left: 25px;
-    top: -260px;
+    top: 150px;
   }
 
   .page2 .conti{
     padding: 40px 0px;
+
   }
 
   .page2 .conti .cards-single {
@@ -1191,7 +1257,7 @@ footer{
   }
 
   .page3 .service-para {
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .page3 .service-conti2 {
@@ -1208,7 +1274,7 @@ footer{
   }
 
   .page3 p {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .page3 .cta {
@@ -1291,7 +1357,7 @@ footer{
     display: flex;
   }
 
-  .row{
+  .rowsa{
     grid-column: 1/4;
     margin-left: -10px;
   }
