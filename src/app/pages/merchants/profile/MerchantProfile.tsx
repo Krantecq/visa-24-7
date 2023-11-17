@@ -21,6 +21,18 @@ import Papa from 'papaparse';
 import moment from 'moment'
 import 'react-range-slider-input/dist/style.css';
 import { Slider } from 'antd'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import { DatePicker } from 'antd'
+
+
+interface Transaction {
+  created_at: string;
+  wallet_balance: number;
+  category: string;
+  type: string;
+  status: string;
+}
+
 function MerchantProfile() {
   const [activeTab, setActiveTab] = useState('Profile')
   const [formData, setFormData] = useState({
@@ -29,6 +41,10 @@ function MerchantProfile() {
     amount: '',
   })
 
+  const [issueDate, setIssueDate] = useState<string | undefined>('');
+  const [expiryDate, setExpiryDate] = useState<string | undefined>('');
+
+  
   const [formData2, setFormData2] = useState({
     merchant_phone_number: '',
     merchant_email_id: '',
@@ -58,8 +74,8 @@ function MerchantProfile() {
   const [receiptShow, setReceiptshow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(true);
-  const [transaction, setTransaction] = useState([]);
-
+  const [transaction, setTransaction] = useState<Transaction[]>([]);
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [commission, setCommission] = useState(0);
   const [upperLimit, setUpperLimit] = useState(0);
 
@@ -80,6 +96,13 @@ function MerchantProfile() {
     setFormData2({ ...formData2, [fieldName]: value })
   }
 
+  const filterTransactions = (startDate: string, endDate: string) => {
+    const filtered = transaction.filter((item: Transaction) => {
+      const transactionDate = moment(item.created_at);
+      return transactionDate.isBetween(startDate, endDate, null, '[]');
+    });
+    setTransaction(filtered);
+  };
   useEffect(() => {
     // Fetch profile data when the component mounts
     fetchProfileData()
@@ -87,9 +110,15 @@ function MerchantProfile() {
     fetchCommission()
   }, [])
 
+  useEffect(() => {
+    if (issueDate && expiryDate) {
+      filterTransactions(issueDate, expiryDate);
+    }
+  }, [issueDate, expiryDate]);
+
   const fetchCommission = async () => {
     try {
-      const markup_percentage = localStorage.getItem('markup_percentage')??'1';
+      const markup_percentage = localStorage.getItem('markup_percentage') ?? '1';
       const markup_percentageAsNumber = parseFloat(markup_percentage); // Convert the string to a number
 
       const response = await axiosInstance.get('/backend/fetch_setting')
@@ -100,7 +129,7 @@ function MerchantProfile() {
       }
 
       setUpperLimit(parseFloat(response.data.data.merchant_percantage))
-      
+
       setCommission(markup_percentageAsNumber)
     } catch (error) {
       console.error('Error fetching profile data:', error)
@@ -156,8 +185,8 @@ function MerchantProfile() {
     const user_id = Cookies.get('user_id')
 
     const response = await axiosInstance.patch('/backend/set_markup_percentage', {
-      merchant_id:user_id,
-      markup_percentage:commission.toString()
+      merchant_id: user_id,
+      markup_percentage: commission.toString()
     })
     console.log(response.data.data)
     if (response.status == 203) {
@@ -167,7 +196,7 @@ function MerchantProfile() {
       setLoading(false);
     } else {
       localStorage.removeItem('markup_percentage');
-      localStorage.setItem('markup_percentage',commission.toString());
+      localStorage.setItem('markup_percentage', commission.toString());
 
       toast.success(response.data.msg, {
         position: 'top-center',
@@ -1069,6 +1098,29 @@ function MerchantProfile() {
 
         </div>
 
+        <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%', marginRight: '3%', }}>
+          <div className='d-flex align-items-center'>
+            <label className='d-flex align-items-center form-label fs-4' style={{ width: '50%' }}>
+              <CalendarMonthIcon style={{ marginRight: '3px' }} />
+              <span className=''>From</span>
+            </label>
+            <label className='d-flex align-items-center form-label fs-4' style={{ width: '50%' }}>
+              <CalendarMonthIcon style={{ marginRight: '3px' }} />
+              <span className=''>To</span>
+            </label>
+          </div>
+          <DatePicker.RangePicker
+            style={{ backgroundClip: '#fff', width: 400, marginTop: 8, border: '2px solid #e5e5e5', borderRadius: 10, padding: 10 }}
+            onChange={(value) => {
+              if (value && value.length === 2) {
+                var x = value[0]?.format('YYYY-MM-DD');
+                var y = value[1]?.format('YYYY-MM-DD');
+                setIssueDate(x);
+                setExpiryDate(y);
+              }
+            }} />
+        </div>
+
         <div
           className='px-5 py-2'
           style={{
@@ -1112,7 +1164,7 @@ function MerchantProfile() {
               </td>
               <td className='text-start'>
                 <span className='text-dark fw-bold d-block fs-6'>
-                  {item && (item as { wallet_balance: Number }).wallet_balance}/-
+                  {item && (item as { wallet_balance: number }).wallet_balance}/-
                 </span>
               </td>
               <td className='text-start'>
@@ -1207,7 +1259,7 @@ function MerchantProfile() {
                   <div className='loader-overlay' style={{ ...overlayStyle, ...(receiptShow && activeOverlayStyle), }}>
                     <div style={contentStyle}>
 
-                      <div onClick={() => setReceiptshow(false)} style={{ backgroundColor: '#d3d3d3', padding:"9px", position:"absolute", top:"15%", left:"84%", transform:"translate(-35%, -40%)", borderRadius: 20, cursor: 'pointer' }}>
+                      <div onClick={() => setReceiptshow(false)} style={{ backgroundColor: '#d3d3d3', padding: "9px", position: "absolute", top: "15%", left: "84%", transform: "translate(-35%, -40%)", borderRadius: 20, cursor: 'pointer' }}>
                         <CloseOutlined />
                       </div>
                       {uploadIssueApiReciept}
@@ -1269,11 +1321,11 @@ function MerchantProfile() {
                       <div className='text-danger mt-2'>
                         <ErrorMessage name='businessDescriptor' />
                       </div>
-                      
+
                     </div>
-                    
+
                   </div>
-                  
+
                   <div className='text-danger mt-2'>
                     <ErrorMessage name='amount' />
                   </div>
@@ -1298,21 +1350,21 @@ function MerchantProfile() {
                   />
                 </div>
                 <div className='pt-5 d-flex justify-content-center'>
-                    <button
-                      type='submit'
-                      style={{ width: 200, backgroundColor: '#327113' }}
-                      className='btn btn-primary'
-                      onClick={() => saveCommission() }
-                    >
-                      {!loading && <span className='indicator-label'>Set Commission</span>}
-                      {loading && (
-                        <span className='indicator-progress' style={{ display: 'block' }}>
-                          Please wait...
-                          <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                        </span>
-                      )}
-                    </button>
-                  </div>
+                  <button
+                    type='submit'
+                    style={{ width: 200, backgroundColor: '#327113' }}
+                    className='btn btn-primary'
+                    onClick={() => saveCommission()}
+                  >
+                    {!loading && <span className='indicator-label'>Set Commission</span>}
+                    {loading && (
+                      <span className='indicator-progress' style={{ display: 'block' }}>
+                        Please wait...
+                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                      </span>
+                    )}
+                  </button>
+                </div>
               </div>
             </Form>
           )}
