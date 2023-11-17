@@ -42,7 +42,7 @@ const SidebarMenuMain = () => {
       <SidebarMenuItem
         to='/superadmin/testing'
         icon='element-11'
-        title={'Testing'}
+        title={'Testing (Sandbox)'}
         fontIcon='bi-app-indicator'
       />
       {/* <SidebarMenuItem to='/builder' icon='switch' title='Layout Builder' fontIcon='bi-layers' /> */}

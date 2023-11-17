@@ -23,6 +23,7 @@ import 'react-range-slider-input/dist/style.css';
 import { Slider } from 'antd'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import { DatePicker } from 'antd'
+import {HeaderWrapper} from '../../../../_metronic/layout/components/header/HeaderWrapper';
 
 
 interface Transaction {
@@ -1191,6 +1192,17 @@ function MerchantProfile() {
       </table>
     </div>
   )
+
+    const user_type = Cookies.get('user_type');
+    const role = formData2.issued_api.length > 0 ? "Partner" : "Retailer";
+    (
+      <>
+        {user_type === "merchant" && (
+          <HeaderWrapper role={role} />
+        )}
+      </>
+    )
+  
 
   const isuueAPIContent = (
     <div

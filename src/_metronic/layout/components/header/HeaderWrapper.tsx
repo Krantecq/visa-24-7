@@ -6,13 +6,14 @@ import { useLayout } from '../../core'
 import { Header } from './Header'
 import { Navbar } from './Navbar'
 import Cookies from 'js-cookie'
-export function HeaderWrapper() {
+export function HeaderWrapper({ role }: { role: string }) {
   const { config, classes } = useLayout()
   if (!config.app?.header?.display) {
     return null
   }
 
   const user_type = Cookies.get('user_type');
+  console.log('Role:', role);
   return (
     <div id='kt_app_header' className='app-header'>
       <div
@@ -74,15 +75,41 @@ export function HeaderWrapper() {
             </Link>
           </div>
         )}
+        
         {user_type=="merchant" &&
-        <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
+          <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
+            <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
           <img
             alt='Logo'
             src={toAbsoluteUrl('/media/logos/logo.png')}
             className='h-20px h-lg-30px app-sidebar-logo-default'
           />
-        </div>
+          {role === "Retailer" && (
+            <p
+              style={{
+                position: "relative",
+                top: "17px",
+                color: "#327113"
+              }}
+            >
+              Retailer
+            </p>
+          )}
+          {role === "Partner" && (
+            <p
+              style={{
+                position: "relative",
+                top: "17px",
+                color: "#327113"
+              }}
+            >
+              Partner
+            </p>
+          )}
+          </div>
+          </div>
         }
+
         <div
           id='kt_app_header_wrapper'
           className='d-flex align-items-stretch justify-content-between flex-lg-grow-1'

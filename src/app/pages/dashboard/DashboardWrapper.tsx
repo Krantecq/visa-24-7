@@ -26,11 +26,15 @@ type Props = {
   api:string | number
   processed:string | number
   waiting:string | number
+  today_total_transactions:string | number
+  visa_processed_today:string | number
 
 }
 
 
 const DashboardPage: FC<Props> = (data) => (
+  
+  
   <>
     {/* begin::Row */}
     <div className='row g-5 g-xl-10'>
@@ -98,6 +102,34 @@ const DashboardPage: FC<Props> = (data) => (
         />
       </div>
       
+    </div>
+    <h1
+      style={{
+        marginTop:"20px",
+        marginBottom:"20px"
+    }}
+    >Today's Statistics</h1>
+    <div className='row g-5 g-xl-10'>
+      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+          <HomeMainCard
+            className='mb-5 mb-xl-10'
+            description='Today total transactions'
+            color='#F0F0F0'
+            icon={icon1}
+            textColor='#071437'
+            count={data.today_total_transactions}
+          />
+      </div>
+      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+          <HomeMainCard
+            className='mb-5 mb-xl-10'
+            description='Visa processed today'
+            color='#F0F0F0'
+            icon={customer}
+            textColor='#071437'
+            count={data.visa_processed_today}
+          />
+      </div>
     </div>
     {/* <div className='row g-5 g-xl-8'>
       <div className='col-xl-4'>
@@ -175,6 +207,8 @@ const DashboardWrapper: FC = () => {
     api:'',
     processed:'',
     waiting:'',
+    today_total_transactions:'',
+    visa_processed_today:'',
   });
   const [loading,setLoading] = useState(true);
   useEffect(() => {

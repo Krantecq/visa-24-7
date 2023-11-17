@@ -9,13 +9,14 @@ import { ForgotPassword as MerchantForgotPassword } from './components/Merchant/
 import { Login as CustomerLogin } from './components/Customer/Login'; 
 import { Registration as CustomerRegistration } from './components/Customer/Registration'; 
 import { ForgotPassword as CustomerForgotPassword } from './components/Customer/ForgotPassword'; 
-import { LandingPage } from './components/LandingPage';
+// import { LandingPage } from './components/LandingPage';
 import { ChangePassword } from './components/Merchant/ChangePassword';
+import Home from '../../pages/landing/home';
 
 const AuthPage = () => (
   <Routes>
     
-    <Route index element={<LandingPage />} />
+    <Route index element={<Home />} />
     <Route element={<AuthLayout />}>
       <Route path='superadmin/login' element={<SuperadminLogin />} />
       <Route path='superadmin/registration' element={<SuperadminRegistration />} />
