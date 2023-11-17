@@ -7,6 +7,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import axios from 'axios'
 import axiosInstance from '../helpers/axiosInstance'
 import { DatePicker } from 'antd'
+// import 'antd/dist/antd.css';
 import moment, { Moment } from 'moment'
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/en';
@@ -93,6 +94,11 @@ const MerchantApplyVisa: React.FC<Props> = ({
     
   const [selectedFromCountry, setSelectedFromCountry] = useState(''); // Initialize with a default value for "From" country
   const [selectedToCountry, setSelectedToCountry] = useState(''); // Initialize with a default value for "To" country
+  const currentDate = new Date();
+
+  const disabledDate = (current) => {
+    return current && current < currentDate;
+  };
 
   // const handleFromCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
   //   const selectedValue = event.target.value;
@@ -687,6 +693,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
                     setExpiryDate(y);
                   }
                 }}
+                disabledDate={disabledDate}
                 />
               </div>
             </div>

@@ -6,7 +6,12 @@ function SelectCountry({show}) {
 
     const [depDate, setDepDate] = useState(null);
     const [returnDate, setReturnDate] = useState(null);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);  
+    const currentDate = new Date();
+    const disabledDate = (current) => {
+        return current && current < currentDate;
+    };
+
     return (
         <div>
             <div className='pb-10 pb-lg-12'>
@@ -541,12 +546,13 @@ function SelectCountry({show}) {
                     <label className='form-label required fw-bold'>Departure Date</label>
                     <div className='col-lg-12 fv-row'>
                         <DatePicker
-                            name='departureDate'
-                            selected={depDate}
-                            onChange={(date) => setDepDate(date)}
-                            className='form-control form-control-lg form-control-solid'
-                            dateFormat='MM/dd/yyyy'
-                            placeholderText='Select Departure Date'
+                          name='departureDate'
+                          value={depDate}
+                          onChange={(date) => setDepDate(date)}
+                          className='form-control form-control-lg form-control-solid'
+                          format='MM/DD/YYYY'
+                          placeholder='Select Departure Date'
+                          disabledDate={disabledDate}
                         />
 
                     </div>

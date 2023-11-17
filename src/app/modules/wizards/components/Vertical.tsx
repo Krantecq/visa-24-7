@@ -299,7 +299,7 @@ const Vertical: React.FC<VerticalProps> = ({
             <>
               <div onClick={() => { }} style={{ ...tabTextStyle }}>
                 <CheckCircleOutline style={{ color: '#332786', marginRight: 8 }} />
-                Traveler {index + 1}
+                Traveller {index + 1}
               </div>
               <div style={{ marginLeft: 20 }}>
                 <div onClick={() => { }} style={{ ...tabTextStyle }}>
@@ -316,7 +316,7 @@ const Vertical: React.FC<VerticalProps> = ({
                 </div>
                 <div onClick={() => { }} style={{ ...tabTextStyle }}>
                   <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
-                  Traveler Photo
+                  Traveller Photo
                 </div>
               </div>
             </>

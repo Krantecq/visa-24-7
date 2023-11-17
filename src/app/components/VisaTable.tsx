@@ -46,12 +46,12 @@ const VisaTable: React.FC<Props> = ({
 
   const [selectedQuantity, setSelectedQuantity] = useState(1);  
 
-  const handleQuantityChange = (newQuantity) => {
-    const updatedQuantity = Math.max(1, newQuantity); 
-    setSelectedQuantity(updatedQuantity);
-    const totalCalculatedPrice = selectedTicketPrice / (selectedQuantity || 1) * updatedQuantity;
-    setSelectedTicketPrice(totalCalculatedPrice);
-  };
+//   const handleQuantityChange = (newQuantity) => {
+//     const updatedQuantity = Math.max(1, newQuantity); 
+//     setSelectedQuantity(updatedQuantity);
+//     const totalCalculatedPrice = selectedTicketPrice / (selectedQuantity || 1) * updatedQuantity;
+//     setSelectedTicketPrice(totalCalculatedPrice);
+//   };
   
   const handleTicketSelection = (ticketIndex) => {
     setSelectedTicket(ticketIndex);
@@ -165,7 +165,7 @@ const VisaTable: React.FC<Props> = ({
               <h2><img className="icons" src="/assets/vt2.png"/>Length of Stay</h2>
               <p>{apiData[selectedTicket].day} Days</p>
           </div>
-          <div style={{padding:"5px 0px"}} className="text-cont">
+          {/* <div style={{padding:"5px 0px"}} className="text-cont">
               <h2><img className="icons" src="/assets/vt3.png"/>Travellers</h2>
               <div className="num-block skin-2">
                   <div className="num-in">
@@ -174,12 +174,12 @@ const VisaTable: React.FC<Props> = ({
                       <span className="plus" onClick={() => handleQuantityChange(selectedQuantity + 1)}></span>
                   </div>
               </div>
-          </div>
+          </div> */}
 
           <div className="text-cont1">
               <h2 className="tb"><img className="icons" src="/assets/vt4.png"/>Total</h2>
               <div className="pb">
-                  <p className="amount">₹{selectedTicketPrice}</p>
+                  <p style={{top:"10px"}} className="amount">₹{selectedTicketPrice}</p>
                   <h2 className="tax-des">(includes all government related fees)</h2>
               </div>
           </div>

@@ -98,7 +98,7 @@ function ApplicationFormView({viewApplication}) {
           className='d-flex flex-row-fluid flex-center bg-body rounded'
           style={{width: '70%', backgroundColor: 'blue'}}
         >
-          <Formik initialValues={initValues} onSubmit={() => {}}>
+          <Formik initialValues={viewApplication} onSubmit={() => {}}>
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div>

@@ -22,7 +22,13 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
   const [expiryDate, setExpiryDate] = useState(null);
   const [initValues] = useState<ICreateAccount>(inits);
 
-  
+  const currentDate = new Date();
+
+  const disabledDate = (current) => {
+    return current && current < currentDate;
+  };
+
+
   const onSubmit = (values: any) => {
     console.log(values)
     visaListLoader(true)
@@ -633,6 +639,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
                   dateFormat='MM/dd/yyyy'
                   placeholderText='Select Date'
                   style={{ backgroundColor: '#fff' }}
+                  disabledDate={disabledDate}
                 />
 
                 <div className='text-danger mt-2'>

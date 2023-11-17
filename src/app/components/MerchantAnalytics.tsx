@@ -22,7 +22,7 @@ export function MerchantAnaltytics({dashboardData}) {
     >Analytics</h1>
     <div className='row g-5 g-xl-10'>
       {/* begin::Col */}
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+      {/* <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Wallet Balance'
@@ -31,7 +31,7 @@ export function MerchantAnaltytics({dashboardData}) {
           textColor='#071437'
           count={dashboardData?.wallet_balance}
         />
-      </div>
+      </div> */}
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
@@ -62,8 +62,6 @@ export function MerchantAnaltytics({dashboardData}) {
           count={dashboardData?.in_process_visa}
         />
       </div>
-    </div>
-    <div className='row g-5 g-xl-10'>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
@@ -74,6 +72,8 @@ export function MerchantAnaltytics({dashboardData}) {
           count={dashboardData?.waiting_visa}
         />
       </div>
+    </div>
+    <div className='row g-5 g-xl-10'>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'

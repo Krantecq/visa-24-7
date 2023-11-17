@@ -189,7 +189,8 @@
     padding: 10px 30px;
     border: 1px solid black;
     transition: 0.4s all;
-
+    position: sticky;
+    top: 90px;
 }
 
 .choice .apply-card:hover{
@@ -268,8 +269,7 @@
 
 .choice .text-cont1{
     border-width: thin;
-    padding: 15px 15px;
-    margin-top: 10px;
+    padding: 10px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
