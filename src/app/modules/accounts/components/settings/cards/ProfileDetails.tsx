@@ -206,7 +206,7 @@ const ProfileDetails: React.FC = () => {
           </div>
 
           <div className='card-footer d-flex justify-content-end py-6 px-9'>
-            <button style={{backgroundColor:"#327113"}} onClick={handleSaveClick} className='btn btn-primary' disabled={loading}>
+            <button style={{backgroundColor:"#327113"}} onClick={handleSaveClick} className='btn btn-success' disabled={loading}>
               {!loading && 'Save Changes'}
               {loading && (
                 <span className='indicator-progress' style={{ display: 'block' }}>

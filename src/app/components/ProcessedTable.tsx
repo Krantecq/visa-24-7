@@ -265,14 +265,14 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                       } />
                       {row.visa_status === 'Applied' && (
                         // Render the "Approve" button only when the merchant is not approved
-                        <button className='btn btn-primary align-self-center'>Check Status</button>
+                        <button className='btn btn-success align-self-center'>Check Status</button>
                       )}
                       {row.visa_status === 'Waiting' && (
                         // Render the "Approve" button only when the merchant is not approved
-                        <button style={{background:"#327113"}} className='btn btn-primary align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
+                        <button style={{background:"#327113"}} className='btn btn-success align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
                       )}
                       {row.visa_status === 'Processed' && (
-                        <button className='btn btn-primary align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
+                        <button className='btn btn-success align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>
 
                           // Render the "Approve" button only when the merchant is not approved
                         )}

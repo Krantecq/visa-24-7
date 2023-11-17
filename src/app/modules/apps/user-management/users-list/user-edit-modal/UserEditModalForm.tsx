@@ -384,7 +384,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
 
           <button
             type='submit'
-            className='btn btn-primary'
+            className='btn btn-success'
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >

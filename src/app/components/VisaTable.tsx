@@ -90,7 +90,7 @@ const VisaTable: React.FC<Props> = ({
               <span>Days</span>
           </div>
           <div className="ticket-area">
-              <div className="visa-type">{entry.entryType} &nbsp;
+              <div className="visa-type">Tourist Visa &nbsp;
                   <svg width="15" height="15" viewBox="0 0 28 23" xmlns="http://www.w3.org/2000/svg">
                       <g transform="rotate(180, 14, 11.5)">
                           <g clip-path="url(#clip0_102_11795)">
@@ -146,7 +146,7 @@ const VisaTable: React.FC<Props> = ({
                       </div>
                       <div className="details">
                           <p>Visa Type</p>
-                          <h2>Tourist Visa</h2>
+                          <h2>{entry.entryType}</h2>
                       </div>
                       <div className="details">
                           <p>Price</p>

@@ -275,7 +275,7 @@ const CreateAppModal = ({show, handleClose}: Props) => {
                 <div>
                   <button
                     type='button'
-                    className='btn btn-lg btn-primary'
+                    className='btn btn-lg btn-success'
                     data-kt-stepper-action='submit'
                     onClick={submit}
                   >
@@ -284,7 +284,7 @@ const CreateAppModal = ({show, handleClose}: Props) => {
 
                   <button
                     type='button'
-                    className='btn btn-lg btn-primary'
+                    className='btn btn-lg btn-success'
                     data-kt-stepper-action='next'
                     onClick={nextStep}
                   >

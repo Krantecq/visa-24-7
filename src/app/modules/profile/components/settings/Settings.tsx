@@ -327,7 +327,7 @@ export function Settings() {
           <div className='mb-8 row pt-10'>
             <label className='col-lg-3 col-form-label'></label>
             <div className='col-lg-9'>
-              <button type='reset' className='btn btn-primary fw-bolder px-6 py-3 me-3'>
+              <button type='reset' className='btn btn-success fw-bolder px-6 py-3 me-3'>
                 Save Changes
               </button>
               <button

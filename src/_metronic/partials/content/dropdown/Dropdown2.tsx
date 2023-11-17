@@ -67,7 +67,7 @@ const Dropdown2: FC = () => {
 
       <div className='menu-item px-3'>
         <div className='menu-content px-3 py-3'>
-          <a className='btn btn-primary  btn-sm px-4' href='#'>
+          <a className='btn btn-success  btn-sm px-4' href='#'>
             Generate Reports
           </a>
         </div>

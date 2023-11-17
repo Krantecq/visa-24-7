@@ -162,7 +162,7 @@ function ApiSettingWrapper() {
                 <div className='d-flex justify-content-center mt-10'>
                   <button
                     type='submit'
-                    className='btn btn-primary'
+                    className='btn btn-success'
                     onClick={handleSave}
                     style={{ backgroundColor: '#327113', width: 180, marginLeft:"150px" }}
                   >

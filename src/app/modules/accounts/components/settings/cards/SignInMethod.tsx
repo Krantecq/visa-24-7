@@ -151,7 +151,7 @@ const SignInMethod: React.FC = () => {
                   <button
                     id='kt_signin_submit'
                     type='submit'
-                    className='btn btn-primary  me-2 px-6'
+                    className='btn btn-success  me-2 px-6'
                   >
                     {!loading1 && 'Update Email'}
                     {loading1 && (
@@ -272,7 +272,7 @@ const SignInMethod: React.FC = () => {
                   <button
                     id='kt_password_submit'
                     type='submit'
-                    className='btn btn-primary me-2 px-6'
+                    className='btn btn-success me-2 px-6'
                   >
                     {!loading2 && 'Update Password'}
                     {loading2 && (
@@ -323,7 +323,7 @@ const SignInMethod: React.FC = () => {
               </div>
               <a
                 href='#'
-                className='btn btn-primary px-6 align-self-center text-nowrap'
+                className='btn btn-success px-6 align-self-center text-nowrap'
                 data-bs-toggle='modal'
                 data-bs-target='#kt_modal_two_factor_authentication'
               >

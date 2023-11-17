@@ -595,7 +595,7 @@ const BuilderPage: React.FC = () => {
               <div className='row'>
                 <div className='col-lg-3'></div>
                 <div className='col-lg-9'>
-                  <button type='button' onClick={updateConfig} className='btn btn-primary me-2'>
+                  <button type='button' onClick={updateConfig} className='btn btn-success me-2'>
                     {!configLoading && <span className='indicator-label'>Preview</span>}
                     {configLoading && (
                       <span className='indicator-progress' style={{display: 'block'}}>

@@ -161,10 +161,10 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                 </li>
               </ul>
             </div>
-            {/* <button className='btn btn-primary align-self-center'>All</button>
+            {/* <button className='btn btn-success align-self-center'>All</button>
             <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button> */}
             <Link to={'/superadmin/add-new-merchant'}>
-              <button style={{backgroundColor:"#327113"}} className='btn btn-primary align-self-center'>Add new Retailer</button>
+              <button style={{backgroundColor:"#327113"}} className='btn btn-success align-self-center'>Add new Retailer</button>
             </Link>
           </div>
         </div>
@@ -277,7 +277,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                               {item.merchant_approved === false && (
                                 // Render the "Approve" button only when the merchant is not approved
                                 <button
-                                  className='btn btn-primary align-self-center'
+                                  className='btn btn-success align-self-center'
                                   onClick={() => handleApproveClick(item)}
                                 >
                                   Approve

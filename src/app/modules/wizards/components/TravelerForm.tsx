@@ -285,7 +285,7 @@ function TravelerForm({ onDataChange, ind }) {
               <button
                 type='button'
                 onClick={handleImageUpload}
-                className='btn btn-lg btn-primary me-3 mt-7'
+                className='btn btn-lg btn-success me-3 mt-7'
                 style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>
@@ -539,7 +539,7 @@ function TravelerForm({ onDataChange, ind }) {
               <button
                 type='button'
                 onClick={handleImageUploadBack}
-                className='btn btn-lg btn-primary me-3 mt-7'
+                className='btn btn-lg btn-success me-3 mt-7'
                 style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>
@@ -656,7 +656,7 @@ function TravelerForm({ onDataChange, ind }) {
               <button
                 type='button'
                 onClick={handlePanUpload}
-                className='btn btn-lg btn-primary me-3 mt-7'
+                className='btn btn-lg btn-success me-3 mt-7'
                 style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>
@@ -752,7 +752,7 @@ function TravelerForm({ onDataChange, ind }) {
               <button
                 type='button'
                 onClick={handlePhotoUpload}
-                className='btn btn-lg btn-primary me-3 mt-7'
+                className='btn btn-lg btn-success me-3 mt-7'
                 style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
               >
                 <span className='indicator-label'>Select Files</span>

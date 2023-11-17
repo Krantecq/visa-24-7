@@ -245,7 +245,7 @@ const Step2: FC<Step2Props> = ({ data, data1, prevStep,showfinalSubmitLoader }) 
 
 
         <div>
-          <button type='button' onClick={handleNext} className='btn btn-lg btn-primary me-3' style={{ justifyContent: 'flex-end' }}>
+          <button type='button' onClick={handleNext} className='btn btn-lg btn-success me-3' style={{ justifyContent: 'flex-end' }}>
             <span className='indicator-label'>
               Apply
               <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />

@@ -17,7 +17,7 @@ const TilesWidget4 = ({className}: Props) => {
         </div>
         <a
           href='#'
-          className='btn btn-primary fw-semibold'
+          className='btn btn-success fw-semibold'
           data-bs-toggle='modal'
           data-bs-target='#kt_modal_create_campaign'
         >

@@ -260,7 +260,7 @@ function AddNewMerchant() {
                 <button
                   type='button'
                   onClick={handlePhotoUpload}
-                  className='btn btn-lg btn-primary me-3 mt-3'
+                  className='btn btn-lg btn-success me-3 mt-3'
                   style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
                 >
                   <span className='indicator-label'>Select Files</span>
@@ -716,7 +716,7 @@ function AddNewMerchant() {
                 <button
                   type='button'
                   onClick={handleImageUploadBack}
-                  className='btn btn-lg btn-primary me-3 mt-3'
+                  className='btn btn-lg btn-success me-3 mt-3'
                   style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
                 >
                   <span className='indicator-label'>Select Files</span>

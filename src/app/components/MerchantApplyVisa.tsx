@@ -702,7 +702,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
               <div className='d-flex justify-content-end'>
                 <button
                   type='submit'
-                  className='btn btn-primary'
+                  className='btn btn-success'
                   style={{
                     marginRight: 60,
                     borderRadius: 25,

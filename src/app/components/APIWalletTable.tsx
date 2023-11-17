@@ -272,7 +272,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                       }} className='mx-5 cursor-pointer' />
                       {row.status === 'In-processed' && (
                           // Render the "Approve" button only when the merchant is not approved
-                          <button className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Issue API</button>
+                          <button className='btn btn-success align-self-center' onClick={() => handleApproveClick(row)}>Issue API</button>
 
                         )}
                     </div>

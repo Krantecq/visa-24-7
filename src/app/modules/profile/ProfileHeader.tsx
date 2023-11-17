@@ -98,7 +98,7 @@ const ProfileHeader: React.FC = () => {
                 </a>
                 <a
                   href='#'
-                  className='btn btn-sm btn-primary me-3'
+                  className='btn btn-sm btn-success me-3'
                   data-bs-toggle='modal'
                   data-bs-target='#kt_modal_offer_a_deal'
                 >

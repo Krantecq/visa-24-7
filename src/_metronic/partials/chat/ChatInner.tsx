@@ -179,7 +179,7 @@ const ChatInner: FC<Props> = ({isDrawer = false}) => {
             </button>
           </div>
           <button
-            className='btn btn-primary'
+            className='btn btn-success'
             type='button'
             data-kt-element='send'
             onClick={sendMessage}

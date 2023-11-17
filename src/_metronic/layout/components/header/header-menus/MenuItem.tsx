@@ -42,7 +42,7 @@ const MenuItem: FC<Props> = ({to, title, icon, fontIcon, hasArrow = false, hasBu
           </span>
         )}
 
-        <span className='menu-title' style={{color:'#332789'}}>{title}</span>
+        <span className='menu-title' style={{color:'#327113'}}>{title}</span>
 
         {hasArrow && <span className='menu-arrow'></span>}
       </Link>

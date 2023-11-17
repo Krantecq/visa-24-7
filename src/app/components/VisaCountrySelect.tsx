@@ -574,7 +574,7 @@ function SelectCountry({show}) {
             </div>
 
             <div className='card-footer d-flex justify-content-end py-6 px-9'>
-                <button type='submit' onClick={()=>show(true)} className='btn btn-primary' disabled={loading}>
+                <button type='submit' onClick={()=>show(true)} className='btn btn-success' disabled={loading}>
                     {!loading && 'Search'}
                     {loading && (
                         <span className='indicator-progress' style={{ display: 'block' }}>

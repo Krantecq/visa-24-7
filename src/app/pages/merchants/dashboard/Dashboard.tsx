@@ -72,7 +72,7 @@ const MerchantDashboard = () => {
   };
   // Define inline styles for the active tab text
   const activeTabTextStyle = {
-    color: '#332789', // Text color for the active tab
+    color: '#327113', // Text color for the active tab
     cursor: 'pointer',
     fontSize: 18,
     fontWeight: 600,
@@ -90,7 +90,7 @@ const MerchantDashboard = () => {
     paddingLeft: 8,
     marginTop: 5,
     borderRadius: 7,
-    color: '#332789', // Add some padding to the active tab
+    color: '#327113', // Add some padding to the active tab
   };
 
   // Define inline styles for the inactive tab text

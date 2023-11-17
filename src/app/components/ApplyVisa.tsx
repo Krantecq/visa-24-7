@@ -669,7 +669,7 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
 
             {!visaList && (
               <div className='d-flex justify-content-end'>
-                <button type="submit" className='btn btn-primary'>
+                <button type="submit" className='btn btn-success'>
                   Search
                 </button>
               </div>

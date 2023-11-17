@@ -69,7 +69,7 @@ export function Dropdown1() {
             Reset
           </button>
 
-          <button type='submit' className='btn btn-sm btn-primary' data-kt-menu-dismiss='true'>
+          <button type='submit' className='btn btn-sm btn-success' data-kt-menu-dismiss='true'>
             Apply
           </button>
         </div>

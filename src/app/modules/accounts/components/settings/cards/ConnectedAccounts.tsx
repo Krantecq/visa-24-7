@@ -159,7 +159,7 @@ const ConnectedAccounts: React.FC = () => {
 
         <div className='card-footer d-flex justify-content-end py-6 px-9'>
           <button className='btn btn-light btn-active-light-primary me-2'>Discard</button>
-          <button onClick={click} className='btn btn-primary'>
+          <button onClick={click} className='btn btn-success'>
             {!loading && 'Save Changes'}
             {loading && (
               <span className='indicator-progress' style={{display: 'block'}}>

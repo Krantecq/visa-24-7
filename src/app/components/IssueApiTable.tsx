@@ -245,7 +245,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                                 handleClickOpen(item)
                               } className='mx-5 cursor-pointer' />
 
-                              <button className='btn btn-primary align-self-center' onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
+                              <button className='btn btn-success align-self-center' onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
                             </div>
                           </td>
                         </tr>
@@ -302,9 +302,9 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                     <div className='d-flex justify-content-center mt-10'>
                       <button
                         type='submit'
-                        className='btn btn-primary'
+                        className='btn btn-success'
                         onClick={handleSaveClick}
-                        style={{ backgroundColor: '#332789', width: 180 }}
+                        style={{ backgroundColor: '#327113', width: 180 }}
                       >
 
                         {!loadingButton && <span className='indicator-label'>Save</span>}

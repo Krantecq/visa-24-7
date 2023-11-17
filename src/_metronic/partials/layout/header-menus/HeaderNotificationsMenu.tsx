@@ -104,7 +104,7 @@ const HeaderNotificationsMenu: FC = () => (
             <div className='text-center mt-5 mb-9'>
               <a
                 href='#'
-                className='btn btn-sm btn-primary px-6'
+                className='btn btn-sm btn-success px-6'
                 data-bs-toggle='modal'
                 data-bs-target='#kt_modal_upgrade_plan'
               >

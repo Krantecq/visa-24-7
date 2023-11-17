@@ -44,7 +44,7 @@ const Item5: FC = () => {
               </div>
 
               <div className='overlay-layer bg-dark bg-opacity-10 rounded'>
-                <a href='#' className='btn btn-sm btn-primary btn-shadow'>
+                <a href='#' className='btn btn-sm btn-success btn-shadow'>
                   Explore
                 </a>
               </div>
@@ -60,7 +60,7 @@ const Item5: FC = () => {
               </div>
 
               <div className='overlay-layer bg-dark bg-opacity-10 rounded'>
-                <a href='#' className='btn btn-sm btn-primary btn-shadow'>
+                <a href='#' className='btn btn-sm btn-success btn-shadow'>
                   Explore
                 </a>
               </div>
@@ -76,7 +76,7 @@ const Item5: FC = () => {
               </div>
 
               <div className='overlay-layer bg-dark bg-opacity-10 rounded'>
-                <a href='#' className='btn btn-sm btn-primary btn-shadow'>
+                <a href='#' className='btn btn-sm btn-success btn-shadow'>
                   Explore
                 </a>
               </div>

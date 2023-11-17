@@ -30,7 +30,7 @@ const Error404: FC = () => {
 
       {/* begin::Link */}
       <div className='mb-0'>
-        <Link to='/' className='btn btn-sm btn-primary'>
+        <Link to='/' className='btn btn-sm btn-success'>
           Return Home
         </Link>
       </div>

@@ -271,7 +271,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
                         {row.status === 'In-processed' && (
                           // Render the "" button only when the merchant is not approved
-                          <button style={{background:"#327113"}} className='btn btn-primary align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
+                          <button style={{background:"#327113"}} className='btn btn-success align-self-center' onClick={() => handleApproveClick(row)}>Approve</button>
 
                         )}
                       </div>

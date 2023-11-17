@@ -498,7 +498,7 @@ function MerchantProfile() {
               <div className='d-flex justify-content-end'>
                 <button
                   type='submit'
-                  className='btn btn-primary'
+                  className='btn btn-success'
                   onClick={handleSave}
                   style={{ backgroundColor: '#327113' }}
                 >
@@ -759,7 +759,7 @@ function MerchantProfile() {
             <button
               type='button'
               onClick={handleImageUpload}
-              className='btn btn-lg btn-primary me-3 mt-3'
+              className='btn btn-lg btn-success me-3 mt-3'
               style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
             >
               <span className='indicator-label'>Select Files</span>
@@ -820,7 +820,7 @@ function MerchantProfile() {
                   <button
                     type='submit'
                     style={{ width: 200, backgroundColor: '#327113' }}
-                    className='btn btn-primary'
+                    className='btn btn-success'
                     onClick={handleSaveClick}
                   >
                     {!loading && <span className='indicator-label'>Save</span>}
@@ -919,7 +919,7 @@ function MerchantProfile() {
             <button
               type='button'
               onClick={handleImageUpload}
-              className='btn btn-lg btn-primary me-3 mt-3'
+              className='btn btn-lg btn-success me-3 mt-3'
               style={{ justifyContent: 'flex-end', backgroundColor: '#327113' }}
             >
               <span className='indicator-label'>Select Files</span>
@@ -980,7 +980,7 @@ function MerchantProfile() {
                   <button
                     type='submit'
                     style={{ width: 200, backgroundColor: '#327113' }}
-                    className='btn btn-primary'
+                    className='btn btn-success'
                     onClick={handleIssueApiClick}
                   >
                     {!loading && <span className='indicator-label'>Save</span>}
@@ -1098,13 +1098,13 @@ function MerchantProfile() {
 
         </div>
 
-        <div className='fv-row mb-10 w-100' style={{ marginLeft: '5%', marginRight: '3%', }}>
+        <div className='fv-row w-50' style={{marginLeft:"-20px"}}>
           <div className='d-flex align-items-center'>
-            <label className='d-flex align-items-center form-label fs-4' style={{ width: '50%' }}>
+            <label className='d-flex align-items-center form-label fs-4' style={{width:"33%", marginLeft:"10px"}}>
               <CalendarMonthIcon style={{ marginRight: '3px' }} />
               <span className=''>From</span>
             </label>
-            <label className='d-flex align-items-center form-label fs-4' style={{ width: '50%' }}>
+            <label className='d-flex align-items-center form-label fs-4'>
               <CalendarMonthIcon style={{ marginRight: '3px' }} />
               <span className=''>To</span>
             </label>
@@ -1241,7 +1241,7 @@ function MerchantProfile() {
                     <button
                       type='submit'
                       style={{ width: 200, backgroundColor: '#327113' }}
-                      className='btn btn-primary'
+                      className='btn btn-success'
                       onClick={() => { setReceiptshow(true) }}
                     >
                       {!loading && <span className='indicator-label'>Issue API</span>}
@@ -1353,7 +1353,7 @@ function MerchantProfile() {
                   <button
                     type='submit'
                     style={{ width: 200, backgroundColor: '#327113' }}
-                    className='btn btn-primary'
+                    className='btn btn-success'
                     onClick={() => saveCommission()}
                   >
                     {!loading && <span className='indicator-label'>Set Commission</span>}

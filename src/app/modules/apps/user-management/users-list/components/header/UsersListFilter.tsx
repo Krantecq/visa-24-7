@@ -114,7 +114,7 @@ const UsersListFilter = () => {
               disabled={isLoading}
               type='button'
               onClick={resetData}
-              className='btn btn-primary fw-bold px-6'
+              className='btn btn-success fw-bold px-6'
               data-kt-menu-dismiss='true'
               data-kt-user-table-filter='filter'
             >

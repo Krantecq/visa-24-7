@@ -45,7 +45,7 @@ const Item7: FC = () => {
                   Login into Metronic Admin Dashboard to make sure the data integrity is OK
                 </div>
               </div>
-              <a href='#' className='btn btn-primary px-6 align-self-center text-nowrap'>
+              <a href='#' className='btn btn-success px-6 align-self-center text-nowrap'>
                 Proceed
               </a>
             </div>

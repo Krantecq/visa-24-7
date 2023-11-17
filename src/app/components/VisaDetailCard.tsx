@@ -525,7 +525,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                     >
                         <div
                             style={{
-                                backgroundColor: '#332789',
+                                backgroundColor: '#327113',
                                 width: '100%',
                                 height: 50,
                                 borderTopRightRadius: 20,
@@ -616,7 +616,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                             <div style={{ flex: '1', borderRight: '1px solid #f5f5f5' }} className='p-10 '>
                                 {/* <div
                                     className='px-10 py-5'
-                                    style={{ width: '100%', backgroundColor: '#332789', borderRadius: 10 }}
+                                    style={{ width: '100%', backgroundColor: '#327113', borderRadius: 10 }}
                                 >
                                     <h6 style={{ color: 'white' }}>
                                         <CheckIcon style={{ marginLeft: -20 }} />
@@ -628,7 +628,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                     onClick={() => handleViewApplicationClick(selectedVisa)}
                                     className='mb-10 mx-10 mt-20 px-10 py-5'
                                     style={{
-                                        border: '2px solid #332789',
+                                        border: '2px solid #327113',
                                         cursor: 'pointer',
                                         borderRadius: 10,
                                         alignItems: 'center',
@@ -637,7 +637,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         backgroundColor: '#fff',
                                     }}
                                 >
-                                    <h6 className='fs-4' style={{ color: '#332789', paddingTop: 7 }}>
+                                    <h6 className='fs-4' style={{ color: '#327113', paddingTop: 7 }}>
                                         View Application
                                     </h6>
 
@@ -650,7 +650,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         alignItems: 'center',
                                         display: 'flex',
                                         justifyContent: 'center',
-                                        backgroundColor: '#332789',
+                                        backgroundColor: '#327113',
                                         color: '#fff',
                                         fontSize: "17px",
                                         whiteSpace: 'nowrap'
@@ -684,7 +684,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                                         alignItems: 'center',
                                         display: 'flex',
                                         justifyContent: 'center',
-                                        backgroundColor: '#332789',
+                                        backgroundColor: '#327113',
                                         color: '#fff',
                                         fontSize: "17px",
                                         whiteSpace: 'nowrap'
@@ -754,7 +754,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                         <button
                             type='submit'
                             id='kt_sign_in_submit'
-                            className='btn btn-primary'
+                            className='btn btn-success'
                             onClick={() => handleViewDetailsClick(entry)}
                             style={{ backgroundColor: '#327113' }}
                         >
@@ -763,7 +763,7 @@ const VisaDetailCard = ({ visaData }: Props) => {
                         <button
                             type='submit'
                             id='kt_sign_in_submit'
-                            className='btn btn-primary'
+                            className='btn btn-success'
                             onClick={() => generateAndDownloadPDF(entry)}
                             style={{ backgroundColor: '#327113', marginTop: 20 }}
                         >

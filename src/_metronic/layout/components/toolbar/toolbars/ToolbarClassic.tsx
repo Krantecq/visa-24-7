@@ -53,7 +53,7 @@ const ToolbarClassic = () => {
         <a
           href='#'
           onClick={() => setShowCreateAppModal(true)}
-          className='btn btn-sm fw-bold btn-primary'
+          className='btn btn-sm fw-bold btn-success'
         >
           Create
         </a>

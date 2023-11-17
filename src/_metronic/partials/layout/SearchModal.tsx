@@ -60,7 +60,7 @@ const SearchModal: React.FC<Props> = ({show, handleClose}) => {
                             }}
                           />
                           <div className='overlay-layer bg-body bg-opacity-50'>
-                            <a href='#' className='btn btn-sm fw-bold btn-primary'>
+                            <a href='#' className='btn btn-sm fw-bold btn-success'>
                               Explore
                             </a>
                           </div>
@@ -77,7 +77,7 @@ const SearchModal: React.FC<Props> = ({show, handleClose}) => {
                             }}
                           />
                           <div className='overlay-layer bg-body bg-opacity-50'>
-                            <a href='#' className='btn btn-sm fw-bold btn-primary'>
+                            <a href='#' className='btn btn-sm fw-bold btn-success'>
                               Explore
                             </a>
                           </div>
@@ -96,7 +96,7 @@ const SearchModal: React.FC<Props> = ({show, handleClose}) => {
                             }}
                           />
                           <div className='overlay-layer bg-body bg-opacity-50'>
-                            <a href='#' className='btn btn-sm fw-bold btn-primary'>
+                            <a href='#' className='btn btn-sm fw-bold btn-success'>
                               Explore
                             </a>
                           </div>
@@ -117,7 +117,7 @@ const SearchModal: React.FC<Props> = ({show, handleClose}) => {
                         }}
                       ></div>
                       <div className='overlay-layer bg-body bg-opacity-50'>
-                        <a href='#' className='btn btn-sm fw-bold btn-primary'>
+                        <a href='#' className='btn btn-sm fw-bold btn-success'>
                           Explore
                         </a>
                       </div>

@@ -677,7 +677,7 @@ const Search: FC = () => {
 
               <a
                 href='/#'
-                className='btn btn-sm fw-bolder btn-primary'
+                className='btn btn-sm fw-bolder btn-success'
                 data-kt-search-element='advanced-options-form-search'
               >
                 Search
@@ -742,7 +742,7 @@ const Search: FC = () => {
               >
                 Cancel
               </button>
-              <button className='btn btn-sm fw-bolder btn-primary'>Save Changes</button>
+              <button className='btn btn-sm fw-bolder btn-success'>Save Changes</button>
             </div>
           </form>
         </div>

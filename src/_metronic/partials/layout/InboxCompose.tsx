@@ -177,7 +177,7 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
             {/*begin::Actions*/}
             <div className='d-flex align-items-center me-3'>
               {/*begin::Send*/}
-              <button className='btn btn-primary me-4 px-6'>Send</button>
+              <button className='btn btn-success me-4 px-6'>Send</button>
               {/*end::Send*/}
 
               {/*begin::Other*/}

@@ -73,7 +73,7 @@ const HelpDrawer = () => {
               {/* begin::Link */}
               <a
                 href='https://devs.keenthemes.com'
-                className='btn btn-lg explore-btn-primary w-100'
+                className='btn btn-lg explore-btn-success w-100'
               >
                 Get Support
               </a>

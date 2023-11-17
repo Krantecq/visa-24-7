@@ -273,14 +273,14 @@ const Vertical: React.FC<VerticalProps> = ({
   // const classes = useStyles();
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
-      <MerchantApplyVisa
+      {/* <MerchantApplyVisa
         visaListLoader={visaListLoader}
         visaList={visaList}
         show={show}
         onApiDataReceived={function (data: any): void {
           throw new Error('Function not implemented.')
         }}
-      />
+      /> */}
 
       <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
         <div
@@ -357,7 +357,7 @@ const Vertical: React.FC<VerticalProps> = ({
             >
               <h6
                 className='fs-4'
-                style={{ color: '#332789', paddingTop: 5, fontSize: 10 }}
+                style={{ color: '#327113', paddingTop: 5, fontSize: 10 }}
                 onClick={addTravelerForm}
               >
                 + Add Another Traveler

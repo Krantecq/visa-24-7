@@ -55,7 +55,7 @@ const SelectLocationModal: React.FC<Props> = ({show, handleClose, data}) => {
           <button type='button' className='btn btn-light-primary' onClick={dissmissLocation}>
             Cancel
           </button>
-          <button id='submit' type='button' className='btn btn-primary' onClick={applyLocation}>
+          <button id='submit' type='button' className='btn btn-success' onClick={applyLocation}>
             Apply
           </button>
         </div>

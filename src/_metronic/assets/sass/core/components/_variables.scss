@@ -5,7 +5,7 @@
 
 // Prefix for :root CSS variables
 $prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
-
+$primary-color: #007bff;
 // Bootstrap color system
 $white: #ffffff !default;
 $black: #000000 !default;
@@ -39,8 +39,8 @@ $grays: (
 
 // Bootstrap contextual colors
 // Primary colors
-$primary: #3699ff !default;
-$primary-active: #187de4 !default;
+$primary: #327113 !default;
+$primary-active: #275710 !default;
 $primary-light: #f1faff !default;
 $primary-inverse: $white !default;
 
@@ -660,7 +660,7 @@ $btn-disabled-opacity: 0.65 !default;
 $btn-active-box-shadow: null !default;
 
 $btn-link-color: var(--#{$prefix}link-color) !default;
-$btn-link-hover-color: var(--#{$prefix}link-hover-color) !default;
+$btn-link-hover-color: #40851d !default;
 $btn-link-disabled-color: var(--#{$prefix}gray-600) !default;
 
 // Allows for customizing button radius independently from global border radius

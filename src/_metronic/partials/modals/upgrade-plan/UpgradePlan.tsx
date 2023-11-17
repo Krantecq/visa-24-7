@@ -236,7 +236,7 @@ const UpgradePlan: FC = () => {
 
                           <div className='ms-5'>
                             {plan.custom && (
-                              <button className='btn btn-sm btn-primary'>Contact Us</button>
+                              <button className='btn btn-sm btn-success'>Contact Us</button>
                             )}
                             {!plan.custom && (
                               <>
@@ -326,7 +326,7 @@ const UpgradePlan: FC = () => {
                 Cancel
               </button>
 
-              <button type='submit' className='btn btn-primary'>
+              <button type='submit' className='btn btn-success'>
                 Upgrade Plan
               </button>
             </div>
