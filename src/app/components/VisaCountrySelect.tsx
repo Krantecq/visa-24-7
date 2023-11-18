@@ -567,6 +567,7 @@ function SelectCountry({show}) {
                             className='form-control form-control-lg form-control-solid'
                             dateFormat='MM/dd/yyyy'
                             placeholderText='Select Return Date'
+                            style={{ backgroundColor: '#fff', color:"#686868" }}
                         />
 
                     </div>

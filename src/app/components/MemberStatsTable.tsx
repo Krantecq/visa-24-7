@@ -310,7 +310,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
           <div style={contentStyle}>
             <div
               onClick={() => handleCloseClick()}
-              style={{ backgroundColor: '#d3d3d3', padding:"9px", position:"absolute", top:"15%", left:"84%", transform:"translate(-35%, -40%)", borderRadius: 20, cursor: 'pointer' }}
+              style={{ backgroundColor: '#d3d3d3', padding:"9px", position:"absolute", top:"15%", left:"84.5%", transform:"translate(-35%, -40%)", borderRadius: 20, cursor: 'pointer' }}
             >
               <CloseOutlined />
             </div>

@@ -635,10 +635,10 @@ const ApplyVisa: React.FC<Props> = ({ show, visaList, onApiDataReceived,visaList
                   name='accountName'
                   selected={issueDate}
                   onChange={(date) => setIssueDate(date)}
-                  className=' form-control form-control-lg form-control-solid border border-1  border-secondary rounded-4'
+                  className=' form-control form-control-lg form-control-solid border border-1  border-secondary rounded-4 text-black'
                   dateFormat='MM/dd/yyyy'
                   placeholderText='Select Date'
-                  style={{ backgroundColor: '#fff' }}
+                  style={{ backgroundColor: '#fff', color:"#686868" }}
                   disabledDate={disabledDate}
                 />
 

@@ -258,58 +258,6 @@ body::-webkit-scrollbar-thumb {
 
 
 
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
-  font-weight: normal;
-  color: #000000;
-  background: transparent;
-  border: none;
-  text-align: center;
-  z-index: 102;
-}
-
-.ui-datepicker td a {
-    display: block;
-    padding: 0.2em;
-
-    text-decoration: none;
-}
-
-.ui-datepicker td a:hover {
-    display: block;
-    padding: 0.2em;
-    text-decoration: none;
-    background: rgb(0, 174, 255);
-    color: #fff;
-    border-radius: 2px;
-}
-
-
-
-
-.ui-datepicker .ui-datepicker-prev span,
-.ui-datepicker .ui-datepicker-next span {
-  background-image: none; 
-  text-indent: 0; 
-  color: #000000; 
-  font-weight: bold;
-  border: none;
-  outline: none;
-}
-
-
-.ui-datepicker .ui-datepicker-prev span::before {
-    content: '←'; 
-  }
-
-  .ui-datepicker .ui-datepicker-next span::before {
-    content: '→';
-  }
-
-
-.ui-datepicker-header{
-    font-weight: 300;
-}
-
 
 .page1 .search-conti input[type="text"], input[type="date"]  {
     padding: 10px 0px;
@@ -322,7 +270,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
 }
 
-.journey-from{
+.page1 .search-conti .journey-from{
   width: 100%;
   padding: 10px 5px;
   border-radius: 10px;
@@ -353,7 +301,7 @@ body::-webkit-scrollbar-thumb {
   background-color: #ffffffb0;
 }
 
-.ant-picker-range {
+.page1 .search-conti .ant-picker-range {
     position: relative;
     display: inline-flex;
     background: none;
@@ -361,13 +309,13 @@ body::-webkit-scrollbar-thumb {
     gap: 3vw;
 }
 
-.ant-picker-focused.ant-picker {
+.page1 .search-conti .ant-picker-focused.ant-picker {
     border-color: #ffffff00;
     box-shadow: 0 0 0 2px rgb(255 255 255 / 0%);
     outline: 0;
 }
 
-.ant-picker-range .ant-picker-active-bar {
+.page1 .search-conti .ant-picker-range .ant-picker-active-bar {
     bottom: -1px;
     height: 2px;
     margin-inline-start: 11px;
@@ -377,7 +325,7 @@ body::-webkit-scrollbar-thumb {
     pointer-events: none;
 }
 
-.ant-picker-dropdown .ant-picker-range-arrow {
+.page1 .search-conti .ant-picker-dropdown .ant-picker-range-arrow {
     position: absolute;
     z-index: 1;
     display: none;
@@ -389,21 +337,21 @@ body::-webkit-scrollbar-thumb {
     overflow: hidden;
 }
 
-.ant-picker-range-arrow{
+.page1 .search-conti .ant-picker-range-arrow{
     left: -80px;
 }
 
-.ant-picker .ant-picker-input-placeholder >input {
+.page1 .search-conti .ant-picker .ant-picker-input-placeholder >input {
     color: rgb(255 255 255);
 }
 
 
-.ant-input:focus {
+.page1 .search-conti .ant-input:focus {
     border-color: #ffffff00;
     box-shadow: 0 0 0 2px rgba(24, 143, 255, 0);
   }
 
-.ant-picker .ant-picker-input >input {
+  .page1 .search-conti .ant-picker .ant-picker-input >input {
     position: relative;
     display: inline-block;
     width: 100%;
@@ -426,17 +374,17 @@ body::-webkit-scrollbar-thumb {
     font-family: inherit;
 }
 
-.ant-picker .ant-picker-input >input:hover {
+.page1 .search-conti .ant-picker .ant-picker-input >input:hover {
     border-color: #63ff4000;
 }
 
-.ant-picker-focused.ant-picker {
+.page1 .search-conti .ant-picker-focused.ant-picker {
     border-color: #1677ff00;
     box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
     outline: 0;
 }
 
-.anticon svg {
+.page1 .search-conti .anticon svg {
     display: inline-block;
     color: #000000;
     background: transparent;
@@ -525,11 +473,11 @@ body::-webkit-scrollbar-thumb {
     display: none;
 }
 
-select::-ms-expand {
+.page1 .search-conti select::-ms-expand {
   display: none;
 }
 
-select{
+.page1 .search-conti select{
   font-size: 16px;
   overflow: hidden;
   scrollbar-width: none; /* Firefox */
@@ -537,10 +485,10 @@ select{
   outline: none; /* Remove the default focus outline */
   cursor: pointer;
 }
-select::-webkit-scrollbar {
+.page1 .search-conti select::-webkit-scrollbar {
   display: none;
 }
-select option {
+.page1 .search-conti select option {
   color: #cccccc;
   background: #000000f7;
   width: 200px;

@@ -569,7 +569,11 @@ const Home = () => {
                         </select>
                     </div>
 
-                    <RangePicker onChange={onChange} />
+                    <RangePicker onChange={onChange}
+                    style={{
+                            
+                        
+                    }} />
                     <button onclick="search()">Search</button>
                 </div>
             </div>

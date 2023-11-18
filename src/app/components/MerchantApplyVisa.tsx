@@ -684,7 +684,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
                 </label>
                 </div>
                 <DatePicker.RangePicker 
-                style={{backgroundClip:'#fff',width:400,marginTop:8,border:'2px solid #e5e5e5',borderRadius:10,padding:10}}
+                style={{backgroundClip:'#fff',color:"#686868",width:400,marginTop:8,border:'2px solid #e5e5e5',borderRadius:10,padding:10}}
                 onChange={(value)=>{
                   if (value && value.length === 2) {
                     var x = value[0]?.format('YYYY-MM-DD');

@@ -629,7 +629,7 @@ function AddNewMerchant() {
                       </label>
 
                       <Field
-                        style={{ ...inputStyle, width: '450px' }}
+                        style={{ ...inputStyle, width: '95%' }}
                         name='merchant_address_one_line'
                         placeholder="Address first line"
                         value={formData.merchant_address_one_line}
@@ -647,7 +647,7 @@ function AddNewMerchant() {
                       </label>
 
                       <Field
-                        style={{ ...inputStyle, width: '450px' }}
+                        style={{ ...inputStyle, width: '95%' }}
                         name='merchant_address_second_line'
                         placeholder="Address second line"
                         value={formData.merchant_address_second_line}
