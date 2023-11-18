@@ -27,7 +27,7 @@ const Home = () => {
             </div>
 
             <div className="part11">
-                <img className="logo" src="./assets/logo2.png" alt="logo" />
+                <img className="logo" src="./media/assets/logo2.png" alt="logo" />
             </div>
 
             <div className="part31">
@@ -51,7 +51,7 @@ const Home = () => {
 
 
         <div className="page1">
-            <img className="bgimg" src="./assets/img1.png"/>
+            <img className="bgimg" src="./media/assets/img1.png"/>
             <h1>
                 Getting Visa Was Never<br/> This Easy.
             </h1>
@@ -594,32 +594,32 @@ const Home = () => {
             <h1>Top vacation Destinations</h1>
             <div className="cards">
                 <div className="card-vac">
-                    <img src="./assets/c2.png" />
+                    <img src="./media/assets/c2.png" />
                     <div className="gradient-layer"></div>
                     <h1 className="vac-title">Bali, Indonesia</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./assets/c3.png" />
+                    <img src="./media/assets/c3.png" />
                     <div className="gradient-layer"></div>
                     <h1 className="vac-title">Kerry, Ireland</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./assets/c4.png" />
+                    <img src="./media/assets/c4.png" />
                     <div className="gradient-layer"></div>
                     <h1 className="vac-title">Sydney, Australia</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./assets/c2.png" />
+                    <img src="./media/assets/c2.png" />
                     <div className="gradient-layer"></div>
                     <h1 className="vac-title">Bali, Indonesia</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./assets/c3.png" />
+                    <img src="./media/assets/c3.png" />
                     <div className="gradient-layer"></div>
                     <h1 className="vac-title">Kerry, Ireland</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./assets/c4.png" />
+                    <img src="./media/assets/c4.png" />
                     <div className="gradient-layer"></div>
                     <h1 className="vac-title">Sydney, Australia</h1>
                 </div>
@@ -632,7 +632,7 @@ const Home = () => {
             <div className="conti">
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Havelock</h1>
@@ -661,7 +661,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Whitsunday Island</h1>
@@ -690,7 +690,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd3.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd3.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Maldives</h1>
@@ -719,7 +719,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd4.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd4.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Mauritius</h1>
@@ -748,7 +748,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Havelock</h1>
@@ -777,7 +777,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Whitsunday Islands</h1>
@@ -808,7 +808,7 @@ const Home = () => {
             <div className="conti">
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Havelock</h1>
@@ -837,7 +837,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Whitsunday Island</h1>
@@ -866,7 +866,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd3.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd3.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Maldives</h1>
@@ -895,7 +895,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd4.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd4.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Mauritius</h1>
@@ -924,7 +924,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Havelock</h1>
@@ -953,7 +953,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Whitsunday Islands</h1>
@@ -984,7 +984,7 @@ const Home = () => {
             <div className="conti1">
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Havelock</h1>
@@ -1013,7 +1013,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Whitsunday Island</h1>
@@ -1042,7 +1042,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd3.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd3.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Maldives</h1>
@@ -1071,7 +1071,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd4.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd4.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Mauritius</h1>
@@ -1100,7 +1100,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Havelock</h1>
@@ -1129,7 +1129,7 @@ const Home = () => {
                 </a>
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
                     <div className="title">
                         <h1 className="heading">Whitsunday Islands</h1>
@@ -1161,27 +1161,27 @@ const Home = () => {
 
 
         <div className="page3">
-            <img className="img-service" src="./assets/contact.png" />
+            <img className="img-service" src="./media/assets/contact.png" />
             
             <div className="services">
                 <h1 className="service-head">Why Choose Us</h1>
                 <p className="service-para">Enjoy different experiences in every place you visit and<br/> discover new and affordable adventures of course.</p>
                 <div className="service-conti2">
-                    <img className="inoc" src="./assets/co1.png" alt=""/>
+                    <img className="inoc" src="./media/assets/co1.png" alt=""/>
                     <div className="service-text">
                         <h2>On-Time Visa Approval</h2>
                         <p>Vitae donec pellentesque a aliquam et ultricies auctor.</p>
                     </div>
                 </div>
                 <div className="service-conti2">
-                    <img className="inoc" src="./assets/co2.png" alt=""/>
+                    <img className="inoc" src="./media/assets/co2.png" alt=""/>
                     <div className="service-text">
                         <h2>90% Approval Rate</h2>
                         <p>Vitae donec pellentesque a aliquam et ultricies auctor.</p>
                     </div>
                 </div>
                 <div className="service-conti2">
-                    <img className="inoc" src="./assets/co3.png" alt=""/>
+                    <img className="inoc" src="./media/assets/co3.png" alt=""/>
                     <div className="service-text">
                         <h2>Best Price</h2>
                         <p>Vitae donec pellentesque a aliquam et ultricies auctor.</p>
@@ -1197,7 +1197,7 @@ const Home = () => {
 
 
         <div className="page4">
-            <img className="testimonial-bg" src="/assets/testimonial.png" alt=""/>
+            <img className="testimonial-bg" src="/media/assets/testimonial.png" alt=""/>
             <div className="testimonial-front">
                 <h2>PROMOTION</h2>
                 <h1>See What Our Clients Say<br/> About Us</h1>
@@ -1205,7 +1205,7 @@ const Home = () => {
             <div className="testimonial mySwiper">
                 <div className="testi-content swiper-wrapper">
                 <div className="slide swiper-slide">
-                    <img src="/assets/img1.jpg" alt="" className="image" />
+                    <img src="/media/assets/img1.jpg" alt="" className="image" />
                     <p><span style={{position:' absolute', top:'60px', left:'70px'}}><svg width="62" height="48" viewBox="0 0 62 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5.65858 43.18C2.13942 39.4422 0.25 35.2499 0.25 28.4542C0.25 16.4958 8.64475 5.77777 20.8525 0.478516L23.9036 5.18668C12.509 11.3503 10.2813 19.3488 9.393 24.3918C11.2278 23.4419 13.6297 23.1105 15.9838 23.3292C22.1474 23.8998 27.0059 28.9598 27.0059 35.2499C27.0059 38.4215 25.746 41.4631 23.5034 43.7058C21.2608 45.9484 18.2191 47.2083 15.0476 47.2083C13.2937 47.1929 11.5603 46.8289 9.94842 46.1373C8.33652 45.4458 6.87829 44.4405 5.65858 43.18ZM39.8253 43.18C36.3061 39.4422 34.4167 35.2499 34.4167 28.4542C34.4167 16.4958 42.8114 5.77777 55.0192 0.478516L58.0703 5.18668C46.6757 11.3503 44.448 19.3488 43.5597 24.3918C45.3944 23.4419 47.7963 23.1105 50.1504 23.3292C56.3141 23.8998 61.1726 28.9598 61.1726 35.2499C61.1726 38.4215 59.9127 41.4631 57.6701 43.7058C55.4274 45.9484 52.3858 47.2083 49.2142 47.2083C47.4603 47.1929 45.727 46.8289 44.1151 46.1373C42.5032 45.4458 41.045 44.4405 39.8253 43.18Z" fill="black" fill-opacity="0.19"/>
                     </svg></span>
@@ -1223,7 +1223,7 @@ const Home = () => {
         
                 </div>
                 <div className="slide swiper-slide">
-                    <img src="/assets/img2.jpg" alt="" className="image" />
+                    <img src="/media/assets/img2.jpg" alt="" className="image" />
                     <p><span style={{position: 'absolute', top:'50px', left:'90px'}}><svg width="62" height="48" viewBox="0 0 62 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5.65858 43.18C2.13942 39.4422 0.25 35.2499 0.25 28.4542C0.25 16.4958 8.64475 5.77777 20.8525 0.478516L23.9036 5.18668C12.509 11.3503 10.2813 19.3488 9.393 24.3918C11.2278 23.4419 13.6297 23.1105 15.9838 23.3292C22.1474 23.8998 27.0059 28.9598 27.0059 35.2499C27.0059 38.4215 25.746 41.4631 23.5034 43.7058C21.2608 45.9484 18.2191 47.2083 15.0476 47.2083C13.2937 47.1929 11.5603 46.8289 9.94842 46.1373C8.33652 45.4458 6.87829 44.4405 5.65858 43.18ZM39.8253 43.18C36.3061 39.4422 34.4167 35.2499 34.4167 28.4542C34.4167 16.4958 42.8114 5.77777 55.0192 0.478516L58.0703 5.18668C46.6757 11.3503 44.448 19.3488 43.5597 24.3918C45.3944 23.4419 47.7963 23.1105 50.1504 23.3292C56.3141 23.8998 61.1726 28.9598 61.1726 35.2499C61.1726 38.4215 59.9127 41.4631 57.6701 43.7058C55.4274 45.9484 52.3858 47.2083 49.2142 47.2083C47.4603 47.1929 45.727 46.8289 44.1151 46.1373C42.5032 45.4458 41.045 44.4405 39.8253 43.18Z" fill="black" fill-opacity="0.19"/>
                     </svg></span>
@@ -1240,7 +1240,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="slide swiper-slide">
-                    <img src="/assets/img3.jpg" alt="" className="image" />
+                    <img src="/media/assets/img3.jpg" alt="" className="image" />
                     <p><span style={{position: 'absolute', top:'60px', left:'70px'}}><svg width="62" height="48" viewBox="0 0 62 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5.65858 43.18C2.13942 39.4422 0.25 35.2499 0.25 28.4542C0.25 16.4958 8.64475 5.77777 20.8525 0.478516L23.9036 5.18668C12.509 11.3503 10.2813 19.3488 9.393 24.3918C11.2278 23.4419 13.6297 23.1105 15.9838 23.3292C22.1474 23.8998 27.0059 28.9598 27.0059 35.2499C27.0059 38.4215 25.746 41.4631 23.5034 43.7058C21.2608 45.9484 18.2191 47.2083 15.0476 47.2083C13.2937 47.1929 11.5603 46.8289 9.94842 46.1373C8.33652 45.4458 6.87829 44.4405 5.65858 43.18ZM39.8253 43.18C36.3061 39.4422 34.4167 35.2499 34.4167 28.4542C34.4167 16.4958 42.8114 5.77777 55.0192 0.478516L58.0703 5.18668C46.6757 11.3503 44.448 19.3488 43.5597 24.3918C45.3944 23.4419 47.7963 23.1105 50.1504 23.3292C56.3141 23.8998 61.1726 28.9598 61.1726 35.2499C61.1726 38.4215 59.9127 41.4631 57.6701 43.7058C55.4274 45.9484 52.3858 47.2083 49.2142 47.2083C47.4603 47.1929 45.727 46.8289 44.1151 46.1373C42.5032 45.4458 41.045 44.4405 39.8253 43.18Z" fill="black" fill-opacity="0.19"/>
                     </svg></span>
@@ -1264,11 +1264,11 @@ const Home = () => {
 
 
         <footer className="footer-sec">
-            <img className="footer-bg" src="./assets/footer.png" alt=""/>
+            <img className="footer-bg" src="./media/assets/footer.png" alt=""/>
             <div className="mains">
             <div className="logo rowsa">
                 <div className="footer-header">
-                <img src="./assets/logo2.png" className="manik" alt=""/>
+                <img src="./media/assets/logo2.png" className="manik" alt=""/>
                 </div>
                 <div className="logo-des">
                 <p>Visa24/7 facilitates seamless<br/> Visa online instantly..</p>

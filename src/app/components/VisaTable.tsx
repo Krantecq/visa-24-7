@@ -173,11 +173,11 @@ const VisaTable: React.FC<Props> = ({
       </div>
       <div className="apply-card">
           <div className="text-cont">
-              <h2><img className="icons" src="/assets/vt2.png"/>Length of Stay</h2>
+              <h2><img className="icons" src="/media/assets/vt2.png"/>Length of Stay</h2>
               <p>{apiData[selectedTicket].day} Days</p>
           </div>
           {/* <div style={{padding:"5px 0px"}} className="text-cont">
-              <h2><img className="icons" src="/assets/vt3.png"/>Travellers</h2>
+              <h2><img className="icons" src="/media/assets/vt3.png"/>Travellers</h2>
               <div className="num-block skin-2">
                   <div className="num-in">
                       <span className="minus dis" onClick={() => handleQuantityChange(selectedQuantity - 1)}></span>
@@ -188,7 +188,7 @@ const VisaTable: React.FC<Props> = ({
           </div> */}
 
           <div className="text-cont1">
-              <h2 className="tb"><img className="icons" src="/assets/vt4.png"/>Total</h2>
+              <h2 className="tb"><img className="icons" src="/media/assets/vt4.png"/>Total</h2>
               <div className="pb">
                   <p style={{top:"10px"}} className="amount">₹{selectedTicketPrice}</p>
                   <h2 className="tax-des">(includes all government related fees)</h2>
