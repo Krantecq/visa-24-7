@@ -981,7 +981,7 @@ const Home = () => {
                     </div>
                 </a>
             </div>
-            <div className="conti1">
+            <div className="conti">
                 <a href="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd1.png" alt="" />
