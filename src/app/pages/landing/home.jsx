@@ -27,16 +27,16 @@ const Home = () => {
             </div>
 
             <div className="part11">
-                <img className="logo" src="./media/assets/logo2.png" alt="logo" />
+                <img className="logo" src="./media/logos/logo.png" alt="logo" />
             </div>
 
             <div className="part31">
+                <button className='button2'>
+                    Login
+                </button>
                 <button className='button1'>
                     Sign up
                 </button>
-                <button className='button2'>
-                    Login
-                </button >
             </div>
             <i className="ri-menu-3-fill hamburger" onClick={toggleMenu}></i>
             <div id="mobile-menu">
@@ -1165,7 +1165,7 @@ const Home = () => {
             
             <div className="services">
                 <h1 className="service-head">Why Choose Us</h1>
-                <p className="service-para">Enjoy different experiences in every place you visit and<br/> discover new and affordable adventures of course.</p>
+                <p className="service-para">Enjoy different experiences in every place you visit and discover<br/> new and affordable adventures of course.</p>
                 <div className="service-conti2">
                     <img className="inoc" src="./media/assets/co1.png" alt=""/>
                     <div className="service-text">
@@ -1188,10 +1188,9 @@ const Home = () => {
                     </div>
                 </div>
 
-                <a className="cta" href="#">Get Yours Now <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 13L7 7L1 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
+                <button className='service-btn'>
+                    Search for Packages
+                </button>
             </div>
         </div>
 
@@ -1268,10 +1267,10 @@ const Home = () => {
             <div className="mains">
             <div className="logo rowsa">
                 <div className="footer-header">
-                <img src="./media/assets/logo2.png" className="manik" alt=""/>
+                <img src="./media/logos/logo.png" className="manik" alt=""/>
                 </div>
                 <div className="logo-des">
-                <p>Visa24/7 facilitates seamless<br/> Visa online instantly..</p>
+                <p style={{color:"rgba(50, 113, 19, 1)"}}>Visa247 facilitates seamless<br/> Visa online instantly..</p>
                 <div className="icons">
                     <a href="#"><i className="social-icon ri-facebook-fill"></i></a>
                     <a href="#"><i className="social-icon ri-instagram-line"></i></a>
@@ -1325,7 +1324,7 @@ const Home = () => {
             
             </div>
             <div className="copyright">
-            <hr/>
+            <hr className='divider'/>
                 <p>Copyright @ Visa24/7 2023. All Rights Reserved.</p>
             </div>
         </footer>

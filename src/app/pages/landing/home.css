@@ -41,10 +41,10 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 100px;
+    height: 80px;
     border-bottom: 1px solid rgba(0, 0, 0, 1);
     position: relative;
-    background: #ffffff45;
+    background: #fff;
     top: 0;
     left: 0;
     padding: 30px 50px 30px 50px;
@@ -59,6 +59,8 @@ body::-webkit-scrollbar-thumb {
 
 #nav .logo{
     width: 11vw;
+    position: relative;
+    left: -2vw;
     
 }
 
@@ -69,42 +71,47 @@ body::-webkit-scrollbar-thumb {
 }
 
 #nav .part21 a{
-    text-decoration: none;
-    color: #000;
+    color: rgba(50, 113, 19, 1);
     font-weight: 600;
     font-size: 16px;
-    font-family: 'Gilroy', sans-serif;
 }
 
 #nav .part21 a:hover{
     text-decoration: underline;
-    text-underline-offset: 8px;
+    scale: 1.1;
+    transition: 0.5s all;
 }
 
 #nav .part31{
     display: flex;
     gap: 2vw;
+    align-items: center;
 }
 
 #nav .part31 .button1{
-    padding: 10px 15px;
-    background: transparent;
-    color: #000000;
-    border: 1px solid #000000;
-    border-radius: 7px;
-    cursor: pointer;
-    height: 40px;
-    font-size: 16px;
-    font-family: 'Gilroy', sans-serif;
+  padding: 10px 15px;
+  background: rgba(50, 113, 19, 1);
+  color: #ffffff;
+  border: 1px solid rgba(50, 113, 19, 1);
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  font-size: 16px;
+  font-family: 'Gilroy', sans-serif;
 }
 
 #nav .part31 .button2{
-  padding: 10px 15px;
-  background: #000;
-  color: #ffffff;
-  border: 1px solid #000000;
+
+  padding: 10px 20px;
+  background: transparent;
+  color: rgba(50, 113, 19, 1);
+  border: 1px solid rgba(50, 113, 19, 1);
   border-radius: 7px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   height: 40px;
   font-size: 16px;
   font-family: 'Gilroy', sans-serif;
@@ -239,7 +246,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     gap: 10px;
     padding: 0px;
-    width: 75vw;
+    width: 70vw;
 }
 
 .page1 .search-bar1{
@@ -286,7 +293,7 @@ body::-webkit-scrollbar-thumb {
 
 .page1 .search-conti input::placeholder {
     color: #dadada;
-    font-size: 16px;
+    font-size: 1vw;
 }
 
 .page1 .search-conti1 input::placeholder {
@@ -358,7 +365,7 @@ body::-webkit-scrollbar-thumb {
     min-width: 1px;
     padding: 0;
     color: rgba(255, 255, 255, 0.88);
-    font-size: 16px;
+    font-size: 1vw;
     line-height: 1.5714285714285714;
     background-color: #ffffff;
     background-image: none;
@@ -436,11 +443,11 @@ body::-webkit-scrollbar-thumb {
 /*-----------------------------------------------Page Intersection------------------------------------------------*/
 
 .vacation {
-    position: relative;
-    top: -27vh;
-    left: 0;
-    padding-left: 150px;
-    z-index: 101;
+  position: static;
+  left: 0;
+  padding-left: 150px;
+  z-index: 101;
+  margin-top: -300px;
 }
 
 .vacation h1 {
@@ -478,7 +485,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1 .search-conti select{
-  font-size: 16px;
+  font-size: 1vw;
   overflow: hidden;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -548,6 +555,7 @@ body::-webkit-scrollbar-thumb {
     top: 0;
     left: 0;
     padding-left: 100px;
+    margin-top: 100px;
 }
 
 .page2 .head{
@@ -674,6 +682,7 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    background: #fff;
 }
 
 .page3 .img-service{
@@ -701,7 +710,7 @@ body::-webkit-scrollbar-thumb {
 
 .page3 .service-para{
   font-family: 'Abhaya Libre', sans-serif;
-    font-size: 1vw;
+    font-size: 1.2vw;
     font-weight: 400;
     letter-spacing: 0.15px;
     text-align: left;
@@ -711,20 +720,34 @@ body::-webkit-scrollbar-thumb {
 .page3 .service-conti2{
     display: flex;
     flex-direction: row;
-    padding: 15px 30px;
+    padding: 10px 30px;
     align-items: center;
     width: 90%;
-    margin-top: 10px;
+    margin-top: 20px;
     border-radius: 10px;
+    background: linear-gradient(to right, rgba(164, 162, 162, 0.605), rgba(206, 206, 206, 0.45), rgba(234, 234, 234, 0.4));
+    box-shadow: 0 8px 10px rgba(0,0,0,.1);
 }
 
 .page3 .service-conti2:hover{
-  box-shadow: 0 8px 17px rgba(0,0,0,.1);
+  box-shadow: 0 8px 17px rgba(255, 255, 255, 0.1);
+  transition: 0.3s all ease-in-out;
+}
+
+.page3 .service-btn{
+  width: 90%;
+  background: rgba(38, 31, 93, 1);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 25px;
 }
 
 .page3 .inoc{
-    width: 2.5vw;
-    height: 2.5vw;
+    width: 3.5vw;
+    height: 3.5vw;
     margin: 10px;
 }
 
@@ -732,14 +755,14 @@ body::-webkit-scrollbar-thumb {
     padding: 5px 15px;
 }
 
-.page3 h2{
-    font-size: 1.2vw;
-    font-family: 'Abhaya Libre', sans-serif;
-    font-weight: 600;
-    line-height: 28px;
-    letter-spacing: 0.15px;
-    text-align: left;
-
+.page3 h2 {
+  font-size: 1.2vw;
+  font-family: 'Abhaya Libre', sans-serif;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.15px;
+  text-align: left;
+  margin-top: 10px;
 }
 
 .page3 p{
@@ -794,12 +817,12 @@ body::-webkit-scrollbar-thumb {
     font-weight: 700;
     text-align: center;
     color: #A1572F;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-transform: uppercase;
 }
 
 .page4 h1{
-    font-size: 3vw;
+    font-size: 2vw;
     font-weight: 700;
     letter-spacing: 0em;
     text-align: center;
@@ -808,7 +831,7 @@ body::-webkit-scrollbar-thumb {
 
 .testimonial {
   position: absolute;
-  top: 65%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 600px;
@@ -927,6 +950,10 @@ footer{
     padding: 10px 60px 10px 40px;
   }
 
+.divider{
+  border: 1px solid #327113;
+}
+
 
 .footer-bg{
     position: absolute;
@@ -994,7 +1021,7 @@ footer{
   }
   
   .link-des a:hover{
-    color: #332885;
+    color: #327113;
     transition: linear 0.3s;
   }
   
@@ -1023,20 +1050,25 @@ footer{
 
   input[type=mail]{
     border: none;
-    padding: 15px 30px;
+    padding: 15px 40px;
     border-radius: 10px;
-    background: #EEEEFF;
+    background: #e6fed9;
     font-size: 14px;
   }
 
   .butt{
     padding: 15px 20px;
-    background-color: #332885;
+    background-color: #327113;
     border-radius: 10px;
     margin-left: -15px;
     border: none;
     color: #fff;
     cursor: pointer;
+  }
+
+  .butt:hover{
+    box-shadow: 0 8px 17px rgba(242, 150, 22, 0.199);
+    transition: 0.4s all
   }
 
   input[type=mail]::placeholder{
@@ -1058,7 +1090,7 @@ footer{
   
   .icons a{
     text-decoration: none;
-    color: #332885;
+    color:#327113;
     justify-content: center;
     padding: 7px;
     align-items: center;
