@@ -156,7 +156,7 @@ const VisaTable: React.FC<Props> = ({
                           <h2>{entry.day} Days</h2>
                       </div>
                       <div className="details">
-                          <p>Visa Type</p>
+                          <p>Entry Type</p>
                           <h2>{entry.entryType}</h2>
                       </div>
                       <div className="details">

@@ -15,6 +15,8 @@
     }
 
     .flex#{$infix}-column-fluid {
+      background: #fff;
+      border-right: 1px solid #8080804f;
       flex: 1 0 auto;
     }
 

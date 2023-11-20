@@ -30,8 +30,9 @@
       margin-left: 0;
 
       &.flex-column {
-        align-items: flex-start;
+        align-items: center !important;
         justify-content: center;
+
       }
 
       .card-icon {

@@ -12,12 +12,15 @@ import { ForgotPassword as CustomerForgotPassword } from './components/Customer/
 // import { LandingPage } from './components/LandingPage';
 import { ChangePassword } from './components/Merchant/ChangePassword';
 import Home from '../../pages/landing/home';
+import Inner from '../../pages/inner/inner';
 
 const AuthPage = () => (
   <Routes>
     
     <Route index element={<Home />} />
+    <Route path='/inner' element={<Inner />} />
     <Route element={<AuthLayout />}>
+      
       <Route path='superadmin/login' element={<SuperadminLogin />} />
       <Route path='superadmin/registration' element={<SuperadminRegistration />} />
       <Route path='superadmin/forgot-password' element={<SuperadminForgotPassword />} />

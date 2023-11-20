@@ -1,60 +1,143 @@
-import { ProcessedTable } from '../../components/ProcessedTable'
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../../helpers/axiosInstance';
+import { Button, Modal, Form } from 'react-bootstrap';
 import { IssueApiTable } from '../../components/IssueApiTable';
+import axiosInstance from '../../helpers/axiosInstance';
 
 function TestingWrapper() {
-    const [memberStatsData, setMemberStatsData] = useState([]);
-    const [loading,setLoading] = useState(false);
-  
-    useEffect(() => {
-      // Define a function to make the POST request
-      const fetchData = async () => {
-        setLoading(true);
-        try {
-        
-          // Make a POST request to your API endpoint
-          axiosInstance.get('/backend/fetch_merchant_api')
-            .then((response) => {
-              console.log(response.data)
-              setMemberStatsData(response.data.data);
-              setLoading(false);
-            })
-            .catch((error) => {
-              console.error('Error fetching Atlys data:', error);
-              setLoading(false);
-            });
-  
-          
-        } catch (error) {
-          console.error('Error:', error);
-          setLoading(false);
-        }
-      };
-  
-      // Call the fetchData function when the component mounts
-      fetchData();
-    }, []); // The empty dependency array ensures this effect runs once on mount
+  const [memberStatsData, setMemberStatsData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showResponseModal, setShowResponseModal] = useState(false);
+  const [email, setEmail] = useState('');
+  const [responseText, setResponseText] = useState('');
+  const [emailError, setEmailError] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get('/backend/fetch_merchant_api');
+        setMemberStatsData(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleTestApi = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEmail('');
+    setEmailError(false);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailError(false);
+  };
+
+  const handleApiTest = async () => {
+    if (!email.trim()) {
+      setEmailError(true);
+      return;
+    }
+
+
+    const simulatedApiResponse = 'Response yaha aayega';
+    setResponseText(simulatedApiResponse);
+    handleCloseModal();
+    setShowResponseModal(true);
+  };
+
+  const handleCloseResponseModal = () => {
+    setShowResponseModal(false);
+    setResponseText('');
+  };
+
   return (
     <div>
       <button
-      style={{
-        position:"absolute",
-        top: "17%",
-        right: "5%",
-        padding:"10px 20px",
-        backgroundColor:"#327113",
-        color:"white",
-        borderRadius:"20px",
-        border:"none",
-        zIndex:1
-      }}
+        style={{
+          position: 'absolute',
+          top: '20%',
+          fontWeight: '600',
+          right: '4%',
+          padding: '12px 20px',
+          backgroundColor: '#327113',
+          color: 'white',
+          borderRadius: '10px',
+          border: 'none',
+          zIndex: 1,
+        }}
+        onClick={handleTestApi}
       >
         Test Partners API
       </button>
-      <IssueApiTable className='' data={memberStatsData} loading={loading}/>
+
+      <IssueApiTable className='' data={memberStatsData} loading={loading} />
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Test Partners API</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={handleEmailChange}
+                style={{ borderColor: emailError ? 'red' : '' }}
+              />
+              {emailError && (
+                <Form.Text className="text-danger">Email is required</Form.Text>
+              )}
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button className='btn-success' variant="primary" onClick={handleApiTest}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showResponseModal} onHide={handleCloseResponseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Response</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <Form.Group controlId="formResponse">
+            <Form.Label>Response</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={responseText}
+              readOnly
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseResponseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
-  )
+  );
 }
 
 export default TestingWrapper;

@@ -10,6 +10,14 @@ import {
 import React, { useState, useEffect } from 'react';
 import icon1 from '../../../_metronic/assets/card/1.png'
 import customer from '../../../_metronic/assets/card/customer.png'
+import icustomer from '../../../_metronic/assets/card/customersss.png'
+import relations from '../../../_metronic/assets/card/retail.png'
+import process from '../../../_metronic/assets/card/processs.png'
+import waiting from '../../../_metronic/assets/card/waitings.png'
+import transaction from '../../../_metronic/assets/card/transactions.png'
+import done from '../../../_metronic/assets/card/visa.png'
+import rejected from '../../../_metronic/assets/card/reject.png'
+import customers from '../../../_metronic/assets/card/partnersss.png'
 import merchant from '../../../_metronic/assets/card/merchant.png'
 import wallet from '../../../_metronic/assets/card/wallet.png'
 import { HomeMainCard } from '../../components/HomeMainCard'
@@ -43,8 +51,8 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Total Partners'
-          color='#F0F0F0'
-          icon={icon1}
+          color='#fff'
+          icon={customers}
           textColor='#071437'
           count={data.api}
         />
@@ -53,8 +61,8 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Individual Customers'
-          color='#F0F0F0'
-          icon={customer}
+          color='#fff'
+          icon={icustomer}
           textColor='#071437'
           count={data.customer_user}
         />
@@ -63,8 +71,8 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Total Retailers'
-          color='#F0F0F0'
-          icon={merchant}
+          color='#fff'
+          icon={relations}
           textColor='#071437'
           count={data.merchant_user}
         />
@@ -73,8 +81,8 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa Rejected'
-          color='#F0F0F0'
-          icon={icon1}
+          color='#fff'
+          icon={rejected}
           textColor='#071437'
           count={data.visa_rejected}
         />
@@ -85,8 +93,8 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa In-Process'
-          color='#F0F0F0'
-          icon={icon1}
+          color='#fff'
+          icon={process}
           textColor='#071437'
           count={data.in_process_visa}
         />
@@ -95,8 +103,8 @@ const DashboardPage: FC<Props> = (data) => (
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa Waiting for Approval'
-          color='#F0F0F0'
-          icon={customer}
+          color='#fff'
+          icon={waiting}
           textColor='#071437'
           count={data.waiting}
         />
@@ -114,8 +122,8 @@ const DashboardPage: FC<Props> = (data) => (
           <HomeMainCard
             className='mb-5 mb-xl-10'
             description='Today total transactions'
-            color='#F0F0F0'
-            icon={icon1}
+            color='#fff'
+            icon={transaction}
             textColor='#071437'
             count={data.today_total_transactions}
           />
@@ -124,8 +132,8 @@ const DashboardPage: FC<Props> = (data) => (
           <HomeMainCard
             className='mb-5 mb-xl-10'
             description='Visa processed today'
-            color='#F0F0F0'
-            icon={customer}
+            color='#fff'
+            icon={done}
             textColor='#071437'
             count={data.visa_processed_today}
           />

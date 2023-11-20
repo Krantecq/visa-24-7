@@ -3,7 +3,7 @@ import { DatePicker } from 'antd';
 import  './home.css'
 import './swiper-bundle.min.css'
 import { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom'
 const Home = () => {
     const { RangePicker } = DatePicker;
 
@@ -50,7 +50,7 @@ const Home = () => {
         </div>        
 
 
-        <div className="page1">
+        <div className="page1h">
             <img className="bgimg" src="./media/assets/img1.png"/>
             <h1>
                 Getting Visa Was Never<br/> This Easy.
@@ -627,10 +627,10 @@ const Home = () => {
         </div>
 
 
-        <div className="page2">
+        <div className="page2h">
             <h1 className="head">Premium Offers In Premium Destinations </h1>
             <div className="conti">
-                <a href="/inner" className="cards-single">
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
@@ -658,8 +658,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
@@ -687,8 +687,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd3.png" alt="" />
                     </div>
@@ -716,8 +716,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd4.png" alt="" />
                     </div>
@@ -745,8 +745,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
@@ -774,8 +774,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
@@ -803,10 +803,10 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
+                </Link>
             </div>
             <div className="conti">
-                <a href="/inner" className="cards-single">
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
@@ -834,8 +834,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
@@ -863,8 +863,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd3.png" alt="" />
                     </div>
@@ -892,8 +892,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd4.png" alt="" />
                     </div>
@@ -921,8 +921,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
@@ -950,8 +950,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
@@ -979,10 +979,10 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
+                </Link>
             </div>
             <div className="conti">
-                <a href="/inner" className="cards-single">
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
@@ -1010,8 +1010,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
@@ -1039,8 +1039,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd3.png" alt="" />
                     </div>
@@ -1068,8 +1068,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd4.png" alt="" />
                     </div>
@@ -1097,8 +1097,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd1.png" alt="" />
                     </div>
@@ -1126,8 +1126,8 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
-                <a href="/inner" className="cards-single">
+                </Link>
+                <Link to="/inner" className="cards-single">
                     <div className="img-conti">
                         <img className="imgr" src="./media/assets/cd2.png" alt="" />
                     </div>
@@ -1155,12 +1155,12 @@ const Home = () => {
                             ₹88,952 <span className="per">Per Person</span>
                         </div>
                     </div>
-                </a>
+                </Link>
             </div>
         </div>
 
 
-        <div className="page3">
+        <div className="page3h">
             <img className="img-service" src="./media/assets/contact.png" />
             
             <div className="services">
@@ -1195,7 +1195,7 @@ const Home = () => {
         </div>
 
 
-        <div className="page4">
+        <div className="page4h">
             <img className="testimonial-bg" src="/media/assets/testimonial.png" alt=""/>
             <div className="testimonial-front">
                 <h2>PROMOTION</h2>
@@ -1262,7 +1262,7 @@ const Home = () => {
         </div>
 
 
-        <footer className="footer-sec">
+        <footer className="footer-sech">
             <img className="footer-bg" src="./media/assets/footer.png" alt=""/>
             <div className="mains">
             <div className="logo rowsa">

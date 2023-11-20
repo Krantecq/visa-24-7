@@ -205,12 +205,12 @@ function AddNewMerchant() {
           <Link to='/superadmin/merchants' >
             <BackIcon style={{ color: '#332786', width: 30, height: 45, cursor: 'pointer', }} />
           </Link>
-          <h5 style={{ fontSize: 30, alignSelf: 'center', marginLeft: 10, display: 'flex', letterSpacing: 0.3 }}>Onboard new Merchant</h5>
+          <h5 style={{ fontSize: 30, alignSelf: 'center', marginLeft: 10, display: 'flex', letterSpacing: 0.3, marginBottom:10 }}>Onboard new Merchant</h5>
         </div>
         <hr />
         <br />
         <div className='d-flex ' style={{ width: '100%' }}>
-          <div style={{ width: '40%', marginTop: 10 }}>
+          <div style={{ width: '40%', marginTop: 60 }}>
             <h6>Merchant Photo</h6>
             {photo ? (
               <div
@@ -666,7 +666,7 @@ function AddNewMerchant() {
         </div>
 
         <div className='d-flex ' style={{ width: '100%' }}>
-          <div style={{ width: '40%', marginTop: 10 }}>
+          <div style={{ width: '40%', marginTop: 60 }}>
             <h6>PAN card Photo</h6>
             {panPhotoUrl ? (
               <div
@@ -749,7 +749,7 @@ function AddNewMerchant() {
                     </label>
 
                     <Field
-                      style={{ ...inputStyle, width: '450px' }}
+                      style={{ ...inputStyle, width: '95%' }}
                       name='merchant_pan_no'
                       placeholder="PAN Number"
                       value={formData.merchant_pan_no}
@@ -767,7 +767,7 @@ function AddNewMerchant() {
                     </label>
 
                     <Field
-                      style={{ ...inputStyle, width: '450px' }}
+                      style={{ ...inputStyle, width: '95%' }}
                       name='merchant_gst_no'
                       placeholder="GST"
                       value={formData.merchant_gst_no}
@@ -843,7 +843,7 @@ function AddNewMerchant() {
                       height: 40,
                       width: 190,
                       border: '1px solid',
-                      marginLeft: 20,
+                      marginLeft: "30%",
                       borderColor: '#696969',
                       borderRadius: 25,
                       alignItems: 'center',
