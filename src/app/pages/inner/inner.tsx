@@ -1,8 +1,8 @@
 import React from 'react'
 import  './inner.css'
 import { useEffect, useState } from 'react';
-import { VisaTable } from '../../components/VisaTable';
-import HomeApply from '../../components/HomeApply';
+import { useLocation } from 'react-router-dom';
+
 type Props = {
     className: string;
     title: String;
@@ -25,6 +25,13 @@ type Props = {
     onApiDataReceived,
     onSelectClick,
   }) => {
+    console.log('Props in Inner:', { className, title, visaList, visaListLoader, apiData });
+    const location = useLocation();
+    const receivedData: any = location.state as any;
+    console.log("ye rha:",receivedData)
+    useEffect(() => {
+        console.log('apiData in Inner:', apiData);
+      }, [apiData]);
     const handleSelectClick = (entryData) => {
       onSelectClick(entryData)
       
@@ -33,9 +40,7 @@ type Props = {
     const handleApplyNowClick = () => {
       onSelectClick(apiData[selectedTicket]);
     };
-    useEffect(() => {
-        console.log('apiData in Inner:', apiData);
-      }, [apiData]);
+    
     const markup_percentage = localStorage.getItem('markup_percentage')??'1';
   
     const [expandedCardIndex, setExpandedCardIndex] = useState(-1)
@@ -47,23 +52,20 @@ type Props = {
     const [selectedTicketPrice, setSelectedTicketPrice] = useState(0);
   
     const [selectedQuantity, setSelectedQuantity] = useState(1);  
-  
+    
+    const receivedDataArray = receivedData.dataArray || [];
     
     const handleTicketSelection = (ticketIndex) => {
-      setSelectedTicket(ticketIndex);
-      const selectedEntry = apiData[ticketIndex];
-      const visaFees = selectedEntry.receipt['Visa Fees'] || 0;
-      const serviceFees = selectedEntry.receipt['Service Fees'] || 0;
-      const markupPercentageString = localStorage.getItem('markup_percentage');
-      const markupPercentage = markupPercentageString !== null ? parseFloat(markupPercentageString) : 1;
-      const calculatedPrice = Math.ceil((visaFees * (1 + markupPercentage / 100)) + serviceFees);
-      const initialPrice = calculatedPrice * selectedQuantity;
-      setSelectedTicketPrice(initialPrice);
-    };
-    useEffect(() => {
-        console.log('apiData in Inner:', apiData);
-        // Access and use the apiData here...
-      }, [apiData]);
+        setSelectedTicket(ticketIndex);
+        const selectedEntry = receivedData.apiData[ticketIndex];  // Change here
+        const visaFees = selectedEntry.receipt['Visa Fees'] || 0;
+        const serviceFees = selectedEntry.receipt['Service Fees'] || 0;
+        const markupPercentageString = localStorage.getItem('markup_percentage');
+        const markupPercentage = markupPercentageString !== null ? parseFloat(markupPercentageString) : 1;
+        const calculatedPrice = Math.ceil((visaFees * (1 + markupPercentage / 100)) + serviceFees);
+        const initialPrice = calculatedPrice * selectedQuantity;
+        setSelectedTicketPrice(initialPrice);
+      };
     const toggleMenu = () => {
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenu) {
@@ -71,6 +73,7 @@ type Props = {
           mobileMenu.classList.toggle('hamburger-open');
         }
       };
+      console.log("Received Data:", receivedData);
   return (
     <div>
   
@@ -109,8 +112,8 @@ type Props = {
         <h1>Choose Your Visa Type</h1>
         <div className="choice">
       <div className="ticket-container" id="ticketContainer">
-      {apiData.map((entry: any, index: number) => {
-  console.log('Mapping entry:', entry);
+      {receivedData.apiData.map((entry: any, index: number) => {
+//   console.log('Mapping entry:', entry);
   return (
       <div
       key={index}
@@ -207,7 +210,7 @@ type Props = {
       <div className="apply-card">
           <div className="text-cont">
               <h2><img className="icons" src="/media/assets/vt2.png"/>Length of Stay</h2>
-              <p>0 Days</p>
+              <p>{receivedData.apiData[selectedTicket].day} Days</p>
           </div>
 
           <div className="text-cont1">

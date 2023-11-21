@@ -96,7 +96,7 @@ function AddNewMerchant() {
       toast.success(response.data.msg, {
         position: 'top-center', // Center the toast notification
       })
-      // navigate('/merchant/apply-visa')
+      navigate('/superadmin/merchants')
     } else {
       console.log(response.data)
       toast.error(response.data.msg, {
@@ -228,10 +228,13 @@ function AddNewMerchant() {
                   onClick={() => setPhoto('')}
                   style={{
                     justifyContent: 'flex-end',
-                    position: 'absolute',
+                    position: 'relative',
                     backgroundColor: 'white',
                     padding: 7,
                     borderRadius: 50,
+                    left: "10px",
+                    width:"35px",
+                    zIndex:"1",
                     cursor: 'pointer',
                   }}
                 >
@@ -240,7 +243,7 @@ function AddNewMerchant() {
                 <img
                   src={photo}
                   alt='Uploaded Image'
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                  style={{ maxWidth: '100%', maxHeight: '100%', position:"relative", marginTop:"-35px" }}
                 />
               </div>
             ) : (
@@ -684,10 +687,13 @@ function AddNewMerchant() {
                   onClick={() => setPanPhotoUrl('')}
                   style={{
                     justifyContent: 'flex-end',
-                    position: 'absolute',
+                    position: 'relative',
                     backgroundColor: 'white',
                     padding: 7,
                     borderRadius: 50,
+                    left: "10px",
+                    width:"35px",
+                    zIndex:"1",
                     cursor: 'pointer',
                   }}
                 >
@@ -696,7 +702,7 @@ function AddNewMerchant() {
                 <img
                   src={panPhotoUrl}
                   alt='Uploaded Image'
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                  style={{ maxWidth: '100%', maxHeight: '100%', position:"relative", marginTop:"-35px" }}
                 />
               </div>
             ) : (

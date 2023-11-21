@@ -6,6 +6,7 @@ import { VisaTable } from '../../../components/VisaTable';
 import ApplyVisa from '../../../components/ApplyVisa';
 import Loader from '../../../components/Loader';
 import MerchantApplyVisa from '../../../components/MerchantApplyVisa';
+import HomeApply from '../../../components/HomeApply';
 
 
 function MerchantNewVisaWrapper() {

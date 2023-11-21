@@ -11,6 +11,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'; 
 import { toast } from 'react-toastify';
 import axiosInstance from '../../../../helpers/axiosInstance'
+import logo from '../../../../../_metronic/assets/logo.png'
 
 
 const loginSchema = Yup.object().shape({
@@ -90,7 +91,10 @@ export function Login() {
     >
       {/* begin::Heading */}
       <div className='text-center mb-11'>
-        <h1 className='text-dark fw-bolder mb-3'>Sign In Superadmin</h1>
+      <img src={logo}
+        style={{width:"200px"}}
+        />
+        <h1 className='text-dark mt-4 mb-3'>Welcome Superadmin !</h1>
        </div>
       {/* begin::Heading */}
 

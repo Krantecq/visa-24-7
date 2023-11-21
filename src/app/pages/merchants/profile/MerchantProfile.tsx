@@ -870,7 +870,7 @@ function MerchantProfile() {
 
   const uploadIssueApiReciept = (
     <div className='d-flex ' style={{ width: '100%' }}>
-      <div style={{ width: '40%', marginTop: 50, marginBottom: 30 }}>
+      <div style={{ width: '40%', marginTop: 50, marginBottom: 30, marginLeft:"10%" }}>
         <h6>Receipt</h6>
         {recieptImage ? (
           <div
@@ -1099,17 +1099,8 @@ function MerchantProfile() {
 
         </div>
 
-        <div className='fv-row w-50' style={{marginLeft:"-20px"}}>
-          <div className='d-flex align-items-center'>
-            <label className='d-flex align-items-center form-label fs-4' style={{width:"33%", marginLeft:"10px"}}>
-              <CalendarMonthIcon style={{ marginRight: '3px' }} />
-              <span className=''>From</span>
-            </label>
-            <label className='d-flex align-items-center form-label fs-4'>
-              <CalendarMonthIcon style={{ marginRight: '3px' }} />
-              <span className=''>To</span>
-            </label>
-          </div>
+        <div className='fv-row w-50' style={{position:"relative", right:"4%"}}>
+          
           <DatePicker.RangePicker
             style={{ backgroundClip: '#fff', width: 400, marginTop: 8, border: '2px solid #e5e5e5', borderRadius: 10, padding: 10 }}
             onChange={(value) => {

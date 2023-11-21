@@ -14,6 +14,7 @@ import { ChangePassword } from './components/Merchant/ChangePassword';
 import Home from '../../pages/landing/home';
 import Inner from '../../pages/inner/inner';
 
+
 const AuthPage = () => (
   <Routes>
     
@@ -33,14 +34,14 @@ const AuthPage = () => (
       path='/inner'
       element={
         <Inner
-          className="yourClassNameHere"
-          title="Your Title Here"
-          show={(value) => {}}
-          visaList={true}
-          visaListLoader={(value) => {}}
-          apiData={[]}  // Pass your actual apiData here
-          onSelectClick={(entryData) => {}}
-          onApiDataReceived={(data) => {}} 
+        className="yourClassNameHere"
+        title="Your Title Here"
+        show={(value) => {}}
+        visaList={true}
+        visaListLoader={(value) => {}}
+        apiData={[]}  // Pass your actual apiData here
+        onSelectClick={(entryData) => {}}
+        onApiDataReceived={(data) => {}}
         />
       }
     />

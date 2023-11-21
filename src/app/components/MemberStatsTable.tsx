@@ -219,7 +219,12 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                                 <img
                                   src={item.merchant_profile_photo}
                                   alt={item.merchant_profile_photo}
-                                  className='h-75 align-self-end'
+                                  className='align-self-end'
+                                  style={{
+                                    width:"45px",
+                                    height:"45px",
+                                    backgroundSize:"cover",
+                                  }}
                                 />
                               </span>
                               <a

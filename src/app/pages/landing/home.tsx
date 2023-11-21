@@ -28,8 +28,7 @@ type Props = {
     apiData,
     onSelectClick,
   }) => {
-
-    const navigate = useNavigate(); // useNavigate instead of useHistory
+    const navigate = useNavigate();
   
     const [apiDataState, setApiData] = useState(null);
     const [visaListState, setVisaList] = useState(false);
@@ -46,7 +45,7 @@ type Props = {
         mobileMenu.classList.toggle('hamburger-open');
       }
     };
-    
+  
     const search = () => {
       console.log('clicked!');
     };
@@ -57,9 +56,11 @@ type Props = {
           setVisaList(data.visaList);
         }
         setVisalistLoader(true);
-    
-        setVisaList(true);
-        setVisalistLoader(false);
+      
+        // Log the data before navigating
+        console.log('Data before navigating:', data);
+      
+        // Navigate to Inner component
         navigate('/inner', { state: { apiData: data } });
       };
   
@@ -104,16 +105,12 @@ type Props = {
             </h1>
             <div className="search-bar">
                 <div className="search-conti">
-                    <HomeApply
-                        className={className}
-                        title={title}
-                        show={show}
-                        visaList={visaList}
-                        visaListLoader={visaListLoader}
-                        apiData={apiData}  // Pass apiData as a prop
-                        onApiDataReceived={handleApiDataReceived}  // Pass the function
-                        onSelectClick={onSelectClick}
-                    />
+                <HomeApply
+                  show={(value) => setVisaList(value)}
+                  visaList={visaList}
+                  visaListLoader={setVisalistLoader}
+                  onApiDataReceived={handleApiDataReceived}
+                />
                 </div>
             </div>
 
