@@ -16,7 +16,7 @@ function TestingWrapper() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get('/backend/fetch_merchant_api');
+        const response = await axiosInstance.get('/backend/fetch_test_api');
         setMemberStatsData(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -49,8 +49,12 @@ function TestingWrapper() {
       return;
     }
 
+      const response = await axiosInstance.post('/backend/merchant/issue_test_api', {
+        merchant_email_id: email,
+      })
 
-    const simulatedApiResponse = 'Response yaha aayega';
+    
+    const simulatedApiResponse =response.data.data;
     setResponseText(simulatedApiResponse);
     handleCloseModal();
     setShowResponseModal(true);
