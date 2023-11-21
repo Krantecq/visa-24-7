@@ -11,6 +11,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'; 
 import { toast } from 'react-toastify'
 import axiosInstance from '../../../../helpers/axiosInstance'
+import logo from '../../../../../_metronic/assets/logo.png'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -93,7 +94,10 @@ export function Login() {
     >
       {/* begin::Heading */}
       <div className='text-center mb-11'>
-        <h1 className='text-dark fw-bolder mb-3'>Sign In Merchant</h1>
+        <img src={logo}
+        style={{width:"200px"}}
+        />
+        <h1 className='text-dark mt-3 mb-3'>Welcome Back !</h1>
         {/* <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div> */}
       </div>
       {/* begin::Heading */}
@@ -169,6 +173,9 @@ export function Login() {
           type='submit'
           id='kt_sign_in_submit'
           className='btn btn-success'
+          style={{
+            backgroundColor: '#327113',
+          }}
           disabled={formik.isSubmitting || !formik.isValid}
         >
           {!loading && <span className='indicator-label'>Continue</span>}

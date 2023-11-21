@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { VisaTable } from '../../components/VisaTable';
 import HomeApply from '../../components/HomeApply';
 type Props = {
-    className: string
-    title: String
-    show: (value: boolean) => void
-    visaList: boolean
-    visaListLoader: (value: boolean) => void
-    apiData: any
-    onSelectClick: (entryData: any) => void 
+    className: string;
+    title: String;
+    show: (value: boolean) => void;
+    visaList: boolean;
+    visaListLoader: (value: boolean) => void;
+    apiData: any;  // Add this line
+    onApiDataReceived: (data: any) => void;
+    onSelectClick: (entryData: any) => void; 
   }
   
   
@@ -21,6 +22,7 @@ type Props = {
     visaList,
     visaListLoader,
     apiData,
+    onApiDataReceived,
     onSelectClick,
   }) => {
     const handleSelectClick = (entryData) => {
@@ -58,6 +60,10 @@ type Props = {
       const initialPrice = calculatedPrice * selectedQuantity;
       setSelectedTicketPrice(initialPrice);
     };
+    useEffect(() => {
+        console.log('apiData in Inner:', apiData);
+        // Access and use the apiData here...
+      }, [apiData]);
     const toggleMenu = () => {
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenu) {

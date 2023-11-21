@@ -80,9 +80,9 @@ const MerchantApplyVisa: React.FC<Props> = ({
           main_data.push(extractedData)
           }
           // Use the extracted values as needed
-          console.log('Day:', day)
-          console.log('Entry Type:', entryType)
-          console.log('Country:', country)
+          // console.log('Day:', day)
+          // console.log('Entry Type:', entryType)
+          // console.log('Country:', country)
         }
         onApiDataReceived(main_data)
       })

@@ -29,15 +29,21 @@ const AuthPage = () => (
         onSelectClick={(entryData) => {}}
       />}
     />
-    <Route path='/inner' element={<Inner 
-        className="yourClassNameHere"
-        title="Your Title Here"
-        show={(value) => {}}
-        visaList={true}
-        visaListLoader={(value) => {}}
-        apiData={[]}
-        onSelectClick={(entryData) => {}}
-    />} />
+    <Route
+      path='/inner'
+      element={
+        <Inner
+          className="yourClassNameHere"
+          title="Your Title Here"
+          show={(value) => {}}
+          visaList={true}
+          visaListLoader={(value) => {}}
+          apiData={[]}  // Pass your actual apiData here
+          onSelectClick={(entryData) => {}}
+          onApiDataReceived={(data) => {}} 
+        />
+      }
+    />
     <Route element={<AuthLayout />}>
       
       <Route path='superadmin/login' element={<SuperadminLogin />} />

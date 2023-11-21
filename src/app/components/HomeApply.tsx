@@ -10,17 +10,26 @@ import { DatePicker } from 'antd'
 import 'dayjs/locale/en';
 
 type Props = {
-  show: (value: boolean) => void
-  visaList: boolean
-  visaListLoader: (value: boolean) => void
+  className: string;
+  title: string;
+  show: (value: boolean) => void;
+  visaList: boolean;
+  visaListLoader: (value: boolean) => void;
+  apiData: any;
+  onSelectClick: (entryData: any) => void;
   onApiDataReceived: (data: any) => void
 }
 
 const HomeApply: React.FC<Props> = ({
+  className,
+  title,
   show,
   visaList,
-  onApiDataReceived,
   visaListLoader,
+  apiData,
+  onSelectClick,
+  onApiDataReceived,
+
 }) => {
     
   const [issueDate, setIssueDate] = useState<string | undefined>('');
@@ -75,9 +84,9 @@ const HomeApply: React.FC<Props> = ({
           main_data.push(extractedData)
           }
 
-          // console.log('Day:', day)
-          // console.log('Entry Type:', entryType)
-          // console.log('Country:', country)
+          console.log('Day:', day)
+          console.log('Entry Type:', entryType)
+          console.log('Country:', country)
         }
         onApiDataReceived(main_data)
       })

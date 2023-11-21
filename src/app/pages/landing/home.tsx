@@ -52,16 +52,16 @@ type Props = {
     };
   
     const handleApiDataReceived = (data) => {
-      setApiData(data);
-      if (data && data.visaList) {
-        setVisaList(data.visaList);
-      }
-      setVisalistLoader(true);
-  
-      setVisaList(true);
-      setVisalistLoader(false);
-      navigate('/inner', { state: { apiData: data } });
-    };
+        setApiData(data);
+        if (data && data.visaList) {
+          setVisaList(data.visaList);
+        }
+        setVisalistLoader(true);
+    
+        setVisaList(true);
+        setVisalistLoader(false);
+        navigate('/inner', { state: { apiData: data } });
+      };
   
 
   return (
@@ -105,10 +105,14 @@ type Props = {
             <div className="search-bar">
                 <div className="search-conti">
                     <HomeApply
-                        visaListLoader={visaListLoader}
-                        visaList={visaList}
+                        className={className}
+                        title={title}
                         show={show}
-                        onApiDataReceived={handleApiDataReceived}
+                        visaList={visaList}
+                        visaListLoader={visaListLoader}
+                        apiData={apiData}  // Pass apiData as a prop
+                        onApiDataReceived={handleApiDataReceived}  // Pass the function
+                        onSelectClick={onSelectClick}
                     />
                 </div>
             </div>
