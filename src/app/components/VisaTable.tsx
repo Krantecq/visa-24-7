@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './card.css'
 import ApplyVisa from './ApplyVisa'
 import ClearIcon from '@mui/icons-material/Clear'
@@ -11,7 +11,7 @@ type Props = {
   visaList: boolean
   visaListLoader: (value: boolean) => void
   apiData: any
-  onSelectClick: (entryData: any) => void // Add a new prop for API data
+  onSelectClick: (entryData: any) => void 
 }
 
 
@@ -24,13 +24,14 @@ const VisaTable: React.FC<Props> = ({
   apiData,
   onSelectClick,
 }) => {
+  useEffect(() => {
+    console.log('apiData in Inner:', apiData);
+  }, [apiData]);
   const handleSelectClick = (entryData) => {
-    // Pass the selected entry data to the parent component
     onSelectClick(entryData)
   }
 
   const handleApplyNowClick = () => {
-    // Call the function received as a prop to handle Apply Now click
     onSelectClick(apiData[selectedTicket]);
   };
 
@@ -45,13 +46,7 @@ const VisaTable: React.FC<Props> = ({
   const [selectedTicketPrice, setSelectedTicketPrice] = useState(0);
 
   const [selectedQuantity, setSelectedQuantity] = useState(1);  
-
-//   const handleQuantityChange = (newQuantity) => {
-//     const updatedQuantity = Math.max(1, newQuantity); 
-//     setSelectedQuantity(updatedQuantity);
-//     const totalCalculatedPrice = selectedTicketPrice / (selectedQuantity || 1) * updatedQuantity;
-//     setSelectedTicketPrice(totalCalculatedPrice);
-//   };
+  
   
   const handleTicketSelection = (ticketIndex) => {
     setSelectedTicket(ticketIndex);
@@ -69,16 +64,6 @@ const VisaTable: React.FC<Props> = ({
   return (
     <div className="choice">
       <div className="ticket-container" id="ticketContainer">
-      {/* <MerchantApplyVisa
-        visaListLoader={visaListLoader}
-        visaList={visaList}
-        show={show}
-        onApiDataReceived={function (data: any): void {
-          throw new Error('Function not implemented.')
-        }}
-      /> */}
-      {/* Visa card 1 */}
-      {/* ... Rest of your component remains the same */}
       {apiData.map((entry: any, index: number) => (
       <div
       key={index}
@@ -176,16 +161,6 @@ const VisaTable: React.FC<Props> = ({
               <h2><img className="icons" src="/media/assets/vt2.png"/>Length of Stay</h2>
               <p>{apiData[selectedTicket].day} Days</p>
           </div>
-          {/* <div style={{padding:"5px 0px"}} className="text-cont">
-              <h2><img className="icons" src="/media/assets/vt3.png"/>Travellers</h2>
-              <div className="num-block skin-2">
-                  <div className="num-in">
-                      <span className="minus dis" onClick={() => handleQuantityChange(selectedQuantity - 1)}></span>
-                      <input type="text" className="in-num" value={selectedQuantity} readOnly/>
-                      <span className="plus" onClick={() => handleQuantityChange(selectedQuantity + 1)}></span>
-                  </div>
-              </div>
-          </div> */}
 
           <div className="text-cont1">
               <h2 className="tb"><img className="icons" src="/media/assets/vt4.png"/>Total</h2>

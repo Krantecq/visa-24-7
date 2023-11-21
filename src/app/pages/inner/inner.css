@@ -179,6 +179,19 @@
   justify-content: center;
 }
 
+.ticket.selected .days{
+  background-color: #327113;
+  color: #fff;
+}
+
+.ticket.selected .days h1{
+  color: #fff;
+}
+
+.ticket.selected .visa-des {
+  border: 3px solid #327113;
+}
+
 .choice .ticket{
   height: 10vw;
   display: flex;

@@ -114,7 +114,7 @@ const MerchantDashboard = () => {
   };
 
   return (
-    <div style={{ display: 'flex', width: '100%', marginTop: -35, backgroundColor: '#fff' }}>
+    <div style={{ display: 'flex', width: '100%', marginTop: -70, backgroundColor: '#fff' }}>
       {/* Sidebar */}
       <div
         style={{

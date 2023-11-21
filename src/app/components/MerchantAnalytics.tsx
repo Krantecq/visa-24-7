@@ -1,7 +1,11 @@
 import { HomeMainCard } from "./HomeMainCard";
 import icon1 from '../../_metronic/assets/card/1.png'
-import customer from '../../_metronic/assets/card/customer.png'
-import merchant from '../../_metronic/assets/card/merchant.png'
+import customer from '../../_metronic/assets/card/customersss.png'
+import merchant from '../../_metronic/assets/card/visa.png'
+import process from '../../_metronic/assets/card/processs.png'
+import waiting from '../../_metronic/assets/card/waitings.png'
+import transaction from '../../_metronic/assets/card/transactions.png'
+import reject from '../../_metronic/assets/card/reject.png'
 import React, { FC } from 'react';
 
 type Props = {
@@ -36,7 +40,7 @@ export function MerchantAnaltytics({dashboardData}) {
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Total Visa'
-          color='#F0F0F0'
+          color='#fff'
           icon={customer}
           textColor='#071437'
           count={dashboardData?.total_visa}
@@ -46,7 +50,7 @@ export function MerchantAnaltytics({dashboardData}) {
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Approved Visa'
-          color='#F0F0F0'
+          color='#fff'
           icon={merchant}
           textColor='#071437'
           count={dashboardData?.approved_visa}
@@ -56,8 +60,8 @@ export function MerchantAnaltytics({dashboardData}) {
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa In-Process'
-          color='#F0F0F0'
-          icon={icon1}
+          color='#fff'
+          icon={process}
           textColor='#071437'
           count={dashboardData?.in_process_visa}
         />
@@ -66,8 +70,8 @@ export function MerchantAnaltytics({dashboardData}) {
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa In Waiting'
-          color='#F0F0F0'
-          icon={icon1}
+          color='#fff'
+          icon={waiting}
           textColor='#071437'
           count={dashboardData?.waiting_visa}
         />
@@ -78,8 +82,8 @@ export function MerchantAnaltytics({dashboardData}) {
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='No. of Visa Not Issued'
-          color='#F0F0F0'
-          icon={customer}
+          color='#fff'
+          icon={reject}
           textColor='#071437'
           count={dashboardData?.not_issued_visa}
         />
@@ -99,8 +103,8 @@ export function MerchantAnaltytics({dashboardData}) {
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description={`Today's Transactions`}
-          color='#F0F0F0'
-          icon={icon1}
+          color='#fff'
+          icon={transaction}
           textColor='#071437'
           count={dashboardData?.today_total_transactions}
         />
@@ -109,7 +113,7 @@ export function MerchantAnaltytics({dashboardData}) {
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Visa processed today'
-          color='#F0F0F0'
+          color='#fff'
           icon={merchant}
           textColor='#071437'
           count={dashboardData?.visa_processed_today}

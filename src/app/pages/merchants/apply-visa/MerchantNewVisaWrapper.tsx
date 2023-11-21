@@ -56,7 +56,7 @@ function MerchantNewVisaWrapper() {
               visaListLoader={setVisalistLoader}
               show={(value) => setVisaList(value)}
               visaList={visaList}
-              apiData={apiData} // Pass the API data to VisaTable
+              apiData={apiData} 
               onSelectClick={handleSelectClick}
             />
           ) : (
@@ -75,6 +75,7 @@ function MerchantNewVisaWrapper() {
           )}
         </>
       )}
+      
     </div>
   );
 }

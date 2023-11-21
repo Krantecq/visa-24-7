@@ -17,8 +17,27 @@ import Inner from '../../pages/inner/inner';
 const AuthPage = () => (
   <Routes>
     
-    <Route index element={<Home />} />
-    <Route path='/inner' element={<Inner />} />
+    <Route
+      index
+      element={<Home
+        className="yourClassNameHere"
+        title="Your Title Here"
+        show={(value) => {}}
+        visaList={false}
+        visaListLoader={(value) => {}}
+        apiData={[]}
+        onSelectClick={(entryData) => {}}
+      />}
+    />
+    <Route path='/inner' element={<Inner 
+        className="yourClassNameHere"
+        title="Your Title Here"
+        show={(value) => {}}
+        visaList={true}
+        visaListLoader={(value) => {}}
+        apiData={[]}
+        onSelectClick={(entryData) => {}}
+    />} />
     <Route element={<AuthLayout />}>
       
       <Route path='superadmin/login' element={<SuperadminLogin />} />
