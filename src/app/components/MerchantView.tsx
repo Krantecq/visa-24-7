@@ -10,6 +10,8 @@ import { toast } from 'react-toastify'
 function MerchantView({ viewApplication }) {
   console.log(viewApplication)
   const [initValues] = useState<ICreateAccount>(inits)
+  const isApiIssued = viewApplication.issued_api && viewApplication.issued_api.length > 0;
+  const isApiAlreadyIssued = isApiIssued;
 
   const [formData, setFormData] = useState({
     merchant_id: viewApplication._id,
@@ -117,16 +119,16 @@ function MerchantView({ viewApplication }) {
               marginTop: 20,
             }}
           >
-            <div
+            {/* <div
               style={{
                 justifyContent: 'flex-end',
                 position: 'absolute',
                 backgroundColor: 'white',
-                padding: 7,
-                borderRadius: 50,
+                padding: '7',
+                borderRadius: '50',
                 cursor: 'pointer',
               }}
-            ></div>
+            ></div> */}
             <img
               src={viewApplication.merchant_profile_photo}
               alt='Uploaded Image'
@@ -140,7 +142,7 @@ function MerchantView({ viewApplication }) {
         >
           <Formik initialValues={formData} onSubmit={() => { }}>
             {() => (
-              <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
+              <Form style={{marginLeft:"50px"}} className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div>
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
@@ -229,7 +231,7 @@ function MerchantView({ viewApplication }) {
                     </label>
 
                     <Field
-                      style={{ ...inputStyle, width: '450px' }}
+                      style={{ ...inputStyle1 }}
                       name='merchant_address_one_line'
                       value={formData.merchant_address_one_line}
                       onChange={(e) => handleFieldChange('merchant_address_one_line', e.target.value)}
@@ -246,7 +248,7 @@ function MerchantView({ viewApplication }) {
                     </label>
 
                     <Field
-                      style={{ ...inputStyle, width: '450px' }}
+                      style={{ ...inputStyle1 }}
                       name='merchant_address_second_line'
                       value={formData.merchant_address_second_line}
                       onChange={(e) => handleFieldChange('merchant_address_second_line', e.target.value)}
@@ -276,7 +278,7 @@ function MerchantView({ viewApplication }) {
               marginTop: 20,
             }}
           >
-            <div
+            {/* <div
               style={{
                 justifyContent: 'flex-end',
                 position: 'absolute',
@@ -285,7 +287,7 @@ function MerchantView({ viewApplication }) {
                 borderRadius: 50,
                 cursor: 'pointer',
               }}
-            ></div>
+            ></div> */}
             <img
               src={viewApplication.merchant_pan_photo}
               alt='Uploaded Image'
@@ -304,7 +306,7 @@ function MerchantView({ viewApplication }) {
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                    style={{ ...inputStyle1 }}
                     name='merchant_pan_no'
                     value={formData.merchant_pan_no}
                     onChange={(e) => handleFieldChange('merchant_pan_no', e.target.value)}
@@ -321,7 +323,7 @@ function MerchantView({ viewApplication }) {
                   </label>
 
                   <Field
-                    style={{ ...inputStyle, width: '450px' }}
+                    style={{ ...inputStyle1 }}
                     name='panNo'
                     value={formData.merchant_gst_no}
                     onChange={(e) => handleFieldChange('merchant_gst_no', e.target.value)}
@@ -427,15 +429,17 @@ function MerchantView({ viewApplication }) {
                     justifyContent: 'center',
                     backgroundColor: '#327113',
                     cursor: 'pointer',
+                    pointerEvents: loading || isApiIssued ? 'none' : 'auto',
+                    opacity: loading || isApiIssued ? 0.6 : 1,
                   }}
                 >
-                  {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>Issue API</h6>}
-                    {loading && (
-                      <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"#fff" }}>
-                        Please wait...
-                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                      </span>
-                    )}
+                  {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>{isApiAlreadyIssued ? 'Already Issued' : 'Issue API'}</h6>}
+                {loading && (
+                  <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color: "#fff" }}>
+                    Please wait...
+                    <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                  </span>
+                )}
                 </div>
                 </div>
               </Form>
@@ -448,3 +452,5 @@ function MerchantView({ viewApplication }) {
 }
 
 export default MerchantView
+
+
