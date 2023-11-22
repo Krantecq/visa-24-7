@@ -102,7 +102,7 @@ const DashboardPage: FC<Props> = (data) => (
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='No. of Visa Waiting for Approval'
+          description='Visa Waiting for Approval'
           color='#fff'
           icon={waiting}
           textColor='#071437'

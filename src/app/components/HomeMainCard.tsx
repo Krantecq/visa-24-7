@@ -13,7 +13,7 @@ const HomeMainCard = ({className, description, color, icon, textColor, count}: P
     style={{
       backgroundColor: color,
       height: '180px',
-      width:"280px",
+      width:"250px",
     }}
   >
     <img src={icon} style={{width: 60, position: 'relative', left: "38%", top: "8%"}} />

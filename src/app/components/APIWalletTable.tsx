@@ -62,9 +62,6 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
       merchant_id: item.merchant_id,
       api_type :'Production'
     })
-
-   
-
     if (response.status == 200) {
       
       const response1 = await axiosInstance.post('/backend/approve_api_transaction', {
@@ -73,7 +70,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
       })
       if(response1.status == 200){
         toast.success(response.data.msg, {
-          position: 'top-center', // Center the toast notification
+          position: 'top-center',
         })
         window.location.reload();
       }else{

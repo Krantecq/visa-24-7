@@ -253,10 +253,13 @@ function TravelerForm({ onDataChange, ind }) {
                 onClick={() => setPassportFrontImageURL('')}
                 style={{
                   justifyContent: 'flex-end',
-                  position: 'absolute',
+                  position: 'relative',
                   backgroundColor: 'white',
                   padding: 7,
                   borderRadius: 50,
+                  left: "10px",
+                  width:"35px",
+                  zIndex:"1",
                   cursor: 'pointer',
                 }}
               >
@@ -265,7 +268,7 @@ function TravelerForm({ onDataChange, ind }) {
               <img
                 src={passportFrontImageURL}
                 alt='Uploaded Image'
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
+                style={{ maxWidth: '100%', maxHeight: '100%', position:"relative", marginTop:"-35px" }}
               />
             </div>
           ) : (
@@ -291,13 +294,13 @@ function TravelerForm({ onDataChange, ind }) {
                 <span className='indicator-label'>Select Files</span>
               </button>
               <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
-                Supports JPEG, JPG, PDF, PNG.
+                Supports Image only.
               </p>
               <input
                 type='file'
                 ref={passportFrontFileInputRef}
                 style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
+                accept="image/*"
                 onChange={handleFileSelect}
               />
             </div>
@@ -507,10 +510,13 @@ function TravelerForm({ onDataChange, ind }) {
                 onClick={() => setPassportBackImageURL('')}
                 style={{
                   justifyContent: 'flex-end',
-                  position: 'absolute',
+                  position: 'relative',
                   backgroundColor: 'white',
                   padding: 7,
                   borderRadius: 50,
+                  left: "10px",
+                  width:"35px",
+                  zIndex:"1",
                   cursor: 'pointer',
                 }}
               >
@@ -519,7 +525,7 @@ function TravelerForm({ onDataChange, ind }) {
               <img
                 src={passportBackImageURL}
                 alt='Uploaded Image'
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
+                style={{ maxWidth: '100%', maxHeight: '100%', position:"relative", marginTop:"-35px" }}
               />
             </div>
           ) : (
@@ -551,7 +557,7 @@ function TravelerForm({ onDataChange, ind }) {
                 type='file'
                 ref={passportBackFileInputRef}
                 style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
+                accept="image/*"
                 onChange={handleFileSelectBack}
               />
             </div>
@@ -628,16 +634,19 @@ function TravelerForm({ onDataChange, ind }) {
                 onClick={() => setPan('')}
                 style={{
                   justifyContent: 'flex-end',
-                  position: 'absolute',
+                  position: 'relative',
                   backgroundColor: 'white',
                   padding: 7,
                   borderRadius: 50,
+                  left: "10px",
+                  width:"35px",
+                  zIndex:"1",
                   cursor: 'pointer',
                 }}
               >
                 <ClearIcon style={{ color: 'red' }} />
               </div>
-              <img src={pan} alt='Uploaded Image' style={{ maxWidth: '100%', maxHeight: '100%' }} />
+              <img src={pan} alt='Uploaded Image' style={{ maxWidth: '100%', maxHeight: '100%', position:"relative", marginTop:"-35px" }} />
             </div>
           ) : (
             <div
@@ -662,13 +671,13 @@ function TravelerForm({ onDataChange, ind }) {
                 <span className='indicator-label'>Select Files</span>
               </button>
               <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
-                Supports JPEG, JPG, PDF, PNG.
+                Supports Image Only.
               </p>
               <input
                 type='file'
                 ref={panFileInputRef}
                 style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
+                accept="image/*"
                 onChange={handlePanSelect}
               />
             </div>
@@ -721,19 +730,22 @@ function TravelerForm({ onDataChange, ind }) {
               }}
             >
               <div
-                onClick={() => setPassportFrontImageURL('')}
+                onClick={() => setPhoto('')}
                 style={{
                   justifyContent: 'flex-end',
-                  position: 'absolute',
+                  position: 'relative',
                   backgroundColor: 'white',
                   padding: 7,
                   borderRadius: 50,
+                  left: "10px",
+                  width:"35px",
+                  zIndex:"1",
                   cursor: 'pointer',
                 }}
               >
                 <ClearIcon style={{ color: 'red' }} />
               </div>
-              <img src={photo} alt='Uploaded Image' style={{ maxWidth: '100%', maxHeight: '100%' }} />
+              <img src={photo} alt='Uploaded Image' style={{ maxWidth: '100%', maxHeight: '100%', position:"relative", marginTop:"-35px" }} />
             </div>
           ) : (
             <div
@@ -758,13 +770,13 @@ function TravelerForm({ onDataChange, ind }) {
                 <span className='indicator-label'>Select Files</span>
               </button>
               <p className='text-bold pt-5 fs-9' style={{ color: '#555555' }}>
-                Supports JPEG, JPG, PDF, PNG.
+                Supports Image only.
               </p>
               <input
                 type='file'
                 ref={photoFileInputRef}
                 style={{ display: 'none' }}
-                accept='.jpeg, .jpg, .pdf, .png'
+                accept="image/*"
                 onChange={handlePhotoSelect}
               />
             </div>

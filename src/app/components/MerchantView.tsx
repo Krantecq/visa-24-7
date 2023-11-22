@@ -53,6 +53,32 @@ function MerchantView({ viewApplication }) {
     setFormData({ ...formData, [fieldName]: value })
   }
 
+  const handleButtonClick = async (apiType) => {
+    try {
+        setLoading(true);
+        const response = await axiosInstance.post('/backend/merchant/issue_api', {
+            merchant_id: formData.merchant_id,
+            api_type: apiType,
+        });
+
+        if (response.status === 200) {
+            toast.success(response.data.msg, {
+                position: 'top-center',
+            });
+            window.location.href = '/superadmin/issueApi';
+        } else {
+            toast.error(response.data.msg, {
+                position: 'top-center',
+            });
+        }
+    } catch (error) {
+        console.error('API error:', error);
+    } finally {
+        setLoading(false);
+    }
+};
+
+
 
   const inputStyle = {
     border: '1.5px solid #d3d3d3', // Border width and color
@@ -60,6 +86,15 @@ function MerchantView({ viewApplication }) {
     padding: '10px',
     paddingLeft: '20px', // Padding
     width: '90%', // 100% width
+    boxSizing: 'border-box', // Include padding and border in the width calculation
+  }
+
+  const inputStyle1 = {
+    border: '1.5px solid #d3d3d3', // Border width and color
+    borderRadius: '15px', // Border radius
+    padding: '10px',
+    paddingLeft: '20px', // Padding
+    width: '95%', // 100% width
     boxSizing: 'border-box', // Include padding and border in the width calculation
   }
 
@@ -143,7 +178,7 @@ function MerchantView({ viewApplication }) {
 
                     <label className='form-label fs-4 mx-5'>Country</label>
                     <Field
-                      style={inputStyle}
+                      style={inputStyle1}
                       name='merchant_country'
                       onChange={(e) => handleFieldChange('merchant_country', e.target.value)}
                       value={formData.merchant_country}
@@ -228,7 +263,7 @@ function MerchantView({ viewApplication }) {
         </div>
       </div>
       <div className='d-flex ' style={{ width: '100%' }}>
-        <div style={{ width: '40%', marginTop: 50 }}>
+        <div style={{ width: '40%', marginTop: 65 }}>
           <h6>Pan Card Photo</h6>
           <div
             style={{
@@ -370,7 +405,7 @@ function MerchantView({ viewApplication }) {
                   >
                     {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>Save</h6>}
                     {loading && (
-                      <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"fff" }}>
+                      <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"#fff" }}>
                         Please wait...
                         <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                       </span>
@@ -378,26 +413,30 @@ function MerchantView({ viewApplication }) {
                   </div>
 
                   <div
-                    // onClick={handleReviewAndSave}
-                    className='mt-10'
-                    style={{
-                      height: 40,
-                      width: 190,
-                      border: '1px solid',
-                      marginLeft: 20,
-                      borderColor: '#696969',
-                      borderRadius: 25,
-                      alignItems: 'center',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      backgroundColor: '#327113',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>
-                      Issue API
-                    </h6>
-                  </div>
+                  className='mt-10'
+                  onClick={() => handleButtonClick('Production')}
+                  style={{
+                    height: 40,
+                    width: 190,
+                    border: '1px solid',
+                    marginLeft: 20,
+                    borderColor: '#696969',
+                    borderRadius: 25,
+                    alignItems: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    backgroundColor: '#327113',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>Issue API</h6>}
+                    {loading && (
+                      <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"#fff" }}>
+                        Please wait...
+                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                      </span>
+                    )}
+                </div>
                 </div>
               </Form>
             )}

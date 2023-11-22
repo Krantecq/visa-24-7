@@ -56,6 +56,14 @@ const contentStyle: CSSProperties = {
   overflowY: 'auto'
 };
 
+const styles = {
+  hoverEffect: {
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+  },
+};
+
 const inputStyle = {
   border: '1.5px solid #d3d3d3', // Border width and color
   borderRadius: '15px', // Border radius
@@ -91,87 +99,87 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
   const [disable, setDisable] = React.useState(false);
 
-  const handleClickOpen = (item) => {
-    setDeleteSelectedItem(item)
-    setOpen(!open);
-  };
-
-  const handleClose = () => {
-    setDeleteSelectedItem(null)
-    setOpen(false);
-  };
-
   const handleAddBalanceClick = (item) => {
     setSelectedItem(item);
     setVisible(true);
   };
 
-  // const handleVisibilityClick = (item) => {
-  //   setSelectedItem(item); // Set the selected item
-  //   setVisible(true);
-  // };
+  const handleClickOpen = (item) => {
+    setDeleteSelectedItem(item);
+    setOpen(!open);
+};
 
-  const handleApproveClick = async () => {
-    try {
+const handleClose = () => {
+    setDeleteSelectedItem(null);
+    setOpen(false);
+};
+
+const handleVisibilityClick = (item) => {
+    setSelectedItem(item);
+    setVisible(true);
+};
+
+const handleApproveClick = async () => {
+  try {
       if (deleteSelectedItem) {
-        const selectedEntry = deleteSelectedItem as { _id: string };
-        if (deleteSelectedItem == null) {
-          toast.error('Selected entry is null', {
-            position: 'top-center',
+          const selectedEntry = deleteSelectedItem as { _id: string };
+          if (deleteSelectedItem == null) {
+              toast.error('Selected entry is null', {
+                  position: 'top-center',
+              });
+          }
+          const response = await axiosInstance.post('/backend/merchant/delete_api', {
+              api_id: selectedEntry._id,
           });
-        }
-        const response = await axiosInstance.post('/backend/merchant/delete_api', {
-          api_id: selectedEntry._id,
-        });
 
-        if (response.status === 200) {
-          toast.success(response.data.msg, {
-            position: 'top-center',
-          });
-          // Handle any additional actions after a successful API call
-        } else {
-          console.log(response.data);
-          toast.error(response.data.msg, {
-            position: 'top-center',
-          });
-        }
+          if (response.status === 200) {
+              toast.success(response.data.msg, {
+                  position: 'top-center',
+              });
+              handleCloseClick();
+              window.location.reload();
+          } else {
+              console.log(response.data);
+              toast.error(response.data.msg, {
+                  position: 'top-center',
+              });
+          }
       }
-    } catch (error) {
+  } catch (error) {
       console.error('API error:', error);
-    }
-  };
-
-
-  const handleCloseClick = () => {
-    setSelectedItem(null);
-    setDeleteSelectedItem(null)
-    setVisible(false);
-  };
-
-  const handleFieldChange = (fieldName, value) => {
-    setFormData({ ...formData, [fieldName]: value })
   }
+};
 
-  const handleSaveClick = async () => {
-    setloadingButton(true)
+const handleCloseClick = () => {
+    setSelectedItem(null);
+    setDeleteSelectedItem(null);
+    setVisible(false);
+};
+
+const handleFieldChange = (fieldName, value) => {
+    setFormData({ ...formData, [fieldName]: value });
+};
+
+const handleSaveClick = async () => {
+    setloadingButton(true);
     const response = await axiosInstance.post('/backend/add_api_balance', {
-      api_id: selectedItem._id,
-      amount: formData.walletBalance
-    })
+        api_id: selectedItem._id,
+        amount: formData.walletBalance,
+    });
 
     if (response.status == 200) {
-      toast.success(response.data.msg, {
-        position: 'top-center', // Center the toast notification
-      })
-      handleCloseClick();
-      window.location.reload();
+        toast.success(response.data.msg, {
+            position: 'top-center',
+        });
+        handleCloseClick();
+        window.location.reload();
     } else {
-      console.log(response.data)
-      toast.error(response.data.msg, {
-        position: 'top-center',
-      })
+        console.log(response.data);
+        toast.error(response.data.msg, {
+            position: 'top-center',
+        });
     }
-  };
+};
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
       <div style={{boxShadow:"none"}} className={`card ${className}`}>
@@ -192,7 +200,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
+              <div style={{borderRadius:"30px", border:"1px solid #327113", overflowX:"hidden"}} className='table-responsive'>
                 {/* begin::Table */}
                 {loading ?
                   <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -208,9 +216,9 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                       <tr className='fw-bold'>
                         <th className='min-w-150px text-center'>Agent</th>
                         <th className='min-w-200px text-center'>Email</th>
-                        <th className='min-w-200px text-center'>Company</th>
-                        <th className='min-w-150px text-center'>API Key</th>
-                        <th className='min-w-200px text-center'>Wallet Balance</th>
+                        <th className='min-w-150px text-center'>Company</th>
+                        <th className='min-w-70px text-center'>API Key</th>
+                        <th className='min-w-100px text-center'>Wallet Balance</th>
                         <th className='min-w-200px text-center'>Action</th>
                       </tr>
                     </thead>
@@ -274,7 +282,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                             <span className='text-dark fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>
                           </td>
                           <td className='text-center'>
-                            <div className='d-flex align-items-center'>
+                            <div className='d-flex align-items-center justify-content-center'>
                               <DeleteOutline onClick={() =>
                                 handleClickOpen(item)
                               } className='mx-5 cursor-pointer' />
@@ -316,7 +324,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                 {() => (
                   <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
 
-                    <div className='fv-row mb-5'>
+                    <div className='fv-row mb-5 d-flex flex-column align-items-center justify-content-center'>
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Add Balance</span>
                       </label>
@@ -333,7 +341,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                       </div>
                     </div>
 
-                    <div className='d-flex justify-content-center mt-10'>
+                    <div className='d-flex justify-content-center mt-5'>
                       <button
                         type='submit'
                         className='btn btn-success'
@@ -359,29 +367,29 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
         </div>
       }
       <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="draggable-dialog-title"
-        >
-          <DialogTitle style={{ cursor: 'move', color: 'red' }} id="draggable-dialog-title">
-            Delete
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to delete this API?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button onClick={handleApproveClick}>Yes</Button>
-          </DialogActions>
-        </Dialog>
-
-
-      </div>
+      <Modal show={open} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+                <Modal.Title style={{ color: 'red' }}>Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>Are you sure you want to delete this API</p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button style={{ background: "#327113", color: "#fff" }} onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button style={{ background: "red" }} variant="danger" onClick={handleApproveClick}>
+                    {!loading && <span>Yes</span>}
+                    {loading && (
+                        <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color: "#fff" }}>
+                            Please wait...
+                            <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                        </span>
+                    )}
+                </Button>
+            </Modal.Footer>
+        </Modal>
+</div>
     </div>
   )
 }

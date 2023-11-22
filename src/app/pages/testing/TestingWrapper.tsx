@@ -70,14 +70,14 @@ function TestingWrapper() {
       <button
         style={{
           position: 'absolute',
-          top: '20%',
+          top: '22%',
           fontWeight: '600',
-          right: '5%',
+          right: '6%',
           padding: '12px 20px',
-          backgroundColor: '#327113',
-          color: 'white',
+          backgroundColor: 'transparent',
+          color: 'black',
           borderRadius: '10px',
-          border: 'none',
+          border: '1px solid #327113',
           zIndex: 1,
         }}
         onClick={handleTestApi}
