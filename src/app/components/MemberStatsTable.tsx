@@ -199,14 +199,14 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                     {/* begin::Table head */}
                     <thead className='px-2' style={{background: '#327113', color: '#fff'}}>
                       <tr className='fw-bold'>
-                        <th className='min-w-150px text-start' style={{paddingLeft: '20px'}}>
+                        <th className='min-w-150px text-start' style={{paddingLeft: '5%'}}>
                           Agent
                         </th>
-                        <th className='min-w-120px text-start'>Wallet Balance</th>
+                        <th className='min-w-100px text-start'>Wallet Balance</th>
                         <th className='min-w-100px text-start'>No. Of Visa</th>
                         <th className='min-w-100px text-start'>Company</th>
                         <th className='min-w-150px text-start'>Joining Date</th>
-                        <th className='min-w-150px text-center'>Action</th>
+                        <th style={{paddingRight:"6%"}} className='min-w-150px text-center'>Action</th>
                       </tr>
                     </thead>
 
@@ -215,9 +215,9 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                     <tbody>
                       {getFilteredData().map((item, index) => (
                         <tr key={index}>
-                          <td style={{paddingLeft:"15px"}} className='text-center'>
+                          <td style={{paddingLeft:"2%"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                              <span className='symbol-label'>
+                              <span style={{background:"transparent"}} className='symbol-label'>
                                 <img
                                   src={item.merchant_profile_photo}
                                   alt={item.merchant_profile_photo}
@@ -265,7 +265,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                             </span>
                           </td>
                           <td className='text-center'>
-                            <div className='d-flex justify-content-center align-items-center'>
+                            <div style={{marginLeft:"11%"}} className='d-flex justify-content-start align-items-center'>
                               <VisibilityIcon
                                 onClick={() => handleVisibilityClick(item)}
                                 className='mx-5 cursor-pointer'
@@ -285,7 +285,16 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                               {item.merchant_approved === false && (
                                 // Render the "Approve" button only when the merchant is not approved
                                 <button
-                                  className='btn btn-success align-self-center'
+                                  style={{
+                                    backgroundColor: '#327113',
+                                    color: '#fff',
+                                    border: 'none',
+                                    padding: "5px 10px",
+                                    borderRadius: "5px",
+                                    cursor: 'pointer',
+                                    marginLeft: "4%"
+
+                                  }}
                                   onClick={() => handleApproveClick(item)}
                                 >
                                   Approve

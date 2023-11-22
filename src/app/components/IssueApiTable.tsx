@@ -229,7 +229,7 @@ const handleSaveClick = async () => {
                         <tr key={index}>
                           <td style={{paddingLeft:"15px"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                              <span className='symbol-label'>
+                              <span style={{background:"transparent"}} className='symbol-label'>
                                 <img
                                   src={item.merchant.merchant_profile_photo}
                                   alt=''

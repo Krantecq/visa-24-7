@@ -291,7 +291,7 @@ function MerchantView({ viewApplication }) {
             <img
               src={viewApplication.merchant_pan_photo}
               alt='Uploaded Image'
-              style={{ maxWidth: '100%', maxHeight: '100%', marginTop: 40 }}
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
           </div>
         </div>
