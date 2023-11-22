@@ -7,7 +7,7 @@ import MerchantView from './MerchantView'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
 import axiosInstance from '../helpers/axiosInstance'
 import { toast } from 'react-toastify'
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -15,6 +15,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
+import { Modal, Button } from 'react-bootstrap';
+
+
 
 
 type Props = {
@@ -74,7 +77,15 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [initValues] = useState<ICreateAccount>(inits)
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
   const [loadingButton, setloadingButton] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
+  const handleToggleModal = () => {
+    setShowModal(!showModal);
+  };
+  const handleShowMoreClick = (e) => {
+    e.stopPropagation();
+    handleToggleModal();
+  };
 
   const [open, setOpen] = React.useState(false);
 
@@ -163,12 +174,14 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   };
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
-      <div className={`card ${className}`}>
+      <div style={{boxShadow:"none"}} className={`card ${className}`}>
         {/* begin::Header */}
         <div className='card-header border-0 pt-5'>
-          <h3 className='card-title align-items-start flex-column'>
+          <h3 style={{marginLeft:"10px"}} className='card-title align-items-start flex-column'>
             <span className='card-label fw-bold fs-3 mb-1'>Partner Statistics</span>
-            <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
+            <span style={{
+              marginLeft:"-100px"
+            }} className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
 
         </div>
@@ -179,7 +192,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div className='table-responsive'>
+              <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
                 {/* begin::Table */}
                 {loading ?
                   <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -206,13 +219,14 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                     <tbody>
                       {data.map((item, index) => (
                         <tr key={index}>
-                          <td className='text-center'>
+                          <td style={{paddingLeft:"15px"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
                               <span className='symbol-label'>
                                 <img
                                   src={item.merchant.merchant_profile_photo}
                                   alt=''
-                                  className='h-75 align-self-end'
+                                  className=' align-self-center'
+                                  style={{width:"45px", height:"45px", borderRadius:"10px"}}
                                 />
                               </span>
                               <a
@@ -233,9 +247,29 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
                             <span className='text-dark fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
-                          <td className='text-center min-w-50px' style={{ whiteSpace: 'pre-wrap' }}>
-                            <span className='text-muted fw-semibold d-block fs-7 '>{item.api_key}</span>
-                          </td>
+                          <td className='text-center min-w-50px' style={{ whiteSpace: 'pre-wrap', maxWidth: '100px' }}>
+                          <button onClick={() => {
+                              setSelectedItem(item);
+                              setShowModal(true);
+                            }} style={{backgroundColor:"transparent", border:"none"}}>
+                            Show Key
+                          </button>
+
+                          <Modal show={showModal} onHide={() => setShowModal(false)} >
+                            <Modal.Header closeButton>
+                              <Modal.Title>API Key </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+                              <p>{item.api_key}</p>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant='secondary' onClick={() => setShowModal(false)}>
+                                Close
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </td>
+
                           <td className='text-center'>
                             <span className='text-dark fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>
                           </td>
@@ -245,7 +279,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
                                 handleClickOpen(item)
                               } className='mx-5 cursor-pointer' />
 
-                              <button className='btn btn-success align-self-center' onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
+                              <button style={{backgroundColor:"#327113"}} className='btn btn-success align-self-center' onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
                             </div>
                           </td>
                         </tr>
@@ -269,7 +303,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
           <div style={contentStyle}>
 
-            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding:"9px", position:"absolute", top:"15%", left:"84.5%", transform:"translate(-35%, -40%)", borderRadius: 20, cursor: 'pointer' }}>
+            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding:"9px", position:"absolute", top:"30%", left:"84.5%", transform:"translate(-35%, -40%)", borderRadius: 20, cursor: 'pointer' }}>
               <CloseOutlined />
             </div>
             <div className='px-10 py-10'>

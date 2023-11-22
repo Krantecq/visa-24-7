@@ -72,7 +72,7 @@ function TestingWrapper() {
           position: 'absolute',
           top: '20%',
           fontWeight: '600',
-          right: '4%',
+          right: '5%',
           padding: '12px 20px',
           backgroundColor: '#327113',
           color: 'white',

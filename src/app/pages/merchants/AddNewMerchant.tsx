@@ -88,22 +88,31 @@ function AddNewMerchant() {
     }
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleSaveClick = async () => {
-
-    const response = await axiosInstance.post('/backend/create_merchant_user', formData)
-
-    if (response.status == 200) {
-      toast.success(response.data.msg, {
-        position: 'top-center', // Center the toast notification
-      })
-      navigate('/superadmin/merchants')
-    } else {
-      console.log(response.data)
-      toast.error(response.data.msg, {
-        position: 'top-center',
-      })
+    setLoading(true);
+  
+    try {
+      const response = await axiosInstance.post('/backend/create_merchant_user', formData);
+  
+      if (response.status === 200) {
+        toast.success(response.data.msg, {
+          position: 'top-center',
+        });
+        navigate('/superadmin/merchants');
+      } else {
+        console.log(response.data);
+        toast.error(response.data.msg, {
+          position: 'top-center',
+        });
+      }
+    } catch (error) {
+      console.error('API error:', error);
+    } finally {
+      setLoading(false); // Set loading to false regardless of success or failure
     }
-  }
+  };
 
 
   const handleFileSelectBack = (event: ChangeEvent<HTMLInputElement>) => {
@@ -842,7 +851,6 @@ function AddNewMerchant() {
                   </div>
 
                   <div
-                    // onClick={handleReviewAndSave}
                     className='mt-10'
                     onClick={handleSaveClick}
                     style={{
@@ -859,9 +867,13 @@ function AddNewMerchant() {
                       cursor: 'pointer',
                     }}
                   >
-                    <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>
-                      Submit
-                    </h6>
+                    {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>Submit</h6>}
+      {loading && (
+        <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"#fff" }}>
+          Please wait...
+          <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+        </span>
+      )}
                   </div>
                 </Form>
               )}

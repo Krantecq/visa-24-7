@@ -156,10 +156,10 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
   };
 
   return (
-    <div className={`card ${className}`}>
+    <div style={{boxShadow:"none"}} className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
-        <h3 className='card-title align-items-center flex-row'>
+        <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
           <span className='fs-6 text-gray-400 fw-bold'>{title == 'VISA' && '30 days'}</span>
         </h3>
@@ -186,7 +186,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div className='table-responsive'>
+        <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
           {/* begin::Table */}
           {loading ?
             <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>

@@ -33,7 +33,8 @@ function ApiSettingWrapper() {
 
   const handleSave = async () => {
     setLoading(true);
-
+  
+    try {
     const response = await axiosInstance.post('/backend/settings', formData)
     console.log(response.data.data)
     if (response.status == 203) {
@@ -47,7 +48,12 @@ function ApiSettingWrapper() {
       })
       setLoading(false);
     }
+  } catch (error) {
+    console.error('API error:', error);
+  } finally {
+    setLoading(false);
   }
+};
   useEffect(() => {
     // Define a function to make the POST request
     const fetchData = async () => {
@@ -166,7 +172,13 @@ function ApiSettingWrapper() {
                     onClick={handleSave}
                     style={{ backgroundColor: '#327113', width: 180, marginLeft:"150px" }}
                   >
-                    Save
+                    {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>Save</h6>}
+                    {loading && (
+                      <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"#fff" }}>
+                        Please wait...
+                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                      </span>
+                    )}
                   </button>
                 </div>
               </Form>

@@ -76,7 +76,7 @@ const MerchantDashboard = () => {
     cursor: 'pointer',
     fontSize: 18,
     fontWeight: 600,
-    borderBottom: "1px solid #ccc",
+    border: "1px solid #327113",
     paddingBottom: "20px",
     padding: '10px 0',
     marginTop: 20,
@@ -89,7 +89,8 @@ const MerchantDashboard = () => {
     padding: 7,
     paddingLeft: 8,
     marginTop: 5,
-    borderRadius: 7,
+    borderRadius:5,
+    
     color: '#327113', // Add some padding to the active tab
   };
 
@@ -98,8 +99,7 @@ const MerchantDashboard = () => {
     color: '#000', // Text color for the inactive tab
     cursor: 'pointer',
     fontSize: 18,
-    borderBottom: "1px solid #ccc",
-    paddingBottom: "20px",
+    paddingBottom: "25px",
     padding: '10px 0',
     marginTop: 20,
     display: 'flex',
@@ -118,7 +118,7 @@ const MerchantDashboard = () => {
       {/* Sidebar */}
       <div
         style={{
-          width: '20%',
+          width: '18%',
           backgroundColor: '#fff',
           padding: '16px',
           position: 'fixed',

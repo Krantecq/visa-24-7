@@ -2,7 +2,7 @@
 import React, { CSSProperties, useState } from 'react'
 import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
+import { CloseOutlined, DeleteOutline, Padding } from '@mui/icons-material'
 import ApplicationFormView from './ApplicationFormView'
 import ConfirmationModal from './ConfirmationModal'
 import Button from '@mui/material/Button';
@@ -158,10 +158,10 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
     setFilter(filterType)
   }
   return (
-    <div className={`card ${className}`}>
+    <div style={{boxShadow:"none"}} className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
-        <h3 className='card-title align-items-center flex-row'>
+        <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
         </h3>
 
@@ -205,14 +205,14 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div className='table-responsive'>
+        <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
           {/* begin::Table */}
-          <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
+          <table style={{ borderRadius: '20px' }} className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             {/* begin::Table head */}
-            <thead style={{ background: '#327113', color: "#fff" }}>
+            <thead style={{ background: '#327113', color: "#fff", borderRadius: '20px' }}>
               <tr className='fw-bold'>
 
-                <th className='min-w-150px text-center'>Email Id</th>
+                <th style={{paddingLeft:"20px"}} className='min-w-150px text-start'>Email Id</th>
                 <th className='min-w-140px text-center'>Transaction Id</th>
                 <th className='min-w-120px text-center'>Amount</th>
                 <th className='min-w-120px text-center'>Status</th>
@@ -231,7 +231,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                       <div className='symbol symbol-45px me-5'>
                         {/* <img src={row.photo} alt='' /> */}
                       </div>
-                      <div className='d-flex justify-content-start flex-column'>
+                      <div className='d-flex justify-content-center flex-column'>
                         <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
                           {row.merchant_email_id}
                         </a>
@@ -257,9 +257,9 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                         {row.status}
                       </a>
                     </td>
-                  <td className='text-center'>
+                  <td  style={{paddingLeft:"5%"}} className='text-center'>
                     {/* Action Buttons */}
-                    <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
+                    <div className='d-flex align-items-center  flex-shrink-0'>
 
                       <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
 

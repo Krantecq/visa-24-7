@@ -148,10 +148,10 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
     setFilter(filterType)
   }
   return (
-    <div className={`card ${className}`}>
+    <div style={{boxShadow:"none"}} className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
-        <h3 className='card-title align-items-center flex-row'>
+        <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
         </h3>
         <div className='dropdown mx-5'>
@@ -194,7 +194,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div className='table-responsive'>
+        <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
           {/* begin::Table */}
           {loading ?
             <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -209,7 +209,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
               <thead style={{ background: '#327113', color: "#fff" }}>
                 <tr className='fw-bold'>
 
-                  <th className='min-w-150px text-center'>Email Id</th>
+                  <th style={{paddingLeft:"5%"}} className='min-w-150px text-start'>Email Id</th>
                   <th className='min-w-140px text-center'>Transaction Id</th>
                   <th className='min-w-120px text-center'>Amount</th>
                   <th className='min-w-120px text-center'>Status</th>
@@ -228,7 +228,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                         <div className='symbol symbol-45px me-5'>
                           {/* <img src={row.photo} alt='' /> */}
                         </div>
-                        <div className='d-flex justify-content-start flex-column'>
+                        <div className='d-flex justify-content-center flex-column'>
                           <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
                             {row.merchant_email_id}
                           </a>
@@ -257,7 +257,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
                     <td className='text-center'>
                       {/* Action Buttons */}
-                      <div className='d-flex align-items-center justify-content-end flex-shrink-0'>
+                      <div className='d-flex align-items-center justify-content-center flex-shrink-0'>
 
                         <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
 

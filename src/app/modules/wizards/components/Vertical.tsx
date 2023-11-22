@@ -298,35 +298,35 @@ const Vertical: React.FC<VerticalProps> = ({
           {travelerForms.map((_, index) => (
             <>
               <div onClick={() => { }} style={{ ...tabTextStyle }}>
-                <CheckCircleOutline style={{ color: '#332786', marginRight: 8 }} />
+                <CheckCircleOutline style={{ color: '#327113', marginRight: 8 }} />
                 Traveller {index + 1}
               </div>
               <div style={{ marginLeft: 20 }}>
                 <div onClick={() => { }} style={{ ...tabTextStyle }}>
-                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
+                  <CheckCircleOutline style={{ color: '#327113', marginRight: 10 }} />
                   Passport
                 </div>
                 <div onClick={() => { }} style={{ ...tabTextStyle }}>
-                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
+                  <CheckCircleOutline style={{ color: '#327113', marginRight: 10 }} />
                   Passport Back
                 </div>
                 <div onClick={() => { }} style={{ ...tabTextStyle }}>
-                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
+                  <CheckCircleOutline style={{ color: '#327113', marginRight: 10 }} />
                   Indian PAN Card
                 </div>
                 <div onClick={() => { }} style={{ ...tabTextStyle }}>
-                  <CheckCircleOutline style={{ color: '#332786', marginRight: 10 }} />
+                  <CheckCircleOutline style={{ color: '#327113', marginRight: 10 }} />
                   Traveller Photo
                 </div>
               </div>
             </>
           ))}
           <div onClick={() => { }} style={{ ...tabTextStyle }}>
-            <CheckCircleOutline style={{ color: '#007bff', marginRight: 10 }} />
+            <CheckCircleOutline style={{ color: '#327113', marginRight: 10 }} />
             Review
           </div>
           <div onClick={() => { }} style={{ ...tabTextStyle, color: '#696969' }}>
-            <CircleOutlined style={{ color: '#d3d3d3', marginRight: 10 }} />
+            <CircleOutlined style={{ color: '#327113', marginRight: 10 }} />
             Submit
           </div>
         </div>

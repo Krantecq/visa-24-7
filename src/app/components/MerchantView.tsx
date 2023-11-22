@@ -25,22 +25,29 @@ function MerchantView({ viewApplication }) {
     merchant_zip_code: viewApplication.merchant_zip_code,
     wallet_balance: viewApplication.wallet_balance
   })
+  const [loading, setLoading] = useState(false);
   const handleSaveClick = async () => {
-
-    const response = await axiosInstance.patch('/backend/super_admin/update_merchant_user', formData)
-
-    if (response.status == 200) {
-      toast.success(response.data.msg, {
-        position: 'top-center', // Center the toast notification
-      })
-      // navigate('/merchant/apply-visa')
-    } else {
-      console.log(response.data)
-      toast.error(response.data.msg, {
-        position: 'top-center',
-      })
+    try {
+      setLoading(true);
+      const response = await axiosInstance.patch('/backend/super_admin/update_merchant_user', formData);
+  
+      if (response.status === 200) {
+        toast.success(response.data.msg, {
+          position: 'top-center',
+        });
+        // navigate('/merchant/apply-visa')
+      } else {
+        console.log(response.data);
+        toast.error(response.data.msg, {
+          position: 'top-center',
+        });
+      }
+    } catch (error) {
+      console.error('API error:', error);
+    } finally {
+      setLoading(false); // Set loading to false regardless of success or failure
     }
-  }
+  };
 
   const handleFieldChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value })
@@ -357,13 +364,17 @@ function MerchantView({ viewApplication }) {
                       alignItems: 'center',
                       display: 'flex',
                       justifyContent: 'center',
-                      backgroundColor: '#332786',
+                      backgroundColor: '#327113',
                       cursor: 'pointer',
                     }}
                   >
-                    <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>
-                      Save
-                    </h6>
+                    {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>Save</h6>}
+                    {loading && (
+                      <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"fff" }}>
+                        Please wait...
+                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                      </span>
+                    )}
                   </div>
 
                   <div
@@ -379,7 +390,7 @@ function MerchantView({ viewApplication }) {
                       alignItems: 'center',
                       display: 'flex',
                       justifyContent: 'center',
-                      backgroundColor: '#332786',
+                      backgroundColor: '#327113',
                       cursor: 'pointer',
                     }}
                   >

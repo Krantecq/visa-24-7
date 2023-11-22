@@ -127,12 +127,14 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
   }
   return (
     <div style={{backgroundColor: '#fff'}} className='w-full'>
-      <div className={`card ${className}`}>
+      <div style={{boxShadow:"none"}} className={`card ${className}`}>
         {/* begin::Header */}
         <div className='card-header border-0 pt-5'>
-          <h3 className='card-title align-items-start flex-column'>
+          <h3 style={{marginLeft:"10px"}} className='card-title align-items-start flex-column'>
             <span className='card-label fw-bold fs-3 mb-1'>Retailer Statistics</span>
-            <span className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
+            <span style={{
+              marginLeft:"-100px"
+            }} className='text-muted mt-1 fw-semibold fs-7'>{data.length} Member</span>
           </h3>
           <div className='d-flex flex-row'>
             <div className='dropdown mx-5'>
@@ -175,7 +177,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div className='table-responsive'>
+              <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
                 {/* begin::Table */}
                 {loading ? (
                   <div
@@ -213,7 +215,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                     <tbody>
                       {getFilteredData().map((item, index) => (
                         <tr key={index}>
-                          <td className='text-center'>
+                          <td style={{paddingLeft:"15px"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
                               <span className='symbol-label'>
                                 <img
@@ -224,6 +226,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                                     width:"45px",
                                     height:"45px",
                                     backgroundSize:"cover",
+                                    borderRadius:"10px",
                                   }}
                                 />
                               </span>
@@ -241,12 +244,12 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                             </div>
                           </td>
                           <td className='text-start'>
-                            <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                            <a style={{marginLeft:"15%"}} href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
                               {item.wallet_balance}
                             </a>
                           </td>
                           <td className='text-start'>
-                            <span className='text-dark fw-bold d-block fs-5'>
+                            <span style={{marginLeft:"15%"}} className='text-dark fw-bold d-block fs-5'>
                               {item.merchant_applicants.length}
                             </span>
                           </td>

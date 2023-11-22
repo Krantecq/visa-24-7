@@ -53,7 +53,7 @@ const data = [
 
 const InProcessedTable: React.FC<Props> = ({className,title}) => {
   return (
-    <div className={`card ${className}`}>
+    <div style={{boxShadow:"none"}} className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-center flex-row'>
@@ -83,7 +83,7 @@ const InProcessedTable: React.FC<Props> = ({className,title}) => {
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div className='table-responsive'>
+        <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
           {/* begin::Table */}
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             {/* begin::Table head */}

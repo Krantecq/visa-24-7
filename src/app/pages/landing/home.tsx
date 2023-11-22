@@ -105,11 +105,12 @@ type Props = {
             </h1>
             <div className="search-bar">
                 <div className="search-conti">
+                <Loader loading={visaListLoaderState} />
                 <HomeApply
-                  show={(value) => setVisaList(value)}
-                  visaList={visaList}
-                  visaListLoader={setVisalistLoader}
-                  onApiDataReceived={handleApiDataReceived}
+                    show={(value) => setVisaList(value)}
+                    visaList={visaList}
+                    visaListLoader={setVisalistLoader}
+                    onApiDataReceived={handleApiDataReceived}
                 />
                 </div>
             </div>
