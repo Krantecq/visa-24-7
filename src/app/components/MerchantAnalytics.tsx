@@ -1,11 +1,11 @@
 import { HomeMainCard } from "./HomeMainCard";
 import icon1 from '../../_metronic/assets/card/1.png'
-import customer from '../../_metronic/assets/card/customersss.png'
-import merchant from '../../_metronic/assets/card/visa.png'
-import process from '../../_metronic/assets/card/processs.png'
-import waiting from '../../_metronic/assets/card/waitings.png'
-import transaction from '../../_metronic/assets/card/transactions.png'
-import reject from '../../_metronic/assets/card/reject.png'
+import customer from '../../_metronic/assets/card/3dcustom.webp'
+import merchant from '../../_metronic/assets/card/3dvisa.webp'
+import process from '../../_metronic/assets/card/3dprocess.webp'
+import waiting from '../../_metronic/assets/card/3dwaiting.webp'
+import transaction from '../../_metronic/assets/card/3dtransaction.webp'
+import reject from '../../_metronic/assets/card/3drej.webp'
 import React, { FC } from 'react';
 
 type Props = {
@@ -89,7 +89,7 @@ export function MerchantAnaltytics({dashboardData}) {
         />
       </div>
     </div>
-    <hr/>
+  
     <h1
     style={{
       marginTop:"20px",

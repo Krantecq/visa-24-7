@@ -10,14 +10,14 @@ import {
 import React, { useState, useEffect } from 'react';
 import icon1 from '../../../_metronic/assets/card/1.png'
 import customer from '../../../_metronic/assets/card/customer.png'
-import icustomer from '../../../_metronic/assets/card/customersss.png'
-import relations from '../../../_metronic/assets/card/retail.png'
-import process from '../../../_metronic/assets/card/processs.png'
-import waiting from '../../../_metronic/assets/card/waitings.png'
-import transaction from '../../../_metronic/assets/card/transactions.png'
-import done from '../../../_metronic/assets/card/visa.png'
-import rejected from '../../../_metronic/assets/card/reject.png'
-import customers from '../../../_metronic/assets/card/partnersss.png'
+import icustomer from '../../../_metronic/assets/card/3dcustom.webp'
+import relations from '../../../_metronic/assets/card/3dretailer.webp'
+import process from '../../../_metronic/assets/card/3dproces.webp'
+import waiting from '../../../_metronic/assets/card/3dwaiting.webp'
+import transaction from '../../../_metronic/assets/card/3dtransaction.webp'
+import done from '../../../_metronic/assets/card/3dvisa.webp'
+import rejected from '../../../_metronic/assets/card/3drej.webp'
+import customers from '../../../_metronic/assets/card/3dpartner.webp'
 import merchant from '../../../_metronic/assets/card/merchant.png'
 import wallet from '../../../_metronic/assets/card/wallet.png'
 import { HomeMainCard } from '../../components/HomeMainCard'
@@ -114,7 +114,8 @@ const DashboardPage: FC<Props> = (data) => (
     <h1
       style={{
         marginTop:"20px",
-        marginBottom:"20px"
+        marginBottom:"20px",
+        fontSize:"19px"
     }}
     >Today's Statistics</h1>
     <div className='row g-5 g-xl-10'>

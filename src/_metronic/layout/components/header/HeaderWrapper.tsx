@@ -40,7 +40,7 @@ export function HeaderWrapper({ role }: { role: string }) {
                 <Link to='/dashboard' className='d-lg-none'>
                   <img
                     alt='Logo'
-                    src={toAbsoluteUrl('/media/logos/default-small.svg')}
+                    src={toAbsoluteUrl('/media/logos/favicon.png')}
                     className='h-30px'
                   />
                 </Link>

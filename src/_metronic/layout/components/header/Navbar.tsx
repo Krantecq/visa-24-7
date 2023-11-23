@@ -156,7 +156,7 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img src={profile.merchant_profile_photo || profile.super_admin_profile_photo} alt='Profile' />
+          <img style={{borderRadius:"50%", width:"40px", height:"40px"}} src={profile.merchant_profile_photo || profile.super_admin_profile_photo} alt='Profile' />
         </div>
         <HeaderUserMenu profile={profile} />
       </div>

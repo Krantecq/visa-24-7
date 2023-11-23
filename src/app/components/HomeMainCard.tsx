@@ -14,12 +14,14 @@ const HomeMainCard = ({className, description, color, icon, textColor, count}: P
       backgroundColor: color,
       height: '180px',
       width:"250px",
+      borderTop: "2px solid #327113",
+      boxShadow: '0px 0px 8px #d6e2cf'
     }}
   >
-    <img src={icon} style={{width: 60, position: 'relative', left: "38%", top: "8%"}} />
+    <img src={icon} style={{ width: 70, position: 'relative', left: "35%", top: "8%", filter: "contrast(120%) drop-shadow(5px 5px 5px #c1d4b8)" }} />
     <div className='card-header pt-5 d-flex align-items-center justify-content-center' style={{position: 'relative', bottom: 10}}>
       <div className='card-title d-flex flex-column align-items-baseline'>
-        <span className=' opacity-75 pt-1 fw-semibold fs-6' style={{color: textColor, justifyContent:"center", alignItems:"center !important", marginTop:"20px"}}>
+        <span className=' opacity-75 pt-1 fw-semibold fs-6' style={{color: textColor, justifyContent:"center", alignItems:"center !important", marginTop:"15px"}}>
           {description}{' '}
         </span>
         <span className='fw-bold  me-2 lh-1 ls-n2' style={{fontSize: '35px', color: textColor, marginTop:"10px"}}>
