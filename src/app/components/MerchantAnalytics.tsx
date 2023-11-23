@@ -6,6 +6,7 @@ import process from '../../_metronic/assets/card/3dprocess.webp'
 import waiting from '../../_metronic/assets/card/3dwaiting.webp'
 import transaction from '../../_metronic/assets/card/3dtransaction.webp'
 import reject from '../../_metronic/assets/card/3drej.webp'
+import revenue from '../../_metronic/assets/card/3drevenue.webp'
 import React, { FC } from 'react';
 
 type Props = {
@@ -88,6 +89,17 @@ export function MerchantAnaltytics({dashboardData}) {
           count={dashboardData?.not_issued_visa || 0}
         />
       </div>
+      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
+        <HomeMainCard
+          className='mb-5 mb-xl-10'
+          description='Revenue Earned'
+          color='#fff'
+          icon={revenue}
+          textColor='#071437'
+          count={dashboardData?.not_issued_visa || 0}
+        />
+      </div>
+      
     </div>
   
     <h1

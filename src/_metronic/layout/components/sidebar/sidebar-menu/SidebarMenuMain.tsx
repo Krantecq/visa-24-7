@@ -92,6 +92,12 @@ const SidebarMenuMain = () => {
         title={'Wallet'}
         fontIcon='bi-app-indicator'
       />
+      <SidebarMenuItem
+        to='/superadmin/revenue'
+        icon='element-11'
+        title={'Revenue'}
+        fontIcon='bi-app-indicator'
+      />
             {/* <SidebarMenuItem
         to='/superadmin/apiPayment'
         icon='element-11'

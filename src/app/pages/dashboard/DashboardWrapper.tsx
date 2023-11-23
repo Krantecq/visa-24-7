@@ -15,6 +15,7 @@ import relations from '../../../_metronic/assets/card/3dretailer.webp'
 import process from '../../../_metronic/assets/card/3dproces.webp'
 import waiting from '../../../_metronic/assets/card/3dwaiting.webp'
 import transaction from '../../../_metronic/assets/card/3dtransaction.webp'
+import revenue from '../../../_metronic/assets/card/3drevenue.webp'
 import done from '../../../_metronic/assets/card/3dvisa.webp'
 import rejected from '../../../_metronic/assets/card/3drej.webp'
 import customers from '../../../_metronic/assets/card/3dpartner.webp'
@@ -109,7 +110,16 @@ const DashboardPage: FC<Props> = (data) => (
           count={data.waiting}
         />
       </div>
-      
+      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
+        <HomeMainCard
+          className='mb-5 mb-xl-10'
+          description='Revenue generated'
+          color='#fff'
+          icon={revenue}
+          textColor='#071437'
+          count={data.waiting}
+        />
+      </div>
     </div>
     <h1
       style={{

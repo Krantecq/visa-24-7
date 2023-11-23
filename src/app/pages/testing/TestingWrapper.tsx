@@ -120,12 +120,11 @@ function TestingWrapper() {
 
       <Modal show={showResponseModal} onHide={handleCloseResponseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Response</Modal.Title>
+          <Modal.Title>Test API</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
           <Form.Group controlId="formResponse">
-            <Form.Label>Response</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}

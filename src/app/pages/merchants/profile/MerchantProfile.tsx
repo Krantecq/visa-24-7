@@ -24,6 +24,7 @@ import { Slider } from 'antd'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import { DatePicker } from 'antd'
 import {HeaderWrapper} from '../../../../_metronic/layout/components/header/HeaderWrapper';
+import { Button } from 'react-bootstrap';
 
 
 interface Transaction {
@@ -1184,6 +1185,127 @@ function MerchantProfile() {
     </div>
   )
 
+  const revenueContent = (
+    <div
+      className='w-full mt-5 mx-10 pt-5'
+      style={{
+        backgroundColor: '#fff',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        borderColor: '#d3d3d3',
+        border: '1px solid #d3d3d3',
+        boxShadow: '0px 0px 7px rgba(0, 0, 0, 0.2)',
+        width: '95%',
+        overflow: 'hidden',
+      }}
+    >
+      <div className='d-flex align-items-center px-10'>
+        <div className='d-flex align-items-center' style={{ flex: 1 }}>
+          <h2 className='' >Revenue</h2>
+
+        </div>
+
+        <div className='fv-row w-50' style={{position:"relative", right:"4%"}}>
+          
+        </div>
+
+        <div
+          className='px-5 py-1'
+          style={{
+            border: '1px solid #327113',
+            borderRadius: 10,
+            alignItems: 'center',
+            display: 'flex',
+            marginLeft: 'auto',
+            backgroundColor: '#fff',
+            cursor: 'pointer',
+
+          }}
+        >
+          <h6 className='fs-4' style={{ marginTop: 5 }}>
+            Download CSV
+          </h6>
+        </div>
+      </div>
+
+      <table className='table align-middle gs-10 mt-10'>
+        {/* begin::Table head */}
+        <thead className='px-5' style={{ background: '#327113', color: '#fff' }}>
+          <tr className='fw-bold'>
+            <th className='min-w-150px'>Name</th>
+            <th className='min-w-150px'>Transaction time</th>
+            <th className='min-w-150px'>Application No.</th>
+            <th className='text-center min-w-150px'>Merchant Margin</th>
+            <th className='text-center min-w-150px'>Invoice</th>
+          </tr>
+        </thead>
+        {/* end::Table head */}
+        {/* begin::Table body */}
+        <tbody>
+          {/* {transaction.map((item, index) => ( */}
+
+            <tr>
+              <td className='text-start'>
+                <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                  
+                </a>
+              </td>
+              <td className='text-start'>
+                <span className='text-dark fw-bold d-block fs-6'>
+                  
+                </span>
+              </td>
+              <td className='text-start'>
+                <span className='text-dark fw-bold d-block fs-6'>
+                  
+                </span>
+              </td>
+              <td className='text-center'>
+                <span className='text-dark fw-bold d-block fs-6'>
+                  
+                </span>
+
+              </td>
+              <td className='text-center'>
+                <span className='text-dark fw-semibold d-block fs-6'>
+                <button
+                  style={{
+                    background: '#327113',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius:"50%",
+                    padding:"2px 6px"
+                  }}
+                >
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{marginBottom:"2px"}}
+                >
+                  
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                </button>
+                </span>
+              </td>
+            </tr>
+          {/* ))} */}
+
+        </tbody>
+        {/* end::Table body */}
+      </table>
+    </div>
+  )
+
     const user_type = Cookies.get('user_type');
     const role = formData2.issued_api.length > 0 ? "Partner" : "Retailer";
     (
@@ -1387,6 +1509,7 @@ function MerchantProfile() {
       content: loadWalletContent,
     },
     { label: 'Transactions', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: transactionContent },
+    { label: 'Revenue', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: revenueContent },
     { label: 'Commisions', icon: <WalletIcon style={{ width: 25, height: 25 }} />, content: commissionContent },
     ...(formData2.issued_api.length > 0
       ? [
