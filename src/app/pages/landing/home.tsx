@@ -56,11 +56,7 @@ type Props = {
           setVisaList(data.visaList);
         }
         setVisalistLoader(true);
-      
-        // Log the data before navigating
         console.log('Data before navigating:', data);
-      
-        // Navigate to Inner component
         navigate('/inner', { state: { apiData: data } });
       };
   

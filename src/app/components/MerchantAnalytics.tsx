@@ -19,7 +19,7 @@ export function MerchantAnaltytics({dashboardData}) {
         <h1
     style={{
       marginTop:"20px",
-      fontSize:"30px",
+      fontSize:"25px",
       fontWeight: "bold",
       marginBottom:"20px",
     }}
@@ -43,7 +43,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={customer}
           textColor='#071437'
-          count={dashboardData?.total_visa}
+          count={dashboardData?.total_visa || 0}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -53,7 +53,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={merchant}
           textColor='#071437'
-          count={dashboardData?.approved_visa}
+          count={dashboardData?.approved_visa || 0}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -63,7 +63,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={process}
           textColor='#071437'
-          count={dashboardData?.in_process_visa}
+          count={dashboardData?.in_process_visa || 0}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
@@ -73,7 +73,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={waiting}
           textColor='#071437'
-          count={dashboardData?.waiting_visa}
+          count={dashboardData?.waiting_visa || 0}
         />
       </div>
     </div>
@@ -85,7 +85,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={reject}
           textColor='#071437'
-          count={dashboardData?.not_issued_visa}
+          count={dashboardData?.not_issued_visa || 0}
         />
       </div>
     </div>
@@ -93,7 +93,7 @@ export function MerchantAnaltytics({dashboardData}) {
     <h1
     style={{
       marginTop:"20px",
-      fontSize:"30px",
+      fontSize:"25px",
       fontWeight: "bold",
       marginBottom:"20px",
     }}
@@ -106,7 +106,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={transaction}
           textColor='#071437'
-          count={dashboardData?.today_total_transactions}
+          count={dashboardData?.today_total_transactions || 0}
         />
       </div>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
@@ -116,7 +116,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={merchant}
           textColor='#071437'
-          count={dashboardData?.visa_processed_today}
+          count={dashboardData?.visa_processed_today || 0}
         />
       </div>
     </div>

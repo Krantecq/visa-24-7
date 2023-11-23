@@ -72,11 +72,12 @@ const MerchantDashboard = () => {
   };
   // Define inline styles for the active tab text
   const activeTabTextStyle = {
-    color: '#327113', // Text color for the active tab
+    color: '#fff', // Text color for the active tab
     cursor: 'pointer',
+    backgroundColor:"#327113",
     fontSize: 18,
     fontWeight: 600,
-    border: "1px solid #327113",
+    border: "none",
     paddingBottom: "20px",
     padding: '10px 0',
     marginTop: 20,
@@ -90,8 +91,8 @@ const MerchantDashboard = () => {
     paddingLeft: 8,
     marginTop: 5,
     borderRadius:5,
-    
-    color: '#327113', // Add some padding to the active tab
+    fontWeight:"500",
+    color: '#fff', // Add some padding to the active tab
   };
 
   // Define inline styles for the inactive tab text

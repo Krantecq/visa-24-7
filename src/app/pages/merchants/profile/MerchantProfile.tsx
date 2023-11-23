@@ -228,7 +228,7 @@ function MerchantProfile() {
 
   const inputStyle = {
     border: '2px solid #d3d3d3', // Border width and color
-    borderRadius: '10px', // Border radius
+    borderRadius: '15px', // Border radius
     padding: '10px',
     paddingLeft: '20px', // Padding
     width: 280, // 100% width
@@ -388,7 +388,7 @@ function MerchantProfile() {
                   </div>
                 </div>
               </div>
-              <hr />
+              <hr style={{marginBottom:"6%", marginTop:"2%"}} />
 
               <div className='d-flex'>
                 <div className='fv-row mb-5'>
@@ -1211,7 +1211,7 @@ function MerchantProfile() {
     >
       <div className='d-flex align-items-center px-10'>
         <div className='d-flex align-items-center' style={{ flex: 1 }}>
-          <h2 className='' >Issue API</h2>
+          <h2 className='' >API</h2>
         </div>
       </div>
       <hr />
@@ -1221,8 +1221,7 @@ function MerchantProfile() {
           {() => (
             <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
               <div>
-                {formData2.issued_api.length > 0
-                  ?
+                  {formData2.issued_api.length > 0 ? (
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center form-label'>
                       <span className='required mx-5'>API Key</span>
@@ -1239,7 +1238,7 @@ function MerchantProfile() {
                       <ErrorMessage name='amount' />
                     </div>
                   </div>
-                  :
+                ) : (
                   <div className='pt-5 d-flex justify-content-center'>
                     <button
                       type='submit'
@@ -1256,7 +1255,7 @@ function MerchantProfile() {
                       )}
                     </button>
                   </div>
-                }
+                )}
                 {receiptShow &&
 
                   <div className='loader-overlay' style={{ ...overlayStyle, ...(receiptShow && activeOverlayStyle), }}>
@@ -1388,10 +1387,17 @@ function MerchantProfile() {
       content: loadWalletContent,
     },
     { label: 'Transactions', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: transactionContent },
-    { label: 'Issue API', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: isuueAPIContent },
-
     { label: 'Commisions', icon: <WalletIcon style={{ width: 25, height: 25 }} />, content: commissionContent },
-  ]
+    ...(formData2.issued_api.length > 0
+      ? [
+          {
+            label: 'API',
+            icon: <CardIcon style={{ width: 25, height: 25 }} />,
+            content: isuueAPIContent,
+          },
+        ]
+      : []),
+  ];
 
   // Find the active tab's content
   const activeTabContent = tabs.find((tab) => tab.label === activeTab)?.content
@@ -1406,16 +1412,16 @@ function MerchantProfile() {
         paddingTop: 20,
       }}
     >
-      <div className='d-flex' style={{ alignItems: 'center' }}>
-        <img src={formData2.merchant_profile_photo} alt='Profile photo' width={70} height={70} />
+      <div className='d-flex' style={{ alignItems: 'center', paddingLeft:"1%" }}>
+        <img style={{borderRadius:"50%"}} src={formData2.merchant_profile_photo} alt='Profile photo' width={70} height={70} />
         <div className='px-10'>
-          <h1 style={{ fontSize: 20 }}>{formData2.merchant_name}</h1>
-          <h5 style={{ fontSize: 20 }}>{formData2.merchant_email_id}</h5>
+          <h1 style={{ fontSize: 20 }}>Welcome {formData2.merchant_name}</h1>
+          <h5 style={{ fontSize: 15 }}>{formData2.merchant_email_id}</h5>
         </div>
       </div>
       {/* Left Side */}
       <div className='d-flex'>
-        <div className='my-10' style={{ width: '20%', padding: '20px' }}>
+        <div className='' style={{ width: '20%', padding: '20px' }}>
           {tabs.map((tab) => (
             <div
               key={tab.label}
