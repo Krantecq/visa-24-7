@@ -52,6 +52,35 @@ const contentStyle: CSSProperties = {
 };
 
 const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
+  const formatDate1 = (dateString) => {
+    // Create a Date object from the input date string
+    const date = new Date(dateString)
+
+    // Get the month name as a three-letter abbreviation (e.g., "Oct")
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ]
+    const month = monthNames[date.getMonth()]
+
+    // Get the day and year
+    const day = date.getDate()
+    const year = date.getFullYear()
+
+    // Format the date string
+    return `${month} ${day}, ${year}`
+  }
+
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
@@ -59,38 +88,10 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [filter, setFilter] = useState('all')
 
   const [open, setOpen] = React.useState(false);
-  const handleApproveClick = async (item) => {
-    const response = await axiosInstance.post('/backend/approve_transaction', {
-      wallet_id: item._id,
-      merchant_id: item.merchant_id
-    })
-
-    if (response.status == 200) {
-      toast.success(response.data.msg, {
-        position: 'top-center', // Center the toast notification
-      })
-
-      window.location.reload();
-      // navigate('/merchant/apply-visa')
-    } else {
-      console.log(response.data)
-      toast.error(response.data.msg, {
-        position: 'top-center',
-      })
-    }
-  };
+  
 
 
-
-  const getFilteredData = () => {
-    if (filter === 'waitingForApproval') {
-      return data.filter((item) => item.status === 'In-processed')
-    } if (filter === 'history') {
-      return data.filter((item) => item.status != 'In-processed')
-    }else {
-      return data // Show all items by default
-    }
-  }
+  
   const handleFilterClick = (filterType) => {
     setFilter(filterType)
   }
@@ -150,7 +151,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               {/* end::Table head */}
               {/* begin::Table body */}
               <tbody>
-                {getFilteredData().map((row, index) => (
+                {data.map((row, index) => (
 
                   <tr>
                     <td className='text-center'>
@@ -161,7 +162,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                         </div>
                         <div className='d-flex justify-content-center flex-column'>
                           <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
-                            {row.merchant_email_id}{/* Name */}
+                            {row.name}{/* Name */}
                           </a>
                         </div>
                       </div>
@@ -169,27 +170,27 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                     <td className='text-center'>
                       {/* Date */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.upi_ref_id}{/* Application Number */}
+                        {row.application_no}{/* Application Number */}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.wallet_balance}{/* Customer Type */}
-                      </a>
-                    </td>
-
-                    <td className='text-center'>
-                      {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.status}{/* Margin */}
+                        {formatDate1(row.transaction_time)}{/* Customer Type */}
                       </a>
                     </td>
 
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.status}{/* Time of Transaction */}
+                        {row.customer_type}{/* Margin */}
+                      </a>
+                    </td>
+
+                    <td className='text-center'>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.revenue}{/* Time of Transaction */}
                       </a>
                     </td>
                   </tr>
