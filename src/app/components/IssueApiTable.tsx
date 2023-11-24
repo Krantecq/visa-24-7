@@ -74,9 +74,8 @@ const inputStyle = {
 }
 
 
-
 const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
-
+  const [itemModalVisibility, setItemModalVisibility] = useState<Array<boolean>>(Array(data.length).fill(false));
   const [formData, setFormData] = useState({
     walletBalance: ''
   })
@@ -89,10 +88,6 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
-  };
-  const handleShowMoreClick = (e) => {
-    e.stopPropagation();
-    handleToggleModal();
   };
 
   const [open, setOpen] = React.useState(false);
@@ -107,7 +102,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const handleClickOpen = (item) => {
     setDeleteSelectedItem(item);
     setOpen(!open);
-};
+  };
 
 const handleClose = () => {
     setDeleteSelectedItem(null);
@@ -256,27 +251,35 @@ const handleSaveClick = async () => {
                             <span className='text-dark fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
                           <td className='text-center min-w-50px' style={{ whiteSpace: 'pre-wrap', maxWidth: '100px' }}>
-                          <button onClick={() => {
-                              setSelectedItem(item);
-                              setShowModal(true);
-                            }} style={{backgroundColor:"transparent", border:"none"}}>
-                            Show Key
-                          </button>
-
-                          <Modal show={showModal} onHide={() => setShowModal(false)} >
-                            <Modal.Header closeButton>
-                              <Modal.Title>API Key </Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-                              <p>{item.api_key}</p>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant='secondary' onClick={() => setShowModal(false)}>
-                                Close
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
-                        </td>
+                            <button onClick={() => {
+                              const updatedVisibility = [...itemModalVisibility];
+                              updatedVisibility[index] = true;
+                              setItemModalVisibility(updatedVisibility);
+                            }} style={{ backgroundColor: 'transparent', border: 'none' }}>
+                              Show Key
+                            </button>
+                            <Modal show={itemModalVisibility[index]} onHide={() => {
+                              const updatedVisibility = [...itemModalVisibility];
+                              updatedVisibility[index] = false;
+                              setItemModalVisibility(updatedVisibility);
+                            }}>
+                              <Modal.Header closeButton>
+                                <Modal.Title>API Key</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+                                <p>{item.api_key}</p>
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Button variant='secondary' onClick={() => {
+                                  const updatedVisibility = [...itemModalVisibility];
+                                  updatedVisibility[index] = false;
+                                  setItemModalVisibility(updatedVisibility);
+                                }}>
+                                  Close
+                                </Button>
+                              </Modal.Footer>
+                            </Modal>
+                          </td>
 
                           <td className='text-center'>
                             <span className='text-dark fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>

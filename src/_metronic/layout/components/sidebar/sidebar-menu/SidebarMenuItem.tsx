@@ -8,7 +8,7 @@ import {useLayout} from '../../../core'
 type Props = {
   to: string
   title: string
-  icon?: string
+  icon?: any
   fontIcon?: string
   hasBullet?: boolean
 }
@@ -29,20 +29,7 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
   return (
     <div className='menu-item'>
       <Link className={clsx('menu-link without-sub', {active: isActive})} to={to}>
-        {hasBullet && (
-          <span className='menu-bullet'>
-            <span className='bullet bullet-dot'></span>
-          </span>
-        )}
-        {/* {icon && app?.sidebar?.default?.menu?.iconType === 'svg' && (
-          <span className='menu-icon'>
-            {' '}
-            <KTIcon iconName={icon} className='fs-2' />
-          </span>
-        )} */}
-        {fontIcon && app?.sidebar?.default?.menu?.iconType === 'font' && (
-          <i className={clsx('bi fs-3', fontIcon)}></i>
-        )}
+        <span style={{marginRight:"10px"}} className='menu-custom-icon'>{icon}</span>
         <span className='menu-title'>{title}</span>
       </Link>
       {children}

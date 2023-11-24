@@ -122,7 +122,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
   }
 
   const handleCloseClick = () => {
-    setSelectedItem(null) // Set the selected item
+    setSelectedItem(null)
     setVisible(false)
   }
   return (
