@@ -37,7 +37,7 @@ type Props = {
   waiting:string | number
   today_total_transactions:string | number
   visa_processed_today:string | number
-
+  revenue:string |number
 }
 
 
@@ -117,7 +117,7 @@ const DashboardPage: FC<Props> = (data) => (
           color='#fff'
           icon={revenue}
           textColor='#071437'
-          count={data.waiting}
+          count={data.revenue}
         />
       </div>
     </div>
@@ -228,6 +228,7 @@ const DashboardWrapper: FC = () => {
     waiting:'',
     today_total_transactions:'',
     visa_processed_today:'',
+    revenue:'',
   });
   const [loading,setLoading] = useState(true);
   useEffect(() => {
