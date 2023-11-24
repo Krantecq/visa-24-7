@@ -96,7 +96,7 @@ export function MerchantAnaltytics({dashboardData}) {
           color='#fff'
           icon={revenue}
           textColor='#071437'
-          count={dashboardData?.not_issued_visa || 0}
+          count={dashboardData?.revenue || 0}
         />
       </div>
       
