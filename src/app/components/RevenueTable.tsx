@@ -14,6 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import WalletFormView from './WalletFormView'
 import { toast } from 'react-toastify'
 import axiosInstance from '../helpers/axiosInstance'
+import Papa from 'papaparse';
 
 type Props = {
   className: string
@@ -50,6 +51,13 @@ const contentStyle: CSSProperties = {
   height: '70%',
   overflowY: 'auto'
 };
+function convertToCSV(data) {
+  const csv = Papa.unparse(data);
+  return csv;
+}
+
+
+
 
 const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const formatDate1 = (dateString) => {
@@ -89,7 +97,18 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
   const [open, setOpen] = React.useState(false);
   
+  const handleDownloadCSVRevenueTable = () => {
+    const csvData = convertToCSV(data);
 
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'revenue_table.csv';
+  
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   
   const handleFilterClick = (filterType) => {
@@ -117,6 +136,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
           zIndex: 1,
           width:"150px"
         }}
+        onClick={handleDownloadCSVRevenueTable}
       >
         Download CSV
       </button>

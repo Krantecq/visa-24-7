@@ -1242,6 +1242,24 @@ function MerchantProfile() {
     </div>
   )
 
+
+  function handleDownloadCSVRevenue() {
+    // Convert revenue data to CSV
+    const revenueCSVData = convertToCSV(revenue);
+
+    // Create a Blob and generate a download link
+    const blob = new Blob([revenueCSVData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'revenue.csv';
+
+    // Simulate a click on the download link
+    a.click();
+
+    // Release the Object URL
+    URL.revokeObjectURL(url);
+}
   const revenueContent = (
     <div
       className='w-full mt-5 mx-10 pt-5'
@@ -1276,8 +1294,8 @@ function MerchantProfile() {
             marginLeft: 'auto',
             backgroundColor: '#fff',
             cursor: 'pointer',
-
           }}
+          onClick={handleDownloadCSVRevenue}
         >
           <h6 className='fs-4' style={{ marginTop: 5 }}>
             Download CSV
