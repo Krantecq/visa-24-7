@@ -35,6 +35,12 @@ interface Transaction {
   status: string;
 }
 
+interface Revenue {
+  name: string;
+  revenue: number;
+  transaction_time: string;
+  application_no: string;
+}
 function MerchantProfile() {
   const [activeTab, setActiveTab] = useState('Profile')
   const [formData, setFormData] = useState({
@@ -46,7 +52,34 @@ function MerchantProfile() {
   const [issueDate, setIssueDate] = useState<string | undefined>('');
   const [expiryDate, setExpiryDate] = useState<string | undefined>('');
 
-  
+  const formatDate1 = (dateString) => {
+    // Create a Date object from the input date string
+    const date = new Date(dateString)
+
+    // Get the month name as a three-letter abbreviation (e.g., "Oct")
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ]
+    const month = monthNames[date.getMonth()]
+
+    // Get the day and year
+    const day = date.getDate()
+    const year = date.getFullYear()
+
+    // Format the date string
+    return `${month} ${day}, ${year}`
+  }
   const [formData2, setFormData2] = useState({
     merchant_phone_number: '',
     merchant_email_id: '',
@@ -77,6 +110,8 @@ function MerchantProfile() {
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(true);
   const [transaction, setTransaction] = useState<Transaction[]>([]);
+  const [revenue, setRevenue] = useState<Revenue[]>([]);
+
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [commission, setCommission] = useState(0);
   const [upperLimit, setUpperLimit] = useState(0);
@@ -110,6 +145,7 @@ function MerchantProfile() {
     fetchProfileData()
     fetchTransactionData()
     fetchCommission()
+    fetchRevenueData()
   }, [])
 
   useEffect(() => {
@@ -176,6 +212,27 @@ function MerchantProfile() {
       // Assuming the response contains the profile data, update the state with the data
       setTransaction(response.data.data)
       console.log('transaction response', response.data)
+    } catch (error) {
+      console.error('Error fetching profile data:', error)
+      // Handle error (e.g., show an error message)
+    }
+  }
+  const fetchRevenueData = async () => {
+    try {
+      const user_id = Cookies.get('user_id')
+      const postData = {
+        merchant_id: user_id,
+      }
+      const response = await axiosInstance.post('/backend/merchant/revenue', postData)
+
+      if (response.status == 203) {
+        toast.error('Please Logout And Login Again', {
+          position: 'top-center',
+        })
+      }
+      // Assuming the response contains the profile data, update the state with the data
+      setRevenue(response.data.data)
+      console.log('Revenue response', response.data)
     } catch (error) {
       console.error('Error fetching profile data:', error)
       // Handle error (e.g., show an error message)
@@ -1236,37 +1293,37 @@ function MerchantProfile() {
             <th className='min-w-150px'>Transaction time</th>
             <th className='min-w-150px'>Application No.</th>
             <th className='text-center min-w-150px'>Merchant Margin</th>
-            <th className='text-center min-w-150px'>Invoice</th>
+            {/* <th className='text-center min-w-150px'>Invoice</th> */}
           </tr>
         </thead>
         {/* end::Table head */}
         {/* begin::Table body */}
         <tbody>
-          {/* {transaction.map((item, index) => ( */}
+          {revenue.map((item, index) => (
 
             <tr>
               <td className='text-start'>
                 <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                  
+                  {item.name}
                 </a>
               </td>
               <td className='text-start'>
                 <span className='text-dark fw-bold d-block fs-6'>
-                  
+                  {formatDate1(item.transaction_time)}
                 </span>
               </td>
               <td className='text-start'>
                 <span className='text-dark fw-bold d-block fs-6'>
-                  
+                  {item.application_no}
                 </span>
               </td>
               <td className='text-center'>
                 <span className='text-dark fw-bold d-block fs-6'>
-                  
+                  {item.revenue}
                 </span>
 
               </td>
-              <td className='text-center'>
+              {/* <td className='text-center'>
                 <span className='text-dark fw-semibold d-block fs-6'>
                 <button
                   style={{
@@ -1296,9 +1353,9 @@ function MerchantProfile() {
                 </svg>
                 </button>
                 </span>
-              </td>
+              </td> */}
             </tr>
-          {/* ))} */}
+           ))} 
 
         </tbody>
         {/* end::Table body */}
