@@ -1071,12 +1071,12 @@ function MerchantProfile() {
   }
 
   function handleDownloadCSV() {
-    const csvData = convertToCSV(transaction); // Use your transaction data here
+    const csvData = convertToCSV(transaction);
     const blob = new Blob([csvData], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'transactions.csv'; // Set the file name
+    a.download = 'transactions.csv';
     a.click();
     URL.revokeObjectURL(url);
   }
