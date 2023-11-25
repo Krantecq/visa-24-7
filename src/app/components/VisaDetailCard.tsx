@@ -470,14 +470,14 @@ const VisaDetailCard = ({ visaData }: Props) => {
         const stepStatusesForVisa = getStepStatuses(selectedVisa.visa_status);
 
         return (
-            <div>
+            <div style={{marginTop:"30px"}}>
                 <div
                     onClick={handleGoBackClick}
                     style={{ cursor: 'pointer' }}
                     className='d-flex items-center'
                 >
-                    <BackIcon style={{ color: '#007bff' }} />
-                    <h6 style={{ color: '#007bff', marginLeft: 10 }}>Go Back to main Dashboard</h6>
+                    <BackIcon style={{ color: '#327113' }} />
+                    <h6 style={{ color: '#327113', marginLeft: 10 }}>Go Back to main Dashboard</h6>
                 </div>
                 <div className='p-10'>
                     <h2>
@@ -702,14 +702,14 @@ const VisaDetailCard = ({ visaData }: Props) => {
     }
     if (viewApplication) {
         return (
-            <div>
+            <div style={{marginTop:"30px"}}>
                 <div
                     onClick={handleGoBackClick}
                     style={{ cursor: 'pointer' }}
                     className='d-flex items-center'
                 >
-                    <BackIcon style={{ color: '#007bff' }} />
-                    <h6 style={{ color: '#007bff', marginLeft: 10 }}>Go Back to main Dashboard</h6>
+                    <BackIcon style={{ color: '#327113' }} />
+                    <h6 style={{ color: '#327113', marginLeft: 10 }}>Go Back to main Dashboard</h6>
                 </div>
                 <ApplicationFormView viewApplication={viewApplication} />
             </div>

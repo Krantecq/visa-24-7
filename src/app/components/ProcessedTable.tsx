@@ -186,7 +186,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
+        <div style={{borderRadius:"10px", border:"1px solid #327113"}} className='table-responsive'>
           {/* begin::Table */}
           {loading ?
             <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -201,11 +201,11 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
               <thead style={{ background: '#327113', color: "#fff" }}>
                 <tr className='fw-bold'>
 
-                  <th className='min-w-150px text-center'>Customers</th>
-                  <th className='min-w-140px text-center'>Application Arrival Date</th>
-                  <th className='min-w-120px text-center'>Application Departure Date</th>
-                  <th className='min-w-100px text-center'>Visa Amount</th>
-                  <th className='min-w-100px text-center'>Visa Status</th>
+                  <th className='min-w-120px text-center'>Customers</th>
+                  <th className='min-w-120px text-center'>Application Arrival Date</th>
+                  <th className='min-w-100px text-center'>Application Departure Date</th>
+                  <th className='min-w-80px text-center'>Visa Amount</th>
+                  <th className='min-w-80px text-center'>Visa Status</th>
                   <th className='min-w-100px text-center'>Actions</th>
                 </tr>
               </thead>
@@ -214,7 +214,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
               <tbody>
                 {data.map((row, index) => (
                   <tr key={index}>
-                    <td className='text-center'>
+                    <td style={{paddingLeft:"15px"}}  className='text-center'>
                       {/* Avatar and Name */}
                       <div className='d-flex align-items-center'>
                         <div className='symbol symbol-45px me-5'>
@@ -251,7 +251,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                         {row.visa_status}
                       </span>
                     </td>
-                    <td className='text-center'>
+                    <td style={{paddingRight:"15px"}}   className='text-center'>
                       {/* Action Buttons */}
                       <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
 

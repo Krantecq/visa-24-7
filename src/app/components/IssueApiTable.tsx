@@ -195,7 +195,7 @@ const handleSaveClick = async () => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div style={{borderRadius:"30px", border:"1px solid #327113", overflowX:"hidden"}} className='table-responsive'>
+              <div style={{borderRadius:"10px", border:"1px solid #327113", overflowX:"hidden"}} className='table-responsive'>
                 {/* begin::Table */}
                 {loading ?
                   <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>

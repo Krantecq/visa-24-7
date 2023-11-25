@@ -83,7 +83,7 @@ const InProcessedTable: React.FC<Props> = ({className,title}) => {
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div style={{borderRadius:"30px", border:"1px solid #327113"}} className='table-responsive'>
+        <div style={{borderRadius:"10px", border:"1px solid #327113"}} className='table-responsive'>
           {/* begin::Table */}
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             {/* begin::Table head */}

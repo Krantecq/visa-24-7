@@ -52,6 +52,8 @@ function ApplicationFormView({viewApplication}) {
         marginLeft: 10,
         marginTop: 20,
         backgroundColor: 'white',
+        overflow: "auto",
+
       }}
     >
       <h5 style={{fontSize: 30, letterSpacing: 0.3}}>Traveller 1 </h5>
@@ -76,16 +78,6 @@ function ApplicationFormView({viewApplication}) {
               marginTop: 20,
             }}
           >
-            <div
-              style={{
-                justifyContent: 'flex-end',
-                position: 'absolute',
-                backgroundColor: 'white',
-                padding: 7,
-                borderRadius: 50,
-                cursor: 'pointer',
-              }}
-            ></div>
             <img
               src={viewApplication.passport_front}
               alt='Uploaded Image'
@@ -284,16 +276,6 @@ function ApplicationFormView({viewApplication}) {
               marginTop: 20,
             }}
           >
-            <div
-              style={{
-                justifyContent: 'flex-end',
-                position: 'absolute',
-                backgroundColor: 'white',
-                padding: 7,
-                borderRadius: 50,
-                cursor: 'pointer',
-              }}
-            ></div>
             <img
               src={viewApplication.passport_back}
               alt='Uploaded Image'
@@ -369,16 +351,6 @@ function ApplicationFormView({viewApplication}) {
               marginTop: 20,
             }}
           >
-            <div
-              style={{
-                justifyContent: 'flex-end',
-                position: 'absolute',
-                backgroundColor: 'white',
-                padding: 7,
-                borderRadius: 50,
-                cursor: 'pointer',
-              }}
-            ></div>
             <img
               src={viewApplication.pan_card}
               alt='Uploaded Image'
@@ -431,16 +403,6 @@ function ApplicationFormView({viewApplication}) {
               marginTop: 20,
             }}
           >
-            <div
-              style={{
-                justifyContent: 'flex-end',
-                position: 'absolute',
-                backgroundColor: 'white',
-                padding: 7,
-                borderRadius: 50,
-                cursor: 'pointer',
-              }}
-            ></div>
             <img
               src={viewApplication.photo}
               alt='Uploaded Image'
