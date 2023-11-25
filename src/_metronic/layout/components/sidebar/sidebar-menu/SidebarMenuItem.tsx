@@ -29,7 +29,7 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
 
   // SVG ke liye dynamic styles
   const iconStyles = {
-    fill: isActive ? '#ffffff' : '#000000', // White color in selected state, black in normal state
+    fill: isActive ? '#ffffff' : '#327113', // White color in selected state, black in normal state
   };
 
   return (
