@@ -1174,13 +1174,13 @@ function MerchantProfile() {
         <div
           className='px-5 py-2'
           style={{
-            border: '2px solid #d3d3d3',
-            borderRadius: 20,
+            border: '1px solid #327113',
+            borderRadius: 10,
             alignItems: 'center',
             display: 'flex',
             marginLeft: 'auto',
             backgroundColor: '#fff',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
           onClick={handleDownloadCSV}
         >

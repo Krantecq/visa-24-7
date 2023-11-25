@@ -1,21 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { CSSProperties, useState } from 'react'
-import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
-import ApplicationFormView from './ApplicationFormView'
-import ConfirmationModal from './ConfirmationModal'
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import WalletFormView from './WalletFormView'
-import { toast } from 'react-toastify'
-import axiosInstance from '../helpers/axiosInstance'
+
 import Papa from 'papaparse';
-import { Tooltip } from 'react-bootstrap';
+
 
 type Props = {
   className: string
@@ -23,35 +10,7 @@ type Props = {
   data: any[];
   loading: Boolean
 }
-const overlayStyle: CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.7)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 9999,
-  opacity: 0,
-  visibility: 'hidden',
-  transition: 'opacity 0.3s, visibility 0.3s',
-};
 
-const activeOverlayStyle: CSSProperties = {
-  opacity: 1,
-  visibility: 'visible',
-};
-const contentStyle: CSSProperties = {
-  backgroundColor: '#fff', // Background color for highlighting
-  padding: '10px', // Adjust padding as needed
-  borderRadius: '5px', // Rounded corners for the highlight
-  // textAlign:'center',
-  width: '70%',
-  height: '70%',
-  overflowY: 'auto'
-};
 function convertToCSV(data) {
   const csv = Papa.unparse(data);
   return csv;
@@ -62,10 +21,9 @@ function convertToCSV(data) {
 
 const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const formatDate1 = (dateString) => {
-    // Create a Date object from the input date string
+
     const date = new Date(dateString)
 
-    // Get the month name as a three-letter abbreviation (e.g., "Oct")
     const monthNames = [
       'Jan',
       'Feb',
@@ -90,16 +48,6 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
     return `${month} ${day}, ${year}`
   }
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const entriesPerPage = 5;
-
-  // const indexOfLastEntry = currentPage * entriesPerPage;
-  // const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-  // const currentEntries = data.slice(indexOfFirstEntry, indexOfLastEntry);
-
-  // const paginate = (pageNumber: number) => {
-  //   setCurrentPage(pageNumber);
-  // };
 
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -284,14 +232,6 @@ ${row.application_no}`}>
             </table>
           }
           {/* end::Table */}
-          {/* Pagination */}
-          {/* <div className='pagination'>
-            {[...Array(Math.ceil(data.length / entriesPerPage))].map((_, index) => (
-              <button key={index} onClick={() => paginate(index + 1)}>
-                {index + 1}
-              </button>
-            ))}
-          </div> */}
         </div>
         {/* end::Table container */}
       </div>
