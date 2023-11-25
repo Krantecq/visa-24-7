@@ -153,7 +153,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                   <th className='min-w-80px text-center'>Merchant ID</th>
                   <th className='min-w-80px text-center'>Provider</th>
                   
-                  <th className='min-w-80px text-center'>Visa Cost</th>
+                  {/* <th className='min-w-80px text-center'>Visa Cost</th> */}
                   <th className='min-w-80px text-center'>Paid</th>
                   <th className='min-w-80px text-center'>Recieved</th>
                   <th className='min-w-80px text-center'>Margin</th>
@@ -188,7 +188,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6' 
                           title={`${row.name} 
-${row.application_no}`}>
+${row.id}`}>
                         {row.name}
                       </a>
                     </td>
@@ -196,26 +196,20 @@ ${row.application_no}`}>
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.customer_type}{/* Margin */}
-                      </a>
-                    </td>
-
-                    <td className='text-center'>
-                      {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.revenue}{/* Time of Transaction */}
+                        Atlys{/* Margin */}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.revenue}{/* Time of Transaction */}
+                        {row.paid}{/* Time of Transaction */}
                       </a>
                     </td>
+                    
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.revenue}{/* Time of Transaction */}
+                        {row.receive}{/* Time of Transaction */}
                       </a>
                     </td>
                     <td className='text-center'>
