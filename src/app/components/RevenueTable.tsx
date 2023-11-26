@@ -17,7 +17,6 @@ function convertToCSV(data: any) {
 
 const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [itemModalVisibility, setItemModalVisibility] = useState<Array<boolean>>(Array(data.length).fill(false));
-  console.log(data);
   const formatDate1 = (dateString: string) => {
     const date = new Date(dateString);
 
