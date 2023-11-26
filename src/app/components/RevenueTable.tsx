@@ -52,7 +52,23 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [issueDate, setIssueDate] = useState<string | undefined>('');
   const [expiryDate, setExpiryDate] = useState<string | undefined>('');
   const [filteredData, setFilteredData] = useState(data as any[]);
-  
+
+  const handleDatePickerChange = (value: any) => {
+    if (value && value.length === 2) {
+      const startDate = value[0]?.isValid() ? value[0].format('YYYY-MM-DD') : '';
+      const endDate = value[1]?.isValid() ? value[1].format('YYYY-MM-DD') : '';
+      const filtered = (data as any[]).filter((item) => {
+        const transactionDate = item.transaction_time.split(' ')[0];
+        return transactionDate >= startDate && transactionDate <= endDate;
+      });
+      setIssueDate(startDate);
+      setExpiryDate(endDate);
+      setFilteredData(filtered);
+    } else {
+      // Date picker cancel hua hai, isliye original data ko set karo
+      setFilteredData(data as any[]);
+    }
+  };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
@@ -100,19 +116,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               borderRadius: 10,
               padding: 10,
             }}
-            onChange={(value) => {
-              if (value && value.length === 2) {
-                const startDate = value[0]?.isValid() ? value[0].format('YYYY-MM-DD') : '';
-                const endDate = value[1]?.isValid() ? value[1].format('YYYY-MM-DD') : '';
-                const filtered = (data as any[]).filter((item) => {
-                  const transactionDate = item.transaction_time.split(' ')[0];
-                  return transactionDate >= startDate && transactionDate <= endDate;
-                });
-                setIssueDate(startDate);
-                setExpiryDate(endDate);
-                setFilteredData(filtered);
-              }
-            }}
+            onChange={handleDatePickerChange}
           />
         </div>
         <div className=' d-flex gap-4 flex-row p-4 dropdown mx-5'>
@@ -227,8 +231,8 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                           <Modal.Title>Merchant Details</Modal.Title>
                         </Modal.Header>
                         <Modal.Body style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Merchant Name -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.name}</p></span>
-                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Merchant Address -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.address}</p></span>
+                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Name -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.name}</p></span>
+                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Address -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.address}</p></span>
                         </Modal.Body>
                       </Modal>
                     </td>

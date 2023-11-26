@@ -1122,6 +1122,19 @@ function MerchantProfile() {
       <div>{activeWalletTabContent}</div>
     </div>
   )
+
+  const handleDatePickerChange = (dates: any, dateStrings: [string, string]) => {
+    if (dates && dates.length === 2) {
+      var x = dates[0]?.format('YYYY-MM-DD');
+      var y = dates[1]?.format('YYYY-MM-DD');
+      setIssueDate(x);
+      setExpiryDate(y);
+    } else {
+      // Date picker cancel hua hai, isliye original data ko set karo
+      setTransaction(transaction);
+    }
+  };
+
   function convertToCSV(data) {
     const csv = Papa.unparse(data);
     return csv;
@@ -1159,16 +1172,16 @@ function MerchantProfile() {
 
         <div className='fv-row w-50' style={{position:"relative", right:"4%"}}>
           
-          <DatePicker.RangePicker
-            style={{ backgroundClip: '#fff', width: 400, marginTop: 8, border: '2px solid #e5e5e5', borderRadius: 10, padding: 10 }}
-            onChange={(value) => {
-              if (value && value.length === 2) {
-                var x = value[0]?.format('YYYY-MM-DD');
-                var y = value[1]?.format('YYYY-MM-DD');
-                setIssueDate(x);
-                setExpiryDate(y);
-              }
-            }} />
+        <DatePicker.RangePicker
+          style={{ backgroundClip: '#fff', width: 400, marginTop: 8, border: '2px solid #e5e5e5', borderRadius: 10, padding: 10 }}
+          onCalendarChange={(dates, dateStrings) => {
+            if (!dates) {
+              // Date picker cancel hua hai, isliye original data ko set karo
+              setTransaction(transaction);
+            }
+          }}
+          onChange={handleDatePickerChange}
+        />
         </div>
 
         <div
