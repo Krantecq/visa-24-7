@@ -14,6 +14,7 @@ import axiosInstance from '../../../../app/helpers/axiosInstance'
 export function HeaderWrapper({ role }: { role: string }) {
   const { config, classes } = useLayout();
   const [profile, setProfile] = useState<any>({}); // Update the type accordingly
+  const [userType, setUserType] = useState<string | undefined>('');
   useEffect(() => {
     if (user_type == 'merchant') {
       
@@ -25,24 +26,33 @@ export function HeaderWrapper({ role }: { role: string }) {
   }, [])
   const fetchProfileData = async () => {
     try {
-      const user_id = Cookies.get('user_id')
-      const postData = {
-        id: user_id,
-      }
-      const response = await axiosInstance.post('/backend/fetch_single_merchant_user', postData)
+      const user_id = Cookies.get('user_id');
+      const postData = { id: user_id };
 
-      if (response.status == 203) {
-        toast.error('Please Logout And Login Again', {
-          position: 'top-center',
-        })
+      const response = await axiosInstance.post('/backend/fetch_single_merchant_user', postData);
+
+      if (response.status === 203) {
+        toast.error('Please Logout And Login Again', { position: 'top-center' });
       }
-      // Assuming the response contains the profile data, update the state with the data
-      setProfile(response.data.data)
+
+      setProfile(response.data.data);
+
+      // Check if issued_api field is available in the response
+      const issuedApi = response.data.data?.issued_api || [];
+
+      // Set user type based on the presence of data in issued_api
+      setUserType(issuedApi.length > 0 ? 'Partner' : 'Retailer');
     } catch (error) {
-      console.error('Error fetching profile data:', error)
-      // Handle error (e.g., show an error message)
+      console.error('Error fetching profile data:', error);
     }
+  };
+
+  const isMerchant = Cookies.get('user_type') === 'merchant';
+
+  if (!config.app?.header?.display) {
+    return null;
   }
+
 
   const fetchData = async () => {
     try {
@@ -56,7 +66,6 @@ export function HeaderWrapper({ role }: { role: string }) {
           console.log('profile response-->',response.data.data)
           const responseData = response.data.data;
           setProfile(responseData[0])
-          // Update the formData state with the fetched data
 
         })
         .catch((error) => {
@@ -72,7 +81,6 @@ export function HeaderWrapper({ role }: { role: string }) {
   const { data } = profile || {}; 
   const user_type = Cookies.get('user_type');
   const issuedApi = (data && data.issued_api) || [];
-  const isMerchant = user_type === 'merchant';
   const isPartnerOrRetailer = isMerchant && data && data.issued_api && data.issued_api.length > 0;
 
   
@@ -153,27 +161,15 @@ export function HeaderWrapper({ role }: { role: string }) {
               src={toAbsoluteUrl('/media/logos/logo.png')}
               className='h-20px h-lg-30px app-sidebar-logo-default'
             />
-             {profile.issued_api ? (
-          <p
-            style={{
-              position: "relative",
-              top: "17px",
-              color: "#327113",
-            }}
-          >
-            Partner
-          </p>
-        ) : (
-          <p
-            style={{
-              position: "relative",
-              top: "17px",
-              color: "#327113",
-            }}
-          >
-            Retailer
-          </p>
-        )}
+             <p
+              style={{
+                position: 'relative',
+                top: '17px',
+                color: '#327113',
+              }}
+            >
+              {userType}
+            </p>
           </div>
         </div>
       )}
