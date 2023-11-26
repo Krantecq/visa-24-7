@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DatePicker } from 'antd';
 import Papa from 'papaparse';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 
 type Props = {
   className: string;
@@ -16,6 +16,7 @@ function convertToCSV(data: any) {
 }
 
 const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
+  const [itemModalVisibility, setItemModalVisibility] = useState<Array<boolean>>(Array(data.length).fill(false));
   console.log(data);
   const formatDate1 = (dateString: string) => {
     const date = new Date(dateString);
@@ -51,6 +52,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [issueDate, setIssueDate] = useState<string | undefined>('');
   const [expiryDate, setExpiryDate] = useState<string | undefined>('');
   const [filteredData, setFilteredData] = useState(data as any[]);
+  
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
@@ -208,22 +210,28 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                         {row.application_no}
                       </a>
                     </td>
-                    <OverlayTrigger
-                      placement='top'
-                      overlay={<Tooltip id={`tooltip-${index}`}
-                      >{`Name - ${row.name} 
-                      `}</Tooltip>}
-
-                    >
-                      <td className='text-center'>
-                        {/* Location 1 */}
-                        <a
-                          className='text-dark fw-bold text-hover-primary d-block fs-6'
-                        >
-                          {row.id}
-                        </a>
-                      </td>
-                    </OverlayTrigger>
+                    <td className='text-center'>
+                      <button onClick={() => {
+                        const updatedVisibility = [...itemModalVisibility];
+                        updatedVisibility[index] = true;
+                        setItemModalVisibility(updatedVisibility);
+                      }} style={{ backgroundColor: 'transparent', border: 'none' }}>
+                        {row.id}
+                      </button>
+                      <Modal show={itemModalVisibility[index]} onHide={() => {
+                        const updatedVisibility = [...itemModalVisibility];
+                        updatedVisibility[index] = false;
+                        setItemModalVisibility(updatedVisibility);
+                      }}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Merchant Details</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Merchant Name -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.name}</p></span>
+                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Merchant Address -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.address}</p></span>
+                        </Modal.Body>
+                      </Modal>
+                    </td>
 
                     <td className='text-center'>
                       {/* Location 1 */}
