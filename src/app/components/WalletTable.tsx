@@ -3,8 +3,6 @@ import React, { CSSProperties, useState } from 'react'
 import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
-import ApplicationFormView from './ApplicationFormView'
-import ConfirmationModal from './ConfirmationModal'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -42,10 +40,9 @@ const activeOverlayStyle: CSSProperties = {
   visibility: 'visible',
 };
 const contentStyle: CSSProperties = {
-  backgroundColor: '#fff', // Background color for highlighting
-  padding: '10px', // Adjust padding as needed
-  borderRadius: '5px', // Rounded corners for the highlight
-  // textAlign:'center',
+  backgroundColor: '#fff', 
+  padding: '10px',
+  borderRadius: '5px',
   width: '70%',
   height: '70%',
   overflowY: 'auto'
@@ -55,6 +52,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
+  
 
   const [filter, setFilter] = useState('all')
 
@@ -67,7 +65,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
     if (response.status == 200) {
       toast.success(response.data.msg, {
-        position: 'top-center', // Center the toast notification
+        position: 'top-center',
       })
 
       window.location.reload();
@@ -100,7 +98,6 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   };
 
   const handleDeleteConfirmation = async () => {
-    // Call your API with the selected item here
     try {
       if (deleteSelectedItem) {
         const selectedEntry = deleteSelectedItem as { _id: string };

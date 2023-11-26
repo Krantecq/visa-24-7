@@ -5,15 +5,84 @@ import { KTIcon, toAbsoluteUrl } from '../../../helpers'
 import { useLayout } from '../../core'
 import { Header } from './Header'
 import { Navbar } from './Navbar'
+import { toast } from 'react-toastify'
 import Cookies from 'js-cookie'
+import React, { useEffect, useState } from 'react';
+import axiosInstance from '../../../../app/helpers/axiosInstance'
+
+
 export function HeaderWrapper({ role }: { role: string }) {
-  const { config, classes } = useLayout()
-  if (!config.app?.header?.display) {
-    return null
+  const { config, classes } = useLayout();
+  const [profile, setProfile] = useState<any>({}); // Update the type accordingly
+  useEffect(() => {
+    if (user_type == 'merchant') {
+      
+      fetchProfileData()
+    }
+    else{
+      fetchData();
+    }
+  }, [])
+  const fetchProfileData = async () => {
+    try {
+      const user_id = Cookies.get('user_id')
+      const postData = {
+        id: user_id,
+      }
+      const response = await axiosInstance.post('/backend/fetch_single_merchant_user', postData)
+
+      if (response.status == 203) {
+        toast.error('Please Logout And Login Again', {
+          position: 'top-center',
+        })
+      }
+      // Assuming the response contains the profile data, update the state with the data
+      setProfile(response.data.data)
+    } catch (error) {
+      console.error('Error fetching profile data:', error)
+      // Handle error (e.g., show an error message)
+    }
   }
 
+  const fetchData = async () => {
+    try {
+      const user_id = Cookies.get('user_id')
+
+      // Make a POST request to your API endpoint
+      axiosInstance.post('/backend/fetch_super_admin', {
+        id: user_id
+      })
+        .then((response) => {
+          console.log('profile response-->',response.data.data)
+          const responseData = response.data.data;
+          setProfile(responseData[0])
+          // Update the formData state with the fetched data
+
+        })
+        .catch((error) => {
+          console.error('Error fetching VISA 247 data:', error);
+        });
+
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+  const { data } = profile || {}; 
   const user_type = Cookies.get('user_type');
-  console.log('Role:', role);
+  const issuedApi = (data && data.issued_api) || [];
+  const isMerchant = user_type === 'merchant';
+  const isPartnerOrRetailer = isMerchant && data && data.issued_api && data.issued_api.length > 0;
+
+  
+
+  if (!config.app?.header?.display) {
+    return null;
+  }
+ 
+
+  
   return (
     <div id='kt_app_header' className='app-header'>
       <div
@@ -76,39 +145,38 @@ export function HeaderWrapper({ role }: { role: string }) {
           </div>
         )}
         
-        {user_type=="merchant" &&
+        {isMerchant && (
+        <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
-            <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
-          <img
-            alt='Logo'
-            src={toAbsoluteUrl('/media/logos/logo.png')}
-            className='h-20px h-lg-30px app-sidebar-logo-default'
-          />
-          {role === "Retailer" && (
-            <p
-              style={{
-                position: "relative",
-                top: "17px",
-                color: "#327113"
-              }}
-            >
-              Retailer
-            </p>
-          )}
-          {role === "Partner" && (
-            <p
-              style={{
-                position: "relative",
-                top: "17px",
-                color: "#327113"
-              }}
-            >
-              Partner
-            </p>
-          )}
+            <img
+              alt='Logo'
+              src={toAbsoluteUrl('/media/logos/logo.png')}
+              className='h-20px h-lg-30px app-sidebar-logo-default'
+            />
+             {profile.issued_api ? (
+          <p
+            style={{
+              position: "relative",
+              top: "17px",
+              color: "#327113",
+            }}
+          >
+            Partner
+          </p>
+        ) : (
+          <p
+            style={{
+              position: "relative",
+              top: "17px",
+              color: "#327113",
+            }}
+          >
+            Retailer
+          </p>
+        )}
           </div>
-          </div>
-        }
+        </div>
+      )}
 
         <div
           id='kt_app_header_wrapper'

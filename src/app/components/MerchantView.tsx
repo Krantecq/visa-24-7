@@ -8,7 +8,7 @@ import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccou
 import { CloseOutlined } from '@mui/icons-material'
 import { toast } from 'react-toastify'
 function MerchantView({ viewApplication }) {
-  console.log(viewApplication)
+  // console.log(viewApplication)
   const [initValues] = useState<ICreateAccount>(inits)
   const isApiIssued = viewApplication.issued_api && viewApplication.issued_api.length > 0;
   const isApiAlreadyIssued = isApiIssued;

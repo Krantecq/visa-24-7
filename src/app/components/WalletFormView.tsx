@@ -6,7 +6,6 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
 function WalletFormView({ viewApplication }) {
-    console.log(viewApplication)
     const handleDownload = () => {
         const imageUrl = viewApplication?.receipt || '';
         const link = document.createElement('a');

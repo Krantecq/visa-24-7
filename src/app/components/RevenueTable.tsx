@@ -183,6 +183,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                   </th>
                   <th className='min-w-80px text-center'>Application No.</th>
                   <th className='min-w-80px text-center'>Merchant ID</th>
+                  <th className='min-w-80px text-center'>Channel</th>
                   <th className='min-w-80px text-center'>Provider</th>
                   <th className='min-w-80px text-center'>Paid</th>
                   <th className='min-w-80px text-center'>Received</th>
@@ -234,6 +235,13 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                           <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Address -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.address}</p></span>
                         </Modal.Body>
                       </Modal>
+                    </td>
+
+                    <td className='text-center'>
+                      {/* Location 1 */}
+                      <a className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                        {row.customer_type}{/* Margin */}
+                      </a>
                     </td>
 
                     <td className='text-center'>
