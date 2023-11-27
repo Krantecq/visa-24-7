@@ -35,7 +35,7 @@ function WalletWrapper() {
   }, []); // The empty dependency array ensures this effect runs once on mount
 
   return (
-    <div>
+    <div style={{marginTop:"-50px"}}>
       <WalletTable className='' title={'Wallet'} data={walletData} loading={loading}/>
     </div>
   )

@@ -210,7 +210,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                     </td>
                     <td className='text-center'>
                       {/* Date */}
-                      <a className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
                         {row.application_no}
                       </a>
                     </td>
@@ -239,33 +239,33 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
                         {row.customer_type}{/* Margin */}
                       </a>
                     </td>
 
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
                         Atlys{/* Margin */}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
                         {row.paid}
                       </a>
                     </td>
 
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
                         {row.receive}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
                         {row.revenue}
                       </a>
                     </td>

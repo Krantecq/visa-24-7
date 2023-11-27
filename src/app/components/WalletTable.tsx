@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { CSSProperties, useState } from 'react'
+import React, { CSSProperties, useState, useEffect } from 'react';
 import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import WalletFormView from './WalletFormView'
 import { toast } from 'react-toastify'
 import axiosInstance from '../helpers/axiosInstance'
+import Pagination from './Pagination'
 
 type Props = {
   className: string
@@ -52,10 +53,28 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
-  
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState('all')
+  const entriesPerPage = 10;
+  const startIndex = (currentPage - 1) * entriesPerPage;
+  const endIndex = startIndex + entriesPerPage;
 
+  
+  const getFilteredData = () => {
+    if (filter === 'waitingForApproval') {
+      return data.filter((item) => item.status === 'In-processed')
+    } if (filter === 'history') {
+      return data.filter((item) => item.status != 'In-processed')
+    }else {
+      return data // Show all items by default
+    }
+  }
+  const displayedData = getFilteredData().slice(startIndex, endIndex);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  
+  
   const [open, setOpen] = React.useState(false);
   const handleApproveClick = async (item) => {
     const response = await axiosInstance.post('/backend/approve_transaction', {
@@ -132,15 +151,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
     setOpen(false); // Close the dialog
   };
 
-  const getFilteredData = () => {
-    if (filter === 'waitingForApproval') {
-      return data.filter((item) => item.status === 'In-processed')
-    } if (filter === 'history') {
-      return data.filter((item) => item.status != 'In-processed')
-    }else {
-      return data // Show all items by default
-    }
-  }
+
   const handleFilterClick = (filterType) => {
     setFilter(filterType)
   }
@@ -206,17 +217,17 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
               <thead style={{ background: '#327113', color: "#fff" }}>
                 <tr className='fw-bold'>
 
-                  <th style={{paddingLeft:"5%"}} className='min-w-150px text-start'>Email Id</th>
-                  <th className='min-w-140px text-center'>Transaction Id</th>
-                  <th className='min-w-120px text-center'>Amount</th>
-                  <th className='min-w-120px text-center'>Status</th>
+                  <th style={{paddingLeft:"5%"}} className='min-w-100px text-start'>Email Id</th>
+                  <th className='min-w-100px text-center'>Transaction Id</th>
+                  <th className='min-w-100px text-center'>Amount</th>
+                  <th className='min-w-100px text-center'>Status</th>
                   <th className='min-w-100px text-center'>Actions</th>
                 </tr>
               </thead>
               {/* end::Table head */}
               {/* begin::Table body */}
               <tbody>
-                {getFilteredData().map((row, index) => (
+              {displayedData.map((row, index) => (
 
                   <tr>
                     <td className='text-center'>
@@ -234,20 +245,20 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                     </td>
                     <td className='text-center'>
                       {/* Date */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
                         {row.upi_ref_id}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
                         {row.wallet_balance}
                       </a>
                     </td>
 
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
                         {row.status}
                       </a>
                     </td>
@@ -279,11 +290,18 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
               </tbody>
               {/* end::Table body */}
             </table>
+            
           }
           {/* end::Table */}
         </div>
+        
         {/* end::Table container */}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(getFilteredData().length / entriesPerPage)}
+        onPageChange={handlePageChange}
+      />
       {/* begin::Body */}
       {visible &&
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
