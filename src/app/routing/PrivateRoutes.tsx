@@ -72,6 +72,7 @@ const PrivateRoutes = () => {
         <Route path='superadmin/apiPayment' element={<ApiPaymentWrapper />}/>
         <Route path='superadmin/apiMerchants' element={<ApiMerchantWrapper />}/>
         <Route path='superadmin/changepassword' element={<ChangePassword/>}/>
+        <Route path='superadmin/apps/chat' element={<ChatPage />}/>
 
 
 
@@ -108,14 +109,7 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         />
-        <Route
-          path='apps/chat/*'
-          element={
-            <SuspensedView>
-              <ChatPage />
-            </SuspensedView>
-          }
-        />
+
         <Route
           path='apps/user-management/*'
           element={

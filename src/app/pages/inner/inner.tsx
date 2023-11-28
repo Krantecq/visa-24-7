@@ -30,7 +30,6 @@ type Props = {
     const receivedData: any = location.state as any;
     console.log("ye rha:",receivedData)
     useEffect(() => {
-        console.log('apiData in Inner:', apiData);
       }, [apiData]);
     const handleSelectClick = (entryData) => {
       onSelectClick(entryData)
@@ -47,17 +46,17 @@ type Props = {
   
     const [priceCardIndex, setPriceCardIndex] = useState(-1)
   
-    const [selectedTicket, setSelectedTicket] = useState(1);
+    const [selectedTicket, setSelectedTicket] = useState(0);
   
     const [selectedTicketPrice, setSelectedTicketPrice] = useState(0);
   
-    const [selectedQuantity, setSelectedQuantity] = useState(1);  
+    const [selectedQuantity, setSelectedQuantity] = useState(0);  
     
     const receivedDataArray = receivedData.dataArray || [];
     
     const handleTicketSelection = (ticketIndex) => {
         setSelectedTicket(ticketIndex);
-        const selectedEntry = receivedData.apiData[ticketIndex];  // Change here
+        const selectedEntry = receivedData.apiData[ticketIndex];  
         const visaFees = selectedEntry.receipt['Visa Fees'] || 0;
         const serviceFees = selectedEntry.receipt['Service Fees'] || 0;
         const markupPercentageString = localStorage.getItem('markup_percentage');
@@ -74,46 +73,72 @@ type Props = {
         }
       };
       console.log("Received Data:", receivedData);
+
+        
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const handleLoginClick = () => setShowLoginModal(true);
+    const handleCloseLoginModal = () => setShowLoginModal(false);
+
   return (
     <div>
   
-        <div id="nav1i">
-      
-            <div className="part2">
-                <a href="/">Home</a>
-                <a href="">About Us</a>
-                <a href="">Contact</a>
-            </div>
+        <div id="nav">
+            <a href='/' className="part11">
+                <img className="logo" src="./media/logos/logo.png" alt="logo" />
+            </a>
 
-            <div className="part1">
-                <img className="logo" src="./media/assets/logo3.png" alt="logo" />
-            </div>
-
-            <div className="part31">
-                <button className='button2'>
+            <div className="part21">
+                {/* <a href="#">About Us</a> */}
+                <a href="#">Contact</a>
+                {/* Button to open the login modal */}
+                <button className="button2" onClick={handleLoginClick}>
                     Login
                 </button>
-                <button className='button1'>
-                    Sign up
-                </button>
             </div>
+
             <i className="ri-menu-3-fill hamburger" onClick={toggleMenu}></i>
-                <div id="mobile-menu">
-                    
-                    <a href="#">Home</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Sign up</a>
-                    <a href="#">Login</a>
-                    
-                </div>
+            <div id="mobile-menu">
+                <a href="#">Home</a>
+                {/* <a href="#">About Us</a> */}
+                <a href="#">Sign up</a>
+                <a href="#">Login</a>
+            </div>
         </div>
+
+      {showLoginModal && (
+        <div className="modal-container">
+        <div className="modal-content">
+          <span className="close" onClick={handleCloseLoginModal}>
+            &times;
+          </span>
+          <h1>Login</h1>
+      
+          <div className="mb-3">
+            <label htmlFor="email">Email address</label>
+            <input type="email" className="form-control" id="email" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">Password</label>
+            <input type="password" className="form-control" id="password" />
+          </div>
+      
+          <button className="social-login" style={{ backgroundColor: '#327113' }}>
+            Login
+          </button>
+      
+
+          <p style={{ marginTop: '10px', textAlign: 'center' }}>
+            Don't have an account? <a href="#">Sign up</a>
+          </p>
+        </div>
+      </div>
+      )}
 
         <div className="choice-maini">
         <h1>Choose Your Visa Type</h1>
         <div className="choice">
       <div className="ticket-container" id="ticketContainer">
       {receivedData.apiData.map((entry: any, index: number) => {
-//   console.log('Mapping entry:', entry);
         return (
             <div
             key={index}
@@ -242,15 +267,12 @@ type Props = {
             <div className="conti6">
                 <a href="#" className="cards-single">
                     <div className="img-conti6">
-                        <img className="imgr" src="./media/assets/inner1.png" alt="" />
+                        <img className="imgr" src="./media/assets/turkey.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Havelock</h1>
+                        <h1 className="heading">Turkey</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -271,15 +293,12 @@ type Props = {
                 </a>
                 <a href="#" className="cards-single">
                     <div className="img-conti6">
-                        <img className="imgr" src="./media/assets/inner2.png" alt="" />
+                        <img className="imgr" src="./media/assets/uzbekistan.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Havelock</h1>
+                        <h1 className="heading">Uzbekistan</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -298,15 +317,7 @@ type Props = {
                         </div>
                     </div>
                 </a>
-                <a href="#" className="cards-singles">
-                    <img className="last-card" src="./media/assets/innerc.png" />
-                    <div className="text-last">
-                        <h1 className="last-heading">Summer Bonanza</h1>
-                        <p className="last-para" >Enjoy comfortable transfers in shared coaches</p>
-                        <p className="last-para" >Choose from 5 flights per week</p>
-                        <p className="last-para" >Get a free Rapid Anitgen test at selected hotels</p>
-                    </div>
-                </a>
+                
             </div>
         </div>
  

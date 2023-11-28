@@ -28,6 +28,7 @@ const HomeApply: React.FC<Props> = ({
   const [initValues] = useState<ICreateAccount>(inits)
 
   const onSubmit = (values: any) => {
+    console.log("Form Values on Submit:", values);
     visaListLoader(true);
     setSelectedFromCountry(values.fromCountry);
     setSelectedToCountry(values.toCountry);
@@ -106,7 +107,7 @@ const HomeApply: React.FC<Props> = ({
       <Formik validationSchema={null} initialValues={initValues} onSubmit={onSubmit}>
         {({ handleSubmit }) => (
           <Form
-            className='mt-10 w-100 px-9'
+            className='mt-8 w-100 px-9'
             noValidate
             id='kt_create_account_form'
             onSubmit={handleSubmit}
@@ -120,7 +121,7 @@ const HomeApply: React.FC<Props> = ({
                   name='fromCountry'
                   defaultValue={selectedFromCountry}
                   // onChange={handleFromCountryChange}
-                  style={{"color":"#fff","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
+                  style={{"color":"#000","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
                 >
                   <option value=''>From...</option>
                   <option value='AF'>Afghanistan</option>
@@ -381,7 +382,7 @@ const HomeApply: React.FC<Props> = ({
                   as='select'
                   name='toCountry'
                   defaultValue={selectedToCountry}
-                  style={{"color":"#fff","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
+                  style={{"color":"#000","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
                 >
                   <option value=''>To...</option>
                   <option value='AF'>Afghanistan</option>
@@ -658,8 +659,8 @@ const HomeApply: React.FC<Props> = ({
                   type='submit'
                   style={{
                     width:"150px",
-                    backgroundColor:"#fff",
-                    color:"#2659C3",
+                    backgroundColor:"#327113",
+                    color:"#fff",
                     fontSize:"1vw",
                     border:"none",
                     cursor:"pointer",
@@ -667,7 +668,7 @@ const HomeApply: React.FC<Props> = ({
                     borderRadius:"50px",
                     marginRight:"-25px",
                     height:"2.7vw",
-                    marginTop:"9px",
+                    marginTop:"11px",
                   }}
                 >
                   Search

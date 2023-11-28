@@ -58,12 +58,12 @@ body::-webkit-scrollbar-thumb {
 
 #nav .part21{
     display: flex;
-    gap: 3.5vw;
+    gap: 3vw;
     align-items: center;
 }
 
 #nav .part21 a{
-    color: rgba(50, 113, 19, 1);
+    color: #000;
     font-weight: 600;
     font-size: 16px;
 }
@@ -74,28 +74,10 @@ body::-webkit-scrollbar-thumb {
     transition: 0.5s all;
 }
 
-#nav .part31{
-    display: flex;
-    gap: 2vw;
-    align-items: center;
-}
 
-#nav .part31 .button1{
-  padding: 10px 15px;
-  background: rgba(50, 113, 19, 1);
-  color: #ffffff;
-  border: 1px solid rgba(50, 113, 19, 1);
-  border-radius: 7px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  height: 40px;
-  font-size: 16px;
-  font-family: 'Gilroy', sans-serif;
-}
 
-#nav .part31 .button2{
-
+#nav .part21 .button2{
+  letter-spacing: 0.5px;
   padding: 10px 20px;
   background: transparent;
   color: rgba(50, 113, 19, 1);
@@ -109,9 +91,57 @@ body::-webkit-scrollbar-thumb {
   font-family: 'Gilroy', sans-serif;
 }
 
-#nav .part31 button:hover{
+#nav .part21 button:hover{
     scale: 1.1;
     transition: 0.2s all;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+/* Styling for the login modal content */
+.modal-content {
+  background: #fff; /* White background */
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  width: 400px;
+  gap: 20px;
+}
+
+/* Styling for the close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #000; /* Set color to black for better visibility */
+  cursor: pointer;
+}
+
+/* Styling for the login button */
+.social-login {
+  background-color: #327113;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 110;
 }
 
 #nav i{
@@ -218,7 +248,7 @@ body::-webkit-scrollbar-thumb {
     width: 75vw;
     height: 7vh;
     margin: 0 auto;
-    background: #bebebe66;
+    background: #bebebe;
     top: 55%;
     left: 47%;
     transform: translate(-50%, -50%);
@@ -261,7 +291,7 @@ body::-webkit-scrollbar-thumb {
 .page1h .search-conti input[type="text"], input[type="date"]  {
     padding: 10px 0px;
     background: transparent;
-    color: #dadada;
+    color: #000000;
     border: none;
     font-size: 1vw;
     width: 19%;
@@ -274,7 +304,7 @@ body::-webkit-scrollbar-thumb {
   padding: 10px 5px;
   border-radius: 10px;
   background: transparent;
-  color: #dad9d9;
+  color: #000000;
   margin-left: -15px;
   border:none;
 }
@@ -284,7 +314,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti input::placeholder {
-    color: #dadada;
+    color: #000000;
     font-size: 1vw;
 }
 
@@ -341,7 +371,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti .ant-picker .ant-picker-input-placeholder >input {
-    color: rgb(255 255 255);
+    color: rgb(0, 0, 0);
 }
 
 
@@ -356,7 +386,7 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     min-width: 1px;
     padding: 0;
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(0, 0, 0, 0.88);
     font-size: 1vw;
     line-height: 1.5714285714285714;
     background-color: #ffffff;
@@ -378,9 +408,16 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti .ant-picker-focused.ant-picker {
-    border-color: #1677ff00;
-    box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+    border-color: none;
+    box-shadow: 0 0 0 2px none;
     outline: 0;
+}
+
+.page1h .search-conti .ant-picker-clear {
+  position: absolute;
+  left: 350px;
+  top: 22px;
+  background: transparent;
 }
 
 .page1h .search-conti .anticon svg {
@@ -437,7 +474,7 @@ body::-webkit-scrollbar-thumb {
 .vacation {
   position: static;
   left: 0;
-  padding-left: 150px;
+  padding-left: 110px;
   z-index: 101;
   margin-top: -300px;
 }
@@ -488,8 +525,8 @@ body::-webkit-scrollbar-thumb {
   display: none;
 }
 .page1h .search-conti select option {
-  color: #cccccc;
-  background: #000000f7;
+  color: #000000;
+  background: #eaeaeaf7;
   width: 200px;
   border-radius: 15px;
 }
@@ -548,7 +585,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     top: 0;
     left: 0;
-    padding-left: 100px;
+    padding-left: 110px;
     margin-top: 100px;
 }
 
@@ -569,7 +606,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
-    padding: 40px 10px;
+    padding: 40px 0px;
 }
 
 
@@ -592,6 +629,13 @@ body::-webkit-scrollbar-thumb {
     height: 180px;
     background-size: cover;
     border-radius: 15px;   
+}
+
+.conti .cards-single .imgr{
+  height: 180px;
+  width: 270px;
+  background-size: cover;
+  border-radius: 15px;  
 }
 
 .conti .title{
@@ -719,7 +763,7 @@ body::-webkit-scrollbar-thumb {
     margin-top: 20px;
     border-radius: 10px;
     background: linear-gradient(to right, rgba(164, 162, 162, 0.605), rgba(206, 206, 206, 0.45), rgba(234, 234, 234, 0.4));
-    box-shadow: 0 8px 10px rgba(0,0,0,.1);
+    box-shadow: 0 8px 10px #32711348;
 }
 
 .page3h .service-conti2:hover{
@@ -729,7 +773,7 @@ body::-webkit-scrollbar-thumb {
 
 .page3h .service-btn{
   width: 90%;
-  background: rgba(38, 31, 93, 1);
+  background: #327113;
   padding: 10px;
   border-radius: 10px;
   font-size: 14px;
@@ -941,7 +985,7 @@ footer{
     position: relative;
     width: 100%;
     font-size: 14px;
-    padding: 10px 60px 10px 40px;
+    padding: 10px 120px 10px 120px;
   }
 
 .divider{
@@ -956,8 +1000,9 @@ footer{
     z-index: -1;
 }
 
-  .manik{
+  .manikk{
     width: 150px;
+    margin-left: 10px;
   }
   .mains{
     margin: 50px;

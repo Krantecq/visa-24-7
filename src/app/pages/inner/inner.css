@@ -1,115 +1,193 @@
 
 /*-------------------------------------------------Navbar---------------------------------------------------*/
 
-#nav1i{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 70px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 30px 50px 30px 50px;
-    z-index: 102;
-    background: #e1fbd5;
-    border-bottom: 2px solid gray;
-  }
-  
-  #nav1i .part1{
-    display: flex;
-    align-items: center;
-  }
-  
-  #nav1i .logo{
-    width: 200px;
-  }
-  
-  #nav1i .part2{
-    display: flex;
-    align-items: center;
-    gap: 50px;
-  }
-  
-  #nav1i .part2 a{
-    text-decoration: none;
-    color: #000000;
-    font-size: 16px;
-    font-weight: 600;
-  }
-  
-  #nav1i .part2 a:hover{
-    text-decoration: underline;
-    text-underline-offset: 8px;
-  }
-  
-  #nav1i .part31{
-    display: flex;
-    gap: 40px;
-    align-items: center;
-  }
-  
-  .part31 .button1{
-    padding: 10px 15px;
-    background: transparent;
-    color: #000000;
-    border: 1px solid #000000;
-    border-radius: 7px;
-    cursor: pointer;
-    height: 40px;
-    font-size: 16px;
-    font-family: 'Gilroy', sans-serif;
-    display: flex;
-    align-items: center;
+#nav{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 80px;
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
+  position: relative;
+  background: #fff;
+  top: 0;
+  left: 0;
+  padding: 30px 50px 30px 50px;
+  z-index: 102;
 }
 
-.part31 .button2{
-  padding: 10px 15px;
-  background: #000;
-  color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 7px;
-  cursor: pointer;
-  height: 40px;
+
+#nav .part11{
   display: flex;
   align-items: center;
+}
+
+#nav .logo{
+  width: 11vw;
+  position: relative;
+  left: -2vw;
+  
+}
+
+#nav .part21{
+  display: flex;
+  gap: 3vw;
+  align-items: center;
+}
+
+#nav .part21 a{
+  color: #000;
+  font-weight: 600;
   font-size: 16px;
-  font-family: 'Gilroy', sans-serif;
 }
 
-.part31 button:hover{
-    scale: 1.1;
-    transition: 0.3s all;
+#nav .part21 a:hover{
+  text-decoration: underline;
+  scale: 1.1;
+  transition: 0.5s all;
 }
 
-#nav1i i{
-    display: none;
-  }
-  
-  
-  
-  #mobile-menu {
-    gap: 30px;
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 80px;
-    left: 0;
-    background-color: #fff;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    z-index: 102;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s ease-in-out;
-  }
 
-  #mobile-menu a {
-    text-decoration: none;
-    color: #000; /* adjust as needed */
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
+
+#nav .part21 .button2{
+letter-spacing: 0.5px;
+padding: 10px 20px;
+background: transparent;
+color: rgba(50, 113, 19, 1);
+border: 1px solid rgba(50, 113, 19, 1);
+border-radius: 7px;
+cursor: pointer;
+display: flex;
+align-items: center;
+height: 40px;
+font-size: 16px;
+font-family: 'Gilroy', sans-serif;
+}
+
+#nav .part21 button:hover{
+  scale: 1.1;
+  transition: 0.2s all;
+}
+
+.modal-container {
+display: flex;
+justify-content: center;
+align-items: center;
+position: fixed;
+z-index: 200;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+/* Styling for the login modal content */
+.modal-content {
+background: #fff; /* White background */
+padding: 20px;
+border-radius: 8px;
+display: flex;
+flex-direction: column;
+
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+width: 400px;
+gap: 20px;
+}
+
+/* Styling for the close button */
+.close {
+position: absolute;
+top: 10px;
+right: 10px;
+font-size: 20px;
+color: #000; /* Set color to black for better visibility */
+cursor: pointer;
+}
+
+/* Styling for the login button */
+.social-login {
+background-color: #327113;
+color: #fff;
+padding: 10px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 16px;
+z-index: 110;
+}
+
+#nav i{
+display: none;
+}
+
+
+
+#mobile-menu {
+gap: 30px;
+display: none;
+flex-direction: column;
+position: absolute;
+top: 65px;
+left: 0;
+background-color: #fff;
+width: 100%;
+padding: 20px;
+box-sizing: border-box;
+z-index: 102;
+justify-content: center;
+align-items: center;
+transition: transform 0.3s ease-in-out;
+}
+
+#mobile-menu a {
+text-decoration: none;
+color: #000; /* adjust as needed */
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+/* Add a media query for smaller screens */
+@media screen and (max-width: 768px) {
+#nav .part21,
+#nav .part31 {
+    display: none;
+}
+
+
+#nav .hamburger-open #mobile-menu {
+  transform: translateY(0);
+}
+
+#nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  height: 80px;
+  padding: 15px;
+}
+
+#nav .logo{
+  width: 130px;
+}
+
+#nav .part21{
+  display: none;
+}
+
+#nav .part31{
+  display: none;
+}
+
+#nav i{
+  display: block;
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+}
+}
+
+
   
 /*------------------------------------------------- Navbar Ends---------------------------------------------------*/
   
@@ -122,7 +200,7 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 70vh;
+    height: 80vh;
 
 }
 
@@ -134,8 +212,8 @@
 
 .image-sectioni .img-conti6 img{
     width: 100vw;
-    height: 70vh;
-    filter: blur(2px);
+    height: 80vh;
+    /* filter: blur(2px); */
 }
 
 .image-sectioni .hero-text{
@@ -156,9 +234,8 @@
 
 .choice-maini{
   position: relative;
-  top: -50px;
   width: 100%;
-  padding: 10vw 5vw 0vw 5vw;
+  padding: 1.5vw 5vw 0vw 5vw;
 }
 
 .choice-maini h1{
@@ -358,7 +435,7 @@ display: none;
   border: 1px solid black;
   transition: 0.4s all;
   position: sticky;
-  top: 90px;
+  top: 30px;
 }
 
 .choice .apply-card:hover{
@@ -551,7 +628,14 @@ transform: rotate(90deg);
 .conti6 .cards-single .img-conti{
   height: 180px;
   background-size: cover;
-  border-radius: 15px;   
+  border-radius: 15px;  
+}
+
+.conti6 .cards-single .imgr{
+  height: 180px;
+  width: 270px;
+  background-size: cover;
+  border-radius: 15px;  
 }
 
 .conti6 .title{
@@ -672,7 +756,7 @@ footer{
   position: relative;
   width: 100%;
   font-size: 14px;
-  padding: 10px 60px 10px 40px;
+  padding: 10px 100px 10px 100px;
 }
 
 .divider{
@@ -689,6 +773,7 @@ border: 1px solid #327113;
 
 .manik{
   width: 150px;
+  margin-left: -10px;
 }
 .mains{
   margin: 50px;
