@@ -96,7 +96,7 @@ body::-webkit-scrollbar-thumb {
     transition: 0.2s all;
 }
 
-.modal-container {
+.modal-container, .sign-up-modal-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,12 +106,11 @@ body::-webkit-scrollbar-thumb {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background: rgba(0, 0, 0, 0.5); 
 }
 
-/* Styling for the login modal content */
 .modal-content {
-  background: #fff; /* White background */
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
   display: flex;
@@ -864,7 +863,7 @@ body::-webkit-scrollbar-thumb {
     font-weight: 700;
     letter-spacing: 0em;
     text-align: center;
-    color: #10295e;
+    color: #327113;
 }
 
 .testimonial {

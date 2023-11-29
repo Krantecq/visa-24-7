@@ -68,7 +68,7 @@ font-family: 'Gilroy', sans-serif;
   transition: 0.2s all;
 }
 
-.modal-container {
+.modal-container, .sign-up-modal-container {
 display: flex;
 justify-content: center;
 align-items: center;

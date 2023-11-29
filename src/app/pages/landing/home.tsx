@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DatePicker } from 'antd';
 import './home.css';
 import './swiper-bundle.min.css';
 import { useEffect } from 'react';
@@ -7,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import HomeApply from '../../components/HomeApply';
 import axiosInstance from '../../helpers/axiosInstance';
 import LoaderHome from '../../components/LoaderHome';
-import { VisaTable } from '../../components/VisaTable';
 
 type Props = {
   className: string;
@@ -60,15 +58,15 @@ const Home: React.FC<Props> = ({
     navigate('/inner', { state: { apiData: data } });
   };
 
-  // State to toggle the login modal
   const [showLoginModal, setShowLoginModal] = useState(false);
-
-  // Function to open the login modal
   const handleLoginClick = () => setShowLoginModal(true);
-
-  // Function to close the login modal
   const handleCloseLoginModal = () => setShowLoginModal(false);
-  
+  const handleCloseSignUpModal = () => setShowSignUpModal(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false); 
+  const handleSignUpClick = () => {
+    setShowLoginModal(false);
+    setShowSignUpModal(true);
+  }
 
   return (
     <>        
@@ -118,11 +116,46 @@ const Home: React.FC<Props> = ({
       
 
           <p style={{ marginTop: '10px', textAlign: 'center' }}>
-            Don't have an account? <a href="#">Sign up</a>
+            Don't have an account? <button style={{background:"none", border:"none"}} className="button2" onClick={handleSignUpClick}>
+            Sign up
+          </button>
           </p>
         </div>
       </div>
       )}
+      {showSignUpModal && (
+    <div className="sign-up-modal-container">
+        <div className="modal-content">
+          <span className="close" onClick={handleCloseSignUpModal}>
+            &times;
+          </span>
+          <h1>Signup</h1>
+
+          <div className="mb-3">
+            <label htmlFor="email">Full Name</label>
+            <input type="email" className="form-control" id="email" />
+          </div>
+      
+          <div className="mb-3">
+            <label htmlFor="email">Email address</label>
+            <input type="email" className="form-control" id="email" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">Password</label>
+            <input type="password" className="form-control" id="password" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">Confirm Password</label>
+            <input type="password" className="form-control" id="password" />
+          </div>
+      
+          <button className="social-login" style={{ backgroundColor: '#327113' }}>
+            Signup
+          </button>
+      
+        </div>
+    </div>
+)}
 
 
         <div className="page1h">

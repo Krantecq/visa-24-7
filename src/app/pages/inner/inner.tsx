@@ -75,14 +75,20 @@ type Props = {
       console.log("Received Data:", receivedData);
 
         
-    const [showLoginModal, setShowLoginModal] = useState(false);
-    const handleLoginClick = () => setShowLoginModal(true);
-    const handleCloseLoginModal = () => setShowLoginModal(false);
+      const [showLoginModal, setShowLoginModal] = useState(false);
+      const handleLoginClick = () => setShowLoginModal(true);
+      const handleCloseLoginModal = () => setShowLoginModal(false);
+      const handleCloseSignUpModal = () => setShowSignUpModal(false);
+      const [showSignUpModal, setShowSignUpModal] = useState(false); 
+      const handleSignUpClick = () => {
+        setShowLoginModal(false);
+        setShowSignUpModal(true);
+      }
 
   return (
     <div>
   
-        <div id="nav">
+  <div id="nav">
             <a href='/' className="part11">
                 <img className="logo" src="./media/logos/logo.png" alt="logo" />
             </a>
@@ -128,11 +134,46 @@ type Props = {
       
 
           <p style={{ marginTop: '10px', textAlign: 'center' }}>
-            Don't have an account? <a href="#">Sign up</a>
+            Don't have an account? <button style={{background:"none", border:"none"}} className="button2" onClick={handleSignUpClick}>
+            Sign up
+          </button>
           </p>
         </div>
       </div>
       )}
+      {showSignUpModal && (
+    <div className="sign-up-modal-container">
+        <div className="modal-content">
+          <span className="close" onClick={handleCloseSignUpModal}>
+            &times;
+          </span>
+          <h1>Signup</h1>
+
+          <div className="mb-3">
+            <label htmlFor="email">Full Name</label>
+            <input type="email" className="form-control" id="email" />
+          </div>
+      
+          <div className="mb-3">
+            <label htmlFor="email">Email address</label>
+            <input type="email" className="form-control" id="email" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">Password</label>
+            <input type="password" className="form-control" id="password" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">Confirm Password</label>
+            <input type="password" className="form-control" id="password" />
+          </div>
+      
+          <button className="social-login" style={{ backgroundColor: '#327113' }}>
+            Signup
+          </button>
+      
+        </div>
+    </div>
+)}
 
         <div className="choice-maini">
         <h1>Choose Your Visa Type</h1>
