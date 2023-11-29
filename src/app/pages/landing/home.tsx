@@ -161,7 +161,7 @@ const Home: React.FC<Props> = ({
         <div className="page1h">
             <img className="bgimg" src="./media/assets/img21.jpeg"/>
             <h1>
-                Getting Visa Was Never<br/> This Easy.
+                Getting Visa Was Never This Easy.
             </h1>
             <div className="search-bar">
                 <div className="search-conti">
