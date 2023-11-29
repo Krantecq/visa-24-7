@@ -124,38 +124,38 @@ const Home: React.FC<Props> = ({
       </div>
       )}
       {showSignUpModal && (
-    <div className="sign-up-modal-container">
-        <div className="modal-content">
-          <span className="close" onClick={handleCloseSignUpModal}>
-            &times;
-          </span>
-          <h1>Signup</h1>
+        <div className="sign-up-modal-container">
+            <div className="modal-content">
+            <span className="close" onClick={handleCloseSignUpModal}>
+                &times;
+            </span>
+            <h1>Signup</h1>
 
-          <div className="mb-3">
-            <label htmlFor="email">Full Name</label>
-            <input type="email" className="form-control" id="email" />
-          </div>
-      
-          <div className="mb-3">
-            <label htmlFor="email">Email address</label>
-            <input type="email" className="form-control" id="email" />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password">Password</label>
-            <input type="password" className="form-control" id="password" />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password">Confirm Password</label>
-            <input type="password" className="form-control" id="password" />
-          </div>
-      
-          <button className="social-login" style={{ backgroundColor: '#327113' }}>
-            Signup
-          </button>
-      
+            <div className="mb-3">
+                <label htmlFor="email">Full Name</label>
+                <input type="email" className="form-control" id="email" />
+            </div>
+        
+            <div className="mb-3">
+                <label htmlFor="email">Email address</label>
+                <input type="email" className="form-control" id="email" />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="password">Password</label>
+                <input type="password" className="form-control" id="password" />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="password">Confirm Password</label>
+                <input type="password" className="form-control" id="password" />
+            </div>
+        
+            <button className="social-login" style={{ backgroundColor: '#327113' }}>
+                Signup
+            </button>
+        
+            </div>
         </div>
-    </div>
-)}
+      )}
 
 
         <div className="page1h">

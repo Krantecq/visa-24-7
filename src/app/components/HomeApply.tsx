@@ -1,10 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
-import RoomIcon from '@mui/icons-material/Room'
-import FlightIcon from '@mui/icons-material/Flight'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import axios from 'axios'
 import axiosInstance from '../helpers/axiosInstance'
 import { DatePicker } from 'antd'
 import 'dayjs/locale/en';
@@ -22,13 +18,18 @@ const HomeApply: React.FC<Props> = ({
   onApiDataReceived,
   visaListLoader,
 }) => {
-    
+  
+  const [selectedFromCountry, setSelectedFromCountry] = useState(''); // Initialize with a default value for "From" country
+  const [selectedToCountry, setSelectedToCountry] = useState(''); // Initialize with a default value for "To" country
   const [issueDate, setIssueDate] = useState<string | undefined>('');
   const [expiryDate, setExpiryDate] = useState<string | undefined>('');
+ 
   const [initValues] = useState<ICreateAccount>(inits)
+  
 
   const onSubmit = (values: any) => {
     console.log("Form Values on Submit:", values);
+    console.log("From Country on Submit:", values.fromCountry);
     visaListLoader(true);
     setSelectedFromCountry(values.fromCountry);
     setSelectedToCountry(values.toCountry);
@@ -93,8 +94,7 @@ const HomeApply: React.FC<Props> = ({
       
   }
     
-  const [selectedFromCountry, setSelectedFromCountry] = useState(''); // Initialize with a default value for "From" country
-  const [selectedToCountry, setSelectedToCountry] = useState(''); // Initialize with a default value for "To" country
+
   const currentDate = new Date();
 
   const disabledDate = (current) => {
@@ -115,7 +115,7 @@ const HomeApply: React.FC<Props> = ({
             <div 
             style={{gap:"15px"}}
             className='d-flex flex-row justify-content-between'>
-              <div className='fv-row mb-10 w-100'>
+              {/* <div className='fv-row mb-10 w-100'>
                 <Field
                   as='select'
                   name='fromCountry'
@@ -375,7 +375,7 @@ const HomeApply: React.FC<Props> = ({
                 <div className='text-danger mt-2'>
                   <ErrorMessage name='businessType' />
                 </div>
-              </div>
+              </div> */}
 
               <div className='fv-row mb-10 w-100'>
                 <Field
@@ -384,7 +384,7 @@ const HomeApply: React.FC<Props> = ({
                   defaultValue={selectedToCountry}
                   style={{"color":"#000","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
                 >
-                  <option value=''>To...</option>
+                  <option value=''>Where to ...</option>
                   <option value='AF'>Afghanistan</option>
                   <option value='AX'>Aland Islands</option>
                   <option value='AL'>Albania</option>
@@ -638,7 +638,7 @@ const HomeApply: React.FC<Props> = ({
                 </div>
               </div>
 
-              <div className='fv-row mb-10 w-100'>
+              {/* <div className='fv-row mb-10 w-100'>
                 <DatePicker.RangePicker 
                 style={{backgroundClip:'#fff',color:"#686868",width:400,marginTop:8,border:'none',borderRadius:10,padding:"10px 0px"}}
                 onChange={(value)=>{
@@ -651,21 +651,21 @@ const HomeApply: React.FC<Props> = ({
                 }}
                 disabledDate={disabledDate}
                 />
-              </div>
+              </div> */}
 
               {!visaList && (
               <div className='d-flex justify-content-end'>
                 <button
                   type='submit'
                   style={{
-                    width:"150px",
+                    width:"100px",
                     backgroundColor:"#327113",
                     color:"#fff",
                     fontSize:"1vw",
                     border:"none",
                     cursor:"pointer",
                     fontWeight:"500",
-                    borderRadius:"50px",
+                    borderRadius:"10px",
                     marginRight:"-25px",
                     height:"2.7vw",
                     marginTop:"11px",

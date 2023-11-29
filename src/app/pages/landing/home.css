@@ -14,6 +14,7 @@ html , body{
     overflow-x: hidden;
 }
 
+
 body::-webkit-scrollbar {
   width: 9px;
   z-index: 110;
@@ -244,8 +245,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-bar{
-    width: 75vw;
-    height: 7vh;
+    width: 35vw;
+    height: 8vh;
     margin: 0 auto;
     background: #bebebe;
     top: 55%;
@@ -266,7 +267,7 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     position: relative;
     gap: 10px;
-    padding: 0px;
+    padding: 10px;
     width: 70vw;
 }
 
@@ -524,8 +525,8 @@ body::-webkit-scrollbar-thumb {
   display: none;
 }
 .page1h .search-conti select option {
-  color: #000000;
-  background: #eaeaeaf7;
+  color: #000;
+  background: #fff;
   width: 200px;
   border-radius: 15px;
 }
