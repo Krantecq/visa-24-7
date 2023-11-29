@@ -52,7 +52,6 @@ body::-webkit-scrollbar-thumb {
 #nav .logo{
     width: 11vw;
     position: relative;
-    left: -2vw;
     
 }
 
@@ -116,22 +115,20 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   flex-direction: column;
 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
   width: 400px;
   gap: 20px;
 }
 
-/* Styling for the close button */
 .close {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 20px;
-  color: #000; /* Set color to black for better visibility */
+  color: #000; 
   cursor: pointer;
 }
 
-/* Styling for the login button */
 .social-login {
   background-color: #327113;
   color: #fff;
@@ -223,39 +220,40 @@ body::-webkit-scrollbar-thumb {
     height: 120vh;
     position: relative;
     top: -100px;
+    display: flex;
+    justify-content: center;
 }
 
 .page1h .bgimg{
     background-size: cover;
-    height: 100%;
+    height: 80%;
     width: 100%;
-    filter: contrast(110%);
 }
 
 .page1h h1{
     width: 100%;
-    color: #dbdbdb;
+    color: #fff;
     position: absolute;
     font-family: 'Inconsolata', sans-serif;
-    top: 35%;
-    left: 59%;
+    top: 25%;
+    left: 68%;
     transform: translate(-50%, -50%);
-    font-size: 4.5vw;
+    font-size: 4vw;
 }
 
 .page1h .search-bar{
     width: 35vw;
     height: 8vh;
     margin: 0 auto;
-    background: #bebebe;
-    top: 55%;
+    background: #fff;
+    top: 37%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 50px;
 }
 
 
@@ -457,7 +455,7 @@ body::-webkit-scrollbar-thumb {
 .page1h::before{
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 140px;
     left: 0;
     width: 100%;
     height: 200px;
@@ -475,12 +473,13 @@ body::-webkit-scrollbar-thumb {
   left: 0;
   padding-left: 110px;
   z-index: 101;
-  margin-top: -300px;
+  margin-top: -540px;
 }
 
 .vacation h1 {
-    color: #dadada;
+    color: #ffffff;
     font-size: 2.5vw;
+    margin-top: 30px;
 }
 
 .vacation .cards {
@@ -489,7 +488,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     position: relative;
     height: 250px;
-    top: 20px;
+    top: 0px;
     overflow-x: scroll;
     overflow-y: hidden;
 }
@@ -513,12 +512,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti select{
-  font-size: 1vw;
+  font-size: 1.2vw;
   overflow: hidden;
   scrollbar-width: none; 
   -ms-overflow-style: none; 
   outline: none;
   cursor: pointer;
+  font-weight: 500;
 }
 .page1h .search-conti select::-webkit-scrollbar {
   display: none;
@@ -526,9 +526,12 @@ body::-webkit-scrollbar-thumb {
 .page1h .search-conti select option {
   color: #000;
   background: #fff;
-  width: 200px;
+  width: 150px;
+  padding: 5px;
   border-radius: 15px;
 }
+
+
 
 
 
@@ -761,7 +764,7 @@ body::-webkit-scrollbar-thumb {
     width: 90%;
     margin-top: 20px;
     border-radius: 10px;
-    background: linear-gradient(to right, rgba(164, 162, 162, 0.605), rgba(206, 206, 206, 0.45), rgba(234, 234, 234, 0.4));
+    background: #f4f4f4;
     box-shadow: 0 8px 10px #32711348;
 }
 

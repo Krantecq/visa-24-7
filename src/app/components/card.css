@@ -268,11 +268,12 @@
 
 .choice .text-cont1{
     border-width: thin;
-    padding: 10px 15px;
+    padding: 10px 0px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     gap: 40px;
+    margin-top: 10px;
 }
 
 
@@ -293,6 +294,7 @@
 
 .choice .tax-des{
     font-size: 10px;
+    margin-left: 28px;
 }
 
 .choice .icons{

@@ -95,7 +95,7 @@ type Props = {
   return (
     <div>
   
-        <div id="nav">
+        <div id="nav1">
         <a href='/' className="part11">
             <img className="logo" src="./media/logos/logo.png" alt="logo" />
         </a>
@@ -226,7 +226,7 @@ type Props = {
                         <div className="visa-des">
                             <div className="upper">
                                 <div className="travel-from">
-                                    <p className="from">From</p>
+                                    <h6 className="from">From</h6>
                                     <h2 className="country">IND</h2>
                                 </div>
                                 <div className="svg-area">
@@ -254,21 +254,21 @@ type Props = {
                                     </svg>
                                 </div>
                                 <div className="travel-to">
-                                    <p className="from">To</p>
+                                    <h6 className="from">To</h6>
                                     <h2 className="country">UAE</h2>
                                 </div>
                             </div>
                             <div className="lower">
                                 <div className="details">
-                                    <p>Days of stays</p>
+                                    <h6>Days of stays</h6>
                                     <h2>{entry.day} Days</h2>
                                 </div>
                                 <div className="details">
-                                    <p>Entry Type</p>
+                                    <h6>Entry Type</h6>
                                     <h2>{entry.entryType}</h2>
                                 </div>
                                 <div className="details">
-                                    <p>Price</p>
+                                    <h6>Price</h6>
                                     <h2>{Math.ceil((entry.receipt['Visa Fees'] ? entry.receipt['Visa Fees'] : 0)*((parseFloat(markup_percentage)?(1+(parseFloat(markup_percentage)/100)):1))) +
                                         (entry.receipt['Service Fees'] ? entry.receipt['Service Fees'] : 0)}</h2>
                                 </div>
@@ -283,13 +283,13 @@ type Props = {
         <div className="apply-card">
             <div className="text-cont">
                 <h2><img className="icons" src="/media/assets/vt2.png"/>Length of Stay</h2>
-                <p>{receivedData.apiData[selectedTicket].day} Days</p>
+                <h6>{receivedData.apiData[selectedTicket].day} Days</h6>
             </div>
 
             <div className="text-cont1">
                 <h2 className="tb"><img className="icons" src="/media/assets/vt4.png"/>Total</h2>
                 <div className="pb">
-                    <p style={{top:"10px"}} className="amount">₹{selectedTicketPrice}</p>
+                    <h6 style={{top:"10px"}} className="amount">₹{selectedTicketPrice}</h6>
                     
                     <h2 className="tax-des">(includes all government related fees)</h2>
                 </div>
@@ -346,6 +346,58 @@ type Props = {
                     </div>
                     <div className="title">
                         <h1 className="heading">Uzbekistan</h1>
+                        <span className="rating">
+                            
+                        </span>
+
+                    </div>
+                    <div className="title-2">Tourist Visa</div>
+                    <div className="card-info">
+                        <ul>
+                            <li>Approval Chances 90%</li>
+                            <li>Visa within 6 Days</li>
+                            <li>Curious Corner</li>
+                        </ul>  
+                    </div>
+                    <div className="card-price">
+                        <del className="del">₹88,952</del>
+                        <div className="amount">
+                            ₹88,952 <span className="per">Per Person</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" className="cards-single">
+                    <div className="img-conti6">
+                        <img className="imgr" src="./media/assets/malaysia.jpg" alt="" />
+                    </div>
+                    <div className="title">
+                        <h1 className="heading">Malaysia</h1>
+                        <span className="rating">
+                            
+                        </span>
+
+                    </div>
+                    <div className="title-2">Tourist Visa</div>
+                    <div className="card-info">
+                        <ul>
+                            <li>Approval Chances 90%</li>
+                            <li>Visa within 6 Days</li>
+                            <li>Curious Corner</li>
+                        </ul>  
+                    </div>
+                    <div className="card-price">
+                        <del className="del">₹88,952</del>
+                        <div className="amount">
+                            ₹88,952 <span className="per">Per Person</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" className="cards-single">
+                    <div className="img-conti6">
+                        <img className="imgr" src="./media/assets/madagascar.jpg" alt="" />
+                    </div>
+                    <div className="title">
+                        <h1 className="heading">Madagascar</h1>
                         <span className="rating">
                             
                         </span>

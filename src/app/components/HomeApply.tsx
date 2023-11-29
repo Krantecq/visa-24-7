@@ -436,7 +436,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='CO'>Colombia</option>
                   <option value='KM'>Comoros</option>
                   <option value='CG'>Congo</option>
-                  <option value='CD'>Congo, the Democratic Republic of the</option>
+                  <option value='CD'>Congo</option>
                   <option value='CK'>Cook Islands</option>
                   <option value='CR'>Costa Rica</option>
                   <option value='CI'>Côte d'Ivoire</option>
@@ -481,7 +481,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='GW'>Guinea-Bissau</option>
                   <option value='GY'>Guyana</option>
                   <option value='HT'>Haiti</option>
-                  <option value='HM'>Heard Island and McDonald Islands</option>
+                  <option value='HM'>Heard Island & McDonald Islands</option>
                   <option value='VA'>Holy See (Vatican City State)</option>
                   <option value='HN'>Honduras</option>
                   <option value='HK'>Hong Kong</option>
@@ -502,7 +502,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='KZ'>Kazakhstan</option>
                   <option value='KE'>Kenya</option>
                   <option value='KI'>Kiribati</option>
-                  <option value='KP'>Korea, Democratic People's Republic of</option>
+                  <option value='KP'>Korea</option>
                   <option value='KW'>Kuwait</option>
                   <option value='KG'>Kyrgyzstan</option>
                   <option value='LA'>Lao People's Democratic Republic</option>
@@ -515,7 +515,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='LT'>Lithuania</option>
                   <option value='LU'>Luxembourg</option>
                   <option value='MO'>Macao</option>
-                  <option value='MK'>Macedonia, the former Yugoslav Republic of</option>
+                  <option value='MK'>Macedonia</option>
                   <option value='MG'>Madagascar</option>
                   <option value='MW'>Malawi</option>
                   <option value='MY'>Malaysia</option>
@@ -569,7 +569,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='RU'>Russian Federation</option>
                   <option value='RW'>Rwanda</option>
                   <option value='BL'>Saint Barthélemy</option>
-                  <option value='SH'>Saint Helena, Ascension and Tristan da Cunha</option>
+                  <option value='SH'>Saint Helena</option>
                   <option value='KN'>Saint Kitts and Nevis</option>
                   <option value='LC'>Saint Lucia</option>
                   <option value='MF'>Saint Martin (French part)</option>
@@ -590,7 +590,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='SB'>Solomon Islands</option>
                   <option value='SO'>Somalia</option>
                   <option value='ZA'>South Africa</option>
-                  <option value='GS'>South Georgia and the South Sandwich Islands</option>
+                  <option value='GS'>South Georgiac& South Sandwich Islands</option>
                   <option value='KR'>South Korea</option>
                   <option value='SS'>South Sudan</option>
                   <option value='ES'>Spain</option>
@@ -665,7 +665,7 @@ const HomeApply: React.FC<Props> = ({
                     border:"none",
                     cursor:"pointer",
                     fontWeight:"500",
-                    borderRadius:"10px",
+                    borderRadius:"50px",
                     marginRight:"-25px",
                     height:"2.7vw",
                     marginTop:"11px",

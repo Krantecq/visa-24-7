@@ -69,7 +69,7 @@ const Home: React.FC<Props> = ({
   }
 
   return (
-    <>        
+    <> <LoaderHome loading={visaListLoaderState} />
         <div id="nav">
             <a href='/' className="part11">
                 <img className="logo" src="./media/logos/logo.png" alt="logo" />
@@ -159,13 +159,12 @@ const Home: React.FC<Props> = ({
 
 
         <div className="page1h">
-            <img className="bgimg" src="./media/assets/img21.jpeg"/>
+            <img className="bgimg" src="./media/assets/bgim.jpg"/>
             <h1>
                 Getting Visa Was Never This Easy.
             </h1>
             <div className="search-bar">
                 <div className="search-conti">
-                <LoaderHome loading={visaListLoaderState} />
                 <HomeApply
                     show={(value) => setVisaList(value)}
                     visaList={visaList}
@@ -191,19 +190,19 @@ const Home: React.FC<Props> = ({
             <h1>Top vacation Destinations</h1>
             <div className="cards">
                 <div className="card-vac">
-                    <img src="./media/assets/singapore.jpg" />
+                    <img src="./media/assets/dubai.jpg" />
                     <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Singapore</h1>
+                    <h1 className="vac-title">Dubai</h1>
+                </div>
+                <div className="card-vac">
+                    <img src="./media/assets/UAE.jpg" />
+                    <div className="gradient-layer"></div>
+                    <h1 className="vac-title">U.A.E</h1>
                 </div>
                 <div className="card-vac">
                     <img src="./media/assets/egypt.jpg" />
                     <div className="gradient-layer"></div>
                     <h1 className="vac-title">Egypt</h1>
-                </div>
-                <div className="card-vac">
-                    <img src="./media/assets/dubai.jpg" />
-                    <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Dubai</h1>
                 </div>
                 <div className="card-vac">
                     <img src="./media/assets/taiwan.jpg" />
