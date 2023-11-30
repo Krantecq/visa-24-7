@@ -82,7 +82,7 @@ const ProfileDetails: React.FC = () => {
   const handleSaveClick = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.post('/backend//update_super_admin', formData)
+        const response = await axiosInstance.post('/backend/update_super_admin', formData)
     console.log('resposne is-->',response);
     if (response.status == 200) {
       toast.success(response.data.msg, {
@@ -173,6 +173,7 @@ const ProfileDetails: React.FC = () => {
                       <Field
                         name='super_admin_email'
                         style={inputStyle}
+                        readOnly
                         value={formData.super_admin_email}
                         className='form-control form-control-lg form-control-solid'
                         onChange={(e) => handleFieldChange('super_admin_email', e.target.value)}

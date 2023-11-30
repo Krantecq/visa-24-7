@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../helpers/axiosInstance";
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 export function ChangePassword() {
   const [passwordData, setPasswordData] = useState({
@@ -8,6 +9,7 @@ export function ChangePassword() {
     newPassword: '',
     confirmNewPassword: '',
   });
+  const [loading, setLoading] = useState(false)
   const handleInputChange = (field, value) => {
     setPasswordData((prevData) => ({
       ...prevData,
@@ -25,11 +27,18 @@ export function ChangePassword() {
     }
     axiosInstance.post('/backend/change_password/super_admin', postData)
       .then((response) => {
-        console.log(response)
+        toast.success(response.data.msg, {
+          position: 'top-center',
+        })
+
 
       })
       .catch((error) => {
-        console.error('Error fetching Atlys data:', error);
+        toast.error(error,{
+          position: 'top-center',
+        })
+
+        
       });
 
   };

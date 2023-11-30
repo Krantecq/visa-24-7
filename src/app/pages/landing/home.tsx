@@ -105,12 +105,12 @@ const Home: React.FC<Props> = ({
             <label htmlFor="email">Email address</label>
             <input type="email" className="form-control" id="email" />
           </div>
-          <div className="mb-3">
+          <div className="mb-1">
             <label htmlFor="password">Password</label>
             <input type="password" className="form-control" id="password" />
           </div>
         
-          <a href='#'>
+          <a style={{color:"#327113", float:"right", display:"flex", justifyContent:"flex-end"}} href='#'>
             Forgot Password ?
           </a>
 
@@ -120,7 +120,7 @@ const Home: React.FC<Props> = ({
       
 
           <p style={{ marginTop: '10px', textAlign: 'center' }}>
-            Don't have an account?<button style={{background:"none", border:"none"}} className="button2" onClick={handleSignUpClick}>
+            Don't have an account?<button style={{background:"none", border:"none", color:"#327113"}} className="button2" onClick={handleSignUpClick}>
             Sign up
           </button>
           </p>
