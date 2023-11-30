@@ -57,7 +57,7 @@ export function ChangePassword() {
                       <input
                         style={{
                           border: '2px solid #d3d3d3',
-                          borderRadius: '25px',
+                          borderRadius: '10px',
                           padding: '10px',
                           paddingLeft: '20px',
                           width: 280,
@@ -82,7 +82,7 @@ export function ChangePassword() {
                   <input
                     style={{
                       border: '2px solid #d3d3d3',
-                      borderRadius: '25px',
+                      borderRadius: '10px',
                       padding: '10px',
                       paddingLeft: '20px',
                       width: 280,
@@ -107,7 +107,7 @@ export function ChangePassword() {
                   <input
                     style={{
                       border: '2px solid #d3d3d3',
-                      borderRadius: '25px',
+                      borderRadius: '10px',
                       padding: '10px',
                       paddingLeft: '20px',
                       width: 280,
@@ -125,7 +125,7 @@ export function ChangePassword() {
             </div>
 
             <div className='card-footer d-flex justify-content-end py-6 px-9'>
-              <button type='submit' className='btn btn-success' onClick={onSubmit}>
+              <button style={{background:"327113"}} type='submit' className='btn btn-success' onClick={onSubmit}>
                 Save
               </button>
             </div>
