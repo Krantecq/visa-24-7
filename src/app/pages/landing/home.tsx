@@ -77,7 +77,7 @@ const Home: React.FC<Props> = ({
 
             <div className="part21">
                 {/* <a href="#">About Us</a> */}
-                <a href="#">Contact</a>
+                {/* <a href="#">Contact</a> */}
                 {/* Button to open the login modal */}
                 <button className="button2" onClick={handleLoginClick}>
                     Login
@@ -109,14 +109,18 @@ const Home: React.FC<Props> = ({
             <label htmlFor="password">Password</label>
             <input type="password" className="form-control" id="password" />
           </div>
-      
+        
+          <a href='#'>
+            Forgot Password ?
+          </a>
+
           <button className="social-login" style={{ backgroundColor: '#327113' }}>
             Login
           </button>
       
 
           <p style={{ marginTop: '10px', textAlign: 'center' }}>
-            Don't have an account? <button style={{background:"none", border:"none"}} className="button2" onClick={handleSignUpClick}>
+            Don't have an account?<button style={{background:"none", border:"none"}} className="button2" onClick={handleSignUpClick}>
             Sign up
           </button>
           </p>

@@ -235,7 +235,7 @@ body::-webkit-scrollbar-thumb {
     color: #fff;
     position: absolute;
     font-family: 'Inconsolata', sans-serif;
-    top: 25%;
+    top: 30%;
     left: 68%;
     transform: translate(-50%, -50%);
     font-size: 4vw;
@@ -246,7 +246,7 @@ body::-webkit-scrollbar-thumb {
     height: 8vh;
     margin: 0 auto;
     background: #fff;
-    top: 37%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
@@ -479,7 +479,7 @@ body::-webkit-scrollbar-thumb {
 .vacation h1 {
     color: #ffffff;
     font-size: 2.5vw;
-    margin-top: 30px;
+    margin-top: 80px;
 }
 
 .vacation .cards {

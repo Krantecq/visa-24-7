@@ -102,7 +102,7 @@ type Props = {
 
         <div className="part21">
             {/* <a href="#">About Us</a> */}
-            <a href="#">Contact</a>
+            {/* <a href="#">Contact</a> */}
             {/* Button to open the login modal */}
             <button className="button2" onClick={handleLoginClick}>
                 Login
