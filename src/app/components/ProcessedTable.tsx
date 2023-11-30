@@ -186,7 +186,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div style={{borderRadius:"10px", border:"1px solid #327113"}} className='table-responsive'>
+        <div style={{borderRadius:"10px"}} className='table-responsive'>
           {/* begin::Table */}
           {loading ?
             <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -198,12 +198,12 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
             :
             <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
               {/* begin::Table head */}
-              <thead style={{ background: '#327113', color: "#fff" }}>
+              <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
                 <tr className='fw-bold'>
 
                   <th className='min-w-120px text-center'>Customers</th>
-                  <th className='min-w-120px text-center'>Application Arrival Date</th>
-                  <th className='min-w-100px text-center'>Application Departure Date</th>
+                  <th className='min-w-120px text-center'>Arrival Date</th>
+                  <th className='min-w-100px text-center'>Departure Date</th>
                   <th className='min-w-80px text-center'>Visa Amount</th>
                   <th className='min-w-80px text-center'>Visa Status</th>
                   <th className='min-w-100px text-center'>Actions</th>
@@ -211,7 +211,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
               </thead>
               {/* end::Table head */}
               {/* begin::Table body */}
-              <tbody>
+              <tbody style={{border:"1px solid #cccccc"}} >
                 {data.map((row, index) => (
                   <tr key={index}>
                     <td style={{paddingLeft:"15px"}}  className='text-center'>
@@ -221,7 +221,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                           <img src={row.photo} alt='' />
                         </div>
                         <div className='d-flex justify-content-start flex-column'>
-                          <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
+                          <a href='#' className='text-dark text-hover-primary fs-6'>
                             {row.first_name}
                           </a>
                         </div>
@@ -229,20 +229,20 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                     </td>
                     <td className='text-center'>
                       {/* Date */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
                         {row.application_arrival_date}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
                         {row.application_departure_date}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 2 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.visa_amount}
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
+                        ₹ {row.visa_amount}
                       </a>
                     </td>
                     <td className='text-center'>

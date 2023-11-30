@@ -104,7 +104,7 @@ export function MerchantAnaltytics({dashboardData}) {
   
     <h1
     style={{
-      marginTop:"20px",
+      marginTop:"0px",
       fontSize:"25px",
       fontWeight: "bold",
       marginBottom:"20px",

@@ -393,9 +393,9 @@ function MerchantView({ viewApplication }) {
                     onClick={handleSaveClick}
                     style={{
                       height: 40,
-                      width: 190,
+                      width: 160,
                       border: '1px solid',
-                      marginLeft: 20,
+                      marginLeft: 50,
                       borderColor: '#696969',
                       borderRadius: 25,
                       alignItems: 'center',
@@ -419,7 +419,7 @@ function MerchantView({ viewApplication }) {
                   onClick={() => handleButtonClick('Production')}
                   style={{
                     height: 40,
-                    width: 190,
+                    width: 160,
                     border: '1px solid',
                     marginLeft: 20,
                     borderColor: '#696969',

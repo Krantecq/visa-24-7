@@ -195,7 +195,7 @@ const handleSaveClick = async () => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div style={{borderRadius:"10px", border:"1px solid #327113", overflowX:"hidden"}} className='table-responsive'>
+              <div style={{borderRadius:"10px", overflowX:"hidden"}} className='table-responsive'>
                 {/* begin::Table */}
                 {loading ?
                   <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -207,19 +207,19 @@ const handleSaveClick = async () => {
                   :
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead className='px-2' style={{ background: '#327113', color: "#fff" }}>
+                    <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
                       <tr className='fw-bold'>
                         <th className='min-w-150px text-center'>Agent</th>
                         <th className='min-w-200px text-center'>Email</th>
-                        <th className='min-w-150px text-center'>Company</th>
+                        <th className='min-w-100px text-center'>Company</th>
                         <th className='min-w-70px text-center'>API Key</th>
-                        <th className='min-w-100px text-center'>Wallet Balance</th>
-                        <th className='min-w-200px text-center'>Action</th>
+                        <th className='min-w-70px text-center'>Wallet</th>
+                        <th className='min-w-130px text-center'>Action</th>
                       </tr>
                     </thead>
                     {/* end::Table head */}
                     {/* begin::Table body */}
-                    <tbody>
+                    <tbody style={{border:"1px solid #cccccc"}} >
                       {data.map((item, index) => (
                         <tr key={index}>
                           <td style={{paddingLeft:"15px"}} className='text-center'>
@@ -234,7 +234,7 @@ const handleSaveClick = async () => {
                               </span>
                               <a
                                 href='#'
-                                className='text-dark fw-bold text-hover-primary mb-1 fs-6'
+                                className='text-dark  text-hover-primary mb-1 fs-6'
                                 style={{ whiteSpace: 'nowrap', paddingLeft: '5px', paddingTop: '5px' }}
                               >
                                 {item.merchant.merchant_name}
@@ -242,12 +242,12 @@ const handleSaveClick = async () => {
                             </div>
                           </td>
                           <td className='text-center'>
-                            <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                            <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
                               {item.merchant.merchant_email_id}
                             </a>
                           </td>
                           <td className='text-center'>
-                            <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
+                            <span className='text-dark  d-block fs-5'>{item.company}</span>
                             <span className='text-dark fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
                           <td className='text-center min-w-50px' style={{ whiteSpace: 'pre-wrap', maxWidth: '100px' }}>
@@ -285,7 +285,7 @@ const handleSaveClick = async () => {
 
 
                           <td className='text-center'>
-                            <span className='text-dark fw-semibold d-block fs-7'>{item.api_wallet_balance}</span>
+                            <span className='text-dark fw-semibold d-block fs-7'>₹ {item.api_wallet_balance}</span>
                           </td>
                           <td className='text-center'>
                             <div className='d-flex align-items-center justify-content-center'>
@@ -328,15 +328,15 @@ const handleSaveClick = async () => {
               )}
               <Formik initialValues={formData} onSubmit={() => { }}>
                 {() => (
-                  <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
+                  <Form className='py-10 px-0' noValidate id='kt_create_account_form'>
 
-                    <div className='fv-row mb-5 d-flex flex-column align-items-center justify-content-center'>
+                    <div className='fv-row mb-5 d-flex flex-column'>
                       <label className='d-flex align-items-center form-label'>
                         <span className='required'>Add Balance</span>
                       </label>
 
                       <Field
-                        style={{ ...inputStyle, width: '450px' }}
+                        style={{ ...inputStyle, width: '450px', marginBottom:"15px" }}
                         name='walletBalance'
                         value={formData.walletBalance}
                         className='form-control form-control-lg form-control-solid'

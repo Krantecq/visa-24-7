@@ -112,7 +112,7 @@ function TestingWrapper() {
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
-          <Button className='btn-success' variant="primary" onClick={handleApiTest}>
+          <Button style={{background:"#327113"}} className='btn-success' variant="primary" onClick={handleApiTest}>
             Submit
           </Button>
         </Modal.Footer>

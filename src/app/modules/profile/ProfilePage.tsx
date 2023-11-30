@@ -59,7 +59,7 @@ const ProfilePage = () => (
         path='details'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Details</PageTitle>
+            {/* <PageTitle breadcrumbs={profileBreadCrumbs}>Details</PageTitle> */}
             <ProfileDetails />
           </>
         }

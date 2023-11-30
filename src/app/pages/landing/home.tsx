@@ -93,9 +93,9 @@ const Home: React.FC<Props> = ({
             </div>
         </div>
 
-      {showLoginModal && (
-        <div className="modal-container">
-        <div className="modal-content">
+        {showLoginModal && (
+        <div className="modal-container1">
+        <div className="modal-content1">
           <span className="close" onClick={handleCloseLoginModal}>
             &times;
           </span>
@@ -125,11 +125,11 @@ const Home: React.FC<Props> = ({
           </button>
           </p>
         </div>
-      </div>
-      )}
-      {showSignUpModal && (
-        <div className="sign-up-modal-container">
-            <div className="modal-content">
+        </div>
+        )}
+        {showSignUpModal && (
+        <div className="sign-up-modal-container1">
+            <div className="modal-content1">
             <span className="close" onClick={handleCloseSignUpModal}>
                 &times;
             </span>
@@ -159,7 +159,7 @@ const Home: React.FC<Props> = ({
         
             </div>
         </div>
-      )}
+        )}
 
 
         <div className="page1h">

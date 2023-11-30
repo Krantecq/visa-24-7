@@ -38,9 +38,6 @@ class Loader extends Component<LoaderProps> {
     };
 
     const pleaseWaitStyle: CSSProperties = {
-      backgroundColor: '#fff', // Background color for highlighting
-      padding: '10px', // Adjust padding as needed
-      borderRadius: '5px', // Rounded corners for the highlight
       textAlign:'center',
     };
 
@@ -48,10 +45,9 @@ class Loader extends Component<LoaderProps> {
       <div style={{ ...overlayStyle, ...(this.props.loading && activeOverlayStyle) }}>
         <div style={pleaseWaitStyle}>
           <div style={{alignSelf:'center'}} ></div>
-          <img 
-            src={toAbsoluteUrl('/media/loading.gif')} />
+          <img style={{width:"250px", height:"250px", borderRadius:"40px"}}
+            src={toAbsoluteUrl('/media/loadere.gif')} />
           <br />
-          Please wait....
         </div>
       </div>
     );

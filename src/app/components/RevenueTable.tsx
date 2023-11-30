@@ -111,7 +111,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               backgroundClip: '#fff',
               width: 400,
               marginTop: 11,
-              border: '2px solid #e5e5e5',
+              border: '2px solid #808080',
               borderRadius: 10,
               padding: 10,
             }}
@@ -129,7 +129,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               borderRadius: '10px',
               border: '1px solid #327113',
               zIndex: 1,
-              width: '150px',
+              width: '160px',
             }}
             onClick={handleDownloadCSVRevenueTable}
           >
@@ -156,7 +156,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div style={{ borderRadius: '10px', border: '1px solid #327113' }} className='table-responsive'>
+        <div style={{ borderRadius: '10px' }} className='table-responsive'>
           {/* begin::Table */}
           {loading ? (
             <div
@@ -174,9 +174,9 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               </span>
             </div>
           ) : (
-            <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
+            <table className='table table-row-dashed table-row-gray-300 align-middle'>
               {/* begin::Table head */}
-              <thead style={{ background: '#327113', color: '#fff' }}>
+              <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
                 <tr className='fw-bold'>
                   <th style={{ paddingLeft: '4%' }} className='min-w-80px text-start'>
                     Date
@@ -194,7 +194,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               </thead>
               {/* end::Table head */}
               {/* begin::Table body */}
-              <tbody>
+              <tbody style={{border:"1px solid #cccccc"}} >
                 {filteredData.map((row, index) => (
                   <tr key={index}>
                     <td className='text-center'>

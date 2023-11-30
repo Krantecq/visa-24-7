@@ -119,8 +119,8 @@ type Props = {
         </div>
 
        {showLoginModal && (
-        <div className="modal-container">
-        <div className="modal-content">
+        <div className="modal-container1">
+        <div className="modal-content1">
           <span className="close" onClick={handleCloseLoginModal}>
             &times;
           </span>
@@ -149,8 +149,8 @@ type Props = {
       </div>
        )}
        {showSignUpModal && (
-    <div className="sign-up-modal-container">
-        <div className="modal-content">
+    <div className="sign-up-modal-container1">
+        <div className="modal-content1">
           <span className="close" onClick={handleCloseSignUpModal}>
             &times;
           </span>

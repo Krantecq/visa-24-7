@@ -67,7 +67,7 @@ font-family: 'Gilroy', sans-serif;
   transition: 0.2s all;
 }
 
-.modal-container, .sign-up-modal-container {
+.modal-container1, .sign-up-modal-container1 {
 display: flex;
 justify-content: center;
 align-items: center;
@@ -81,7 +81,7 @@ background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
 }
 
 /* Styling for the login modal content */
-.modal-content {
+.modal-content1 {
 background: #fff; /* White background */
 padding: 20px;
 border-radius: 8px;

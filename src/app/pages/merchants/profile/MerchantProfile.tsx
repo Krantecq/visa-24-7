@@ -341,7 +341,7 @@ function MerchantProfile() {
     >
       <h2 className='py-10'>Agency Information</h2>
       <hr />
-      <Formik initialValues={formData2} onSubmit={() => { }}>
+      <Formik initialValues={{...formData2}} onSubmit={() => { }}>
         {() => (
           <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
             <div>
@@ -1205,7 +1205,7 @@ function MerchantProfile() {
 
       <table className='table align-middle gs-10 mt-10'>
         {/* begin::Table head */}
-        <thead className='px-5' style={{ background: '#327113', color: '#fff' }}>
+        <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
           <tr className='fw-bold'>
             <th className='min-w-150px'>Date/Time</th>
             <th className='min-w-150px'>Amount</th>
@@ -1216,27 +1216,27 @@ function MerchantProfile() {
         </thead>
         {/* end::Table head */}
         {/* begin::Table body */}
-        <tbody>
+        <tbody style={{border:"1px solid #cccccc"}} >
           {transaction.map((item, index) => (
 
             <tr key={index}>
               <td className='text-start'>
-                <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
                   {item && moment((item as any).created_at).format('DD MMM YYYY hh:mm a')}
                 </a>
               </td>
               <td className='text-start'>
-                <span className='text-dark fw-bold d-block fs-6'>
-                  {item && (item as { wallet_balance: number }).wallet_balance}/-
+                <span className='text-dark d-block fs-6'>
+                  ₹ {item && (item as { wallet_balance: number }).wallet_balance}/-
                 </span>
               </td>
               <td className='text-start'>
-                <span className='text-dark fw-bold d-block fs-6'>
+                <span className='text-dark d-block fs-6'>
                   {item && (item as { category: String }).category}
                 </span>
               </td>
               <td className='text-start'>
-                <span className='text-dark fw-bold d-block fs-6'>
+                <span className='text-dark d-block fs-6'>
                   {item && (item as { type: string }).type}
                 </span>
 
@@ -1300,7 +1300,6 @@ function MerchantProfile() {
         <div
           className='px-5 py-1'
           style={{
-            border: '1px solid #327113',
             borderRadius: 10,
             alignItems: 'center',
             display: 'flex',
@@ -1318,7 +1317,7 @@ function MerchantProfile() {
 
       <table className='table align-middle gs-10 mt-10'>
         {/* begin::Table head */}
-        <thead className='px-5' style={{ background: '#327113', color: '#fff' }}>
+        <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
           <tr className='fw-bold'>
             <th className='min-w-150px'>Name</th>
             <th className='min-w-150px'>Transaction time</th>
@@ -1329,28 +1328,28 @@ function MerchantProfile() {
         </thead>
         {/* end::Table head */}
         {/* begin::Table body */}
-        <tbody>
+        <tbody style={{border:"1px solid #cccccc"}} >
           {revenue.map((item, index) => (
 
             <tr>
               <td className='text-start'>
-                <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
+                <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
                   {item.name}
                 </a>
               </td>
               <td className='text-start'>
-                <span className='text-dark fw-bold d-block fs-6'>
+                <span className='text-dark d-block fs-6'>
                   {formatDate1(item.transaction_time)}
                 </span>
               </td>
               <td className='text-start'>
-                <span className='text-dark fw-bold d-block fs-6'>
+                <span className='text-dark d-block fs-6'>
                   {item.application_no}
                 </span>
               </td>
               <td className='text-center'>
-                <span className='text-dark fw-bold d-block fs-6'>
-                  {item.revenue}
+                <span className='text-dark d-block fs-6'>
+                  ₹ {item.revenue}
                 </span>
 
               </td>
@@ -1514,7 +1513,7 @@ function MerchantProfile() {
               <div>
                 <div className='fv-row mb-10'>
                   <label className='d-flex align-items-center form-label'>
-                    <span className='required mx-5'>Commisionss</span>
+                    <span className='required mx-5'>Commisions</span>
                   </label>
 
                   <div className='d-flex'>

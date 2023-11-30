@@ -45,12 +45,12 @@ const ProfileHeader: React.FC = () => {
     }
   };
   return (
-    <div className='card mb-5 mb-xl-10'>
+    <div style={{boxShadow:"none", paddingLeft:"30px"}} className='card mb-5 mb-xl-10'>
       <div className='card-body pt-9 pb-0'>
         <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
           <div className='me-7 mb-4'>
-            <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
-              <img src={formData.super_admin_profile_photo} alt='Profile pic' />
+            <div className='position-relative'>
+              <img style={{width:"130px", height:"130px", borderRadius:"15px"}} src={formData.super_admin_profile_photo} alt='Profile pic' />
               <div className='position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px'></div>
             </div>
           </div>
@@ -59,12 +59,12 @@ const ProfileHeader: React.FC = () => {
             <div className='d-flex justify-content-between align-items-start flex-wrap mb-2'>
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
-                  <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
+                  <a style={{textTransform:"capitalize"}} href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
                     {formData.super_admin_name}
                   </a>
                 </div>
 
-                <div className='d-flex flex-wrap fw-bold fs-6 mb-4 pe-2'>
+                <div className='d-flex flex-column fs-4 mb-2 pe-2'>
                   {/* <a
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
@@ -73,13 +73,13 @@ const ProfileHeader: React.FC = () => {
                   </a> */}
                   <a
                     href='#'
-                    className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
+                    className='d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2'
                   >
                     {formData.super_admin_email}
                   </a>
                   <a
                     href='#'
-                    className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
+                    className='d-flex align-items-center text-gray-500 text-hover-primary mb-2'
                   >
                     Joined: {moment(formData.created_at).format('DD MMM YYYY')}
                   </a>
@@ -122,7 +122,7 @@ const ProfileHeader: React.FC = () => {
             </div>
           </div>
         </div>
-
+        
         <div className='d-flex overflow-auto h-55px'>
           <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap'>
             {/* <li className='nav-item'>

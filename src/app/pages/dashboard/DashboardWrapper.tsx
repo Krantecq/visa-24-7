@@ -123,8 +123,8 @@ const DashboardPage: FC<Props> = (data) => (
     </div>
     <h1
       style={{
-        marginTop:"20px",
-        marginBottom:"20px",
+        marginTop:"-10px",
+        marginBottom:"30px",
         fontSize:"19px"
     }}
     >Today's Statistics</h1>

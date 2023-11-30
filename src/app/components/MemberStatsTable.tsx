@@ -177,7 +177,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div style={{borderRadius:"10px", border:"1px solid #327113"}} className='table-responsive'>
+              <div style={{borderRadius:"10px"}} className='table-responsive'>
                 {/* begin::Table */}
                 {loading ? (
                   <div
@@ -197,22 +197,22 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                 ) : (
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead className='px-2' style={{background: '#327113', color: '#fff'}}>
+                    <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
                       <tr className='fw-bold'>
                         <th className='min-w-150px text-start' style={{paddingLeft: '5%'}}>
                           Agent
                         </th>
-                        <th className='min-w-100px text-start'>Wallet Balance</th>
-                        <th className='min-w-100px text-start'>No. Of Visa</th>
-                        <th className='min-w-100px text-start'>Company</th>
-                        <th className='min-w-150px text-start'>Joining Date</th>
-                        <th style={{paddingRight:"6%"}} className='min-w-150px text-center'>Action</th>
+                        <th className='min-w-100px text-center'>Wallet Balance</th>
+                        <th className='min-w-100px text-center'>No. Of Visa</th>
+                        <th className='min-w-100px text-center'>Company</th>
+                        <th className='min-w-150px text-center'>Joining Date</th>
+                        <th className='min-w-150px text-center'>Action</th>
                       </tr>
                     </thead>
 
                     {/* end::Table head */}
                     {/* begin::Table body */}
-                    <tbody>
+                    <tbody style={{border:"1px solid #cccccc"}} >
                       {getFilteredData().map((item, index) => (
                         <tr key={index}>
                           <td style={{paddingLeft:"2%"}} className='text-center'>
@@ -232,7 +232,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                               </span>
                               <a
                                 href='#'
-                                className='text-dark fw-bold text-hover-primary mb-1 fs-6'
+                                className='text-dark  text-hover-primary mb-1 fs-6'
                                 style={{
                                   whiteSpace: 'nowrap',
                                   paddingLeft: '5px',
@@ -243,23 +243,23 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                               </a>
                             </div>
                           </td>
-                          <td className='text-start'>
-                            <a style={{marginLeft:"15%"}} href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
-                              {item.wallet_balance}
+                          <td className='text-center'>
+                            <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
+                              ₹ {item.wallet_balance}
                             </a>
                           </td>
-                          <td className='text-start'>
-                            <span style={{marginLeft:"15%"}} className='text-dark fw-bold d-block fs-5'>
+                          <td className='text-center'>
+                            <span className='text-dark  d-block fs-5'>
                               {item.merchant_applicants.length}
                             </span>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
                             <span className='text-muted fw-semibold d-block fs-7 '>
                               {item.merchant_company_name}
                             </span>
                           </td>
-                          <td className='text-start'>
+                          <td className='text-center'>
                             <span className='text-muted fw-semibold d-block fs-7'>
                               {moment(item.created_at).format('DD MMM YYYY hh:mm a')}
                             </span>

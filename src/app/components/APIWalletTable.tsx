@@ -244,7 +244,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
                   <td className='text-center'>
                     {/* Location 1 */}
                     <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                      {row.wallet_balance}
+                      ₹ {row.wallet_balance}
                     </a>
                   </td>
 

@@ -86,10 +86,9 @@ const ProfileDetails: React.FC = () => {
     console.log('resposne is-->',response);
     if (response.status == 200) {
       toast.success(response.data.msg, {
-        position: 'top-center', // Center the toast notification
+        position: 'top-center',
       })
       setLoading(false);
-      // navigate('/merchant/apply-visa')
     } else {
       console.log(response.data)
       toast.error(response.data.msg, {
@@ -124,11 +123,11 @@ const ProfileDetails: React.FC = () => {
   })
 
   return (
-    <div className='card mb-5 mb-xl-10'>
+    <div style={{marginTop:"-100px"}} className='card mb-5 mb-xl-10'>
       <div id='kt_account_profile_details' className='collapse show'>
         <form onSubmit={()=>{}} noValidate className='form'>
-          <div className='card-body border-top p-9'>
-            <div className='col mb-6'>
+          <div className='card-body p-9'>
+            {/* <div className='col mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>Profile Picture</label>
               <div className='col-lg-8'>
                 <div
@@ -142,13 +141,13 @@ const ProfileDetails: React.FC = () => {
                   ></div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
            
           <Formik initialValues={initialValues} onSubmit={() => { }}>
             {() => (
-              <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
-                <div>
+              <Form className='py-4 px-9' noValidate id='kt_create_account_form'>
+                <div className='d-flex flex-column flex-wrap justify-between'>
                   <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                     <div className='fv-row mb-5'>
                       <label style={{marginLeft:"10px"}} className='form-label required'>Name</label>

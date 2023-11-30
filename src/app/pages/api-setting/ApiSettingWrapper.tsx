@@ -172,7 +172,7 @@ function ApiSettingWrapper() {
                     onClick={handleSave}
                     style={{ backgroundColor: '#327113', width: 180, marginLeft:"150px" }}
                   >
-                    {!loading && <h6 className='fs-4' style={{ color: 'white', paddingTop: 7 }}>Save</h6>}
+                    {!loading && <h6 className='fs-2' style={{ color: 'white', paddingTop: 7 }}>Save</h6>}
                     {loading && (
                       <span className='indicator-progress' style={{ display: 'flex', alignItems: 'center', color:"#fff" }}>
                         Please wait...
