@@ -120,7 +120,8 @@
 
   &.active {
     .page-link {
-      color: var(--#{$prefix}pagination-active-color);
+      color: #fff;
+      background-color: #327113;
 
       &.page-text {
         background-color: transparent;

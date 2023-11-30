@@ -34,7 +34,7 @@ function ApplicationFormView({viewApplication}) {
     borderRadius: '10px', // Border radius
     padding: '10px',
     paddingLeft: '20px', // Padding
-    width: '100%', // 100% width
+    width: '90%', // 100% width
     boxSizing: 'border-box', // Include padding and border in the width calculation
   }
 
@@ -45,16 +45,7 @@ function ApplicationFormView({viewApplication}) {
   return (
     <div
       className='py-10 px-20'
-      style={{
-        borderRadius: 20,
-        borderColor: '#f5f5f5',
-        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-        marginLeft: 10,
-        marginTop: 20,
-        backgroundColor: 'white',
-        overflow: "auto",
 
-      }}
     >
       <h5 style={{fontSize: 30, letterSpacing: 0.3}}>Traveller 1 </h5>
       <hr />
@@ -100,7 +91,7 @@ function ApplicationFormView({viewApplication}) {
                     </label>
 
                     <Field
-                      style={{...inputStyle, width: '100%'}}
+                      style={{...inputStyle, width: '95%'}}
                       name='passportNumber'
                       readOnly
                       value={viewApplication.passport_number}
@@ -236,12 +227,12 @@ function ApplicationFormView({viewApplication}) {
                       </div>
                     </div>
                     <div className='fv-row mb-10'>
-                      <label style={{marginLeft:"5px"}} className='form-label required'>Marital Status</label>
+                      <label style={{marginLeft:"-10px"}} className='form-label required'>Marital Status</label>
 
                       <Field
                         readOnly
                         value={viewApplication.marital_status}
-                        style={{...inputStyle, width: '215px', backgroundColor: 'white'}}
+                        style={{...inputStyle, width: '210px', backgroundColor: 'white', position:"relative", left:"-25px"}}
                         name='maritalStatus'
                         className='form-select form-select-lg form-select-solid'
                       />

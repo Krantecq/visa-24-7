@@ -295,7 +295,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       {visible &&
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
           <div style={contentStyle}>
-            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: 243, borderRadius: 20, cursor: 'pointer', top: '156px' }}>
+            <div onClick={() => handleCloseClick()} style={{ backgroundColor: '#d3d3d3', padding: 10, position: 'absolute', right: "193px", borderRadius: 20, cursor: 'pointer', top: '83px' }}>
               <CloseOutlined />
             </div>
             <ApplicationFormView viewApplication={selectedItem} />

@@ -16,14 +16,14 @@ const btnIconClass = 'fs-2'
 const Navbar = () => {
   const { config } = useLayout();
   const [currentWallet, setCurrentWallet] = useState('');
-  const [profile,setProfile] = useState({
+  const [profile, setProfile] = useState({
     merchant_email_id: '',
     merchant_name: '',
     merchant_profile_photo:'',
     super_admin_profile_photo:'',
     super_admin_name:'',
     super_admin_email:''
-  })
+  });
 
   const user_type = Cookies.get('user_type');
   useEffect(() => {
@@ -100,7 +100,6 @@ const Navbar = () => {
       }
       // Assuming the response contains the profile data, update the state with the data
       setProfile(response.data.data)
-      console.log('profile response header', response)
     } catch (error) {
       console.error('Error fetching profile data:', error)
       // Handle error (e.g., show an error message)
@@ -108,38 +107,7 @@ const Navbar = () => {
   }
   return (
     <div className='app-navbar flex-shrink-0'>
-      {/* <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
-        <Search />
-      </div> */}
 
-      {/* <div className={clsx('app-navbar-item', itemClass)}>
-        <div id='kt_activities_toggle' className={btnClass}>
-          <KTIcon iconName='chart-simple' className={btnIconClass} />
-        </div>
-      </div> */}
-
-      {/* <div className={clsx('app-navbar-item', itemClass)}>
-        <div
-          data-kt-menu-trigger="{default: 'click'}"
-          data-kt-menu-attach='parent'
-          data-kt-menu-placement='bottom-end'
-          className={btnClass}
-        >
-          <KTIcon iconName='element-plus' className={btnIconClass} />
-        </div>
-        <HeaderNotificationsMenu />
-      </div> */}
-
-      {/* <div className={clsx('app-navbar-item', itemClass)}>
-        <div className={clsx('position-relative', btnClass)} id='kt_drawer_chat_toggle'>
-          <KTIcon iconName='message-text-2' className={btnIconClass} />
-          <span className='bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink' />
-        </div>
-      </div> */}
-
-      {/* <div className={clsx('app-navbar-item', itemClass)}>
-        <ThemeModeSwitcher toggleBtnClass={clsx('btn-active-light-primary btn-custom')} />
-      </div> */}
       {user_type == 'merchant' &&
         <div className={clsx('app-navbar-item', itemClass)}>
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0' style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 10, marginRight: 30 }}>
@@ -149,6 +117,7 @@ const Navbar = () => {
           </div>
         </div>
       }
+      
       <div className={clsx('app-navbar-item', itemClass)}>
         <div
           className={clsx('cursor-pointer symbol', userAvatarClass)}
@@ -159,6 +128,7 @@ const Navbar = () => {
           <img style={{borderRadius:"50%", width:"40px", height:"40px"}} src={profile.merchant_profile_photo || profile.super_admin_profile_photo} alt='Profile' />
         </div>
         <HeaderUserMenu profile={profile} />
+        
       </div>
 
       {config.app?.header?.default?.menu?.display && (

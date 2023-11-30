@@ -1,107 +1,170 @@
 import React, { useState } from 'react';
-import { DatePicker } from 'antd';
 import './home.css';
 import './swiper-bundle.min.css';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import HomeApply from '../../components/HomeApply';
 import axiosInstance from '../../helpers/axiosInstance';
-import Loader from '../../components/Loader';
-import { VisaTable } from '../../components/VisaTable';
+import LoaderHome from '../../components/LoaderHome';
 
 type Props = {
-    className: string;
-    title: string;
-    show: (value: boolean) => void;
-    visaList: boolean;
-    visaListLoader: (value: boolean) => void;
-    apiData: any;
-    onSelectClick: (entryData: any) => void;
+  className: string;
+  title: string;
+  show: (value: boolean) => void;
+  visaList: boolean;
+  visaListLoader: (value: boolean) => void;
+  apiData: any;
+  onSelectClick: (entryData: any) => void;
+};
+
+const Home: React.FC<Props> = ({
+  className,
+  title,
+  show,
+  visaList,
+  visaListLoader,
+  apiData,
+  onSelectClick,
+}) => {
+  const navigate = useNavigate();
+
+  const [apiDataState, setApiData] = useState(null);
+  const [visaListState, setVisaList] = useState(false);
+  const [visaListLoaderState, setVisalistLoader] = useState(false);
+
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
   };
-  
-  const Home: React.FC<Props> = ({
-    className,
-    title,
-    show,
-    visaList,
-    visaListLoader,
-    apiData,
-    onSelectClick,
-  }) => {
-    const navigate = useNavigate();
-  
-    const [apiDataState, setApiData] = useState(null);
-    const [visaListState, setVisaList] = useState(false);
-    const [visaListLoaderState, setVisalistLoader] = useState(false);
-  
-    const onChange = (date, dateString) => {
-      console.log(date, dateString);
-    };
-  
-    const toggleMenu = () => {
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (mobileMenu) {
-        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-        mobileMenu.classList.toggle('hamburger-open');
-      }
-    };
-  
-    const search = () => {
-      console.log('clicked!');
-    };
-  
-    const handleApiDataReceived = (data) => {
-        setApiData(data);
-        if (data && data.visaList) {
-          setVisaList(data.visaList);
-        }
-        setVisalistLoader(true);
-        console.log('Data before navigating:', data);
-        navigate('/inner', { state: { apiData: data } });
-      };
-  
+
+  const toggleMenu = () => {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu) {
+      mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+      mobileMenu.classList.toggle('hamburger-open');
+    }
+  };
+
+  const search = () => {
+    console.log('clicked!');
+  };
+
+  const handleApiDataReceived = (data) => {
+    setApiData(data);
+    if (data && data.visaList) {
+      setVisaList(data.visaList);
+    }
+    setVisalistLoader(true);
+    console.log('Data before navigating:', data);
+    navigate('/inner', { state: { apiData: data } });
+  };
+
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const handleLoginClick = () => setShowLoginModal(true);
+  const handleCloseLoginModal = () => setShowLoginModal(false);
+  const handleCloseSignUpModal = () => setShowSignUpModal(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false); 
+  const handleSignUpClick = () => {
+    setShowLoginModal(false);
+    setShowSignUpModal(true);
+  }
 
   return (
-    <>        
+    <> <LoaderHome loading={visaListLoaderState} />
         <div id="nav">
-            <div className="part21">
-                <a href="">Home</a>
-                <a href="">About Us</a>
-                <a href="">Contact</a>
-            </div>
-
-            <div className="part11">
+            <a href='/' className="part11">
                 <img className="logo" src="./media/logos/logo.png" alt="logo" />
-            </div>
+            </a>
 
-            <div className="part31">
-                <button className='button2'>
+            <div className="part21">
+                {/* <a href="#">About Us</a> */}
+                <a href="#">Contact</a>
+                {/* Button to open the login modal */}
+                <button className="button2" onClick={handleLoginClick}>
                     Login
                 </button>
-                <button className='button1'>
-                    Sign up
-                </button>
             </div>
+
             <i className="ri-menu-3-fill hamburger" onClick={toggleMenu}></i>
             <div id="mobile-menu">
-                
                 <a href="#">Home</a>
-                <a href="#">About Us</a>
+                {/* <a href="#">About Us</a> */}
                 <a href="#">Sign up</a>
                 <a href="#">Login</a>
-                
             </div>
-        </div>        
+        </div>
+
+      {showLoginModal && (
+        <div className="modal-container">
+        <div className="modal-content">
+          <span className="close" onClick={handleCloseLoginModal}>
+            &times;
+          </span>
+          <h1>Login</h1>
+      
+          <div className="mb-3">
+            <label htmlFor="email">Email address</label>
+            <input type="email" className="form-control" id="email" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">Password</label>
+            <input type="password" className="form-control" id="password" />
+          </div>
+      
+          <button className="social-login" style={{ backgroundColor: '#327113' }}>
+            Login
+          </button>
+      
+
+          <p style={{ marginTop: '10px', textAlign: 'center' }}>
+            Don't have an account? <button style={{background:"none", border:"none"}} className="button2" onClick={handleSignUpClick}>
+            Sign up
+          </button>
+          </p>
+        </div>
+      </div>
+      )}
+      {showSignUpModal && (
+        <div className="sign-up-modal-container">
+            <div className="modal-content">
+            <span className="close" onClick={handleCloseSignUpModal}>
+                &times;
+            </span>
+            <h1>Signup</h1>
+
+            <div className="mb-3">
+                <label htmlFor="email">Full Name</label>
+                <input type="email" className="form-control" id="email" />
+            </div>
+        
+            <div className="mb-3">
+                <label htmlFor="email">Email address</label>
+                <input type="email" className="form-control" id="email" />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="password">Password</label>
+                <input type="password" className="form-control" id="password" />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="password">Confirm Password</label>
+                <input type="password" className="form-control" id="password" />
+            </div>
+        
+            <button className="social-login" style={{ backgroundColor: '#327113' }}>
+                Signup
+            </button>
+        
+            </div>
+        </div>
+      )}
 
 
         <div className="page1h">
-            <img className="bgimg" src="./media/assets/img1.png"/>
+            <img className="bgimg" src="./media/assets/bgim.jpg"/>
             <h1>
-                Getting Visa Was Never<br/> This Easy.
+                Getting Visa Was Never This Easy.
             </h1>
             <div className="search-bar">
                 <div className="search-conti">
-                <Loader loading={visaListLoaderState} />
                 <HomeApply
                     show={(value) => setVisaList(value)}
                     visaList={visaList}
@@ -127,34 +190,34 @@ type Props = {
             <h1>Top vacation Destinations</h1>
             <div className="cards">
                 <div className="card-vac">
-                    <img src="./media/assets/c2.png" />
+                    <img src="./media/assets/dubai.jpg" />
                     <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Bali, Indonesia</h1>
+                    <h1 className="vac-title">Dubai</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./media/assets/c3.png" />
+                    <img src="./media/assets/UAE.jpg" />
                     <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Kerry, Ireland</h1>
+                    <h1 className="vac-title">U.A.E</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./media/assets/c4.png" />
+                    <img src="./media/assets/egypt.jpg" />
                     <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Sydney, Australia</h1>
+                    <h1 className="vac-title">Egypt</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./media/assets/c2.png" />
+                    <img src="./media/assets/taiwan.jpg" />
                     <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Bali, Indonesia</h1>
+                    <h1 className="vac-title">Taiwan</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./media/assets/c3.png" />
+                    <img src="./media/assets/mongolio.jpg" />
                     <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Kerry, Ireland</h1>
+                    <h1 className="vac-title">Mongolia</h1>
                 </div>
                 <div className="card-vac">
-                    <img src="./media/assets/c4.png" />
+                    <img src="./media/assets/australia.jpg" />
                     <div className="gradient-layer"></div>
-                    <h1 className="vac-title">Sydney, Australia</h1>
+                    <h1 className="vac-title">Australia</h1>
                 </div>
             </div>
         </div>
@@ -165,15 +228,12 @@ type Props = {
             <div className="conti">
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/albania.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Havelock</h1>
+                        <h1 className="heading">Albania</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -182,7 +242,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Look Around</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -194,15 +254,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/bahrain.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Whitsunday Island</h1>
+                        <h1 className="heading">Bahrain</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -211,7 +268,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Holiday</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -223,15 +280,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd3.png" alt="" />
+                        <img className="imgr" src="./media/assets/cambodia.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Maldives</h1>
+                        <h1 className="heading">Cambodia</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -240,7 +294,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Explore</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -257,10 +311,7 @@ type Props = {
                     <div className="title">
                         <h1 className="heading">Mauritius</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -281,15 +332,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/china.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Havelock</h1>
+                        <h1 className="heading">China</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -298,7 +346,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Vacation</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -310,15 +358,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/ethopia.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Whitsunday Islands</h1>
+                        <h1 className="heading">Ethopia</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -327,7 +372,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Visit</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -341,15 +386,12 @@ type Props = {
             <div className="conti">
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/japan.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Havelock</h1>
+                        <h1 className="heading">Japan</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -358,7 +400,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Stay in</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -370,15 +412,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/jordan.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Whitsunday Island</h1>
+                        <h1 className="heading">Jordan</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -387,7 +426,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Spend time</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -404,10 +443,7 @@ type Props = {
                     <div className="title">
                         <h1 className="heading">Maldives</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -416,7 +452,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Pay a visit</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -428,15 +464,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd4.png" alt="" />
+                        <img className="imgr" src="./media/assets/kenya.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Mauritius</h1>
+                        <h1 className="heading">Kenya</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                           
                         </span>
 
                     </div>
@@ -445,7 +478,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Monthend</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -462,10 +495,7 @@ type Props = {
                     <div className="title">
                         <h1 className="heading">Havelock</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -474,7 +504,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Enjoy</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -491,10 +521,7 @@ type Props = {
                     <div className="title">
                         <h1 className="heading">Whitsunday Islands</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -503,7 +530,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Family</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -517,15 +544,12 @@ type Props = {
             <div className="conti">
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/kyrzygstan.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Havelock</h1>
+                        <h1 className="heading">Kyrzygstan</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -534,7 +558,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Long</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -546,15 +570,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/laos.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Whitsunday Island</h1>
+                        <h1 className="heading">Laos</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -563,7 +584,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Summers</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -575,15 +596,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd3.png" alt="" />
+                        <img className="imgr" src="./media/assets/madagascar.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Maldives</h1>
+                        <h1 className="heading">Madagascar</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -592,7 +610,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>New</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -604,15 +622,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd4.png" alt="" />
+                        <img className="imgr" src="./media/assets/russia.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Mauritius</h1>
+                        <h1 className="heading">Russia</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -621,7 +636,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Cool</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -633,15 +648,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd1.png" alt="" />
+                        <img className="imgr" src="./media/assets/srilanka.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Havelock</h1>
+                        <h1 className="heading">Sri Lanka</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -650,7 +662,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Family</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -662,15 +674,12 @@ type Props = {
                 </Link>
                 <Link to="/inner" className="cards-single">
                     <div className="img-conti">
-                        <img className="imgr" src="./media/assets/cd2.png" alt="" />
+                        <img className="imgr" src="./media/assets/thai.jpg" alt="" />
                     </div>
                     <div className="title">
-                        <h1 className="heading">Whitsunday Islands</h1>
+                        <h1 className="heading">Thailand</h1>
                         <span className="rating">
-                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.0318 8.38835L14.5745 7.59522L12.1349 2.64945C12.0683 2.51403 11.9586 2.40442 11.8232 2.33778C11.4836 2.17013 11.0709 2.30984 10.9011 2.64945L8.46157 7.59522L3.00424 8.38835C2.85379 8.40984 2.71622 8.48077 2.6109 8.58824C2.48358 8.71911 2.41341 8.89517 2.41583 9.07775C2.41825 9.26032 2.49305 9.43447 2.6238 9.56192L6.57225 13.4115L5.63941 18.8473C5.61753 18.9738 5.63153 19.1038 5.6798 19.2227C5.72807 19.3416 5.8087 19.4446 5.91253 19.52C6.01636 19.5954 6.13924 19.6403 6.26725 19.6494C6.39525 19.6585 6.52325 19.6316 6.63673 19.5717L11.518 17.0053L16.3993 19.5717C16.5326 19.6426 16.6873 19.6662 16.8356 19.6405C17.2096 19.576 17.4611 19.2213 17.3966 18.8473L16.4638 13.4115L20.4122 9.56192C20.5197 9.4566 20.5906 9.31904 20.6121 9.16858C20.6702 8.79243 20.4079 8.44423 20.0318 8.38835Z" fill="black"/>
-                            </svg>
-                            4.7
+                            
                         </span>
 
                     </div>
@@ -679,7 +688,7 @@ type Props = {
                         <ul>
                             <li>Approval Chances 90%</li>
                             <li>Visa within 6 Days</li>
-                            <li>Curious Corner</li>
+                            <li>Friends</li>
                         </ul>  
                     </div>
                     <div className="card-price">
@@ -800,7 +809,7 @@ type Props = {
             <div className="mains">
             <div className="logo rowsa">
                 <div className="footer-header">
-                <img src="./media/logos/logo.png" className="manik" alt=""/>
+                <img src="./media/logos/logo.png" className="manikk" alt=""/>
                 </div>
                 <div className="logo-des">
                 <p style={{color:"rgba(50, 113, 19, 1)"}}>Visa247 facilitates seamless<br/> Visa online instantly..</p>

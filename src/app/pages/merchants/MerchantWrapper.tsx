@@ -40,7 +40,7 @@ function MerchantWrapper() {
   }, []); // The empty dependency array ensures this effect runs once on mount
 
   return (
-    <div>
+    <div style={{marginTop:"-40px"}} >
       <MemberStatsTable className='' data={memberStatsData} loading={loading} />
     </div>
   );

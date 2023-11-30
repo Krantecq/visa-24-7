@@ -1,10 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
-import RoomIcon from '@mui/icons-material/Room'
-import FlightIcon from '@mui/icons-material/Flight'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import axios from 'axios'
 import axiosInstance from '../helpers/axiosInstance'
 import { DatePicker } from 'antd'
 import 'dayjs/locale/en';
@@ -22,12 +18,18 @@ const HomeApply: React.FC<Props> = ({
   onApiDataReceived,
   visaListLoader,
 }) => {
-    
+  
+  const [selectedFromCountry, setSelectedFromCountry] = useState(''); // Initialize with a default value for "From" country
+  const [selectedToCountry, setSelectedToCountry] = useState(''); // Initialize with a default value for "To" country
   const [issueDate, setIssueDate] = useState<string | undefined>('');
   const [expiryDate, setExpiryDate] = useState<string | undefined>('');
+ 
   const [initValues] = useState<ICreateAccount>(inits)
+  
 
   const onSubmit = (values: any) => {
+    console.log("Form Values on Submit:", values);
+    console.log("From Country on Submit:", values.fromCountry);
     visaListLoader(true);
     setSelectedFromCountry(values.fromCountry);
     setSelectedToCountry(values.toCountry);
@@ -92,8 +94,7 @@ const HomeApply: React.FC<Props> = ({
       
   }
     
-  const [selectedFromCountry, setSelectedFromCountry] = useState(''); // Initialize with a default value for "From" country
-  const [selectedToCountry, setSelectedToCountry] = useState(''); // Initialize with a default value for "To" country
+
   const currentDate = new Date();
 
   const disabledDate = (current) => {
@@ -106,7 +107,7 @@ const HomeApply: React.FC<Props> = ({
       <Formik validationSchema={null} initialValues={initValues} onSubmit={onSubmit}>
         {({ handleSubmit }) => (
           <Form
-            className='mt-10 w-100 px-9'
+            className='mt-8 w-100 px-9'
             noValidate
             id='kt_create_account_form'
             onSubmit={handleSubmit}
@@ -114,13 +115,13 @@ const HomeApply: React.FC<Props> = ({
             <div 
             style={{gap:"15px"}}
             className='d-flex flex-row justify-content-between'>
-              <div className='fv-row mb-10 w-100'>
+              {/* <div className='fv-row mb-10 w-100'>
                 <Field
                   as='select'
                   name='fromCountry'
                   defaultValue={selectedFromCountry}
                   // onChange={handleFromCountryChange}
-                  style={{"color":"#fff","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
+                  style={{"color":"#000","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
                 >
                   <option value=''>From...</option>
                   <option value='AF'>Afghanistan</option>
@@ -374,16 +375,16 @@ const HomeApply: React.FC<Props> = ({
                 <div className='text-danger mt-2'>
                   <ErrorMessage name='businessType' />
                 </div>
-              </div>
+              </div> */}
 
               <div className='fv-row mb-10 w-100'>
                 <Field
                   as='select'
                   name='toCountry'
                   defaultValue={selectedToCountry}
-                  style={{"color":"#fff","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
+                  style={{"color":"#000","background":"transparent","width":"100%","border":"none","height":"2.7vw","marginTop":"10px"}}
                 >
-                  <option value=''>To...</option>
+                  <option value=''>Where to ...</option>
                   <option value='AF'>Afghanistan</option>
                   <option value='AX'>Aland Islands</option>
                   <option value='AL'>Albania</option>
@@ -435,7 +436,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='CO'>Colombia</option>
                   <option value='KM'>Comoros</option>
                   <option value='CG'>Congo</option>
-                  <option value='CD'>Congo, the Democratic Republic of the</option>
+                  <option value='CD'>Congo</option>
                   <option value='CK'>Cook Islands</option>
                   <option value='CR'>Costa Rica</option>
                   <option value='CI'>Côte d'Ivoire</option>
@@ -480,7 +481,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='GW'>Guinea-Bissau</option>
                   <option value='GY'>Guyana</option>
                   <option value='HT'>Haiti</option>
-                  <option value='HM'>Heard Island and McDonald Islands</option>
+                  <option value='HM'>Heard Island & McDonald Islands</option>
                   <option value='VA'>Holy See (Vatican City State)</option>
                   <option value='HN'>Honduras</option>
                   <option value='HK'>Hong Kong</option>
@@ -501,7 +502,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='KZ'>Kazakhstan</option>
                   <option value='KE'>Kenya</option>
                   <option value='KI'>Kiribati</option>
-                  <option value='KP'>Korea, Democratic People's Republic of</option>
+                  <option value='KP'>Korea</option>
                   <option value='KW'>Kuwait</option>
                   <option value='KG'>Kyrgyzstan</option>
                   <option value='LA'>Lao People's Democratic Republic</option>
@@ -514,7 +515,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='LT'>Lithuania</option>
                   <option value='LU'>Luxembourg</option>
                   <option value='MO'>Macao</option>
-                  <option value='MK'>Macedonia, the former Yugoslav Republic of</option>
+                  <option value='MK'>Macedonia</option>
                   <option value='MG'>Madagascar</option>
                   <option value='MW'>Malawi</option>
                   <option value='MY'>Malaysia</option>
@@ -568,7 +569,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='RU'>Russian Federation</option>
                   <option value='RW'>Rwanda</option>
                   <option value='BL'>Saint Barthélemy</option>
-                  <option value='SH'>Saint Helena, Ascension and Tristan da Cunha</option>
+                  <option value='SH'>Saint Helena</option>
                   <option value='KN'>Saint Kitts and Nevis</option>
                   <option value='LC'>Saint Lucia</option>
                   <option value='MF'>Saint Martin (French part)</option>
@@ -589,7 +590,7 @@ const HomeApply: React.FC<Props> = ({
                   <option value='SB'>Solomon Islands</option>
                   <option value='SO'>Somalia</option>
                   <option value='ZA'>South Africa</option>
-                  <option value='GS'>South Georgia and the South Sandwich Islands</option>
+                  <option value='GS'>South Georgiac& South Sandwich Islands</option>
                   <option value='KR'>South Korea</option>
                   <option value='SS'>South Sudan</option>
                   <option value='ES'>Spain</option>
@@ -637,7 +638,7 @@ const HomeApply: React.FC<Props> = ({
                 </div>
               </div>
 
-              <div className='fv-row mb-10 w-100'>
+              {/* <div className='fv-row mb-10 w-100'>
                 <DatePicker.RangePicker 
                 style={{backgroundClip:'#fff',color:"#686868",width:400,marginTop:8,border:'none',borderRadius:10,padding:"10px 0px"}}
                 onChange={(value)=>{
@@ -650,16 +651,16 @@ const HomeApply: React.FC<Props> = ({
                 }}
                 disabledDate={disabledDate}
                 />
-              </div>
+              </div> */}
 
               {!visaList && (
               <div className='d-flex justify-content-end'>
                 <button
                   type='submit'
                   style={{
-                    width:"150px",
-                    backgroundColor:"#fff",
-                    color:"#2659C3",
+                    width:"100px",
+                    backgroundColor:"#327113",
+                    color:"#fff",
                     fontSize:"1vw",
                     border:"none",
                     cursor:"pointer",
@@ -667,7 +668,7 @@ const HomeApply: React.FC<Props> = ({
                     borderRadius:"50px",
                     marginRight:"-25px",
                     height:"2.7vw",
-                    marginTop:"9px",
+                    marginTop:"11px",
                   }}
                 >
                   Search

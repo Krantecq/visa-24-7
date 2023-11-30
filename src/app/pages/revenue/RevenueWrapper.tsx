@@ -32,7 +32,7 @@ function RevenueWrapper() {
   }, []);
 
   return (
-    <div>
+    <div style={{marginTop:"-50px"}} >
       <RevenueTable className='' title={'Revenue'} data={revenueData} loading={loading}/>
     </div>
   )

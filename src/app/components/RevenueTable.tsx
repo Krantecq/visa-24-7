@@ -1,71 +1,25 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { CSSProperties, useState } from 'react'
-import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
-import ApplicationFormView from './ApplicationFormView'
-import ConfirmationModal from './ConfirmationModal'
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import WalletFormView from './WalletFormView'
-import { toast } from 'react-toastify'
-import axiosInstance from '../helpers/axiosInstance'
+import React, { useEffect, useState } from 'react';
+import { DatePicker } from 'antd';
 import Papa from 'papaparse';
-import { Tooltip } from 'react-bootstrap';
+import { Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 
 type Props = {
-  className: string
-  title: String,
+  className: string;
+  title: string;
   data: any[];
-  loading: Boolean
-}
-const overlayStyle: CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.7)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 9999,
-  opacity: 0,
-  visibility: 'hidden',
-  transition: 'opacity 0.3s, visibility 0.3s',
+  loading: boolean;
 };
 
-const activeOverlayStyle: CSSProperties = {
-  opacity: 1,
-  visibility: 'visible',
-};
-const contentStyle: CSSProperties = {
-  backgroundColor: '#fff', // Background color for highlighting
-  padding: '10px', // Adjust padding as needed
-  borderRadius: '5px', // Rounded corners for the highlight
-  // textAlign:'center',
-  width: '70%',
-  height: '70%',
-  overflowY: 'auto'
-};
-function convertToCSV(data) {
+function convertToCSV(data: any) {
   const csv = Papa.unparse(data);
   return csv;
 }
 
-
-
-
 const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
-  const formatDate1 = (dateString) => {
-    // Create a Date object from the input date string
-    const date = new Date(dateString)
+  const [itemModalVisibility, setItemModalVisibility] = useState<Array<boolean>>(Array(data.length).fill(false));
+  const formatDate1 = (dateString: string) => {
+    const date = new Date(dateString);
 
-    // Get the month name as a three-letter abbreviation (e.g., "Oct")
     const monthNames = [
       'Jan',
       'Feb',
@@ -79,220 +33,255 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
       'Oct',
       'Nov',
       'Dec',
-    ]
-    const month = monthNames[date.getMonth()]
+    ];
+    const month = monthNames[date.getMonth()];
 
-    // Get the day and year
-    const day = date.getDate()
-    const year = date.getFullYear()
+    const day = date.getDate();
+    const year = date.getFullYear();
 
-    // Format the date string
-    return `${month} ${day}, ${year}`
-  }
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const entriesPerPage = 5;
-
-  // const indexOfLastEntry = currentPage * entriesPerPage;
-  // const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-  // const currentEntries = data.slice(indexOfFirstEntry, indexOfLastEntry);
-
-  // const paginate = (pageNumber: number) => {
-  //   setCurrentPage(pageNumber);
-  // };
+    return `${month} ${day}, ${year}`;
+  };
 
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
-
-  const [filter, setFilter] = useState('all')
-
+  const [filter, setFilter] = useState('all');
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [issueDate, setIssueDate] = useState<string | undefined>('');
+  const [expiryDate, setExpiryDate] = useState<string | undefined>('');
+  const [filteredData, setFilteredData] = useState(data as any[]);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+  const handleDatePickerChange = (value: any) => {
+    if (value && value.length === 2) {
+      const startDate = value[0]?.isValid() ? value[0].format('YYYY-MM-DD') : '';
+      const endDate = value[1]?.isValid() ? value[1].format('YYYY-MM-DD') : '';
+      const filtered = (data as any[]).filter((item) => {
+        const transactionDate = item.transaction_time.split(' ')[0];
+        return transactionDate >= startDate && transactionDate <= endDate;
+      });
+      setIssueDate(startDate);
+      setExpiryDate(endDate);
+      setFilteredData(filtered);
+    } else {
+      // Date picker cancel hua hai, isliye original data ko set karo
+      setFilteredData(data as any[]);
+    }
   };
 
-  const filteredData = data.filter((row: Record<string, string>) =>
-  Object.values(row).some(
-    (value) =>
-      value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-  )
-);
-  const handleDownloadCSVRevenueTable = () => {
-    const csvData = convertToCSV(data);
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
 
+    const filtered = (data as any[]).filter((item) =>
+      Object.entries(item).some(
+        ([key, value]) =>
+          value && (value as any).toString().toLowerCase().includes(term)
+      )
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    setFilteredData(data as any[]);
+  }, [data]);
+
+  const handleDownloadCSVRevenueTable = () => {
+    const csvData = convertToCSV(filteredData);
     const blob = new Blob([csvData], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'revenue_table.csv';
-  
+
     a.click();
     URL.revokeObjectURL(url);
-  }
+  };
 
-
-  
-  const handleFilterClick = (filterType) => {
-    setFilter(filterType)
-  }
   return (
-    <div style={{boxShadow:"none"}} className={`card ${className}`}>
+    <div style={{ boxShadow: 'none' }} className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
-        <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>
+        <h3 style={{ marginLeft: '10px' }} className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
         </h3>
-        
+        <div className='fv-row w-25' style={{ position: 'relative', right: '4%' }}>
+          <DatePicker.RangePicker
+            style={{
+              backgroundClip: '#fff',
+              width: 400,
+              marginTop: 11,
+              border: '2px solid #e5e5e5',
+              borderRadius: 10,
+              padding: 10,
+            }}
+            onChange={handleDatePickerChange}
+          />
+        </div>
         <div className=' d-flex gap-4 flex-row p-4 dropdown mx-5'>
-        <button
-        style={{
-
-          fontWeight: '600',
-          right: '6%',
-          padding: '5px 18px',
-          backgroundColor: 'transparent',
-          color: 'black',
-          borderRadius: '10px',
-          border: '1px solid #327113',
-          zIndex: 1,
-          width:"150px"
-        }}
-        onClick={handleDownloadCSVRevenueTable}
-      >
-        Download CSV
-      </button>
+          <button
+            style={{
+              fontWeight: '600',
+              right: '6%',
+              padding: '5px 18px',
+              backgroundColor: 'transparent',
+              color: 'black',
+              borderRadius: '10px',
+              border: '1px solid #327113',
+              zIndex: 1,
+              width: '150px',
+            }}
+            onClick={handleDownloadCSVRevenueTable}
+          >
+            Download CSV
+          </button>
 
           <input
-            type="text"
-            placeholder="Search..."
+            type='text'
+            placeholder='Search...'
             onChange={handleSearch}
             value={searchTerm}
             style={{
               border: '1.5px solid #d3d3d3',
-              borderRadius: '10px', 
+              borderRadius: '10px',
               padding: '10px',
               paddingLeft: '20px',
               width: '70%',
               boxSizing: 'border-box',
-              }}
-            />
-
+            }}
+          />
         </div>
       </div>
       {/* end::Header */}
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div style={{borderRadius:"10px", border:"1px solid #327113"}} className='table-responsive'>
+        <div style={{ borderRadius: '10px', border: '1px solid #327113' }} className='table-responsive'>
           {/* begin::Table */}
-          {loading ?
-            <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+          {loading ? (
+            <div
+              style={{
+                height: 300,
+                overflowX: 'hidden',
+                justifyContent: 'center',
+                alignItems: 'center',
+                display: 'flex',
+              }}
+            >
               <span className='indicator-progress' style={{ display: 'block' }}>
                 Please wait...
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             </div>
-            :
+          ) : (
             <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
               {/* begin::Table head */}
-              <thead style={{ background: '#327113', color: "#fff" }}>
+              <thead style={{ background: '#327113', color: '#fff' }}>
                 <tr className='fw-bold'>
-                  <th style={{paddingLeft:"5%"}}  className='min-w-80px text-start'>Date</th>
-                  <th className='min-w-80px text-center'>Id/Name</th>
+                  <th style={{ paddingLeft: '4%' }} className='min-w-80px text-start'>
+                    Date
+                  </th>
+                  <th className='min-w-80px text-center'>Application No.</th>
                   <th className='min-w-80px text-center'>Merchant ID</th>
+                  <th className='min-w-80px text-center'>Channel</th>
                   <th className='min-w-80px text-center'>Provider</th>
-                  
-                  {/* <th className='min-w-80px text-center'>Visa Cost</th> */}
                   <th className='min-w-80px text-center'>Paid</th>
-                  <th className='min-w-80px text-center'>Recieved</th>
-                  <th className='min-w-80px text-center'>Margin</th>
+                  <th className='min-w-80px text-center'>Received</th>
+                  <th style={{ paddingRight: '10px' }} className='min-w-80px text-center'>
+                    Margin
+                  </th>
                 </tr>
               </thead>
               {/* end::Table head */}
               {/* begin::Table body */}
               <tbody>
-              {filteredData.map((row, index) => (
+                {filteredData.map((row, index) => (
                   <tr key={index}>
                     <td className='text-center'>
                       {/* Avatar and Name */}
                       <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-45px me-5'>
-                          {/* <img src={row.photo} alt='' /> */}
-                        </div>
+                        <div className='symbol symbol-45px me-5'>{/* <img src={row.photo} alt='' /> */}</div>
                         <div className='d-flex justify-content-center flex-column'>
-                          <a href='#' className='text-dark fw-bold text-hover-primary fs-6'>
-                          {formatDate1(row.transaction_time)}
-                            
+                          <a className='text-dark fw-bold text-hover-primary fs-6'>
+                            {formatDate1(row.transaction_time)}
                           </a>
                         </div>
                       </div>
                     </td>
                     <td className='text-center'>
                       {/* Date */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.application_no}{/* Application Number */}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                        {row.application_no}
                       </a>
                     </td>
                     <td className='text-center'>
+                      <button onClick={() => {
+                        const updatedVisibility = [...itemModalVisibility];
+                        updatedVisibility[index] = true;
+                        setItemModalVisibility(updatedVisibility);
+                      }} style={{ backgroundColor: 'transparent', border: 'none' }}>
+                        {row.id}
+                      </button>
+                      <Modal show={itemModalVisibility[index]} onHide={() => {
+                        const updatedVisibility = [...itemModalVisibility];
+                        updatedVisibility[index] = false;
+                        setItemModalVisibility(updatedVisibility);
+                      }}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Merchant Details</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Name -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.name}</p></span>
+                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Address -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.address}</p></span>
+                        </Modal.Body>
+                      </Modal>
+                    </td>
+
+                    <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6' 
-                          title={`${row.name} 
-${row.id}`}>
-                        {row.name}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                        {row.customer_type}{/* Margin */}
                       </a>
                     </td>
 
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
                         Atlys{/* Margin */}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.paid}{/* Time of Transaction */}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                        {row.paid}
                       </a>
                     </td>
-                    
+
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.receive}{/* Time of Transaction */}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                        {row.receive}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
-                      <a href='#' className='text-dark fw-bold text-hover-primary d-block fs-6'>
-                        {row.revenue}{/* Time of Transaction */}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                        {row.revenue}
                       </a>
                     </td>
                   </tr>
                 ))}
-
               </tbody>
               {/* end::Table body */}
             </table>
-          }
+          )}
           {/* end::Table */}
-          {/* Pagination */}
-          {/* <div className='pagination'>
-            {[...Array(Math.ceil(data.length / entriesPerPage))].map((_, index) => (
-              <button key={index} onClick={() => paginate(index + 1)}>
-                {index + 1}
-              </button>
-            ))}
-          </div> */}
         </div>
         {/* end::Table container */}
       </div>
       {/* begin::Body */}
-      
     </div>
-  )
-}
+  );
+};
 
-export { RevenueTable }
+export { RevenueTable };

@@ -36,7 +36,7 @@ function IssueApiWrapper() {
       fetchData();
     }, []); // The empty dependency array ensures this effect runs once on mount
   return (
-    <div>
+    <div style={{marginTop:"-50px"}} >
       <IssueApiTable className='' data={memberStatsData} loading={loading}/>
     </div>
   )

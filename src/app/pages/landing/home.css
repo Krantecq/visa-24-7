@@ -14,6 +14,7 @@ html , body{
     overflow-x: hidden;
 }
 
+
 body::-webkit-scrollbar {
   width: 9px;
   z-index: 110;
@@ -34,7 +35,6 @@ body::-webkit-scrollbar-thumb {
     justify-content: space-between;
     width: 100%;
     height: 80px;
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
     position: relative;
     background: #fff;
     top: 0;
@@ -52,18 +52,17 @@ body::-webkit-scrollbar-thumb {
 #nav .logo{
     width: 11vw;
     position: relative;
-    left: -2vw;
     
 }
 
 #nav .part21{
     display: flex;
-    gap: 3.5vw;
+    gap: 3vw;
     align-items: center;
 }
 
 #nav .part21 a{
-    color: rgba(50, 113, 19, 1);
+    color: #000;
     font-weight: 600;
     font-size: 16px;
 }
@@ -74,28 +73,10 @@ body::-webkit-scrollbar-thumb {
     transition: 0.5s all;
 }
 
-#nav .part31{
-    display: flex;
-    gap: 2vw;
-    align-items: center;
-}
 
-#nav .part31 .button1{
-  padding: 10px 15px;
-  background: rgba(50, 113, 19, 1);
-  color: #ffffff;
-  border: 1px solid rgba(50, 113, 19, 1);
-  border-radius: 7px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  height: 40px;
-  font-size: 16px;
-  font-family: 'Gilroy', sans-serif;
-}
 
-#nav .part31 .button2{
-
+#nav .part21 .button2{
+  letter-spacing: 0.5px;
   padding: 10px 20px;
   background: transparent;
   color: rgba(50, 113, 19, 1);
@@ -109,9 +90,54 @@ body::-webkit-scrollbar-thumb {
   font-family: 'Gilroy', sans-serif;
 }
 
-#nav .part31 button:hover{
+#nav .part21 button:hover{
     scale: 1.1;
     transition: 0.2s all;
+}
+
+.modal-container, .sign-up-modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  width: 400px;
+  gap: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #000; 
+  cursor: pointer;
+}
+
+.social-login {
+  background-color: #327113;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 110;
 }
 
 #nav i{
@@ -194,39 +220,40 @@ body::-webkit-scrollbar-thumb {
     height: 120vh;
     position: relative;
     top: -100px;
+    display: flex;
+    justify-content: center;
 }
 
 .page1h .bgimg{
     background-size: cover;
-    height: 100%;
+    height: 80%;
     width: 100%;
-    filter: contrast(110%);
 }
 
 .page1h h1{
     width: 100%;
-    color: #dbdbdb;
+    color: #fff;
     position: absolute;
     font-family: 'Inconsolata', sans-serif;
-    top: 35%;
-    left: 59%;
+    top: 25%;
+    left: 68%;
     transform: translate(-50%, -50%);
-    font-size: 5vw;
+    font-size: 4vw;
 }
 
 .page1h .search-bar{
-    width: 75vw;
-    height: 7vh;
+    width: 35vw;
+    height: 8vh;
     margin: 0 auto;
-    background: #bebebe66;
-    top: 55%;
-    left: 47%;
+    background: #fff;
+    top: 37%;
+    left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 50px;
 }
 
 
@@ -237,7 +264,7 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     position: relative;
     gap: 10px;
-    padding: 0px;
+    padding: 10px;
     width: 70vw;
 }
 
@@ -261,7 +288,7 @@ body::-webkit-scrollbar-thumb {
 .page1h .search-conti input[type="text"], input[type="date"]  {
     padding: 10px 0px;
     background: transparent;
-    color: #dadada;
+    color: #000000;
     border: none;
     font-size: 1vw;
     width: 19%;
@@ -274,7 +301,7 @@ body::-webkit-scrollbar-thumb {
   padding: 10px 5px;
   border-radius: 10px;
   background: transparent;
-  color: #dad9d9;
+  color: #000000;
   margin-left: -15px;
   border:none;
 }
@@ -284,7 +311,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti input::placeholder {
-    color: #dadada;
+    color: #000000;
     font-size: 1vw;
 }
 
@@ -341,7 +368,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti .ant-picker .ant-picker-input-placeholder >input {
-    color: rgb(255 255 255);
+    color: rgb(0, 0, 0);
 }
 
 
@@ -356,7 +383,7 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     min-width: 1px;
     padding: 0;
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(0, 0, 0, 0.88);
     font-size: 1vw;
     line-height: 1.5714285714285714;
     background-color: #ffffff;
@@ -378,9 +405,16 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti .ant-picker-focused.ant-picker {
-    border-color: #1677ff00;
-    box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+    border-color: none;
+    box-shadow: 0 0 0 2px none;
     outline: 0;
+}
+
+.page1h .search-conti .ant-picker-clear {
+  position: absolute;
+  left: 350px;
+  top: 22px;
+  background: transparent;
 }
 
 .page1h .search-conti .anticon svg {
@@ -421,7 +455,7 @@ body::-webkit-scrollbar-thumb {
 .page1h::before{
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 140px;
     left: 0;
     width: 100%;
     height: 200px;
@@ -437,14 +471,15 @@ body::-webkit-scrollbar-thumb {
 .vacation {
   position: static;
   left: 0;
-  padding-left: 150px;
+  padding-left: 110px;
   z-index: 101;
-  margin-top: -300px;
+  margin-top: -540px;
 }
 
 .vacation h1 {
-    color: #dadada;
+    color: #ffffff;
     font-size: 2.5vw;
+    margin-top: 30px;
 }
 
 .vacation .cards {
@@ -453,7 +488,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     position: relative;
     height: 250px;
-    top: 20px;
+    top: 0px;
     overflow-x: scroll;
     overflow-y: hidden;
 }
@@ -477,22 +512,26 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page1h .search-conti select{
-  font-size: 1vw;
+  font-size: 1.2vw;
   overflow: hidden;
   scrollbar-width: none; 
   -ms-overflow-style: none; 
   outline: none;
   cursor: pointer;
+  font-weight: 500;
 }
 .page1h .search-conti select::-webkit-scrollbar {
   display: none;
 }
 .page1h .search-conti select option {
-  color: #cccccc;
-  background: #000000f7;
-  width: 200px;
+  color: #000;
+  background: #fff;
+  width: 150px;
+  padding: 5px;
   border-radius: 15px;
 }
+
+
 
 
 
@@ -548,7 +587,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     top: 0;
     left: 0;
-    padding-left: 100px;
+    padding-left: 110px;
     margin-top: 100px;
 }
 
@@ -569,7 +608,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
-    padding: 40px 10px;
+    padding: 40px 0px;
 }
 
 
@@ -592,6 +631,13 @@ body::-webkit-scrollbar-thumb {
     height: 180px;
     background-size: cover;
     border-radius: 15px;   
+}
+
+.conti .cards-single .imgr{
+  height: 180px;
+  width: 270px;
+  background-size: cover;
+  border-radius: 15px;  
 }
 
 .conti .title{
@@ -718,8 +764,8 @@ body::-webkit-scrollbar-thumb {
     width: 90%;
     margin-top: 20px;
     border-radius: 10px;
-    background: linear-gradient(to right, rgba(164, 162, 162, 0.605), rgba(206, 206, 206, 0.45), rgba(234, 234, 234, 0.4));
-    box-shadow: 0 8px 10px rgba(0,0,0,.1);
+    background: #f4f4f4;
+    box-shadow: 0 8px 10px #32711348;
 }
 
 .page3h .service-conti2:hover{
@@ -729,7 +775,7 @@ body::-webkit-scrollbar-thumb {
 
 .page3h .service-btn{
   width: 90%;
-  background: rgba(38, 31, 93, 1);
+  background: #327113;
   padding: 10px;
   border-radius: 10px;
   font-size: 14px;
@@ -820,7 +866,7 @@ body::-webkit-scrollbar-thumb {
     font-weight: 700;
     letter-spacing: 0em;
     text-align: center;
-    color: #10295e;
+    color: #327113;
 }
 
 .testimonial {
@@ -941,7 +987,7 @@ footer{
     position: relative;
     width: 100%;
     font-size: 14px;
-    padding: 10px 60px 10px 40px;
+    padding: 10px 120px 10px 120px;
   }
 
 .divider{
@@ -956,8 +1002,9 @@ footer{
     z-index: -1;
 }
 
-  .manik{
+  .manikk{
     width: 150px;
+    margin-left: 10px;
   }
   .mains{
     margin: 50px;
