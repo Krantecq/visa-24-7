@@ -27,18 +27,23 @@ export function ChangePassword() {
     }
     axiosInstance.post('/backend/change_password/super_admin', postData)
       .then((response) => {
-        toast.success(response.data.msg, {
-          position: 'top-center',
-        })
-
+        if (response.status == 200) {
+          toast.success(response.data.msg, {
+            position: 'top-center',
+          })
+        }else{
+          toast.error(response.data.msg, {
+            position: 'top-center',
+          })
+        }
 
       })
       .catch((error) => {
-        toast.error(error,{
+        toast.error(error, {
           position: 'top-center',
         })
 
-        
+
       });
 
   };
