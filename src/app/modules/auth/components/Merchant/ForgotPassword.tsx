@@ -4,6 +4,8 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {requestPassword} from '../../core/_requests'
+import axiosInstance from '../../../../helpers/axiosInstance'
+import { toast } from 'react-toastify'
 
 const initialValues = {
   email: '',
@@ -24,21 +26,35 @@ export function ForgotPassword() {
     initialValues,
     validationSchema: forgotPasswordSchema,
     onSubmit: (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
-      setHasErrors(undefined)
-      setTimeout(() => {
-        requestPassword(values.email)
-          .then(({data: {result}}) => {
-            setHasErrors(false)
-            setLoading(false)
+      try {
+        const requestBody = {
+          merchant_email_id: values.email,
+          resetpasslink:'visa247.co.in:9000/passwordreset'
+        };
+        
+        axiosInstance.post('/backend/forgot_password/merchant_user', requestBody)
+          .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+              toast.success(response.data.msg, {
+                position: "top-center", // Center the toast notification
+              });
+              setTimeout(() => {
+                window.location.href = '/merchant/login'                
+              }, 400);
+            } else {
+              setLoading(false);
+              toast.error(response.data.msg,{
+                position:'top-center'
+              });
+            }
           })
-          .catch(() => {
-            setHasErrors(true)
-            setLoading(false)
-            setSubmitting(false)
-            setStatus('The login detail is incorrect')
-          })
-      }, 1000)
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      } catch (error) {
+        console.error('Error:', error);
+      }
     },
   })
 

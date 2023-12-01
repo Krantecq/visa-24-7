@@ -25,6 +25,7 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit }) => {
   };
 
   const handleSubmit = (values: { newPassword: string }) => {
+    console.log(values.newPassword)
     onSubmit(values.newPassword);
   };
 

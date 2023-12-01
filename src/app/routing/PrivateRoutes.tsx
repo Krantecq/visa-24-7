@@ -28,6 +28,7 @@ import ApiPaymentWrapper from '../pages/api-payment/ApiPaymentWrapper'
 import ApiMerchantWrapper from '../pages/api-merchant/ApiMerchantWrapper'
 import { ChangePassword } from '../modules/profile/components/ChangePassword'
 import TestingWrapper  from '../pages/testing/TestingWrapper'
+import PasswordPage from '../../app/pages/Forgot_password/PasswordResetWrapper'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -73,7 +74,7 @@ const PrivateRoutes = () => {
         <Route path='superadmin/apiMerchants' element={<ApiMerchantWrapper />}/>
         <Route path='superadmin/changepassword' element={<ChangePassword/>}/>
         <Route path='superadmin/apps/chat' element={<ChatPage />}/>
-
+        <Route path='superadmin/forgotPassword' element={<PasswordPage />}/>
 
 
         {/* Lazy Modules */}

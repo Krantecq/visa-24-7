@@ -13,7 +13,7 @@ import { ForgotPassword as CustomerForgotPassword } from './components/Customer/
 import { ChangePassword } from './components/Merchant/ChangePassword';
 import Home from '../../pages/landing/home';
 import Inner from '../../pages/inner/inner';
-import PasswordResetWrapper from '../../pages/Forgot-password/PasswordResetWrapper'
+import PasswordResetWrapper from '../../pages/Forgot_password/PasswordResetWrapper'
 
 
 const AuthPage = () => (
