@@ -29,7 +29,7 @@ export function ForgotPassword() {
       try {
         const requestBody = {
           merchant_email_id: values.email,
-          resetpasslink:'visa247.co.in:9000/passwordreset'
+          resetpasslink:'http://visa247.co.in:9000/passwordreset'
         };
         
         axiosInstance.post('/backend/forgot_password/merchant_user', requestBody)

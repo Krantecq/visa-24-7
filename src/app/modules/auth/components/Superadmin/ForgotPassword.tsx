@@ -30,7 +30,7 @@ export function ForgotPassword() {
       try {
         const requestBody = {
           super_admin_email: values.email,
-          resetpasslink:'visa247.co.in:9000/passwordreset'
+          resetpasslink:'http://visa247.co.in:9000/passwordreset'
         };
         console.log(requestBody);
         
