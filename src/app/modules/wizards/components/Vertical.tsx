@@ -1,37 +1,21 @@
 import { useEffect, useState, useRef, ChangeEvent } from 'react'
-import { KTIcon } from '../../../../_metronic/helpers'
-import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik'
-import { ICreateAccount, inits } from './CreateAccountWizardHelper'
 import { useNavigate } from 'react-router-dom'
-import ClearIcon from '@mui/icons-material/Delete'
-import MerchantApplyVisa from '../../../components/MerchantApplyVisa'
 import TravelerForm from './TravelerForm'
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
-
 import axiosInstance from '../../../helpers/axiosInstance'
 import { CheckCircleOutline, CircleOutlined } from '@mui/icons-material'
-import { colorDarken } from '../../../../_metronic/assets/ts/_utils'
 import Loader from '../../../components/Loader'
 import { Box, Step, StepLabel, Stepper, Theme, Typography, } from '@mui/material'
 
 interface VerticalProps {
-  selectedEntry: any // Define the type for selectedEntry
-
+  selectedEntry: any
   show: (value: boolean) => void
   visaList: boolean
   visaListLoader: (value: boolean) => void
   showfinalSubmitLoader: (value: boolean) => void
 }
 
-const inputStyle = {
-  border: '1.5px solid #d3d3d3', // Border width and color
-  borderRadius: '15px', // Border radius
-  padding: '10px',
-  paddingLeft: '20px', // Padding
-  width: '90%', // 100% width
-  boxSizing: 'border-box', // Include padding and border in the width calculation
-}
 const Vertical: React.FC<VerticalProps> = ({
   selectedEntry,
   showfinalSubmitLoader,
@@ -54,23 +38,18 @@ const Vertical: React.FC<VerticalProps> = ({
   const navigate = useNavigate()
 
   const [travelerForms, setTravelerForms] = useState<any[]>([
-    // Initialize with an empty traveler data object
     {},
   ])
   const [isFixed, setIsFixed] = useState(false)
 
   const handleScroll = () => {
-    // Calculate the scroll position.
     const scrollY = window.scrollY || window.pageYOffset
-
-    // Adjust the isFixed state based on the scroll position.
-    setIsFixed(scrollY >= 180) // Change 20 to your desired threshold.
+    setIsFixed(scrollY >= 180) 
   }
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
     fetchwallet();
-    // Clean up the event listener when the component unmounts.
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
@@ -89,11 +68,9 @@ const Vertical: React.FC<VerticalProps> = ({
           position: 'top-center'
         });
       }
-      // Assuming the response contains the profile data, update the state with the data
       setCurrentWallet(response.data.data.wallet_balance);
     } catch (error) {
       console.error("Error fetching profile data:", error);
-      // Handle error (e.g., show an error message)
     }
   };
   const markup_percentage = localStorage.getItem('markup_percentage') ?? '1';
@@ -116,17 +93,14 @@ const Vertical: React.FC<VerticalProps> = ({
     const date = new Date(dateString)
     if (!isNaN(date.getTime())) {
       const year = date.getUTCFullYear()
-      const month = String(date.getUTCMonth() + 1).padStart(2, '0') // Month is zero-based
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0')
       const day = String(date.getUTCDate()).padStart(2, '0')
       return `${year}-${month}-${day}`
     }
-    return null // Invalid date string
+    return null 
   }
   const formatDate1 = (dateString) => {
-    // Create a Date object from the input date string
     const date = new Date(dateString)
-
-    // Get the month name as a three-letter abbreviation (e.g., "Oct")
     const monthNames = [
       'Jan',
       'Feb',
@@ -142,12 +116,8 @@ const Vertical: React.FC<VerticalProps> = ({
       'Dec',
     ]
     const month = monthNames[date.getMonth()]
-
-    // Get the day and year
     const day = date.getDate()
     const year = date.getFullYear()
-
-    // Format the date string
     return `${month} ${day}, ${year}`
   }
 
@@ -209,9 +179,8 @@ const Vertical: React.FC<VerticalProps> = ({
                     console.log(response.data.data)
                     if (response.status == 200) {
                       toast.success(response.data.msg, {
-                        position: 'top-center', // Center the toast notification
+                        position: 'top-center',
                       })
-                      // navigate('/merchant/apply-visa')
                     } else {
                       console.log(response.data)
                       toast.error(response.data.msg, {
@@ -247,6 +216,14 @@ const Vertical: React.FC<VerticalProps> = ({
     }
   }
 
+  const handleDeleteForm = (index) => {
+    setTravelerForms((prevForms) => {
+      const updatedData = [...prevForms]
+      updatedData.splice(index, 1)
+      return updatedData
+    })
+  }
+
   const stepsContent = [
     {
       title: 'Auto-validation upon submission',
@@ -262,26 +239,17 @@ const Vertical: React.FC<VerticalProps> = ({
       description: 'If canceled after payment, you will not be refunded.',
     },
   ];
-  // Define inline styles for the inactive tab text
+
   const tabTextStyle = {
-    color: '#000', // Text color for the inactive tab
+    color: '#000',
     cursor: 'pointer',
     padding: '8px',
     fontSize: 16,
     fontWeight: 'bold',
   }
-  // const classes = useStyles();
+
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
-      {/* <MerchantApplyVisa
-        visaListLoader={visaListLoader}
-        visaList={visaList}
-        show={show}
-        onApiDataReceived={function (data: any): void {
-          throw new Error('Function not implemented.')
-        }}
-      /> */}
-
       <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
         <div
           style={{
@@ -330,40 +298,56 @@ const Vertical: React.FC<VerticalProps> = ({
             Submit
           </div>
         </div>
-        <div style={{ width: '80%', marginLeft: isFixed ? '20%' : '0%' }}>
-          {travelerForms.map((_, index) => (
-            <TravelerForm
-              key={index}
-              ind={index}
-              onDataChange={(newData) => handleTravelerDataChange(newData, index)}
-            />
-          ))}
-          <div className='d-flex mt-10' style={{ justifyContent: 'flex-end', display: 'flex' }}>
-            <div
-              className='mb-10 mx-5'
-              style={{
-                height: 40,
-                paddingLeft: 15,
-                paddingRight: 15,
-                border: '1px solid',
-                borderColor: '#696969',
-                borderRadius: 10,
-                alignItems: 'center',
-                display: 'flex',
-                justifyContent: 'center',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-              }}
-            >
-              <h6
-                className='fs-4'
-                style={{ color: '#327113', paddingTop: 5, fontSize: 10 }}
-                onClick={addTravelerForm}
-              >
-                + Add Another Traveler
-              </h6>
-            </div>
-          </div>
+        <div style={{ width: '80%', paddingBottom: "5%", marginLeft: isFixed ? '20%' : '0%' }}>
+  {travelerForms.map((_, index) => (
+    <div key={index}>
+      <TravelerForm
+        ind={index}
+        onDataChange={(newData) => handleTravelerDataChange(newData, index)}
+      />
+      {travelerForms.length > 1 && index !== 0 && (
+        <button
+          onClick={() => handleDeleteForm(index)}
+          style={{
+            color: '#ffffff',
+            padding: "7px 10px",
+            border: "none",
+            backgroundColor: "red",
+            width: "100px",
+            borderRadius: "5px",
+            marginLeft: "20px",
+            marginTop: "20px",
+            fontSize: "16px"
+          }}>
+          Delete
+        </button>
+      )}
+    </div>
+  ))}
+  <div className='d-flex my-10' style={{ justifyContent: 'flex-end', display: 'flex' }}>
+    <div
+      onClick={addTravelerForm}
+      style={{
+        height: 40,
+        paddingLeft: 15,
+        paddingRight: 15,
+        border: '1px solid',
+        borderColor: '#696969',
+        borderRadius: 10,
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        cursor: 'pointer',
+      }}>
+      <h6
+        className='fs-4'
+        style={{ color: '#327113', paddingTop: 5, fontSize: 10 }}>
+        + Add Another Traveller
+      </h6>
+    </div>
+  </div>
+
 
           <div className='d-flex'>
             <div

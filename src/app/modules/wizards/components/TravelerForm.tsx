@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import ClearIcon from '@mui/icons-material/Delete'
 import axiosInstance from '../../../helpers/axiosInstance'
 import { DatePicker } from 'antd'
+import * as Yup from 'yup';
 import 'react-datepicker/dist/react-datepicker.css'
 function TravelerForm({ onDataChange, ind }) {
   const [initValues] = useState<ICreateAccount>(inits)
@@ -17,6 +18,21 @@ function TravelerForm({ onDataChange, ind }) {
   const [passportBackImageURL, setPassportBackImageURL] = useState('')
   const [photo, setPhoto] = useState('')
   const [pan, setPan] = useState('')
+
+  const validationSchema = Yup.object().shape({
+    passportNumber: Yup.string().required('Passport Number is required'),
+    firstName: Yup.string().required('First Name is required'),
+    lastName: Yup.string().required('Last Name is required'),
+    birthPlace: Yup.string().required('Birth Place is required'),
+    birthDetail: Yup.string().required('Date of Birth is required'),
+    passportIssueDate: Yup.string().required('Passport Issue Date is required'),
+    passPortExpiryDate: Yup.string().required('Passport Expiry Date is required'),
+    gender: Yup.string().required('Gender is required'),
+    maritalStatus: Yup.string().required('Marital Status is required'),
+    fatherName: Yup.string().required('Father name is required'),
+    motherName: Yup.string().required('Mother name is required'),
+    panNo: Yup.string().required('PAN number is required')
+  });
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -311,7 +327,7 @@ function TravelerForm({ onDataChange, ind }) {
           className='d-flex flex-row-fluid flex-center bg-body rounded'
           style={{ width: '70%', backgroundColor: 'blue' }}
         >
-          <Formik initialValues={initValues} onSubmit={() => { }}>
+          <Formik initialValues={initValues} onSubmit={() => { }} validationSchema={validationSchema}>
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div>
@@ -568,7 +584,7 @@ function TravelerForm({ onDataChange, ind }) {
           className='d-flex flex-row-fluid flex-center bg-body rounded'
           style={{ width: '70%', backgroundColor: 'blue' }}
         >
-          <Formik initialValues={initValues} onSubmit={() => { }}>
+          <Formik initialValues={initValues} onSubmit={() => { }} validationSchema={validationSchema}>
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div className='fv-row mb-10'>
@@ -684,7 +700,7 @@ function TravelerForm({ onDataChange, ind }) {
           )}
         </div>
         <div style={{ marginLeft: 50 }}>
-          <Formik initialValues={initValues} onSubmit={() => { }}>
+          <Formik initialValues={initValues} onSubmit={() => { }} validationSchema={validationSchema}>
             {() => (
               <Form className='py-20 px-9' noValidate id='kt_create_account_form'>
                 <div className='fv-row mb-10'>
