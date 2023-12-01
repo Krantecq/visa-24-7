@@ -124,7 +124,7 @@ export function ForgotPassword() {
 
       {/* begin::Form group */}
       <div className='d-flex flex-wrap justify-content-center pb-lg-0'>
-        <button type='submit' id='kt_password_reset_submit' className='btn btn-success me-4'>
+        <button style={{background:"#327113"}} type='submit' id='kt_password_reset_submit' className='btn btn-success me-4'>
           <span className='indicator-label'>Submit</span>
           {loading && (
             <span className='indicator-progress'>

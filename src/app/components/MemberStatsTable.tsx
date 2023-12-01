@@ -265,7 +265,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                             </span>
                           </td>
                           <td className='text-center'>
-                            <div style={{marginLeft:"11%"}} className='d-flex justify-content-start align-items-center'>
+                            <div style={{marginLeft:"20%"}} className='d-flex justify-content-start align-items-center'>
                               <VisibilityIcon
                                 onClick={() => handleVisibilityClick(item)}
                                 className='mx-5 cursor-pointer'

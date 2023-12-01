@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
 import axiosInstance from '../../../../app/helpers/axiosInstance'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -117,8 +118,13 @@ const Navbar = () => {
           </div>
         </div>
       }
-      
+
+      {/* <Link to={'/messas'} >
+        Message
+      </Link> */}
+
       <div className={clsx('app-navbar-item', itemClass)}>
+        
         <div
           className={clsx('cursor-pointer symbol', userAvatarClass)}
           data-kt-menu-trigger="{default: 'click'}"
