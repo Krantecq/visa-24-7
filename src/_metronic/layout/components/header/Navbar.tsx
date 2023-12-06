@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import axiosInstance from '../../../../app/helpers/axiosInstance'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import chat from '../../../assets/card/chat (1).png'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -31,9 +32,7 @@ const Navbar = () => {
     if (user_type == 'merchant') {
       fetchwallet();
       fetchProfileData()
-      const intervalId = setInterval(fetchwallet, 7000); // 5000 milliseconds (5 seconds)
-
-      // Clean up the interval when the component unmounts
+      const intervalId = setInterval(fetchwallet, 7000);
       return () => {
         clearInterval(intervalId);
       };
@@ -46,16 +45,13 @@ const Navbar = () => {
     try {
       const user_id = Cookies.get('user_id')
 
-      // Make a POST request to your API endpoint
       axiosInstance.post('/backend/fetch_super_admin', {
         id: user_id
       })
         .then((response) => {
-          console.log('profile response-->',response.data.data)
+          // console.log('profile response-->',response.data.data)
           const responseData = response.data.data;
           setProfile(responseData[0])
-          // Update the formData state with the fetched data
-
         })
         .catch((error) => {
           console.error('Error fetching VISA 247 data:', error);
@@ -73,7 +69,7 @@ const Navbar = () => {
         id: user_id
       }
       const response = await axiosInstance.post("/backend/fetch_single_merchant_user", postData);
-      // console.log("response issss----->", response)
+      console.log("response issss----->", response)
       if (response.status == 203) {
         toast.error("Please Logout And Login Again", {
           position: 'top-center'
@@ -119,9 +115,31 @@ const Navbar = () => {
         </div>
       }
 
-      {/* <Link to={'/messas'} >
-        Message
-      </Link> */}
+      {user_type == "merchant" ?
+        <Link to={'/merchant/chat'} >
+          <img
+            style={{
+              height: "35px",
+              width: "35px",
+              marginTop: "17px",
+              marginRight: "20px",
+            }}
+            src={chat}
+          />
+        </Link>
+        :
+        <Link to={'/superadmin/chat'} >
+          <img
+            style={{
+              height: "35px",
+              width: "35px",
+              marginTop: "17px",
+              marginRight: "20px",
+            }}
+            src={chat}
+          />
+        </Link>
+      }
 
       <div className={clsx('app-navbar-item', itemClass)}>
         

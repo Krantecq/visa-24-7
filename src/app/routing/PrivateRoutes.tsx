@@ -29,6 +29,8 @@ import ApiMerchantWrapper from '../pages/api-merchant/ApiMerchantWrapper'
 import { ChangePassword } from '../modules/profile/components/ChangePassword'
 import TestingWrapper  from '../pages/testing/TestingWrapper'
 import PasswordPage from '../../app/pages/Forgot_password/PasswordResetWrapper'
+import Chats from '../components/Chat'
+import Chat from '../pages/chat/Chat'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -49,7 +51,7 @@ const PrivateRoutes = () => {
           <Route path='merchant/apply-visa' element={<MerchantNewVisaWrapper />} />
           <Route path='merchant/dashboard' element={<MerchantDashboard />} />
           <Route path='merchant/profile' element={<MerchantProfile />} />
-       
+          <Route path='merchant/chat' element={<Chat />} />
           </>
           :
           <>
@@ -73,9 +75,9 @@ const PrivateRoutes = () => {
         <Route path='superadmin/apiPayment' element={<ApiPaymentWrapper />}/>
         <Route path='superadmin/apiMerchants' element={<ApiMerchantWrapper />}/>
         <Route path='superadmin/changepassword' element={<ChangePassword/>}/>
-        <Route path='superadmin/apps/chat' element={<ChatPage />}/>
+        {/* <Route path='superadmin/chat' element={<ChatPage />}/> */}
         <Route path='superadmin/forgotPassword' element={<PasswordPage />}/>
-
+        <Route path='superadmin/chat' element={<Chat />} />
 
         {/* Lazy Modules */}
         <Route
