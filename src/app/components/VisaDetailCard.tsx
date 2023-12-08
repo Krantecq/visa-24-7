@@ -8,6 +8,7 @@ import { Box, Step, StepLabel, Stepper } from '@mui/material'
 import jsPDF from 'jspdf';
 import html2pdf from 'html2pdf.js';
 import { toAbsoluteUrl } from '../../_metronic/helpers'
+import image from '../../_metronic/assets/card/nodata.jpg'
 
 type VisaData = {
     country_code: string
@@ -462,7 +463,14 @@ const VisaDetailCard = ({ visaData }: Props) => {
 
     // Check if visaData is null or an empty array and handle it accordingly
     if (visaData === null || visaData.length === 0) {
-        return <div>No visa data available</div>
+        return (
+        <div className='  d-flex align-items-center justify-content-center'>
+            <div className='d-flex flex-column align-items-center justify-content-center'>
+                <img className='fade-in-out' style={{width:"300px", height:"300px"}} src={image}/>
+                <h1>No Visa Data Available</h1>
+            </div>
+        </div>
+        )
     }
 
     if (selectedVisa) {

@@ -20,12 +20,12 @@ export function MerchantAnaltytics({dashboardData}) {
         <h1
     style={{
       marginTop:"20px",
-      fontSize:"25px",
-      fontWeight: "bold",
+      fontSize:"20px",
+      fontWeight: "500",
       marginBottom:"20px",
     }}
     >Analytics</h1>
-    <div className='row g-5 g-xl-10'>
+    <div className='row gx-1 gy-5'>
       {/* begin::Col */}
       {/* <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
@@ -42,6 +42,7 @@ export function MerchantAnaltytics({dashboardData}) {
           className='mb-5 mb-xl-10'
           description='Total Visa'
           color='#fff'
+          too="/merchant/dashboard"
           icon={customer}
           textColor='#071437'
           count={dashboardData?.total_visa || 0}
@@ -52,6 +53,7 @@ export function MerchantAnaltytics({dashboardData}) {
           className='mb-5 mb-xl-10'
           description='Approved Visa'
           color='#fff'
+          too="/merchant/dashboard"
           icon={merchant}
           textColor='#071437'
           count={dashboardData?.approved_visa || 0}
@@ -60,8 +62,9 @@ export function MerchantAnaltytics({dashboardData}) {
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='No. of Visa In-Process'
+          description='Visa In-Process'
           color='#fff'
+          too="/merchant/dashboard"
           icon={process}
           textColor='#071437'
           count={dashboardData?.in_process_visa || 0}
@@ -70,20 +73,22 @@ export function MerchantAnaltytics({dashboardData}) {
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='No. of Visa In Waiting'
+          description='Visa In Waiting'
           color='#fff'
+          too="/merchant/dashboard"
           icon={waiting}
           textColor='#071437'
           count={dashboardData?.waiting_visa || 0}
         />
       </div>
     </div>
-    <div className='row g-5 g-xl-10'>
+    <div className='row gx-1 gy-5'>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='No. of Visa Not Issued'
+          description='Visa Not Issued'
           color='#fff'
+          too="/merchant/dashboard"
           icon={reject}
           textColor='#071437'
           count={dashboardData?.not_issued_visa || 0}
@@ -92,8 +97,9 @@ export function MerchantAnaltytics({dashboardData}) {
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Revenue Earned'
+          description='Revenue generated'
           color='#fff'
+          too="/merchant/dashboard"
           icon={revenue}
           textColor='#071437'
           count={dashboardData?.revenue || 0}
@@ -104,18 +110,18 @@ export function MerchantAnaltytics({dashboardData}) {
   
     <h1
     style={{
-      marginTop:"0px",
-      fontSize:"25px",
-      fontWeight: "bold",
+      fontSize:"20px",
+      fontWeight: "500",
       marginBottom:"20px",
     }}
     >Today's Statistics</h1>
-    <div className='row g-5 g-xl-10'>
+    <div className='row gx-1 gy-5'>
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description={`Today's Transactions`}
+          description='Total Transaction'
           color='#fff'
+          too="/merchant/dashboard"
           icon={transaction}
           textColor='#071437'
           count={dashboardData?.today_total_transactions || 0}
@@ -124,8 +130,9 @@ export function MerchantAnaltytics({dashboardData}) {
       <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Visa processed today'
+          description='Visa processed'
           color='#fff'
+          too="/merchant/dashboard"
           icon={merchant}
           textColor='#071437'
           count={dashboardData?.visa_processed_today || 0}

@@ -111,7 +111,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               backgroundClip: '#fff',
               width: 400,
               marginTop: 11,
-              border: '2px solid #808080',
+              border: '1px solid #808080',
               borderRadius: 10,
               padding: 10,
             }}
@@ -142,7 +142,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
             onChange={handleSearch}
             value={searchTerm}
             style={{
-              border: '1.5px solid #d3d3d3',
+              border: '1px solid #d3d3d3',
               borderRadius: '10px',
               padding: '10px',
               paddingLeft: '20px',

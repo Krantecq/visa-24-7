@@ -14,6 +14,8 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import moment from 'moment'
+import { FcInfo } from "react-icons/fc";
+import { FcFullTrash } from "react-icons/fc";
 
 type Props = {
   className: string
@@ -266,12 +268,14 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                           </td>
                           <td className='text-center'>
                             <div style={{marginLeft:"20%"}} className='d-flex justify-content-start align-items-center'>
-                              <VisibilityIcon
+                              <FcInfo
+                                style={{fontSize:"20px"}}
                                 onClick={() => handleVisibilityClick(item)}
                                 className='mx-5 cursor-pointer'
                               />
 
-                              <DeleteOutline
+                              <FcFullTrash
+                              style={{fontSize:"20px"}}
                                 onClick={() => {
                                   handleClickOpen(item)
                                   // const confirmed = window.confirm('Are you sure you want to delete this item?');

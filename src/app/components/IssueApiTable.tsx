@@ -16,7 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
 import { Modal, Button } from 'react-bootstrap';
-
+import { FcFullTrash } from "react-icons/fc";
 
 
 
@@ -289,7 +289,9 @@ const handleSaveClick = async () => {
                           </td>
                           <td className='text-center'>
                             <div className='d-flex align-items-center justify-content-center'>
-                              <DeleteOutline onClick={() =>
+                              <FcFullTrash 
+                                style={{fontSize:"20px"}} 
+                                onClick={() =>
                                 handleClickOpen(item)
                               } className='mx-5 cursor-pointer' />
 

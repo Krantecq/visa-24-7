@@ -1,65 +1,110 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from 'styled-components';
-
 import ChatInput from "./ChatInput";
 import { v4 as uuidv4 } from "uuid";
-import axiosInstance from '../../../app/helpers/axiosInstance'
-
+import axiosInstance from '../../../app/helpers/axiosInstance';
+import Cookies from 'js-cookie';
+import { io, Socket } from "socket.io-client";
 
 interface ChatContainerProps {
   currentChat?: any;
   socket?: React.MutableRefObject<any>;
 }
 
-const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat, socket }) => {
-  const [messages, setMessages] = useState<any[]>([]);
+const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
+  const [messages, setMessages] = useState<any[]>([]); // Initialize messages as an empty array
   const scrollRef = useRef<any>();
-  const [arrivalMessage, setArrivalMessage] = useState<any | null>(null);
-
-  const fetchData = async () => {
-    try {
-      const localStorageData = localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY || 'http://localhost:3000');
-      const data = localStorageData ? JSON.parse(localStorageData) : {};
-  
-        let receiveMessageRoute = "/backend/get_message";
-        if (receiveMessageRoute) {
-          const response = await axiosInstance.post(receiveMessageRoute, {
-            from: data._id,
-            to: currentChat._id,
-          }); 
-          setMessages(response.data);
-        }
-      
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const socketRef = useRef<Socket | null>(null);
+  const [arrivalMessage, setArrivalMessage] = useState<any | null>();
 
   const handleSendMsg = async (msg: string) => {
     try {
-      const localStorageData = localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY || 'http://localhost:3000');
-      const data = JSON.parse(localStorageData || "{}");
+      const userIdFromCookies = Cookies.get('user_id');
+
       let sendMessageRoute = "/backend/add_message";
-      if (socket && socket.current) {
-        socket.current.emit("send-msg", {
-          to: currentChat?._id,
-          from: data?._id,
+
+      if (socketRef.current && userIdFromCookies) {
+        const toId = "6523a9eed9be7d310661ecc4";
+
+        socketRef.current.emit("send-msg", {
+          to: toId,
+          from: userIdFromCookies,
           msg,
         });
-      }
-      await axiosInstance.post(sendMessageRoute, {
-        from: data?._id,
-        to: currentChat?._id,
-        message: msg,
-      });
 
-      const msgs = [...messages];
-      msgs.push({ fromSelf: true, message: msg });
-      setMessages(msgs);
+        await axiosInstance.post(sendMessageRoute, {
+          from: userIdFromCookies,
+          to: toId,
+          message: msg,
+        });
+
+        const msgs = [...messages];
+        msgs.push({ fromSelf: true, message: msg });
+        setMessages(msgs);
+        console.log('Updated Messages:', msgs);
+      } else {
+        console.error("Socket or user ID is not available.");
+      }
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
+
+  useEffect(() => {
+    socketRef.current = io("http://localhost:5003", {
+      withCredentials: true,
+    });
+
+    socketRef.current.on("connect", () => {
+      // console.log("Connected to socket server");
+    });
+
+    socketRef.current.on("msg-recieve", (receivedMessage) => {
+      // console.log("Received Message from Socket:", receivedMessage);
+      setMessages((prevMessages) => [...prevMessages, { fromSelf: false, message: receivedMessage }]);
+    });
+
+    socketRef.current.on("disconnect", () => {
+      // console.log("Disconnected from socket server");
+    });
+
+    socketRef.current.on("error", (error) => {
+      // console.error("Socket error:", error);
+    });
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, [messages, setMessages, socketRef.current]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userIdFromCookies = Cookies.get('user_id');
+        // console.log('User ID from Cookies:', userIdFromCookies);
+        let receiveMessageRoute = "/backend/get_message";
+        
+        if (receiveMessageRoute && currentChat) {
+          const toId = currentChat._id; // Use currentChat to get the correct merchant's _id
+          
+          const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
+            from: toId, // This is now the merchant's _id
+            to: userIdFromCookies, // This is now the user's _id
+          });
+  
+          setMessages(messagesResponse.data.data);
+          // console.log('Add Message Response:', messagesResponse.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [currentChat]);
+
 
   return (
     <Container>
@@ -72,19 +117,22 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat, socket }) =>
             /> */}
           </div>
           <div className="username">
-            <h3>Hello</h3>
+            {/* <h3>Hello</h3> */}
           </div>
         </div>
       </div>
       <div className="chat-messages" ref={scrollRef}>
-        {messages.map((message) => (
-          <div key={uuidv4()} className={`message ${message.fromSelf ? "sended" : "recieved"}`}>
-            <div className="content">
-              <p>{message.message}</p>
-            </div>
+      {messages && messages.map((message) => (
+        <div
+          key={uuidv4()}
+          className={`message ${message.fromSelf ? "sended" : "received"}`}
+        >
+          <div className="content">
+            <p>{message.message}</p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
+    </div>
       <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
@@ -149,14 +197,14 @@ const Container = styled.div`
         }
       }
     }
+    
     .sended {
-      justify-content: flex-end;
       .content {
         background-color: #4f04ff21;
       }
     }
+    
     .recieved {
-      justify-content: flex-start;
       .content {
         background-color: #9900ff20;
       }

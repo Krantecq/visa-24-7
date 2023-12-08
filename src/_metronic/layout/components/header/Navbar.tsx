@@ -69,7 +69,7 @@ const Navbar = () => {
         id: user_id
       }
       const response = await axiosInstance.post("/backend/fetch_single_merchant_user", postData);
-      console.log("response issss----->", response)
+      // console.log("response issss----->", response)
       if (response.status == 203) {
         toast.error("Please Logout And Login Again", {
           position: 'top-center'

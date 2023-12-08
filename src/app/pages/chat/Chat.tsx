@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ChatContainer from "./ChatContainer";
 import Contacts from "./Contact";
 import Cookies from 'js-cookie';
-import axiosInstance from '../../../app/helpers/axiosInstance'
+import axiosInstance from '../../../app/helpers/axiosInstance';
 
 const Chat: React.FC = () => {
   const navigate = useNavigate();
@@ -18,8 +18,10 @@ const Chat: React.FC = () => {
     const user = {
       user_type: Cookies.get('user_type'),
     };
-
+    
+    // console.log('Cookies Data:', document.cookie);
     setCurrentUser(user);
+    // console.log('Socket Connection:', socket.current);
   }, []);  
 
   useEffect(() => {
@@ -43,6 +45,7 @@ const Chat: React.FC = () => {
     setCurrentChat(chat);
   };
   
+  
   return (
       <>
           <Container>
@@ -57,10 +60,10 @@ const Chat: React.FC = () => {
   );
 };
 
-interface ChatContainerProps {
-    currentChat?: any;
-    socket?: Socket | null; // Change here
-}
+// interface ChatContainerProps {
+//     currentChat?: any;
+//     socket?: Socket | null;
+// }
 
 const Container = styled.div`
     height: 100%;

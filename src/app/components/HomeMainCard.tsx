@@ -1,34 +1,50 @@
+import { SlGraph } from "react-icons/sl";
+import analytics from '../../_metronic/assets/card/stats.svg'
+import { RxDotsHorizontal } from "react-icons/rx";
+import { Link } from "react-router-dom";
+import Cookies from 'js-cookie';
+
 type Props = {
   className: string
   description: string
   color: string
+  too?: string | undefined 
   icon?: string
   textColor: string
   count: number | string
 }
-
-const HomeMainCard = ({className, description, color, icon, textColor, count}: Props) => (
+const user_type = Cookies.get('user_type');
+const HomeMainCard = ({className, description, color, icon, too, textColor, count}: Props) => (
+  
   <div
     className={`card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end ${className}`}
     style={{
-      backgroundColor: color,
+      backgroundColor: "#e7fddd",
       height: '140px',
       width:"220px",
-      marginBottom:"0px !important",
-      boxShadow: '0px 0px 8px #d6e2cf',
       marginTop:"-10px"
     }}
   >
-    <img src={icon} style={{ width: 60, position: 'relative', left: "35%", top: "6%", filter: "contrast(120%) drop-shadow(5px 5px 5px #c1d4b8)" }} />
+    <Link to={too ? too : '/dashboard'} title="See More" >
+      <RxDotsHorizontal style={{
+        position:'absolute',
+        top:0,
+        right:10,
+        fontSize:30,
+        color:"#327113"
+      }}/>
+    </Link>
+    <img src={icon} style={{ width: 50, position: 'relative', left: "7%", top: "6%", filter: "contrast(150%) drop-shadow(5px 5px 5px #c1d4b8)" }} />
     <div className='card-header pt-5 d-flex align-items-center justify-content-center' style={{position: 'relative', bottom: 5}}>
       <div className='card-title d-flex flex-column align-items-baseline'>
-        <span className=' opacity-75 pt-1 fw-semibold fs-7' style={{color: textColor, justifyContent:"center", alignItems:"center !important", marginTop:"0px"}}>
-          {description}{' '}
-        </span>
-        <span className='fw-bold  me-2 lh-1 ls-n2' style={{fontSize: '18px', color: textColor, marginTop:"10px"}}>
+        
+        <span className='fw-bold  me-2 lh-1' style={{fontSize: '22px', color: textColor, marginTop:"0px"}}>
           {' '}
-          {description === ('Payments Processed' || 'Visa 24/7 Wallet Balance') ? <>₹{' '}</> : null}
+          <img style={{ width: 30, marginLeft:-25, marginRight:5}} src={analytics}/>{description === 'Total transactions' || description === 'Revenue generated' ? <>₹{' '}</> : null}
           {count}
+        </span>
+        <span className=' opacity-75 pt-1 fw-semibold fs-6' style={{color: textColor, justifyContent:"center", alignItems:"center !important", marginTop:"0px"}}>
+          {description}{' '}
         </span>
       </div>
     </div>

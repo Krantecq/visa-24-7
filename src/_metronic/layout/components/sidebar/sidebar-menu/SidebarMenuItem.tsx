@@ -29,16 +29,16 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
 
   // SVG ke liye dynamic styles
   const iconStyles = {
-    fill: isActive ? '#ffffff' : '#327113', // White color in selected state, black in normal state
+    fill: isActive ? '#327113' : '#77BA7B',
   };
 
   return (
     <div className='menu-item'>
       <Link className={clsx('menu-link without-sub', { active: isActive })} to={to}>
-        <span style={{ marginRight: "10px", color: "#327113" }} className='menu-custom-icon'>
+        <span style={{ marginRight: "15px", color: "#77BA7B" }} className='menu-custom-icon'>
           {React.cloneElement(icon, { style: iconStyles })} {/* Cloning icon with dynamic styles */}
         </span>
-        <span className='menu-title'>{title}</span>
+        <span style={{fontWeight:"500"}} className='menu-title'>{title}</span>
       </Link>
       {children}
     </div>

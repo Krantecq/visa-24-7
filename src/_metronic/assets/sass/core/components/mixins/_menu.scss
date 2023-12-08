@@ -138,10 +138,10 @@
   }
 
   @if ($title-color != null) {
-    color: $title-color;
+    color: #383737;
 
     .menu-title {
-      color: $title-color;
+      color: #696969;
     }
   }
 
@@ -213,7 +213,7 @@
   #{$sel}.menu-link:hover:not(.disabled):not(.active):not(.here) {
     transition: $transition-link;
 
-    @include menu-link-theme(#327113, $icon-color, $bullet-color, $arrow-color, $bg-color);
+    @include menu-link-theme(#E2FDD5, $icon-color, $bullet-color, $arrow-color, $bg-color);
   }
 }
 
@@ -234,8 +234,10 @@
 
   #{$sel}.menu-link.active {
     transition: $transition-link;
-
-    @include menu-link-theme($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color);
+    border-radius: 20px;
+    color: black;
+    background: #E2FDD5;
+    @include menu-link-theme(#000, $icon-color, $bullet-color, $arrow-color, #E2FDD5);
   }
 }
 

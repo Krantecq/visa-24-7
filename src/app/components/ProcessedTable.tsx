@@ -15,7 +15,9 @@ import axiosInstance from '../helpers/axiosInstance'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
+import { FcFullTrash } from "react-icons/fc";
 import Cookies from 'js-cookie'
+import { FcInfo } from "react-icons/fc";
 
 type Props = {
   className: string
@@ -255,8 +257,10 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                       {/* Action Buttons */}
                       <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
 
-                      <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
-                      <DeleteOutline onClick={() => 
+                      <FcInfo style={{fontSize:"20px"}} className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
+                      <FcFullTrash 
+                        style={{fontSize:"20px"}}
+                        onClick={() => 
                         handleClickOpen(row)
                         // const confirmed = window.confirm('Are you sure you want to delete this item?');
                         // if (confirmed) {

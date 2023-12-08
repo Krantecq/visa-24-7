@@ -46,75 +46,82 @@ const DashboardPage: FC<Props> = (data) => (
   
   <>
     {/* begin::Row */}
-    <div className='row g-5 g-xl-10'>
+    <div className='row gx-0 px-5 gy-5'>
       {/* begin::Col */}
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
-          className='mb-5 mb-xl-10'
+          className='mb-6 mb-xl-10'
           description='Total Partners'
           color='#fff'
+          too='/superadmin/issueApi'
           icon={customers}
           textColor='#071437'
           count={data.api}
         />
       </div>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
-          className='mb-5 mb-xl-10'
+          className='mb-6 mb-xl-10'
           description='Individual Customers'
           color='#fff'
+          too='/superadmin/partners'
           icon={icustomer}
           textColor='#071437'
           count={data.customer_user}
         />
       </div>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
-          className='mb-5 mb-xl-10'
+          className='mb-6 mb-xl-10'
           description='Total Retailers'
           color='#fff'
+          too='/superadmin/merchants'
           icon={relations}
           textColor='#071437'
           count={data.merchant_user}
         />
       </div>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
-          className='mb-5 mb-xl-10'
-          description='No. of Visa Rejected'
+          className='mb-6 mb-xl-10'
+          description='Visa Rejected'
           color='#fff'
+          too='/superadmin/rejected'
           icon={rejected}
           textColor='#071437'
           count={data.visa_rejected}
         />
       </div>
     </div>
-    <div className='row g-5 g-xl-10'>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
+    <div className='row gx-1 px-5 gy-5'>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='No. of Visa In-Process'
+          description='Visa In-Process'
           color='#fff'
+          too='/superadmin/waiting-for-approval'
           icon={process}
           textColor='#071437'
           count={data.in_process_visa}
         />
       </div>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Visa Waiting for Approval'
+          description='Waiting for Approval'
           color='#fff'
+          too='/superadmin/in-process'
           icon={waiting}
           textColor='#071437'
           count={data.waiting}
         />
       </div>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3 '>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
           description='Revenue generated'
           color='#fff'
+          too='/superadmin/revenue'
           icon={revenue}
           textColor='#071437'
           count={data.revenue}
@@ -128,22 +135,24 @@ const DashboardPage: FC<Props> = (data) => (
         fontSize:"19px"
     }}
     >Today's Statistics</h1>
-    <div className='row g-5 g-xl-10'>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+    <div className='row gx-1 px-5 gy-5'>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
           <HomeMainCard
             className='mb-5 mb-xl-10'
-            description='Today total transactions'
+            description='Total transactions'
             color='#fff'
+            too='/superadmin/wallet'
             icon={transaction}
             textColor='#071437'
             count={data.today_total_transactions}
           />
       </div>
-      <div className=' col-md-6 col-lg-6 col-xl-6 col-xxl-3'>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
           <HomeMainCard
             className='mb-5 mb-xl-10'
             description='Visa processed today'
             color='#fff'
+            too='/superadmin/processed'
             icon={done}
             textColor='#071437'
             count={data.visa_processed_today}

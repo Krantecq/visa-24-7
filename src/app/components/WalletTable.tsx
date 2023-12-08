@@ -13,6 +13,8 @@ import WalletFormView from './WalletFormView'
 import { toast } from 'react-toastify'
 import axiosInstance from '../helpers/axiosInstance'
 import Pagination from './Pagination'
+import { FcInfo } from "react-icons/fc";
+import { FcFullTrash } from "react-icons/fc";
 
 type Props = {
   className: string
@@ -267,9 +269,9 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                       {/* Action Buttons */}
                       <div className='d-flex align-items-center justify-content-center flex-shrink-0'>
 
-                        <VisibilityIcon className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
+                      <FcInfo style={{fontSize:"20px"}} className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
 
-                        <DeleteOutline onClick={() => {
+                        <FcFullTrash style={{fontSize:"20px"}} onClick={() => {
                           handleClickOpen(row)
                           // const confirmed = window.confirm('Are you sure you want to delete this item?');
                           // if (confirmed) {
