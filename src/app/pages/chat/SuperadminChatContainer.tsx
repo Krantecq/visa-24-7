@@ -101,31 +101,6 @@ const SuperadminChatContainer: React.FC<SuperadminChatContainerProps> = ({ curre
     };
 
     fetchData();
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const userIdFromCookies = Cookies.get('user_id');
-            console.log('User ID from Cookies:', userIdFromCookies);
-            let receiveMessageRoute = "/backend/get_message";
-            
-            if (receiveMessageRoute && currentChat) {
-              const toId = currentChat._id;
-              
-              const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
-                from: toId,
-                to: userIdFromCookies,
-              });
-      
-              setMessages(messagesResponse.data.data);
-              console.log('Add Message Response:', messagesResponse.data);
-            }
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        };
-      
-        fetchData();
-      }, [currentChat]);
 
     return () => {
       if (socketRef.current) {
