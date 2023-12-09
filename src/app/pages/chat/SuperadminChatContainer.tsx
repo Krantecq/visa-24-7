@@ -6,39 +6,45 @@ import axiosInstance from '../../../app/helpers/axiosInstance';
 import Cookies from 'js-cookie';
 import { io, Socket } from "socket.io-client";
 
-interface ChatContainerProps {
+interface SuperadminChatContainerProps {
   currentChat?: any;
   socket?: React.MutableRefObject<any>;
 }
 
-const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
-  const [messages, setMessages] = useState<any[]>([]); // Initialize messages as an empty array
+const SuperadminChatContainer: React.FC<SuperadminChatContainerProps> = ({ currentChat }) => {
+  const [messages, setMessages] = useState<any[]>([]);
   const scrollRef = useRef<any>();
   const socketRef = useRef<Socket | null>(null);
   const [arrivalMessage, setArrivalMessage] = useState<any | null>();
+  const prevMessagesRef = useRef<any[]>([]);
 
   const handleSendMsg = async (msg: string) => {
     try {
       const userIdFromCookies = Cookies.get('user_id');
-      let sendMessageRoute = "/backend/add_message";
+      const toId = currentChat?._id || "";
+      const sendMessageRoute = "/backend/add_message";
+
       if (socketRef.current && userIdFromCookies) {
-        const toId = "6523a9eed9be7d310661ecc4";
+        // Emitting message to the server
         socketRef.current.emit("send-msg", {
           to: toId,
           from: userIdFromCookies,
           msg,
         });
 
-        await axiosInstance.post(sendMessageRoute, {
+        // Making API call to add message
+        const response = await axiosInstance.post(sendMessageRoute, {
           from: userIdFromCookies,
           to: toId,
           message: msg,
         });
 
-        const msgs = [...messages];
-        msgs.push({ fromSelf: true, message: msg });
-        setMessages(msgs);
-        console.log('Updated Messages:', msgs);
+        console.log('add_message API response:', response);
+
+        // Updating state with the sent message
+        setMessages((prevMessages) => [...prevMessages, { fromSelf: true, message: msg }]);
+        prevMessagesRef.current = [...prevMessagesRef.current, { fromSelf: true, message: msg }];
+        console.log('Updated Messages:', prevMessagesRef.current);
       } else {
         console.error("Socket or user ID is not available.");
       }
@@ -74,34 +80,59 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
         socketRef.current.disconnect();
       }
     };
-  }, [messages, setMessages, socketRef.current]);
+  }, []);
 
   useEffect(() => {
+    const userIdFromCookies = Cookies.get('user_id');
+    const toId = currentChat?._id;
+
     const fetchData = async () => {
       try {
-        const userIdFromCookies = Cookies.get('user_id');
-        console.log('User ID from Cookies:', userIdFromCookies);
-        let receiveMessageRoute = "/backend/get_message";
-        
-        if (receiveMessageRoute && currentChat) {
-          const toId = currentChat._id;
-          
-          const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
-            from: toId,
-            to: userIdFromCookies,
-          });
-  
-          setMessages(messagesResponse.data.data);
-          console.log('Add Message Response:', messagesResponse.data);
-        }
+        const messagesResponse = await axiosInstance.post("/backend/get_message", {
+          from: toId,
+          to: userIdFromCookies,
+        });
+
+        setMessages(messagesResponse.data.data);
+        console.log('Add Message Response:', messagesResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
-    fetchData();
-  }, [currentChat]);
 
+    fetchData();
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const userIdFromCookies = Cookies.get('user_id');
+            console.log('User ID from Cookies:', userIdFromCookies);
+            let receiveMessageRoute = "/backend/get_message";
+            
+            if (receiveMessageRoute && currentChat) {
+              const toId = currentChat._id;
+              
+              const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
+                from: toId,
+                to: userIdFromCookies,
+              });
+      
+              setMessages(messagesResponse.data.data);
+              console.log('Add Message Response:', messagesResponse.data);
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+      
+        fetchData();
+      }, [currentChat]);
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, [currentChat]);
 
   return (
     <Container>
@@ -119,21 +150,22 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
         </div>
       </div>
       <div className="chat-messages" ref={scrollRef}>
-      {messages && messages.map((message) => (
-        <div
-          key={uuidv4()}
-          className={`message ${message.fromSelf ? "sended" : "received"}`}
-        >
-          <div className="content">
-            <p>{message.message}</p>
+        {messages && messages.map((message) => (
+          <div
+            key={uuidv4()}
+            className={`message ${message.fromSelf ? "sended" : "received"}`}
+          >
+            <div className="content">
+              <p>{message.message}</p>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
       <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
 }
+
 
 const Container = styled.div`
   display: grid;
@@ -209,4 +241,4 @@ const Container = styled.div`
   }
 `;
 
-export default ChatContainer;
+export default SuperadminChatContainer;

@@ -76,6 +76,7 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
       try {
         const user_id = Cookies.get('user_id');
         const response = await axiosInstance.get('/backend/all_user');
+        // console.log('ye rha', response)
         const mappedMerchants = response.data.data.map((merchant) => ({
           _id: merchant._id,
           merchant_name: merchant.merchant_name,
@@ -85,9 +86,9 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
         setMerchants(mappedMerchants);
 
         if (!initialChatSet && mappedMerchants.length > 0) {
-          // console.log('Setting initial chat:', mappedMerchants[0]);
+          console.log('Setting initial chat:', mappedMerchants[0]);
           changeChat(mappedMerchants[0]);
-          setInitialChatSet(true); // Set the flag to true once the initial chat is set
+          setInitialChatSet(true);
         }
 
         if (user_type === 'super_admin') {
@@ -105,11 +106,50 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
     fetchData();
   }, [changeChat, profile, user_type, initialChatSet]);
 
+  const handleReceivedMessage = (receivedMessage: any) => {
+    console.log("Received Message:", receivedMessage);
+  };
+
+  useEffect(() => {
+    if (user_type === 'merchant') {
+      fetchProfileData();
+  
+      socketRef.current = io("http://localhost:5003", {
+        withCredentials: true,
+      });
+  
+      socketRef.current.on("connect", () => {
+        console.log("Connected to socket server");
+      });
+  
+      socketRef.current.on("msg-recieve", (receivedMessage) => {
+        console.log("Received Message from Socket:", receivedMessage);
+        handleReceivedMessage(receivedMessage);
+      });
+  
+      socketRef.current.on("disconnect", () => {
+        console.log("Disconnected from socket server");
+      });
+  
+      socketRef.current.on("error", (error) => {
+        console.error("Socket error:", error);
+      });
+    } else {
+      fetchData();
+    }
+  
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, [user_type, handleReceivedMessage]);
+
 
   useEffect(() => {
     if (socketRef.current) {
       socketRef.current.on("msg-recieve", (receivedMessage) => {
-        // console.log("Received Message from Socket:", receivedMessage);
+        console.log("Received Message from Socket:", receivedMessage);
 
         setMerchants((prevMerchants) => {
           return prevMerchants.map((merchant) => {
