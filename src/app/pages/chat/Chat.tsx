@@ -18,11 +18,10 @@ const Chat: React.FC = () => {
     const user = {
       user_type: Cookies.get('user_type'),
     };
-    
-    // console.log('Cookies Data:', document.cookie);
+
     setCurrentUser(user);
-    // console.log('Socket Connection:', socket.current);
   }, []);  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,16 +46,16 @@ const Chat: React.FC = () => {
   
   
   return (
-      <>
-          <Container>
-              <div className="container">
-                  {currentUser && currentUser.user_type !== 'merchant' && (
-                      <Contacts contacts={merchantList} changeChat={handleChatChange} />
-                  )}
-                  <ChatContainer currentChat={currentChat} socket={socket} />
-              </div>
-          </Container>
-      </>
+    <>
+      <Container>
+        <div className="container">
+          {currentUser && currentUser.user_type !== 'merchant' && (
+            <Contacts contacts={merchantList} changeChat={handleChatChange} />
+          )}
+          <ChatContainer currentChat={currentChat} socket={socket}/>
+        </div>
+      </Container>
+    </>
   );
 };
 
