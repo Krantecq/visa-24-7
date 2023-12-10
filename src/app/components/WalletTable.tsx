@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { CSSProperties, useState, useEffect } from 'react';
-import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers'
-import VisibilityIcon from '@mui/icons-material/Visibility'
+import { DatePicker } from 'antd';
+import Papa from 'papaparse';
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -60,7 +60,67 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const entriesPerPage = 10;
   const startIndex = (currentPage - 1) * entriesPerPage;
   const endIndex = startIndex + entriesPerPage;
+  const [searchTerm, setSearchTerm] = useState('');
+  const [issueDate, setIssueDate] = useState<string | undefined>('');
+  const [expiryDate, setExpiryDate] = useState<string | undefined>('');
+  const [filteredData, setFilteredData] = useState(data as any[]);
 
+  const handleDatePickerChange = (value: any) => {
+    if (value && value.length === 2) {
+      const startDate = value[0]?.isValid() ? value[0].format('YYYY-MM-DD') : '';
+      const endDate = value[1]?.isValid() ? value[1].format('YYYY-MM-DD') : '';
+      const filtered = (data as any[]).filter((item) => {
+        const transactionDate = item.transaction_time.split(' ')[0];
+        return transactionDate >= startDate && transactionDate <= endDate;
+      });
+      setIssueDate(startDate);
+      setExpiryDate(endDate);
+      setFilteredData(filtered);
+    } else {
+      // Date picker cancel hua hai, isliye original data ko set karo
+      setFilteredData(data as any[]);
+    }
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+
+    const filtered = (data as any[]).filter((item) =>
+      Object.keys(item).some(
+        (key) =>
+          item[key] &&
+          (item[key] as any).toString().toLowerCase().includes(term)
+      )
+    );
+
+    setFilteredData(filtered);
+    console.log("Filtered data set successfully:", filtered);
+  };
+
+  useEffect(() => {
+    setFilteredData(data as any[]);
+    
+    // Additional code that depends on setFilteredData should go here
+    console.log("Initial data set successfully:", data);
+  }, [data]);
+
+  const handleDownloadCSVWalletTable = () => {
+    const csvData = convertToCSV(filteredData);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'wallet_table.csv';
+
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  function convertToCSV(data: any) {
+    const csv = Papa.unparse(data);
+    return csv;
+  }
   
   const getFilteredData = () => {
     if (filter === 'waitingForApproval') {
@@ -165,7 +225,52 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
         <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
         </h3>
-        <div className='dropdown mx-5'>
+        {/* <div className='fv-row' style={{ position: 'relative', right: '0%' }}>
+          <DatePicker.RangePicker
+            style={{
+              backgroundClip: '#fff',
+              width: 300,
+              marginTop: 11,
+              border: '1px solid #808080',
+              borderRadius: 10,
+              padding: 10,
+            }}
+            onChange={handleDatePickerChange}
+          />
+        </div> */}
+               <input
+            type='text'
+            placeholder='Search...'
+            onChange={handleSearch}
+            value={searchTerm}
+            style={{
+              border: '1px solid #d3d3d3',
+              borderRadius: '10px',
+              padding: '10px',
+              paddingLeft: '20px',
+              marginTop:"10px",
+              width: '350px',
+              fontSize:"14px",
+              boxSizing: 'border-box',
+            }}
+          />
+        <div style={{gap:"10px", padding:"10px 0px"}} className='dropdown d-flex g-3'>
+          <button
+            style={{
+              fontWeight: '600',
+              right: '0%',
+              padding: '0px 5px',
+              backgroundColor: 'transparent',
+              color: 'black',
+              borderRadius: '10px',
+              border: '1px solid #327113',
+              zIndex: 1,
+              width: '135px',
+            }}
+            onClick={handleDownloadCSVWalletTable}
+          >
+            Download CSV
+          </button>
           <button
             className='btn btn-secondary dropdown-toggle'
             type='button'
