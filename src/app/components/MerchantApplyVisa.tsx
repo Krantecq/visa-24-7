@@ -705,7 +705,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
                   className='btn btn-success'
                   style={{
                     marginRight: 60,
-                    borderRadius: 25,
+                    borderRadius: 5,
                     paddingLeft: 25,
                     paddingRight: 25,
                     backgroundColor: '#327113',

@@ -15,8 +15,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Toast } from 'react-bootstrap';
 import { FcFullTrash } from "react-icons/fc";
+import 'react-toastify/dist/ReactToastify.css';
+import { FaEye } from "react-icons/fa";
 
 
 
@@ -85,6 +87,7 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
   const [loadingButton, setloadingButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
@@ -155,6 +158,22 @@ const handleFieldChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value });
 };
 
+const copyApiKey = (apiKey: string) => {
+  const textarea = document.createElement('textarea');
+  textarea.value = apiKey;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+  navigator.clipboard.writeText(apiKey)
+      .then(() => {
+        toast.success('API Key copied successfully!');
+      })
+      .catch((error) => {
+        console.error('Error copying API key:', error);
+      });
+};
+
 const handleSaveClick = async () => {
     setloadingButton(true);
     const response = await axiosInstance.post('/backend/add_api_balance', {
@@ -175,6 +194,7 @@ const handleSaveClick = async () => {
         });
     }
 };
+
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
       <div style={{boxShadow:"none"}} className={`card ${className}`}>
@@ -195,7 +215,7 @@ const handleSaveClick = async () => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div style={{borderRadius:"10px", overflowX:"hidden"}} className='table-responsive'>
+              <div style={{ overflowX:"hidden"}} className='table-responsive'>
                 {/* begin::Table */}
                 {loading ?
                   <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -207,10 +227,12 @@ const handleSaveClick = async () => {
                   :
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
+                    <thead style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}}>
                       <tr className='fw-bold'>
-                        <th className='min-w-150px text-center'>Agent</th>
-                        <th className='min-w-200px text-center'>Email</th>
+                        <th className='min-w-100px text-center'>Agent</th>
+                        <th className='min-w-100px text-center'>Email</th>
+                        <th className='min-w-100px text-center'>Contact</th>
+                        <th className='min-w-100px text-center'>State</th>
                         <th className='min-w-100px text-center'>Company</th>
                         <th className='min-w-70px text-center'>API Key</th>
                         <th className='min-w-70px text-center'>Wallet</th>
@@ -221,17 +243,17 @@ const handleSaveClick = async () => {
                     {/* begin::Table body */}
                     <tbody style={{border:"1px solid #cccccc"}} >
                       {data.map((item, index) => (
-                        <tr key={index}>
+                          <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                           <td style={{paddingLeft:"15px"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                              <span style={{background:"transparent"}} className='symbol-label'>
+                              {/* <span style={{background:"transparent"}} className='symbol-label'>
                                 <img
                                   src={item.merchant.merchant_profile_photo}
                                   alt=''
                                   className=' align-self-center'
                                   style={{width:"45px", height:"45px", borderRadius:"10px"}}
                                 />
-                              </span>
+                              </span> */}
                               <a
                                 href='#'
                                 className='text-dark  text-hover-primary mb-1 fs-6'
@@ -247,6 +269,16 @@ const handleSaveClick = async () => {
                             </a>
                           </td>
                           <td className='text-center'>
+                            <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
+                              {item.merchant.merchant_phone_number}
+                            </a>
+                          </td>
+                          <td className='text-center'>
+                            <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
+                              {item.merchant.merchant_state}
+                            </a>
+                          </td>
+                          <td className='text-center'>
                             <span className='text-dark  d-block fs-5'>{item.company}</span>
                             <span className='text-dark fw-semibold d-block fs-7 '>{item.merchant.merchant_company_name}</span>
                           </td>
@@ -256,8 +288,9 @@ const handleSaveClick = async () => {
                               updatedVisibility[index] = true;
                               setItemModalVisibility(updatedVisibility);
                             }} style={{ backgroundColor: 'transparent', border: 'none' }}>
-                              Show Key
+                              <FaEye style={{fontSize:"20px", color:"#000"}} />
                             </button>
+                            
                             <Modal show={itemModalVisibility[index]} onHide={() => {
                               const updatedVisibility = [...itemModalVisibility];
                               updatedVisibility[index] = false;
@@ -270,6 +303,11 @@ const handleSaveClick = async () => {
                                 <p>{item.api_key}</p>
                               </Modal.Body>
                               <Modal.Footer>
+                                <Toast />
+                              <Button style={{background:"#327113"}} variant="primary" onClick={() => copyApiKey(item.api_key)}>
+                                Copy API Key
+                              </Button>
+                              
                                 <Button variant='secondary' onClick={() => {
                                   const updatedVisibility = [...itemModalVisibility];
                                   updatedVisibility[index] = false;
@@ -295,7 +333,7 @@ const handleSaveClick = async () => {
                                 handleClickOpen(item)
                               } className='mx-5 cursor-pointer' />
 
-                              <button style={{backgroundColor:"#327113"}} className='btn btn-success align-self-center' onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
+                              <button style={{backgroundColor:"#327113", padding:"5px 8px", border:"none", color:"#fff", borderRadius:"5px", fontSize:"12px"}} onClick={() => handleAddBalanceClick(item)}>Add Balance</button>
                             </div>
                           </td>
                         </tr>

@@ -87,7 +87,7 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
 
         if (!initialChatSet && mappedMerchants.length > 0) {
           console.log('Setting initial chat:', mappedMerchants[0]);
-          changeChat(mappedMerchants[0]);
+          // changeChat(mappedMerchants[0]); // Comment out this line
           setInitialChatSet(true);
         }
 
@@ -174,6 +174,7 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
     changeChat(contact);
   };
 
+
   const getUnreadMessagesCount = (contactId: string) => {
     const contact = merchants.find((merchant) => merchant?.data?._id === contactId);
     return contact?.unreadMessages || 0;
@@ -184,7 +185,8 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
       {currentUserImage && currentUserImage && (
         <Container>
           <div className="brand">
-            <img src={Logo} alt="logo" />
+            {/* <img src={Logo} alt="logo" /> */}
+            <h3>Recent</h3>
           </div>
           <div className="contacts">
           {Array.isArray(merchants) &&
@@ -206,14 +208,14 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
             </div>
           ))}
           </div>
-          <div className="current-user">
+          {/* <div className="current-user">
             <div className="avatar">
               <img src={currentUserImage} alt="avatar" />
             </div>
             <div className="username">
               <h2>{currentUserName}</h2>
             </div>
-          </div>
+          </div> */}
         </Container>
       )}
     </>
@@ -225,7 +227,7 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
-  background-color: #080420;
+  background-color: #fff;
   .brand {
     display: flex;
     align-items: center;
@@ -235,7 +237,7 @@ const Container = styled.div`
       height: 2rem;
     }
     h3 {
-      color: white;
+      color: black;
       text-transform: uppercase;
     }
   }
@@ -254,7 +256,7 @@ const Container = styled.div`
       }
     }
     .contact {
-      background-color: #ffffff34;
+      background-color: #bbdcbd;
       cursor: pointer;
       width: 90%;
       border-radius: 0.2rem;
@@ -265,17 +267,23 @@ const Container = styled.div`
       transition: 0.5s ease-in-out;
       .avatar {
         img {
-          height: 3rem;
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
         }
       }
       .username {
         h3 {
-          color: white;
+          color: black;
         }
       }
     }
     .selected {
-      background-color: #9a86f3;
+      background-color: #327113;
+      color: #fff;
+      .username h3 {
+        color: white;
+      }
     }
   }
 
@@ -287,7 +295,9 @@ const Container = styled.div`
     gap: 2rem;
     .avatar {
       img {
-        height: 4rem;
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
         max-inline-size: 100%;
       }
     }

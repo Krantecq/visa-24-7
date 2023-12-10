@@ -59,6 +59,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
     socketRef.current.on("msg-recieve", (receivedMessage) => {
       console.log("Received Message from Socket:", receivedMessage);
       setMessages((prevMessages) => [...prevMessages, { fromSelf: false, message: receivedMessage }]);
+      // Scroll to the bottom when a new message is received
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     });
 
     socketRef.current.on("disconnect", () => {
@@ -78,21 +80,32 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('Fetching data...');
       try {
         const userIdFromCookies = Cookies.get('user_id');
         console.log('User ID from Cookies:', userIdFromCookies);
         let receiveMessageRoute = "/backend/get_message";
-        
-        if (receiveMessageRoute && currentChat) {
-          const toId = currentChat._id;
-          
-          const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
-            from: toId,
-            to: userIdFromCookies,
-          });
   
-          setMessages(messagesResponse.data.data);
-          console.log('Add Message Response:', messagesResponse.data);
+        if (receiveMessageRoute && currentChat) {
+          // Assuming currentChat._id represents the merchant's ID
+          const toId = currentChat._id;
+  
+          // Update the condition to fetch messages for merchants only
+          if (currentChat.user_type === 'merchant') {
+            const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
+              from: userIdFromCookies,
+              to: toId,
+            });
+  
+            const msgs = messagesResponse.data.data;
+            setMessages(msgs);
+            console.log('Updated Messages:', msgs);
+  
+            // Scroll to the bottom when messages are updated
+            scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+          } else {
+            console.log('Not fetching messages for non-merchant user.');
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -119,17 +132,19 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
         </div>
       </div>
       <div className="chat-messages" ref={scrollRef}>
-      {messages && messages.map((message) => (
-        <div
-          key={uuidv4()}
-          className={`message ${message.fromSelf ? "sended" : "received"}`}
-        >
-          <div className="content">
-            <p>{message.message}</p>
+        {messages.map((message) => (
+          <div
+            key={uuidv4()}
+            className={`message ${message.fromSelf ? "sended" : "received"}`}
+          >
+            <div className="content">
+              <p>{message.message}</p>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+        {/* Dummy element for scrolling to the bottom */}
+        <div ref={scrollRef}></div>
+      </div>
       <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
@@ -185,10 +200,10 @@ const Container = styled.div`
       .content {
         max-width: 40%;
         overflow-wrap: break-word;
-        padding: 1rem;
+        padding: 10px 20px 0px 20px;
         font-size: 1.1rem;
         border-radius: 1rem;
-        color: #d1d1d1;
+        color: #000;
         @media screen and (min-width: 720px) and (max-width: 1080px) {
           max-width: 70%;
         }
@@ -196,17 +211,17 @@ const Container = styled.div`
     }
     
     .sended {
-      .content {
-        background-color: #4f04ff21;
+        .content {
+          background-color: #4f04ff21;
+          margin-left: auto;  // Updated line
+        }
       }
-    }
     
-    .recieved {
-      .content {
-        background-color: #9900ff20;
+      .received {
+        .content {
+          background-color: #9900ff20;
+        }
       }
-    }
   }
 `;
-
 export default ChatContainer;

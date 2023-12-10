@@ -28,6 +28,14 @@ body::-webkit-scrollbar-thumb {
   background-color: rgb(32, 95, 1);   
 }
 
+.even-row {
+  background-color: #ffffff; 
+}
+
+.odd-row {
+  background-color: #f2f2f2;
+}
+
 
 /*--------------------------------------------------- Navbar---------------------------------------------------*/
 #nav{

@@ -57,9 +57,9 @@ export function Login() {
             console.log(response);
             if (response.status === 200) {
               setLoading(false);            
-              toast.success(response.data.msg, {
-                position: "top-center", // Center the toast notification
-              });
+              // toast.success(response.data.msg, {
+              //   position: "top-center",
+              // });
               Cookies.set('isLoggedIn', 'true', { expires: 7 });
               Cookies.set('user_id', response.data.user_id,{ expires: 15 });
               Cookies.set('user_type', 'super_admin',{ expires: 15 });
@@ -175,7 +175,7 @@ export function Login() {
           style={{background:"#327113"}}
           disabled={formik.isSubmitting || !formik.isValid}
         >
-          {!loading && <span className='indicator-label'>Continue</span>}
+          {!loading && <span className='indicator-label'>Sign in</span>}
           {loading && (
             <span className='indicator-progress' style={{ display: 'block' }}>
               Please wait...

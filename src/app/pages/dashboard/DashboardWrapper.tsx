@@ -19,6 +19,7 @@ import revenue from '../../../_metronic/assets/card/3drevenue.webp'
 import done from '../../../_metronic/assets/card/3dvisa.webp'
 import rejected from '../../../_metronic/assets/card/3drej.webp'
 import customers from '../../../_metronic/assets/card/3dpartner.webp'
+import issued from '../../../_metronic/assets/card/3dissued2.webp'
 import merchant from '../../../_metronic/assets/card/merchant.png'
 import wallet from '../../../_metronic/assets/card/wallet.png'
 import { HomeMainCard } from '../../components/HomeMainCard'
@@ -48,6 +49,17 @@ const DashboardPage: FC<Props> = (data) => (
     {/* begin::Row */}
     <div className='row gx-0 px-5 gy-5'>
       {/* begin::Col */}
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
+        <HomeMainCard
+          className='mb-5 mb-xl-10'
+          description='Revenue generated'
+          color='#fff'
+          too='/superadmin/revenue'
+          icon={revenue}
+          textColor='#071437'
+          count={data.revenue}
+        />
+      </div>
       <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
           className='mb-6 mb-xl-10'
@@ -57,17 +69,6 @@ const DashboardPage: FC<Props> = (data) => (
           icon={customers}
           textColor='#071437'
           count={data.api}
-        />
-      </div>
-      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
-        <HomeMainCard
-          className='mb-6 mb-xl-10'
-          description='Individual Customers'
-          color='#fff'
-          too='/superadmin/partners'
-          icon={icustomer}
-          textColor='#071437'
-          count={data.customer_user}
         />
       </div>
       <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
@@ -84,25 +85,25 @@ const DashboardPage: FC<Props> = (data) => (
       <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
           className='mb-6 mb-xl-10'
-          description='Visa Rejected'
+          description='Individual Customers'
           color='#fff'
-          too='/superadmin/rejected'
-          icon={rejected}
+          too='/superadmin/partners'
+          icon={icustomer}
           textColor='#071437'
-          count={data.visa_rejected}
+          count={data.customer_user}
         />
       </div>
     </div>
     <div className='row gx-1 px-5 gy-5'>
-      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
+    <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
-          className='mb-5 mb-xl-10'
-          description='Visa In-Process'
+          className='mb-6 mb-xl-10'
+          description='Visa Issued'
           color='#fff'
-          too='/superadmin/waiting-for-approval'
-          icon={process}
+          too='/superadmin/processed'
+          icon={issued}
           textColor='#071437'
-          count={data.in_process_visa}
+          count={data.processed}
         />
       </div>
       <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
@@ -119,12 +120,23 @@ const DashboardPage: FC<Props> = (data) => (
       <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
         <HomeMainCard
           className='mb-5 mb-xl-10'
-          description='Revenue generated'
+          description='Visa In-Process'
           color='#fff'
-          too='/superadmin/revenue'
-          icon={revenue}
+          too='/superadmin/waiting-for-approval'
+          icon={process}
           textColor='#071437'
-          count={data.revenue}
+          count={data.in_process_visa}
+        />
+      </div>
+      <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
+        <HomeMainCard
+          className='mb-6 mb-xl-10'
+          description='Visa Rejected'
+          color='#fff'
+          too='/superadmin/rejected'
+          icon={rejected}
+          textColor='#071437'
+          count={data.visa_rejected}
         />
       </div>
     </div>

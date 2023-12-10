@@ -156,7 +156,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div style={{ borderRadius: '10px' }} className='table-responsive'>
+        <div className='table-responsive'>
           {/* begin::Table */}
           {loading ? (
             <div
@@ -176,13 +176,13 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
           ) : (
             <table className='table table-row-dashed table-row-gray-300 align-middle'>
               {/* begin::Table head */}
-              <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
-                <tr className='fw-bold'>
-                  <th style={{ paddingLeft: '4%' }} className='min-w-80px text-start'>
+              <thead >
+              <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
+                  <th style={{ paddingLeft: '2%'}} className='min-w-80px text-start'>
                     Date
                   </th>
                   <th className='min-w-80px text-center'>Application No.</th>
-                  <th className='min-w-80px text-center'>Merchant ID</th>
+                  <th className='min-w-80px text-center'>Name</th>
                   <th className='min-w-80px text-center'>Channel</th>
                   <th className='min-w-80px text-center'>Provider</th>
                   <th className='min-w-80px text-center'>Paid</th>
@@ -196,7 +196,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               {/* begin::Table body */}
               <tbody style={{border:"1px solid #cccccc"}} >
                 {filteredData.map((row, index) => (
-                  <tr key={index}>
+                  <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                     <td className='text-center'>
                       {/* Avatar and Name */}
                       <div className='d-flex align-items-center'>
@@ -220,7 +220,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                         updatedVisibility[index] = true;
                         setItemModalVisibility(updatedVisibility);
                       }} style={{ backgroundColor: 'transparent', border: 'none' }}>
-                        {row.id}
+                        {row.name}
                       </button>
                       <Modal show={itemModalVisibility[index]} onHide={() => {
                         const updatedVisibility = [...itemModalVisibility];
@@ -231,7 +231,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
                           <Modal.Title>Merchant Details</Modal.Title>
                         </Modal.Header>
                         <Modal.Body style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Name -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.name}</p></span>
+                          <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Merchant id -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.id}</p></span>
                           <span className='d-flex'><h1 style={{fontSize:"16px", fontWeight:"600"}}>Address -</h1><p style={{fontSize:"14px"}}>&nbsp;&nbsp;{row.address}</p></span>
                         </Modal.Body>
                       </Modal>

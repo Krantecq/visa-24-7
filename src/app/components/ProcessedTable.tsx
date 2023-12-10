@@ -18,6 +18,7 @@ import Loader from './Loader'
 import { FcFullTrash } from "react-icons/fc";
 import Cookies from 'js-cookie'
 import { FcInfo } from "react-icons/fc";
+import { MdRefresh } from "react-icons/md";
 
 type Props = {
   className: string
@@ -62,7 +63,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
   const [selectedItem, setSelectedItem] = useState(null);
   const [issueVisaLoader, setissueVisaLoader] = useState(false);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
-
+  
   const [open, setOpen] = React.useState(false);
 
   const handleApproveClick = async () => {
@@ -187,8 +188,17 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       {/* end::Header */}
       {/* begin::Body */}
       <div className='card-body py-3'>
+        <h1 style={{position:"absolute", top:"35px", right:"5%", fontSize:"18px"}} >
+          Atlys wallet balance - 
+          <button className='btn btn-success' style={{backgroundColor:"#327113", padding:"5px 10px", marginTop:"-5px", marginLeft:"5px"}} >
+            ₹ 2 /-
+          </button>
+          <a title='Refresh' href='#'>
+            <MdRefresh style={{color:"#327113", marginLeft:"12px", fontSize:"20px", marginTop:"-4px"}}/>
+          </a>
+        </h1>
         {/* begin::Table container */}
-        <div style={{borderRadius:"10px"}} className='table-responsive'>
+        <div className='table-responsive'>
           {/* begin::Table */}
           {loading ?
             <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -200,14 +210,17 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
             :
             <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
               {/* begin::Table head */}
-              <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
-                <tr className='fw-bold'>
+              <thead >
+                <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
 
-                  <th className='min-w-120px text-center'>Customers</th>
-                  <th className='min-w-120px text-center'>Arrival Date</th>
-                  <th className='min-w-100px text-center'>Departure Date</th>
-                  <th className='min-w-80px text-center'>Visa Amount</th>
-                  <th className='min-w-80px text-center'>Visa Status</th>
+                  <th className='min-w-80px text-center'>Name</th>
+                  <th className='min-w-80px text-center'>Phone</th>
+                  <th className='min-w-80px text-center'>Email</th>
+                  <th className='min-w-80px text-center'>From</th>
+                  <th className='min-w-80px text-center'>To</th>
+                  <th className='min-w-80px text-center'>Date</th>
+                  <th className='min-w-80px text-center'>Status</th>
+                  <th className='min-w-80px text-center'>Amount</th>
                   <th className='min-w-100px text-center'>Actions</th>
                 </tr>
               </thead>
@@ -215,13 +228,13 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
               {/* begin::Table body */}
               <tbody style={{border:"1px solid #cccccc"}} >
                 {data.map((row, index) => (
-                  <tr key={index}>
+                  <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                     <td style={{paddingLeft:"15px"}}  className='text-center'>
                       {/* Avatar and Name */}
                       <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-45px me-5'>
+                        {/* <div className='symbol symbol-45px me-5'>
                           <img src={row.photo} alt='' />
-                        </div>
+                        </div> */}
                         <div className='d-flex justify-content-start flex-column'>
                           <a href='#' className='text-dark text-hover-primary fs-6'>
                             {row.first_name}
@@ -230,9 +243,27 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                       </div>
                     </td>
                     <td className='text-center'>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
+                        phone
+                      </a>
+                    </td>
+                    <td className='text-center'>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
+                        email
+                      </a>
+                    </td>
+                    <td className='text-center'>
                       {/* Date */}
                       <a href='#' className='text-dark text-hover-primary d-block fs-6'>
-                        {row.application_arrival_date}
+                      {row.nationality}
+                      </a>
+                    </td>
+                    <td className='text-center'>
+                      {/* Location 1 */}
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
+                        {row.application_destination}
                       </a>
                     </td>
                     <td className='text-center'>
@@ -242,22 +273,24 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                       </a>
                     </td>
                     <td className='text-center'>
-                      {/* Location 2 */}
-                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
-                        ₹ {row.visa_amount}
-                      </a>
-                    </td>
-                    <td className='text-center'>
                       {/* Status */}
                       <span className='text-muted fw-semibold text-muted d-block fs-7'>
                         {row.visa_status}
                       </span>
                     </td>
+                    <td className='text-center'>
+                      {/* Location 2 */}
+                      <a href='#' className='text-dark text-hover-primary d-block fs-6'>
+                        ₹ {row.visa_amount}
+                      </a>
+                    </td>
+
+
                     <td style={{paddingRight:"15px"}}   className='text-center'>
                       {/* Action Buttons */}
-                      <div className='d-flex align-items-center justify-content-between flex-shrink-0'>
+                      <div className='d-flex align-items-center justify-content-around flex-shrink-0'>
 
-                      <FcInfo style={{fontSize:"20px"}} className='mx-5 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
+                      <FcInfo style={{fontSize:"20px"}} className='mx-2 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
                       <FcFullTrash 
                         style={{fontSize:"20px"}}
                         onClick={() => 
@@ -273,7 +306,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                       )}
                       {row.visa_status === 'Waiting' && (
                         // Render the "Approve" button only when the merchant is not approved
-                        <button style={{background:"#327113"}} className='btn btn-success align-self-center' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
+                        <button style={{backgroundColor:"#327113", padding:"5px 10px", border:"none", color:"#fff", borderRadius:"5px", fontSize:"12px"}} className='' onClick={() => handleIssueVisaClick(row)}>Issue Visa</button>
                       )}
                       {row.visa_status === 'Processed' && (
                         <button className='btn btn-success align-self-center' onClick={() => handleDownloadClick(row)}>Download</button>

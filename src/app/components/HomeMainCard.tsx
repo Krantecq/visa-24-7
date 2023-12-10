@@ -34,7 +34,7 @@ const HomeMainCard = ({className, description, color, icon, too, textColor, coun
         color:"#327113"
       }}/>
     </Link>
-    <img src={icon} style={{ width: 50, position: 'relative', left: "7%", top: "6%", filter: "contrast(150%) drop-shadow(5px 5px 5px #c1d4b8)" }} />
+    <img src={icon} style={{ width: 50, position: 'relative', left: "7%", top: "6%", filter: "contrast(130%) drop-shadow(5px 5px 5px #c1d4b8)" }} />
     <div className='card-header pt-5 d-flex align-items-center justify-content-center' style={{position: 'relative', bottom: 5}}>
       <div className='card-title d-flex flex-column align-items-baseline'>
         

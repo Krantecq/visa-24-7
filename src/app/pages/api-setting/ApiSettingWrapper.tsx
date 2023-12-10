@@ -91,7 +91,7 @@ function ApiSettingWrapper() {
   }, []); // The empty dependency array ensures this effect runs once on mount
   return (
     <div>
-      <div className='w-full' style={{ backgroundColor: '#fff' }}>
+      <div className='w-full' style={{ backgroundColor: '#fff', marginTop:"-100px" }}>
 
         <div className='px-10 py-10'>
 
@@ -116,7 +116,7 @@ function ApiSettingWrapper() {
                 </div>
                 <div className='w-100 d-flex flex-column mx-auto mb-10'>
                   <label className='d-flex align-items-center form-label'>
-                    <span className='required'>All Country percentage</span>
+                    <span className='required'>B2C percentage</span>
                   </label>
 
                   <Field

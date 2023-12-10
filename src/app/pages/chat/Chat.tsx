@@ -43,31 +43,25 @@ const Chat: React.FC = () => {
   const handleChatChange = (chat: any) => {
     setCurrentChat(chat);
   };
-  
-  
+
   return (
-      <>
-          <Container>
-              <div className="container">
-                  {currentUser && currentUser.user_type !== 'merchant' && (
-                      <Contacts contacts={merchantList} changeChat={handleChatChange} />
-                  )}
-                  {currentUser && currentUser.user_type === 'super_admin' && (
-                      <SuperadminChatContainer currentChat={currentChat} />
-                  )}
-                  {currentUser && currentUser.user_type === 'merchant' && (
-                      <ChatContainer currentChat={currentChat} socket={socket} />
-                  )}
-              </div>
-          </Container>
-      </>
+    <>
+      <Container>
+        <div className="container">
+          {currentUser && currentUser.user_type !== 'merchant' && (
+            <Contacts contacts={merchantList} changeChat={handleChatChange} />
+          )}
+          {currentUser && currentUser.user_type === 'super_admin' && (
+            <SuperadminChatContainer currentChat={currentChat} />
+          )}
+          {currentUser && currentUser.user_type === 'merchant' && (
+            <ChatContainer currentChat={currentChat} socket={socket} />
+          )}
+        </div>
+      </Container>
+    </>
   );
 };
-
-// interface ChatContainerProps {
-//     currentChat?: any;
-//     socket?: Socket | null;
-// }
 
 const Container = styled.div`
     height: 100%;
@@ -82,7 +76,7 @@ const Container = styled.div`
     .container {
         height: 85vh;
         width: 85vw;
-        background-color: #00000076;
+        background-color: #fff;
         display: grid;
         grid-template-columns: 25% 75%;
         @media screen and (min-width: 720px) and (max-width: 1080px) {

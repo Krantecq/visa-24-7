@@ -127,6 +127,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
     setSelectedItem(null)
     setVisible(false)
   }
+
   return (
     <div style={{backgroundColor: '#fff'}} className='w-full'>
       <div style={{boxShadow:"none"}} className={`card ${className}`}>
@@ -179,7 +180,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
             {/* begin::Tap pane */}
             <div className='tab-pane fade show active' id='kt_table_widget_6_tab_1'>
               {/* begin::Table container */}
-              <div style={{borderRadius:"10px"}} className='table-responsive'>
+              <div className='table-responsive'>
                 {/* begin::Table */}
                 {loading ? (
                   <div
@@ -199,16 +200,18 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                 ) : (
                   <table className='table align-middle gs-2 gy-3'>
                     {/* begin::Table head */}
-                    <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
+                    <thead style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}}>
                       <tr className='fw-bold'>
-                        <th className='min-w-150px text-start' style={{paddingLeft: '5%'}}>
+                        <th className='min-w-100px text-center'>
                           Agent
                         </th>
-                        <th className='min-w-100px text-center'>Wallet Balance</th>
-                        <th className='min-w-100px text-center'>No. Of Visa</th>
+                        <th className='min-w-100px text-center'>Wallet</th>
+                        <th className='min-w-100px text-center'>State</th>
+                        <th className='min-w-80px text-center'>Visas</th>
                         <th className='min-w-100px text-center'>Company</th>
-                        <th className='min-w-150px text-center'>Joining Date</th>
-                        <th className='min-w-150px text-center'>Action</th>
+                        <th className='min-w-100px text-center'>Contact</th>
+                        <th className='min-w-100px text-center'>Email</th>
+                        <th  className='min-w-100px text-center'>Action</th>
                       </tr>
                     </thead>
 
@@ -216,10 +219,10 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                     {/* begin::Table body */}
                     <tbody style={{border:"1px solid #cccccc"}} >
                       {getFilteredData().map((item, index) => (
-                        <tr key={index}>
-                          <td style={{paddingLeft:"2%"}} className='text-center'>
+                        <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+                          <td style={{paddingLeft:"1%"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                              <span style={{background:"transparent"}} className='symbol-label'>
+                              {/* <span style={{background:"transparent"}} className='symbol-label'>
                                 <img
                                   src={item.merchant_profile_photo}
                                   alt={item.merchant_profile_photo}
@@ -231,13 +234,13 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                                     borderRadius:"10px",
                                   }}
                                 />
-                              </span>
+                              </span> */}
                               <a
                                 href='#'
                                 className='text-dark  text-hover-primary mb-1 fs-6'
                                 style={{
                                   whiteSpace: 'nowrap',
-                                  paddingLeft: '5px',
+                                  paddingLeft: '0px',
                                   paddingTop: '5px',
                                 }}
                               >
@@ -245,33 +248,44 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                               </a>
                             </div>
                           </td>
-                          <td className='text-center'>
+                          <td className='text-start'>
                             <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
                               ₹ {item.wallet_balance}
                             </a>
+                          </td>
+                          <td className='text-start'>
+                            <span className='text-dark  d-block fs-6'>
+                              {item.merchant_state}
+                            </span>
                           </td>
                           <td className='text-center'>
                             <span className='text-dark  d-block fs-5'>
                               {item.merchant_applicants.length}
                             </span>
                           </td>
-                          <td className='text-center'>
+                          <td className='text-start'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
                             <span className='text-muted fw-semibold d-block fs-7 '>
                               {item.merchant_company_name}
                             </span>
                           </td>
                           <td className='text-center'>
-                            <span className='text-muted fw-semibold d-block fs-7'>
-                              {moment(item.created_at).format('DD MMM YYYY hh:mm a')}
+                            <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
+                            <span className='text-muted fw-semibold d-block fs-7 '>
+                              {item.merchant_phone_number}
                             </span>
                           </td>
-                          <td className='text-center'>
+                          <td className='text-start'>
+                            <span className='text-muted fw-semibold d-block fs-7'>
+                              {item.merchant_email_id}
+                            </span>
+                          </td>
+                          <td className='text-start'>
                             <div style={{marginLeft:"20%"}} className='d-flex justify-content-start align-items-center'>
                               <FcInfo
                                 style={{fontSize:"20px"}}
                                 onClick={() => handleVisibilityClick(item)}
-                                className='mx-5 cursor-pointer'
+                                className='mx-1 cursor-pointer'
                               />
 
                               <FcFullTrash
@@ -283,7 +297,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                                   // Laxit write here for delete api
                                   // }
                                 }}
-                                className='mx-5 cursor-pointer'
+                                className='mx-1 cursor-pointer'
                               />
 
                               {item.merchant_approved === false && (

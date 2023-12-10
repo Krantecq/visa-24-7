@@ -111,7 +111,7 @@
     // Remove border
     &:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush) {
       border: 0;
-      display: none;
+      border-radius: 50%;
     }
 
     // Sizes

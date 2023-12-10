@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import axiosInstance from '../../../app/helpers/axiosInstance';
 import Cookies from 'js-cookie';
 import { io, Socket } from "socket.io-client";
+import Welcome from './Welcome';
 
 interface SuperadminChatContainerProps {
   currentChat?: any;
@@ -17,6 +18,7 @@ const SuperadminChatContainer: React.FC<SuperadminChatContainerProps> = ({ curre
   const socketRef = useRef<Socket | null>(null);
   const [arrivalMessage, setArrivalMessage] = useState<any | null>();
   const prevMessagesRef = useRef<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSendMsg = async (msg: string) => {
     try {
@@ -25,14 +27,12 @@ const SuperadminChatContainer: React.FC<SuperadminChatContainerProps> = ({ curre
       const sendMessageRoute = "/backend/add_message";
 
       if (socketRef.current && userIdFromCookies) {
-        // Emitting message to the server
         socketRef.current.emit("send-msg", {
           to: toId,
           from: userIdFromCookies,
           msg,
         });
 
-        // Making API call to add message
         const response = await axiosInstance.post(sendMessageRoute, {
           from: userIdFromCookies,
           to: toId,
@@ -40,8 +40,6 @@ const SuperadminChatContainer: React.FC<SuperadminChatContainerProps> = ({ curre
         });
 
         console.log('add_message API response:', response);
-
-        // Updating state with the sent message
         setMessages((prevMessages) => [...prevMessages, { fromSelf: true, message: msg }]);
         prevMessagesRef.current = [...prevMessagesRef.current, { fromSelf: true, message: msg }];
         console.log('Updated Messages:', prevMessagesRef.current);
@@ -83,64 +81,78 @@ const SuperadminChatContainer: React.FC<SuperadminChatContainerProps> = ({ curre
   }, []);
 
   useEffect(() => {
-    const userIdFromCookies = Cookies.get('user_id');
-    const toId = currentChat?._id;
-
     const fetchData = async () => {
       try {
-        const messagesResponse = await axiosInstance.post("/backend/get_message", {
-          from: toId,
-          to: userIdFromCookies,
-        });
-
-        setMessages(messagesResponse.data.data);
-        console.log('Add Message Response:', messagesResponse.data);
+        setLoading(true);
+        const userIdFromCookies = Cookies.get('user_id');
+        console.log('User ID from Cookies:', userIdFromCookies);
+        const receiveMessageRoute = "/backend/get_message";
+    
+        if (receiveMessageRoute && currentChat) {
+          const toId = currentChat._id;
+    
+          const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
+            from: toId,
+            to: userIdFromCookies,
+          });
+    
+          const updatedMessages = messagesResponse.data.data;  // Corrected variable name
+          setMessages(updatedMessages);
+          prevMessagesRef.current = updatedMessages;
+          console.log('Updated Messages:', prevMessagesRef.current);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
-
+  
     fetchData();
-
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-      }
-    };
   }, [currentChat]);
 
   return (
     <Container>
-      <div className="chat-header">
-        <div className="user-details">
-          <div className="avatar">
-            {/* <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-              alt=""
-            /> */}
-          </div>
-          <div className="username">
-            {/* <h3>Hello</h3> */}
-          </div>
-        </div>
-      </div>
-      <div className="chat-messages" ref={scrollRef}>
-        {messages && messages.map((message) => (
-          <div
-            key={uuidv4()}
-            className={`message ${message.fromSelf ? "sended" : "received"}`}
-          >
-            <div className="content">
-              <p>{message.message}</p>
+      {currentChat ? (
+        <>
+          <div className="chat-header">
+            <div className="user-details">
+              <div className="avatar">
+                {/* <img
+                  src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
+                  alt=""
+                /> */}
+              </div>
+              <div className="username">
+                {/* <h3>Hello</h3> */}
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-      <ChatInput handleSendMsg={handleSendMsg} />
+          <div className="chat-messages" ref={scrollRef}>
+            {loading && <p>Loading...</p>}
+            {!loading && messages &&
+              messages
+                .sort((a, b) => a.timestamp - b.timestamp)
+                .map((message) => (
+                  <div
+                    key={uuidv4()}
+                    className={`message ${message.fromSelf ? "sended" : "received"}`}
+                  >
+                    <div className="content">
+                      <p>{message.message}</p>
+                    </div>
+                  </div>
+                ))}
+            <div ref={scrollRef}></div>
+          </div>
+          <ChatInput handleSendMsg={handleSendMsg} />
+        </>
+      ) : (
+        <Welcome />
+      )}
     </Container>
   );
 }
-
 
 const Container = styled.div`
   display: grid;
@@ -187,33 +199,34 @@ const Container = styled.div`
       }
     }
     .message {
-      display: flex;
-      align-items: center;
-      .content {
-        max-width: 40%;
-        overflow-wrap: break-word;
-        padding: 1rem;
-        font-size: 1.1rem;
-        border-radius: 1rem;
-        color: #d1d1d1;
-        @media screen and (min-width: 720px) and (max-width: 1080px) {
-          max-width: 70%;
+        display: flex;
+        align-items: center;
+        .content {
+          max-width: 40%;
+          overflow-wrap: break-word;
+          padding: 10px 20px 0px 20px;
+          font-size: 1.1rem;
+          border-radius: 1rem;
+          color: #000;
+          @media screen and (min-width: 720px) and (max-width: 1080px) {
+            max-width: 70%;
+          }
         }
       }
-    }
     
-    .sended {
-      .content {
-        background-color: #4f04ff21;
+      .sended {
+        .content {
+          background-color: #4f04ff21;
+          margin-right: auto; // Adjusted line to margin-right
+        }
       }
-    }
     
-    .recieved {
-      .content {
-        background-color: #9900ff20;
+      .received {
+        .content {
+          background-color: #9900ff20;
+          margin-left: auto; // Adjusted line to margin-left
+        }
       }
-    }
-  }
-`;
+    `;
 
 export default SuperadminChatContainer;

@@ -285,8 +285,8 @@ function MerchantProfile() {
   }
 
   const inputStyle = {
-    border: '2px solid #d3d3d3', // Border width and color
-    borderRadius: '15px', // Border radius
+    border: '1px solid #d3d3d3', // Border width and color
+    borderRadius: '10px', // Border radius
     padding: '10px',
     paddingLeft: '20px', // Padding
     width: 280, // 100% width

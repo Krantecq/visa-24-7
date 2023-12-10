@@ -47,7 +47,7 @@ const PrivateRoutes = () => {
         {/* Redirect to Dashboard after success login/registartion */}
         {user_type == 'merchant' ?
           <>
-          <Route path='*' element={<Navigate to='/merchant/apply-visa' />} />
+          <Route path='*' element={<Navigate to='/merchant/dashboard' />} />
           <Route path='merchant/apply-visa' element={<MerchantNewVisaWrapper />} />
           <Route path='merchant/dashboard' element={<MerchantDashboard />} />
           <Route path='merchant/profile' element={<MerchantProfile />} />

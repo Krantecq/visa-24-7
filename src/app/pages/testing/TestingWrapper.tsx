@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { IssueApiTable } from '../../components/IssueApiTable';
 import axiosInstance from '../../helpers/axiosInstance';
@@ -30,6 +30,15 @@ function TestingWrapper() {
 
   const handleTestApi = () => {
     setShowModal(true);
+  };
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const copyResponseText = () => {
+    if (textareaRef.current) {
+      textareaRef.current.select();
+      document.execCommand('copy');
+    }
   };
 
   const handleCloseModal = () => {
@@ -70,10 +79,10 @@ function TestingWrapper() {
       <button
         style={{
           position: 'absolute',
-          top: '20%',
+          top: '155px',
           fontWeight: '600',
           right: '6%',
-          padding: '12px 20px',
+          padding: '10px 15px',
           backgroundColor: 'transparent',
           color: 'black',
           borderRadius: '10px',
@@ -130,10 +139,14 @@ function TestingWrapper() {
               rows={3}
               value={responseText}
               readOnly
+              ref={textareaRef}
             />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
+          <Button variant="primary" onClick={copyResponseText}>
+            Copy API Response
+          </Button>
           <Button variant="secondary" onClick={handleCloseResponseModal}>
             Close
           </Button>

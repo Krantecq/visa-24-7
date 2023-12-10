@@ -157,6 +157,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const handleFilterClick = (filterType) => {
     setFilter(filterType)
   }
+  console.log(data)
   return (
     <div style={{boxShadow:"none"}} className={`card ${className}`}>
       {/* begin::Header */}
@@ -204,7 +205,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
       {/* begin::Body */}
       <div className='card-body py-3'>
         {/* begin::Table container */}
-        <div style={{borderRadius:"10px"}} className='table-responsive'>
+        <div className='table-responsive'>
           {/* begin::Table */}
           {loading ?
             <div style={{ height: 300, overflowX: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -216,11 +217,12 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
             :
             <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
               {/* begin::Table head */}
-              <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
-                <tr className='fw-bold'>
+              <thead >
+              <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
 
-                  <th style={{paddingLeft:"5%"}} className='min-w-120px text-start'>Email Id</th>
-                  <th className='min-w-120px text-center'>Transaction Id</th>
+                  <th style={{paddingLeft:"2%"}} className='min-w-100px text-start'>Name</th>
+                  <th className='min-w-100px text-center'>Company</th>
+                  <th className='min-w-100px text-center'>Transaction Id</th>
                   <th className='min-w-70px text-center'>Amount</th>
                   <th className='min-w-100px text-center'>Status</th>
                   <th className='min-w-100px text-center'>Actions</th>
@@ -231,7 +233,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
               <tbody style={{border:"1px solid #cccccc"}} >
               {displayedData.map((row, index) => (
 
-                  <tr>
+                  <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                     <td className='text-center'>
                       {/* Avatar and Name */}
                       <div className='d-flex align-items-center'>
@@ -244,6 +246,12 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                           </a>
                         </div>
                       </div>
+                    </td>
+                    <td className='text-center'>
+                      {/* Date */}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                        Krantecq
+                      </a>
                     </td>
                     <td className='text-center'>
                       {/* Date */}

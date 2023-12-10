@@ -209,10 +209,10 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
             <thead style={{ background: '#327113', color: "#fff", borderRadius: '20px' }}>
               <tr className='fw-bold'>
 
-                <th style={{paddingLeft:"20px"}} className='min-w-150px text-start'>Email Id</th>
-                <th className='min-w-140px text-center'>Transaction Id</th>
-                <th className='min-w-120px text-center'>Amount</th>
-                <th className='min-w-120px text-center'>Status</th>
+                <th style={{paddingLeft:"20px"}} className='min-w-100px text-start'>Email Id</th>
+                <th className='min-w-100px text-center'>Transaction Id</th>
+                <th className='min-w-100px text-center'>Amount</th>
+                <th className='min-w-100px text-center'>Status</th>
                 <th className='min-w-100px text-center'>Actions</th>
               </tr>
             </thead>
