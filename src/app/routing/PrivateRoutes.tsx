@@ -21,6 +21,7 @@ import MerchantNewVisaWrapper from '../pages/merchants/apply-visa/MerchantNewVis
 import MerchantProfile from '../pages/merchants/profile/MerchantProfile'
 import Cookies from 'js-cookie';
 import WalletWrapper from '../pages/wallet/WalletWrapper'
+import ReportWrapper from '../pages/report/ReportWrapper'
 import RevenueWrapper from '../pages/revenue/RevenueWrapper'
 import IssueApiWrapper from '../pages/IssueApi/IssueApiWrapper'
 import ApiSettingWrapper from '../pages/api-setting/ApiSettingWrapper'
@@ -66,6 +67,7 @@ const PrivateRoutes = () => {
         <Route path='superadmin/waiting-for-approval' element={< ApprovalWrapper />} />
         <Route path='superadmin/rejected' element={<RejectedWrapper />} />
         <Route path='superadmin/wallet' element={<WalletWrapper />} />
+        <Route path='superadmin/report' element={<ReportWrapper />} />
         <Route path='superadmin/revenue' element={<RevenueWrapper />} />
         <Route path='superadmin/testing' element={<TestingWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />

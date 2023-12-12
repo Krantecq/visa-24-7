@@ -204,10 +204,10 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
         {/* begin::Table container */}
         <div style={{borderRadius:"10px", border:"1px solid #327113"}} className='table-responsive'>
           {/* begin::Table */}
-          <table style={{ borderRadius: '20px' }} className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
+          <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             {/* begin::Table head */}
-            <thead style={{ background: '#327113', color: "#fff", borderRadius: '20px' }}>
-              <tr className='fw-bold'>
+            <thead >
+            <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
 
                 <th style={{paddingLeft:"20px"}} className='min-w-100px text-start'>Email Id</th>
                 <th className='min-w-100px text-center'>Transaction Id</th>

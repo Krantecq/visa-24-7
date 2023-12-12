@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
+import { IoArrowBackOutline } from "react-icons/io5";
 import './card.css'
-import ApplyVisa from './ApplyVisa'
-import ClearIcon from '@mui/icons-material/Clear'
-import InfoIcon from '@mui/icons-material/InfoOutlined'
-import MerchantApplyVisa from './MerchantApplyVisa'
+
 type Props = {
   className: string
   title: String
@@ -63,7 +62,8 @@ const VisaTable: React.FC<Props> = ({
   
   return (
     <div className="choice">
-      <div className="ticket-container" id="ticketContainer">
+      <div style={{marginTop:"-45px"}} className="ticket-container" id="ticketContainer">
+      <Link style={{marginLeft:"0px", fontSize:"16px", fontWeight:"600", color:"#327113"}} to="/merchant/apply-visa" ><IoArrowBackOutline style={{marginTop:"-3px", fontSize:"20px"}} /> Go Back</Link>
       {apiData.map((entry: any, index: number) => (
       <div
       key={index}
@@ -103,7 +103,7 @@ const VisaTable: React.FC<Props> = ({
               <div className="visa-des">
                   <div className="upper">
                       <div className="travel-from">
-                          <p className="from">From</p>
+                          <h6 className="from">From</h6>
                           <h2 className="country">IND</h2>
                       </div>
                       <div className="svg-area">
@@ -131,21 +131,21 @@ const VisaTable: React.FC<Props> = ({
                           </svg>
                       </div>
                       <div className="travel-to">
-                          <p className="from">To</p>
+                          <h6 className="from">To</h6>
                           <h2 className="country">UAE</h2>
                       </div>
                   </div>
                   <div className="lower">
                       <div className="details">
-                          <p>Days of stays</p>
+                          <h6>Days of stays</h6>
                           <h2>{entry.day} Days</h2>
                       </div>
                       <div className="details">
-                          <p>Entry Type</p>
+                          <h6>Entry Type</h6>
                           <h2>{entry.entryType}</h2>
                       </div>
                       <div className="details">
-                          <p>Price</p>
+                          <h6>Price</h6>
                           <h2>{Math.ceil((entry.receipt['Visa Fees'] ? entry.receipt['Visa Fees'] : 0)*((parseFloat(markup_percentage)?(1+(parseFloat(markup_percentage)/100)):1))) +
                             (entry.receipt['Service Fees'] ? entry.receipt['Service Fees'] : 0)}</h2>
                       </div>
@@ -159,13 +159,13 @@ const VisaTable: React.FC<Props> = ({
       <div className="apply-card">
           <div className="text-cont">
               <h2><img className="icons" src="/media/assets/vt2.png"/>Length of Stay</h2>
-              <p>{apiData[selectedTicket].day} Days</p>
+              <h6>{apiData[selectedTicket].day} Days</h6>
           </div>
 
           <div className="text-cont1">
               <h2 className="tb"><img className="icons" src="/media/assets/vt4.png"/>Total</h2>
               <div className="pb">
-                  <p style={{top:"10px"}} className="amount">₹{selectedTicketPrice}</p>
+                  <h6 style={{top:"10px"}} className="amount">₹{selectedTicketPrice}</h6>
                   <h2 className="tax-des">(includes all government related fees)</h2>
               </div>
           </div>

@@ -1,4 +1,3 @@
-// Importing necessary dependencies
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Logo from "../../../_metronic/assets/icons/logo.png";
@@ -228,6 +227,8 @@ const Container = styled.div`
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
   background-color: #fff;
+  border-radius: 15px;
+  border: 1px solid #327113;
   .brand {
     display: flex;
     align-items: center;
@@ -238,7 +239,6 @@ const Container = styled.div`
     }
     h3 {
       color: black;
-      text-transform: uppercase;
     }
   }
   .contacts {
@@ -246,7 +246,6 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     overflow: auto;
-    gap: 0.8rem;
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
@@ -256,34 +255,33 @@ const Container = styled.div`
       }
     }
     .contact {
-      background-color: #bbdcbd;
+      background-color: #fafafa;
       cursor: pointer;
-      width: 90%;
-      border-radius: 0.2rem;
+      width: 100%;
       padding: 10px 15px;
+      border-top: 1px solid #dadada;
       display: flex;
       gap: 1rem;
       align-items: center;
       transition: 0.5s ease-in-out;
       .avatar {
         img {
-          height: 40px;
-          width: 40px;
+          height: 45px;
+          width: 45px;
           border-radius: 50%;
         }
       }
       .username {
         h3 {
           color: black;
+          font-size: 16px;
+          font-weight: 500;
+          margin-top: 5px;
         }
       }
     }
     .selected {
-      background-color: #327113;
-      color: #fff;
-      .username h3 {
-        color: white;
-      }
+      background-color: #bbdcbd;
     }
   }
 

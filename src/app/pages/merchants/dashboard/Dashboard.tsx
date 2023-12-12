@@ -10,23 +10,40 @@ import { GoStopwatch } from "react-icons/go";
 import { MdOutlineDoNotDisturb } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
+import { GiAirplaneDeparture } from "react-icons/gi";
+import { useNavigate } from 'react-router-dom';
+import Loader from '../../../components/Loader';
 
 const MerchantDashboard = () => {
   const [activeTab, setActiveTab] = useState("Analytics"); // Initialize active tab state
   const [visaData, setVisaData] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
-
+  const [loading, setLoading] = useState(false); // State to manage loading
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Function to fetch data from the API based on the activeTab
-    
     fetchData();
     fetchDashboardData(); // Call the fetchData function when activeTab changes
   }, [activeTab]);
+
   // Function to handle tab clicks
-  const handleTabClick = (tabName) => {
+  const handleTabClick = async (tabName) => {
     setActiveTab(tabName);
+
+    if (tabName === 'ApplyVisa') {
+      setLoading(true); // Show loading state or spinner until the data is fetched
+      try {
+        // Fetch data here
+        await fetchData();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error, e.g., setLoading(false) to stop loading state
+      }
+      setLoading(false); // Stop loading state after data is fetched
+    }
   };
+
   const fetchData = async () => {
     try {
       const merchant_id = Cookies.get('user_id');
@@ -50,8 +67,11 @@ const MerchantDashboard = () => {
         } else if (activeTab === "Waiting") {
           data = response.data.data.filter(item => item.visa_status === 'Waiting');
         }
-        if(activeTab != "Analytics"){
-        setVisaData(data); // Set the fetched data in the state
+        if (activeTab != "Analytics") {
+          setVisaData(data); // Set the fetched data in the state
+        }
+        if (activeTab === 'ApplyVisa') {
+          navigate('/merchant/apply-visa');
         }
       }
     } catch (error) {
@@ -67,10 +87,7 @@ const MerchantDashboard = () => {
       }
       let response = await axiosInstance.post("/backend/merchant_dashboard", postBody);
       if (response.status == 200) {
-        
-        // if(activeTab!= "Analytics"){
-          setDashboardData(response.data.data); // Set the fetched data in the state
-        // }
+        setDashboardData(response.data.data); // Set the fetched data in the state
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -188,16 +205,26 @@ const MerchantDashboard = () => {
         >
           <RxCross1 style={iconStyle}/>Rejected
         </div>
+        <div
+          onClick={() => handleTabClick("ApplyVisa")}
+          style={activeTab === "ApplyVisa" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+        >
+          <GiAirplaneDeparture style={iconStyle} />Apply Visa
+        </div>
       </div>
 
-      {/* Right-side content */}
       <div style={{ marginLeft: '20%', width: '80%', overflowY: 'auto', padding: '16px' }}>
         {activeTab === "Analytics" ?
           <div>
-            <MerchantAnaltytics dashboardData={dashboardData}/>
+            <MerchantAnaltytics dashboardData={dashboardData} />
           </div>
           :
-          <VisaDetailCard visaData={visaData} />
+          <>
+            <Loader loading={loading} />
+            {!loading && (
+              <VisaDetailCard visaData={visaData} />
+            )}
+          </>
         }
       </div>
     </div>

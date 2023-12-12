@@ -201,7 +201,7 @@
     border: 1px solid black;
     transition: 0.4s all;
     position: sticky;
-    top: 30px;
+    top: 90px;
 }
 
 .choice .apply-card:hover{

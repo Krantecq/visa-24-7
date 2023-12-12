@@ -211,17 +211,20 @@ const Container = styled.div`
     }
     
     .sended {
-        .content {
-          background-color: #4f04ff21;
-          margin-left: auto;  // Updated line
-        }
+      .content {
+        background-color: #f4f4f4;
+        margin-right: auto;
+        border-radius: 15px 5px 15px 5px;
       }
-    
-      .received {
-        .content {
-          background-color: #9900ff20;
-        }
+    }
+  
+    .received {
+      .content {
+        background-color: #dbfbcc;
+        border-radius: 5px 15px 5px 10px;
+        margin-left: auto; // Adjusted line to margin-left
       }
+    }
   }
 `;
 export default ChatContainer;

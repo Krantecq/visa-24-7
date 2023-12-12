@@ -1205,49 +1205,53 @@ function MerchantProfile() {
 
       <table className='table align-middle gs-10 mt-10'>
         {/* begin::Table head */}
-        <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
-          <tr className='fw-bold'>
-            <th className='min-w-150px'>Date/Time</th>
-            <th className='min-w-150px'>Amount</th>
-            <th className='min-w-150px'>Category</th>
-            <th className='min-w-150px'>Type</th>
-            <th className='min-w-150px'>Status</th>
+        <thead >
+        <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
+            <th className='min-w-100px'>Date/Time</th>
+            <th className='min-w-100px'>Particular</th>
+            <th className='min-w-100px'>Status</th>
+            <th className='min-w-100px'>Credit</th>
+            <th className='min-w-100px'>Debit</th>
+            <th className='min-w-100px'>Wallet</th>
           </tr>
         </thead>
         {/* end::Table head */}
         {/* begin::Table body */}
         <tbody style={{border:"1px solid #cccccc"}} >
-          {transaction.map((item, index) => (
-
-            <tr key={index}>
-              <td className='text-start'>
-                <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
-                  {item && moment((item as any).created_at).format('DD MMM YYYY hh:mm a')}
-                </a>
-              </td>
-              <td className='text-start'>
-                <span className='text-dark d-block fs-6'>
-                  ₹ {item && (item as { wallet_balance: number }).wallet_balance}/-
-                </span>
-              </td>
-              <td className='text-start'>
-                <span className='text-dark d-block fs-6'>
-                  {item && (item as { category: String }).category}
-                </span>
-              </td>
-              <td className='text-start'>
-                <span className='text-dark d-block fs-6'>
-                  {item && (item as { type: string }).type}
-                </span>
-
-              </td>
-              <td className='text-start'>
-                <span className='text-dark fw-semibold d-block fs-6'>
-                  {item && (item as { status: string }).status}
-                </span>
-              </td>
-            </tr>
-          ))}
+        {transaction.map((item, index) => (
+          <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+            <td className='text-start'>
+              <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
+                {item && moment(item.created_at).format('DD MMM YYYY hh:mm a')}
+              </a>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark d-block fs-6'>
+                {item && item.category}
+              </span>
+            </td>
+            <td className='text-start'>
+              <span className='text-dark fw-semibold d-block fs-6'>
+                {item && item.status}
+              </span>
+            </td>
+            <td className='text-start'>
+              {item && item.type === 'Credit' ? (
+                <span className='text-dark d-block fs-6'>₹ {item.wallet_balance}/-</span>
+              ) : "-"}
+            </td>
+            <td className='text-start'>
+              {item && item.type === 'Debit' ? (
+                <span className='text-dark d-block fs-6'>₹ {item.wallet_balance}/-</span>
+              ) : "-"}
+            </td>
+            <td className='text-start'>
+              <span className='text-dark d-block fs-6'>
+                {item && item.type}
+              </span>
+            </td>
+          </tr>
+        ))}
 
         </tbody>
         {/* end::Table body */}
@@ -1298,8 +1302,9 @@ function MerchantProfile() {
         </div>
 
         <div
-          className='px-5 py-1'
+          className='px-5 py-2'
           style={{
+            border: '1px solid #327113',
             borderRadius: 10,
             alignItems: 'center',
             display: 'flex',
@@ -1317,8 +1322,8 @@ function MerchantProfile() {
 
       <table className='table align-middle gs-10 mt-10'>
         {/* begin::Table head */}
-        <thead style={{ background: '#327113', color: '#fff', border:"1px solid #b2b2b2" }}>
-          <tr className='fw-bold'>
+        <thead >
+        <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
             <th className='min-w-150px'>Name</th>
             <th className='min-w-150px'>Transaction time</th>
             <th className='min-w-150px'>Application No.</th>
@@ -1331,7 +1336,7 @@ function MerchantProfile() {
         <tbody style={{border:"1px solid #cccccc"}} >
           {revenue.map((item, index) => (
 
-            <tr>
+            <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
               <td className='text-start'>
                 <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
                   {item.name}

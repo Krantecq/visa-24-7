@@ -1,14 +1,29 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import Robot from '../../../_metronic/assets/favi.png';
+import Robot from '../../../_metronic/assets/card/3dchat1.webp';
+import { GiBeveledStar } from "react-icons/gi";
 
 const WelcomeContainer: React.FC = () => (
   <Container>
-    <BounceImage width='100px' height='100px' src={Robot} alt="" />
-    <h1>Welcome,</h1>
+    <BounceImage width='150px' height='150px' src={Robot} alt="" />
+    <h1>Welcome <RotatingStar><GiBeveledStar style={{fontSize:"28px", color:"#327113"}} /></RotatingStar></h1>
     <h3>Please select a chat to start messaging.</h3>
   </Container>
 );
+
+const rotateAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+const RotatingStar = styled.span`
+  display: inline-block;
+  animation: ${rotateAnimation} 2s linear infinite;
+`;
 
 const bounceAnimation = keyframes`
   0%, 20%, 50%, 80%, 100% {
@@ -27,6 +42,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 80dvh;
+  gap: 15px;
   color: white;
   flex-direction: column;
   h1, h3 {

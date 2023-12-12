@@ -4,13 +4,13 @@ import { io, Socket } from "socket.io-client";
 import styled from "styled-components";
 import ChatContainer from "./ChatContainer";
 import Contacts from "./Contact";
-import SuperadminChatContainer from "./SuperadminChatContainer"; // Import SuperadminChatContainer
+import SuperadminChatContainer from "./SuperadminChatContainer";
 import Cookies from 'js-cookie';
 import axiosInstance from '../../../app/helpers/axiosInstance';
 
 const Chat: React.FC = () => {
   const navigate = useNavigate();
-  const socket = useRef<Socket<any, any>>(io());
+  const socketRef = useRef<Socket | null>(null);
   const [currentUser, setCurrentUser] = useState<any | undefined>(undefined);
   const [currentChat, setCurrentChat] = useState<any | undefined>(undefined);
   const [merchantList, setMerchantList] = useState<any[]>([]);
@@ -40,6 +40,17 @@ const Chat: React.FC = () => {
     fetchData();
   }, [currentUser]);
 
+  useEffect(() => {
+    const socket = io();
+    socketRef.current = socket;
+
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);  
+
   const handleChatChange = (chat: any) => {
     setCurrentChat(chat);
   };
@@ -55,7 +66,7 @@ const Chat: React.FC = () => {
             <SuperadminChatContainer currentChat={currentChat} />
           )}
           {currentUser && currentUser.user_type === 'merchant' && (
-            <ChatContainer currentChat={currentChat} socket={socket} />
+            <ChatContainer currentChat={currentChat} socket={socketRef} />
           )}
         </div>
       </Container>
@@ -72,7 +83,7 @@ const Container = styled.div`
     justify-content: center;
     gap: 1rem;
     align-items: center;
-    background-color: #131324;
+    background-color: #fff;
     .container {
         height: 85vh;
         width: 85vw;

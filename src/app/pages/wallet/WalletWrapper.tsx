@@ -15,7 +15,7 @@ function WalletWrapper() {
         // Make a POST request to your API endpoint
         axiosInstance.get('/backend/fetch_wallet_transaction')
           .then((response) => {
-            console.log(response.data)
+            // console.log('ye bhi hai',response.data)
             setWalletData(response.data.data);
             setLoading(false);
           })
@@ -32,7 +32,8 @@ function WalletWrapper() {
 
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs once on mount
+  }, []); 
+  
 
   return (
     <div style={{marginTop:"-50px"}}>

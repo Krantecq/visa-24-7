@@ -157,7 +157,6 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       setissueVisaLoader(false);
     }
   };
-
   return (
     <div style={{boxShadow:"none"}} className={`card ${className}`}>
       {/* begin::Header */}
@@ -190,7 +189,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       <div className='card-body py-3'>
         <h1 style={{position:"absolute", top:"35px", right:"5%", fontSize:"18px"}} >
           Atlys wallet balance - 
-          <button className='btn btn-success' style={{backgroundColor:"#327113", padding:"5px 10px", marginTop:"-5px", marginLeft:"5px"}} >
+          <button className='btn btn-success' style={{backgroundColor:"#327113", padding:"5px 10px", marginTop:"-4px", marginLeft:"5px"}} >
             ₹ 2 /-
           </button>
           <a title='Refresh' href='#'>
@@ -216,11 +215,11 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                   <th className='min-w-80px text-center'>Name</th>
                   <th className='min-w-80px text-center'>Phone</th>
                   <th className='min-w-80px text-center'>Email</th>
-                  <th className='min-w-80px text-center'>From</th>
-                  <th className='min-w-80px text-center'>To</th>
+                  <th className='min-w-60px text-center'>From</th>
+                  <th className='min-w-60px text-center'>To</th>
                   <th className='min-w-80px text-center'>Date</th>
-                  <th className='min-w-80px text-center'>Status</th>
-                  <th className='min-w-80px text-center'>Amount</th>
+                  <th className='min-w-60px text-center'>Status</th>
+                  <th className='min-w-60px text-center'>Amount</th>
                   <th className='min-w-100px text-center'>Actions</th>
                 </tr>
               </thead>
@@ -245,13 +244,13 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark text-hover-primary d-block fs-6'>
-                        phone
+                        {row.merchant_phone_number}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a href='#' className='text-dark text-hover-primary d-block fs-6'>
-                        email
+                        {row.merchant_email_id}
                       </a>
                     </td>
                     <td className='text-center'>
@@ -292,6 +291,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
 
                       <FcInfo style={{fontSize:"20px"}} className='mx-2 cursor-pointer' onClick={() => handleVisibilityClick(row)} />
                       <FcFullTrash 
+                        className='mx-1'
                         style={{fontSize:"20px"}}
                         onClick={() => 
                         handleClickOpen(row)

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DatePicker } from 'antd';
 import Papa from 'papaparse';
 import { Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
+import moment from 'moment'
 
 type Props = {
   className: string;
@@ -19,27 +20,9 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [itemModalVisibility, setItemModalVisibility] = useState<Array<boolean>>(Array(data.length).fill(false));
   const formatDate1 = (dateString: string) => {
     const date = new Date(dateString);
-
-    const monthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    const month = monthNames[date.getMonth()];
-
-    const day = date.getDate();
-    const year = date.getFullYear();
-
-    return `${month} ${day}, ${year}`;
+    const formattedDate = moment(date).format('DD MMM YYYY');
+    const formattedTime = moment(date).format('hh:mm a');
+    return `${formattedDate} ${formattedTime}`;
   };
 
   const [visible, setVisible] = useState(false);
@@ -97,7 +80,7 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
     a.click();
     URL.revokeObjectURL(url);
   };
-
+console.log('revenue', data)
   return (
     <div style={{ boxShadow: 'none' }} className={`card ${className}`}>
       {/* begin::Header */}
@@ -178,10 +161,10 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               {/* begin::Table head */}
               <thead >
               <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
-                  <th style={{ paddingLeft: '2%'}} className='min-w-80px text-start'>
-                    Date
+                  <th style={{ paddingLeft: '2%'}} className='min-w-100px text-start'>
+                    Date / Time
                   </th>
-                  <th className='min-w-80px text-center'>Application No.</th>
+                  <th className='min-w-100px text-center'>Application No.</th>
                   <th className='min-w-80px text-center'>Name</th>
                   <th className='min-w-80px text-center'>Channel</th>
                   <th className='min-w-80px text-center'>Provider</th>
@@ -197,13 +180,11 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
               <tbody style={{border:"1px solid #cccccc"}} >
                 {filteredData.map((row, index) => (
                   <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
-                    <td className='text-center'>
-                      {/* Avatar and Name */}
+                    <td style={{paddingLeft:"10px"}} className='text-center'>
                       <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-45px me-5'>{/* <img src={row.photo} alt='' /> */}</div>
                         <div className='d-flex justify-content-center flex-column'>
                           <a className='text-dark fw-bold text-hover-primary fs-6'>
-                            {formatDate1(row.transaction_time)}
+                          {`${formatDate1(row.transaction_time)}`}
                           </a>
                         </div>
                       </div>

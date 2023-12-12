@@ -47,7 +47,7 @@ function ApplicationFormView({viewApplication}) {
       className='py-10 px-20'
 
     >
-      <h5 style={{fontSize: 30, letterSpacing: 0.3}}>Traveller 1 </h5>
+      <h5 className='mx-auto' style={{fontSize: 30, letterSpacing: 0.3}}>Traveller 1 </h5>
       <hr />
       <br />
       <h3>Upload Traveler's Front Passport Page</h3>

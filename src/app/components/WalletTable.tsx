@@ -2,6 +2,7 @@
 import React, { CSSProperties, useState, useEffect } from 'react';
 import { DatePicker } from 'antd';
 import Papa from 'papaparse';
+import moment from 'moment'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -57,25 +58,28 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState('all')
-  const entriesPerPage = 10;
-  const startIndex = (currentPage - 1) * entriesPerPage;
-  const endIndex = startIndex + entriesPerPage;
   const [searchTerm, setSearchTerm] = useState('');
   const [issueDate, setIssueDate] = useState<string | undefined>('');
   const [expiryDate, setExpiryDate] = useState<string | undefined>('');
   const [filteredData, setFilteredData] = useState(data as any[]);
-
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const formattedDate = moment(date).format('DD MMM YYYY');
+    const formattedTime = moment(date).format('hh:mm a');
+    return `${formattedDate} ${formattedTime}`;
+  };
   const handleDatePickerChange = (value: any) => {
     if (value && value.length === 2) {
       const startDate = value[0]?.isValid() ? value[0].format('YYYY-MM-DD') : '';
       const endDate = value[1]?.isValid() ? value[1].format('YYYY-MM-DD') : '';
       const filtered = (data as any[]).filter((item) => {
-        const transactionDate = item.transaction_time.split(' ')[0];
+        const transactionDate = item.created_at.split(' ')[0];
         return transactionDate >= startDate && transactionDate <= endDate;
       });
       setIssueDate(startDate);
       setExpiryDate(endDate);
       setFilteredData(filtered);
+      console.log('Filtered Data:', filtered);
     } else {
       // Date picker cancel hua hai, isliye original data ko set karo
       setFilteredData(data as any[]);
@@ -100,9 +104,6 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
   useEffect(() => {
     setFilteredData(data as any[]);
-    
-    // Additional code that depends on setFilteredData should go here
-    console.log("Initial data set successfully:", data);
   }, [data]);
 
   const handleDownloadCSVWalletTable = () => {
@@ -128,14 +129,9 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
     } if (filter === 'history') {
       return data.filter((item) => item.status != 'In-processed')
     }else {
-      return data // Show all items by default
+      return data
     }
   }
-  const displayedData = getFilteredData().slice(startIndex, endIndex);
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-  
   
   const [open, setOpen] = React.useState(false);
   const handleApproveClick = async (item) => {
@@ -217,7 +213,6 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const handleFilterClick = (filterType) => {
     setFilter(filterType)
   }
-  console.log(data)
   return (
     <div style={{boxShadow:"none"}} className={`card ${className}`}>
       {/* begin::Header */}
@@ -225,11 +220,11 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
         <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>
           <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
         </h3>
-        {/* <div className='fv-row' style={{ position: 'relative', right: '0%' }}>
+        <div className='fv-row' style={{ position: 'relative', right: '0%' }}>
           <DatePicker.RangePicker
             style={{
               backgroundClip: '#fff',
-              width: 300,
+              width: 400,
               marginTop: 11,
               border: '1px solid #808080',
               borderRadius: 10,
@@ -237,23 +232,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
             }}
             onChange={handleDatePickerChange}
           />
-        </div> */}
-               <input
-            type='text'
-            placeholder='Search...'
-            onChange={handleSearch}
-            value={searchTerm}
-            style={{
-              border: '1px solid #d3d3d3',
-              borderRadius: '10px',
-              padding: '10px',
-              paddingLeft: '20px',
-              marginTop:"10px",
-              width: '350px',
-              fontSize:"14px",
-              boxSizing: 'border-box',
-            }}
-          />
+        </div>
         <div style={{gap:"10px", padding:"10px 0px"}} className='dropdown d-flex g-3'>
           <button
             style={{
@@ -327,6 +306,8 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
                   <th style={{paddingLeft:"2%"}} className='min-w-100px text-start'>Name</th>
                   <th className='min-w-100px text-center'>Company</th>
+                  <th className='min-w-100px text-center'>Created at</th>
+                  <th className='min-w-100px text-center'>Updated at</th>
                   <th className='min-w-100px text-center'>Transaction Id</th>
                   <th className='min-w-70px text-center'>Amount</th>
                   <th className='min-w-100px text-center'>Status</th>
@@ -336,7 +317,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
               {/* end::Table head */}
               {/* begin::Table body */}
               <tbody style={{border:"1px solid #cccccc"}} >
-              {displayedData.map((row, index) => (
+              {filteredData.map((row, index) => (
 
                   <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                     <td className='text-center'>
@@ -347,7 +328,7 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                         </div>
                         <div className='d-flex justify-content-center flex-column'>
                           <a className='text-dark text-hover-primary fs-6'>
-                            {row.merchant_email_id}
+                            {row.merchant_name}
                           </a>
                         </div>
                       </div>
@@ -355,7 +336,19 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
                     <td className='text-center'>
                       {/* Date */}
                       <a className='text-dark text-hover-primary d-block fs-6'>
-                        Krantecq
+                        {row.merchant_company_name}
+                      </a>
+                    </td>
+                    <td className='text-center'>
+                      {/* Date */}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                      {`${formatDate(row.created_at)}`}
+                      </a>
+                    </td>
+                    <td className='text-center'>
+                      {/* Date */}
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                      {`${formatDate(row.updated_at)}`}
                       </a>
                     </td>
                     <td className='text-center'>
@@ -412,11 +405,6 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
         
         {/* end::Table container */}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(getFilteredData().length / entriesPerPage)}
-        onPageChange={handlePageChange}
-      />
       {/* begin::Body */}
       {visible &&
         <div className='loader-overlay' style={{ ...overlayStyle, ...(visible && activeOverlayStyle), }}>
