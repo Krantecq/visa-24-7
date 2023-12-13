@@ -36,11 +36,7 @@ export function HeaderWrapper({ role }: { role: string }) {
       }
 
       setProfile(response.data.data);
-
-      // Check if issued_api field is available in the response
       const issuedApi = response.data.data?.issued_api || [];
-
-      // Set user type based on the presence of data in issued_api
       setUserType(issuedApi.length > 0 ? 'Partner' : 'Retailer');
     } catch (error) {
       console.error('Error fetching profile data:', error);
@@ -156,11 +152,13 @@ export function HeaderWrapper({ role }: { role: string }) {
         {isMerchant && (
         <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/logos/logo.png')}
-              className='h-20px h-lg-30px app-sidebar-logo-default'
-            />
+            <Link to='/dashboard'>
+              <img
+                alt='Logo'
+                src={toAbsoluteUrl('/media/logos/logo.png')}
+                className='h-20px h-lg-30px app-sidebar-logo-default'
+              />
+            </Link>
              <p
               style={{
                 position: 'relative',

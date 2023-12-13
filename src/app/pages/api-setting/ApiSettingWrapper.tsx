@@ -150,7 +150,7 @@ function ApiSettingWrapper() {
 
                 <div className='w-100 d-flex flex-column mx-auto mb-10'>
                   <label className='d-flex align-items-center form-label'>
-                    <span className='required'>API percentage</span>
+                    <span className='required'>Partner percentage</span>
                   </label>
 
                   <Field

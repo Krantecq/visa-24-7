@@ -13,7 +13,7 @@ class Loader extends Component<LoaderProps> {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      // backgroundColor: 'rgba(0, 0, 0, 0.7)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -45,7 +45,7 @@ class Loader extends Component<LoaderProps> {
       <div style={{ ...overlayStyle, ...(this.props.loading && activeOverlayStyle) }}>
         <div style={pleaseWaitStyle}>
           <div style={{alignSelf:'center'}} ></div>
-          <img style={{width:"250px", height:"250px", borderRadius:"40px"}}
+          <img style={{width:"150px", height:"150px", borderRadius:"20px"}}
             src={toAbsoluteUrl('/media/loadere.gif')} />
           <br />
         </div>

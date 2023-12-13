@@ -304,10 +304,9 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
               <thead >
               <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
 
-                  <th style={{paddingLeft:"2%"}} className='min-w-100px text-start'>Name</th>
+                  <th style={{paddingLeft:"2%"}} className='min-w-100px text-start'>Created at</th>
+                  <th className='min-w-100px text-center'>Name</th>
                   <th className='min-w-100px text-center'>Company</th>
-                  <th className='min-w-100px text-center'>Created at</th>
-                  <th className='min-w-100px text-center'>Updated at</th>
                   <th className='min-w-100px text-center'>Transaction Id</th>
                   <th className='min-w-70px text-center'>Amount</th>
                   <th className='min-w-100px text-center'>Status</th>
@@ -321,34 +320,19 @@ const WalletTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
                   <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                     <td className='text-center'>
-                      {/* Avatar and Name */}
-                      <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-45px me-5'>
-                          {/* <img src={row.photo} alt='' /> */}
-                        </div>
-                        <div className='d-flex justify-content-center flex-column'>
-                          <a className='text-dark text-hover-primary fs-6'>
-                            {row.merchant_name}
-                          </a>
-                        </div>
-                      </div>
-                    </td>
-                    <td className='text-center'>
-                      {/* Date */}
-                      <a className='text-dark text-hover-primary d-block fs-6'>
-                        {row.merchant_company_name}
-                      </a>
-                    </td>
-                    <td className='text-center'>
-                      {/* Date */}
                       <a className='text-dark text-hover-primary d-block fs-6'>
                       {`${formatDate(row.created_at)}`}
                       </a>
                     </td>
                     <td className='text-center'>
+                      <a className='text-dark text-hover-primary d-block fs-6'>
+                      {row.merchant_name}
+                      </a>
+                    </td>
+                    <td className='text-center'>
                       {/* Date */}
                       <a className='text-dark text-hover-primary d-block fs-6'>
-                      {`${formatDate(row.updated_at)}`}
+                        {row.merchant_company_name}
                       </a>
                     </td>
                     <td className='text-center'>

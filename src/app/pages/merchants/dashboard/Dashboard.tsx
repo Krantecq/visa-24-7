@@ -13,34 +13,39 @@ import { RxCross1 } from "react-icons/rx";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../../components/Loader';
+import { GoArrowLeft } from "react-icons/go";
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import { GoArrowRight } from "react-icons/go";
+import logo from '../../../../_metronic/assets/favi.png'
 
 const MerchantDashboard = () => {
-  const [activeTab, setActiveTab] = useState("Analytics"); // Initialize active tab state
+  const [activeTab, setActiveTab] = useState("Analytics"); 
   const [visaData, setVisaData] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(false); // State to manage loading
+  const [loading, setLoading] = useState(false); 
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Function to fetch data from the API based on the activeTab
     fetchData();
-    fetchDashboardData(); // Call the fetchData function when activeTab changes
+    fetchDashboardData(); 
   }, [activeTab]);
 
-  // Function to handle tab clicks
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   const handleTabClick = async (tabName) => {
     setActiveTab(tabName);
 
     if (tabName === 'ApplyVisa') {
-      setLoading(true); // Show loading state or spinner until the data is fetched
+      setLoading(true);
       try {
-        // Fetch data here
         await fetchData();
       } catch (error) {
         console.error('Error fetching data:', error);
-        // Handle error, e.g., setLoading(false) to stop loading state
       }
-      setLoading(false); // Stop loading state after data is fetched
+      setLoading(false);
     }
   };
 
@@ -68,7 +73,7 @@ const MerchantDashboard = () => {
           data = response.data.data.filter(item => item.visa_status === 'Waiting');
         }
         if (activeTab != "Analytics") {
-          setVisaData(data); // Set the fetched data in the state
+          setVisaData(data); 
         }
         if (activeTab === 'ApplyVisa') {
           navigate('/merchant/apply-visa');
@@ -87,15 +92,15 @@ const MerchantDashboard = () => {
       }
       let response = await axiosInstance.post("/backend/merchant_dashboard", postBody);
       if (response.status == 200) {
-        setDashboardData(response.data.data); // Set the fetched data in the state
+        setDashboardData(response.data.data); 
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  // Define inline styles for the active tab text
+
   const activeTabTextStyle = {
-    color: '#000', // Text color for the active tab
+    color: '#000', 
     cursor: 'pointer',
     backgroundColor:"#E2FDD5",
     fontSize: 16,
@@ -108,24 +113,23 @@ const MerchantDashboard = () => {
     alignItems: 'center',
   };
 
-  // Define inline styles for the active tab border
-  const activeTabBorderStyle = { // Add a bottom border for the active tab
+
+  const activeTabBorderStyle = {
     padding: 7,
     paddingLeft: 8,
     marginTop: 5,
     borderRadius:20,
     fontWeight:"500",
-    color: '#327113', // Add some padding to the active tab
+    color: '#327113', 
   };
 
-  // Define inline styles for the inactive tab text
   const tabTextStyle = {
-    color: '#959595', // Text color for the inactive tab
+    color: '#959595', 
     cursor: 'pointer',
     fontSize: 16,
     paddingBottom: "25px",
     padding: '10px 0',
-    marginTop: 20,
+    marginTop: 25,
     display: 'flex',
     alignItems: 'center',
   };
@@ -136,11 +140,17 @@ const MerchantDashboard = () => {
     marginLeft:"10px",
   };
 
-  // Define inline styles for the inactive tab border
-  const tabBorderStyle = { // Add a transparent bottom border for inactive tabs
+  const iconStyle1 = {
+    fontSize:"20px",
+    marginRight:"10px",
+    marginLeft:"10px",
+    cursor:"pointer"
+  };
+
+
+  const tabBorderStyle = { 
     padding: '8px',
     marginTop: 5,
-    // Add some padding to the inactive tabs
   };
 
   return (
@@ -148,72 +158,131 @@ const MerchantDashboard = () => {
       {/* Sidebar */}
       <div
         style={{
-          width: '19%',
+          width: sidebarOpen ? '260px' : '80px', // Toggle sidebar width
           backgroundColor: '#f8f8f8',
-          padding: '16px',
+          padding: '12px',
           position: 'fixed',
           height: '100%',
           overflowY: 'auto',
-          paddingTop: 50,
-          left:0
+          paddingTop: 70,
+          left: 0,
+          transition: 'all 0.5s ease', // Add transition property
         }}
       >
-
-        <div
-          onClick={() => handleTabClick("Analytics")}
-          style={activeTab === "Analytics" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <TfiStatsUp style={iconStyle}/>Analytics
-        </div>
-        <h5 className="py-7" style={{ padding: 8 }}>
-          VISA
-        </h5>
-        <div
-          onClick={() => handleTabClick("All")}
-          style={activeTab === "All" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <MdOutlineAlignHorizontalLeft style={iconStyle}/>All
-        </div>
-        <div
-          onClick={() => handleTabClick("Processed")}
-          style={activeTab === "Processed" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <IoMdDoneAll style={iconStyle}/>Processed
-        </div>
-        <div
-          onClick={() => handleTabClick("In-Process")}
-          style={activeTab === "In-Process" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <IoSettingsOutline style={iconStyle}/>In-Process
-        </div>
-
-        <div
-          onClick={() => handleTabClick("Waiting")}
-          style={activeTab === "Waiting" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <GoStopwatch style={iconStyle}/>Waiting for Approval
-        </div>
-        <div
-          onClick={() => handleTabClick("Not Issued")}
-          style={activeTab === "Not Issued" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <MdOutlineDoNotDisturb style={iconStyle}/>Not Issued
-        </div>
-        <div
-          onClick={() => handleTabClick("Rejected")}
-          style={activeTab === "Rejected" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <RxCross1 style={iconStyle}/>Rejected
-        </div>
-        <div
-          onClick={() => handleTabClick("ApplyVisa")}
-          style={activeTab === "ApplyVisa" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
-        >
-          <GiAirplaneDeparture style={iconStyle} />Apply Visa
-        </div>
+        {sidebarOpen ? (
+          <>
+            <div
+              onClick={() => handleTabClick("Analytics")}
+              style={activeTab === "Analytics" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><TfiStatsUp style={iconStyle1} /> Analytics</>}
+            </div>
+            <div
+              onClick={() => handleTabClick("ApplyVisa")}
+              style={activeTab === "ApplyVisa" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><GiAirplaneDeparture style={iconStyle1} /> Apply Visa</>}
+            </div>
+            <h5 className="py-7" style={{ padding: 8 }}>
+              {sidebarOpen && '───────VISA────────'}
+            </h5>
+            <div
+              onClick={() => handleTabClick("All")}
+              style={activeTab === "All" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><MdOutlineAlignHorizontalLeft style={iconStyle} /> All</>}
+            </div>
+            <div
+              onClick={() => handleTabClick("Processed")}
+              style={activeTab === "Processed" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><IoMdDoneAll style={iconStyle} />Processed</>}
+            </div>
+            <div
+              onClick={() => handleTabClick("In-Process")}
+              style={activeTab === "In-Process" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><IoSettingsOutline style={iconStyle} />In-Process</>}
+            </div>
+            <div
+              onClick={() => handleTabClick("Waiting")}
+              style={activeTab === "Waiting" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><GoStopwatch style={iconStyle} />Waiting</>}
+            </div>
+            <div
+              onClick={() => handleTabClick("Not Issued")}
+              style={activeTab === "Not Issued" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><MdOutlineDoNotDisturb style={iconStyle} />Not Issued</>}
+            </div>
+            <div
+              onClick={() => handleTabClick("Rejected")}
+              style={activeTab === "Rejected" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              {sidebarOpen && <><RxCross1 style={iconStyle} />Rejected</>}
+            </div>
+          
+            </>
+        ) : (
+          <>
+          <img style={{width:"35px", height:"35px", marginTop:"-75px", marginLeft:"10px"}} src={logo} alt="" />
+            <div
+              onClick={() => handleTabClick("Analytics")}
+              style={activeTab === "Analytics" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              <TfiStatsUp style={iconStyle1} />
+            </div>
+            <div
+              onClick={() => handleTabClick("ApplyVisa")}
+              style={{ ...tabBorderStyle }}
+            >
+              <GiAirplaneDeparture style={iconStyle1} />
+            </div>
+            <h5 className="py-7" style={{ padding: 8 }}>
+              VISA
+            </h5>
+            <div
+              onClick={() => handleTabClick("All")}
+              style={activeTab === "All" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              <MdOutlineAlignHorizontalLeft style={iconStyle1} />
+            </div>
+            <div
+              onClick={() => handleTabClick("Processed")}
+              style={activeTab === "Processed" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              <IoMdDoneAll style={iconStyle1} />
+            </div>
+            <div
+              onClick={() => handleTabClick("In-Process")}
+              style={activeTab === "In-Process" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+             <IoSettingsOutline style={iconStyle1} />
+            </div>
+            <div
+              onClick={() => handleTabClick("Waiting")}
+              style={activeTab === "Waiting" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              <GoStopwatch style={iconStyle1} />
+            </div>
+            <div
+              onClick={() => handleTabClick("Not Issued")}
+              style={activeTab === "Not Issued" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              <MdOutlineDoNotDisturb style={iconStyle1} />
+            </div>
+            <div
+              onClick={() => handleTabClick("Rejected")}
+              style={activeTab === "Rejected" ? { ...activeTabTextStyle, ...activeTabBorderStyle } : { ...tabTextStyle, ...tabBorderStyle }}
+            >
+              <RxCross1 style={iconStyle1} />
+            </div>
+          </>
+        )}
       </div>
 
-      <div style={{ marginLeft: '20%', width: '80%', overflowY: 'auto', padding: '16px' }}>
+      <div style={{ marginLeft: sidebarOpen ? '20%' : '80px', width: sidebarOpen ? '80%' : '100%', overflowY: 'auto', padding: '16px' }}>
         {activeTab === "Analytics" ?
           <div>
             <MerchantAnaltytics dashboardData={dashboardData} />
@@ -227,6 +296,25 @@ const MerchantDashboard = () => {
           </>
         }
       </div>
+      <button
+        onClick={toggleSidebar}
+        style={{
+          position: "fixed",
+          color: "#000",
+          fontSize:"18px",
+          top: "15%",
+          left: sidebarOpen ? "260px" : '80px',
+          transform: "translate(-50%, -50%)",
+          zIndex: 999,
+          border:"none",
+          background: "#fff",
+          borderRadius:"50%",
+          cursor: "pointer",
+          transition:"all 0.5s ease "
+        }}
+      >
+        {sidebarOpen ? <GoArrowLeft /> : <GoArrowRight />}
+      </button>
     </div>
   );
 };

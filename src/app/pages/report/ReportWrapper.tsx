@@ -10,7 +10,7 @@ function ReportWrapper() {
 
   return (
     <div style={{marginTop:"-50px"}}>
-      <ReportTable className='' title={'Wallet Report'} data={reportData} loading={loading}/>
+      <ReportTable className='' title={'Transactions'} data={reportData} loading={loading}/>
     </div>
   )
 }

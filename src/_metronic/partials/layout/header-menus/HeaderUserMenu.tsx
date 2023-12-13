@@ -15,30 +15,40 @@ const HeaderUserMenu: React.FC<Props> = ({profile}) => {
   const { currentUser, logout } = useAuth()
   const navigate = useNavigate();
   const user_type = Cookies.get('user_type');
-  const handleLogout = async () => {
+  const handleMerchantLogout = async () => {
     try {
-      axiosInstance.get('/backend/logout/merchant_user')
-        .then((response) => {
-          if (response.status === 200) {
-            // setLoading(false);
-            toast.success(response.data.msg);
-            Cookies.remove('isLoggedIn');
-            setTimeout(() => {
-              window.location.href = '/';
-            }, 400);
-          } else {
-            toast.error(response.data.msg);
-          }
-        })
-        .catch((error) => {
-          console.error('Error fetching Atlys data:', error);
-          // setLoading(false);
-        });
+      const response = await axiosInstance.get('/backend/logout/merchant_user');
+
+      if (response.status === 200) {
+        Cookies.remove('isLoggedIn');
+        setTimeout(() => {
+          window.location.href = '/merchant/login';
+        }, 400);
+      } else {
+        toast.error(response.data.msg);
+      }
     } catch (error) {
-      console.error('Error:', error);
-      // setLoading(false);
+      console.error('Error logging out:', error);
     }
   };
+
+  const handleSuperAdminLogout = async () => {
+    try {
+      const response = await axiosInstance.get('/backend/logout/merchant_user');
+
+      if (response.status === 200) {
+        Cookies.remove('isLoggedIn');
+        setTimeout(() => {
+          window.location.href = '/superadmin/login';
+        }, 400);
+      } else {
+        toast.error(response.data.msg);
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <div
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
@@ -83,95 +93,16 @@ const HeaderUserMenu: React.FC<Props> = ({profile}) => {
         }
       </div>
 
-      {/* <div className='menu-item px-5'>
-        <a href='#' className='menu-link px-5'>
-          <span className='menu-text'>My Projects</span>
-          <span className='menu-badge'>
-            <span className='badge badge-light-danger badge-circle fw-bolder fs-7'>3</span>
-          </span>
-        </a>
-      </div>
-
-      <div
-        className='menu-item px-5'
-        data-kt-menu-trigger='hover'
-        data-kt-menu-placement='left-start'
-        data-kt-menu-flip='bottom'
-      >
-        <a href='#' className='menu-link px-5'>
-          <span className='menu-title'>My Subscription</span>
-          <span className='menu-arrow'></span>
-        </a>
-
-        <div className='menu-sub menu-sub-dropdown w-175px py-4'>
-          <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-5'>
-              Referrals
-            </a>
-          </div>
-
-          <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-5'>
-              Billing
-            </a>
-          </div>
-
-          <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-5'>
-              Payments
-            </a>
-          </div>
-
-          <div className='menu-item px-3'>
-            <a href='#' className='menu-link d-flex flex-stack px-5'>
-              Statements
-              <i
-                className='fas fa-exclamation-circle ms-2 fs-7'
-                data-bs-toggle='tooltip'
-                title='View your statements'
-              ></i>
-            </a>
-          </div>
-
-          <div className='separator my-2'></div>
-
-          <div className='menu-item px-3'>
-            <div className='menu-content px-3'>
-              <label className='form-check form-switch form-check-custom form-check-solid'>
-                <input
-                  className='form-check-input w-30px h-20px'
-                  type='checkbox'
-                  value='1'
-                  defaultChecked={true}
-                  name='notifications'
-                />
-                <span className='form-check-label text-muted fs-7'>Notifications</span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className='menu-item px-5'>
-        <a href='#' className='menu-link px-5'>
-          My Statements
-        </a>
-      </div>
-
-      <div className='separator my-2'></div>
-
-      <Languages /> */}
-
-      {/* <div className='menu-item px-5 my-1'>
-        <Link to='/crafted/account/settings' className='menu-link px-5'>
-          Account Settings
-        </Link>
-      </div> */}
-
-      <div className='menu-item px-5'>
-        <a onClick={handleLogout} className='menu-link px-5'>
-          Sign Out
-        </a>
+        {user_type === 'merchant' ? (
+          <a onClick={handleMerchantLogout} className='menu-link px-5'>
+            Sign Out
+          </a>
+        ) : (
+          <a onClick={handleSuperAdminLogout} className='menu-link px-5'>
+            Sign Out
+          </a>
+        )}
       </div>
     </div>
   )

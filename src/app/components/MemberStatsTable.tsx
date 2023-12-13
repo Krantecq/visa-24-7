@@ -205,12 +205,12 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                         <th className='min-w-100px text-center'>
                           Agent
                         </th>
-                        <th className='min-w-100px text-center'>Wallet</th>
-                        <th className='min-w-100px text-center'>State</th>
-                        <th className='min-w-80px text-center'>Visas</th>
-                        <th className='min-w-100px text-center'>Company</th>
-                        <th className='min-w-100px text-center'>Contact</th>
                         <th className='min-w-100px text-center'>Email</th>
+                        <th className='min-w-100px text-center'>Contact</th>
+                        <th className='min-w-100px text-center'>State</th>
+                        <th className='min-w-100px text-center'>Company</th>
+                        <th className='min-w-80px text-center'>Visas</th>
+                        <th className='min-w-100px text-center'>Wallet</th>
                         <th  className='min-w-100px text-center'>Action</th>
                       </tr>
                     </thead>
@@ -249,24 +249,8 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                             </div>
                           </td>
                           <td className='text-start'>
-                            <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
-                              ₹ {item.wallet_balance}
-                            </a>
-                          </td>
-                          <td className='text-start'>
-                            <span className='text-dark  d-block fs-6'>
-                              {item.merchant_state}
-                            </span>
-                          </td>
-                          <td className='text-center'>
-                            <span className='text-dark  d-block fs-5'>
-                              {item.merchant_applicants.length}
-                            </span>
-                          </td>
-                          <td className='text-start'>
-                            <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
-                            <span className='text-muted fw-semibold d-block fs-7 '>
-                              {item.merchant_company_name}
+                            <span className='text-muted fw-semibold d-block fs-7'>
+                              {item.merchant_email_id}
                             </span>
                           </td>
                           <td className='text-center'>
@@ -276,9 +260,25 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                             </span>
                           </td>
                           <td className='text-start'>
-                            <span className='text-muted fw-semibold d-block fs-7'>
-                              {item.merchant_email_id}
+                            <span className='text-dark  d-block fs-6'>
+                              {item.merchant_state}
                             </span>
+                          </td>
+                          <td className='text-start'>
+                            <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
+                            <span className='text-muted fw-semibold d-block fs-7 '>
+                              {item.merchant_company_name}
+                            </span>
+                          </td>
+                          <td className='text-center'>
+                            <span className='text-dark  d-block fs-5'>
+                              {item.merchant_applicants.length}
+                            </span>
+                          </td>
+                          <td className='text-start'>
+                            <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
+                              ₹ {item.wallet_balance}
+                            </a>
                           </td>
                           <td className='text-start'>
                             <div style={{marginLeft:"20%"}} className='d-flex justify-content-start align-items-center'>

@@ -24,12 +24,7 @@ const MasterLayout = () => {
     reInitMenu();
   }, [location.key]);
 
-
-  // console.log("user_type:", user_type);
-  // console.log("formData2:", formData2);
-
   const role = formData2.issued_api.length > 0 ? "Partner" : "Retailer";
-  // console.log("role:", role);
 
   return (
     <PageDataProvider>

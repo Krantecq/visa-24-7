@@ -9,8 +9,8 @@ import { toast } from 'react-toastify';
 import BackIcon from '@mui/icons-material/ArrowBackOutlined'
 
 const inputStyle1 = {
-  border: '1.5px solid #d3d3d3', // Border width and color
-  borderRadius: '15px', // Border radius
+  border: '1px solid #d3d3d3', // Border width and color
+  borderRadius: '10px', // Border radius
   padding: '10px',
   paddingLeft: '20px', // Padding
   width: '95%', // 100% width
@@ -18,8 +18,8 @@ const inputStyle1 = {
 }
 
 const inputStyle = {
-  border: '1.5px solid #d3d3d3', // Border width and color
-  borderRadius: '15px', // Border radius
+  border: '1px solid #d3d3d3', // Border width and color
+  borderRadius: '10px', // Border radius
   padding: '10px',
   paddingLeft: '20px', // Padding
   width: '90%', // 100% width
@@ -212,11 +212,16 @@ function AddNewMerchant() {
       <div className='container' style={{ marginTop: -35 }}>
         <div className='d-flex align-items-center pt-3'>
           <Link to='/superadmin/merchants' >
-            <BackIcon style={{ color: '#332786', width: 30, height: 45, cursor: 'pointer', }} />
+            <BackIcon style={{ color: '#332786', width: 30, height: 45, cursor: 'pointer',marginTop:"-8px" }} />
           </Link>
-          <h5 style={{ fontSize: 30, alignSelf: 'center', marginLeft: 10, display: 'flex', letterSpacing: 0.3, marginBottom:10 }}>Onboard new Merchant</h5>
+          <h5 style={{ fontSize: 26, alignSelf: 'center', marginLeft: 10, display: 'flex', letterSpacing: 0.3, marginBottom:10 }}>Onboard new Merchant</h5>
         </div>
-        <hr />
+        <hr style={{
+        width:"95%",
+        border: 0,
+        height: "1px",
+        backgroundImage: "linear-gradient(to right, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0))"
+      }} />
         <br />
         <div className='d-flex ' style={{ width: '100%' }}>
           <div style={{ width: '40%', marginTop: 60 }}>
@@ -778,7 +783,7 @@ function AddNewMerchant() {
 
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center form-label mx-5'>
-                      <span className='required'>GST</span>
+                      <span className=''>GST</span>
                     </label>
 
                     <Field
@@ -855,11 +860,11 @@ function AddNewMerchant() {
                     onClick={handleSaveClick}
                     style={{
                       height: 40,
-                      width: 190,
+                      width: 150,
                       border: '1px solid',
                       marginLeft: "30%",
                       borderColor: '#696969',
-                      borderRadius: 25,
+                      borderRadius: 10,
                       alignItems: 'center',
                       display: 'flex',
                       justifyContent: 'center',

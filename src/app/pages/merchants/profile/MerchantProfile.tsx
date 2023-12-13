@@ -11,20 +11,20 @@ import { ICreateAccount, inits } from '../../../modules/wizards/components/Creat
 import axiosInstance from '../../../helpers/axiosInstance'
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
-import RoomIcon from '@mui/icons-material/Room'
+import { FaFileCode } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom'
-import Switch from '@mui/material/Switch';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { CloseOutlined } from '@mui/icons-material'
 import Papa from 'papaparse';
 import moment from 'moment'
 import 'react-range-slider-input/dist/style.css';
 import { Slider } from 'antd'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import { HiReceiptPercent } from "react-icons/hi2";
 import { DatePicker } from 'antd'
 import {HeaderWrapper} from '../../../../_metronic/layout/components/header/HeaderWrapper';
-import { Button } from 'react-bootstrap';
+import { BsClipboardDataFill } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
+import { FaWallet } from "react-icons/fa6";
 
 
 interface Transaction {
@@ -33,6 +33,7 @@ interface Transaction {
   category: string;
   type: string;
   status: string;
+  remaining_balance: string;
 }
 
 interface Revenue {
@@ -337,10 +338,18 @@ function MerchantProfile() {
         boxShadow: '0px 0px 7px rgba(0, 0, 0, 0.1)',
         width: '95%',
         overflow: 'hidden',
+        display:"flex",
+        flexDirection:"column",
+        alignItems:"center"
       }}
     >
-      <h2 className='py-10'>Agency Information</h2>
-      <hr />
+      <h2 className='pb-5 pt-10'>Agency Information</h2>
+      <hr style={{
+        width:"70%",
+        border: 0,
+        height: "1px",
+        backgroundImage: "linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0))"
+      }} />
       <Formik initialValues={{...formData2}} onSubmit={() => { }}>
         {() => (
           <Form className='py-10 px-9' noValidate id='kt_create_account_form'>
@@ -446,7 +455,14 @@ function MerchantProfile() {
                   </div>
                 </div>
               </div>
-              <hr style={{marginBottom:"6%", marginTop:"2%"}} />
+              <hr style={{
+                width:"100%",
+                border: 0,
+                height: "1px",
+                marginTop:"10px",
+                marginBottom:"10px",
+                backgroundImage: "linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0))"
+              }} />
 
               <div className='d-flex'>
                 <div className='fv-row mb-5'>
@@ -1089,8 +1105,13 @@ function MerchantProfile() {
         overflow: 'hidden',
       }}
     >
-      <h2 className='pt-10'>Load Wallet</h2>
-      <hr />
+      <h2 style={{display:"flex", justifyContent:"center"}} className='pt-10 pb-5'>Load Wallet</h2>
+      <hr style={{
+        width:"70%",
+        border: 0,
+        height: "1px",
+        backgroundImage: "linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0))"
+      }} />
       <div className='d-flex' style={{ justifyContent: 'space-around' }}>
         {walletTabs.map((tab) => (
           <div
@@ -1134,6 +1155,7 @@ function MerchantProfile() {
       setTransaction(transaction);
     }
   };
+  const [remainingBalance, setRemainingBalance] = useState("");
 
   function convertToCSV(data) {
     const csv = Papa.unparse(data);
@@ -1246,8 +1268,8 @@ function MerchantProfile() {
               ) : "-"}
             </td>
             <td className='text-start'>
-              <span className='text-dark d-block fs-6'>
-                {item && item.type}
+              <span className='text-dark fw-semibold d-block fs-6'>
+                {item && item.remaining_balance}
               </span>
             </td>
           </tr>
@@ -1271,7 +1293,6 @@ function MerchantProfile() {
     a.href = url;
     a.download = 'revenue.csv';
 
-    // Simulate a click on the download link
     a.click();
 
     // Release the Object URL
@@ -1505,11 +1526,16 @@ function MerchantProfile() {
       }}
     >
       <div className='d-flex align-items-center px-10'>
-        <div className='d-flex align-items-center' style={{ flex: 1 }}>
+        <div className='d-flex justify-content-center align-items-center' style={{ flex: 1 }}>
           <h2 className='' >Merchant Commission</h2>
         </div>
       </div>
-      <hr />
+      <hr style={{
+        width:"70%",
+        border: 0,
+        height: "1px",
+        backgroundImage: "linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0))"
+      }} />
       <div>
 
         <Formik initialValues={initValues} onSubmit={() => { }}>
@@ -1557,10 +1583,10 @@ function MerchantProfile() {
                       backgroundColor: 'lightgray', // Customize the rail color
                     }}
                     trackStyle={{
-                      backgroundColor: 'blue', // Customize the track color
+                      backgroundColor: '#327113', // Customize the track color
                     }}
                     handleStyle={{
-                      borderColor: 'blue', // Customize the handle border color
+                      borderColor: '#327113', // Customize the handle border color
                       backgroundColor: 'white', // Customize the handle background color
                     }}
                   />
@@ -1593,21 +1619,21 @@ function MerchantProfile() {
     {
       label: 'Profile',
       content: profileContent,
-      icon: <PersonIcon style={{ width: 25, height: 25 }} />,
+      icon: <FaUser style={{ width: 25, height: 25, marginTop:"-5px" }} />,
     },
     {
       label: 'Load Wallet',
-      icon: <WalletIcon style={{ width: 25, height: 25 }} />,
+      icon: <FaWallet style={{ width: 25, height: 25, marginTop:"-5px" }} />,
       content: loadWalletContent,
     },
-    { label: 'Transactions', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: transactionContent },
-    { label: 'Revenue', icon: <CardIcon style={{ width: 25, height: 25 }} />, content: revenueContent },
-    { label: 'Commisions', icon: <WalletIcon style={{ width: 25, height: 25 }} />, content: commissionContent },
+    { label: 'Transactions', icon: <FaMoneyCheckDollar style={{ width: 25, height: 25, marginTop:"-5px" }} />, content: transactionContent },
+    { label: 'Revenue', icon: <BsClipboardDataFill style={{ width: 25, height: 25, marginTop:"-5px" }} />, content: revenueContent },
+    { label: 'Commisions', icon: <HiReceiptPercent style={{ width: 25, height: 25, marginTop:"-5px" }} />, content: commissionContent },
     ...(formData2.issued_api.length > 0
       ? [
           {
             label: 'API',
-            icon: <CardIcon style={{ width: 25, height: 25 }} />,
+            icon: <FaFileCode style={{ width: 25, height: 25, marginTop:"-5px" }} />,
             content: isuueAPIContent,
           },
         ]

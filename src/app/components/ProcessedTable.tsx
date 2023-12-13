@@ -187,15 +187,6 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
       {/* end::Header */}
       {/* begin::Body */}
       <div className='card-body py-3'>
-        <h1 style={{position:"absolute", top:"35px", right:"5%", fontSize:"18px"}} >
-          Atlys wallet balance - 
-          <button className='btn btn-success' style={{backgroundColor:"#327113", padding:"5px 10px", marginTop:"-4px", marginLeft:"5px"}} >
-            ₹ 2 /-
-          </button>
-          <a title='Refresh' href='#'>
-            <MdRefresh style={{color:"#327113", marginLeft:"12px", fontSize:"20px", marginTop:"-4px"}}/>
-          </a>
-        </h1>
         {/* begin::Table container */}
         <div className='table-responsive'>
           {/* begin::Table */}

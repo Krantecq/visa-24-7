@@ -55,10 +55,10 @@ export function MenuInner() {
           <h1 style={{marginTop:"15px"}}>{greeting} {superadminName} !</h1>
         </>
       ) : (
-        <>
+        <div style={{marginLeft:"-40px", fontSize:"14px", marginTop:"10px"}}>
           {/* <MenuItem title={intl.formatMessage({ id: 'MENU.DASHBOARD' })} to='/merchant/dashboard' /> */}
           {/* <MenuItem title={'Apply Visa'} to='/merchant/apply-visa' /> */}
-        </>
+        </div>
       )}
     </>
   );

@@ -8,6 +8,7 @@ import axiosInstance from '../../../../app/helpers/axiosInstance'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import chat from '../../../assets/card/chat (1).png'
+import { MdRefresh } from "react-icons/md";
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -105,14 +106,24 @@ const Navbar = () => {
   return (
     <div className='app-navbar flex-shrink-0'>
 
-      {user_type == 'merchant' &&
-        <div className={clsx('app-navbar-item', itemClass)}>
+      {user_type == 'merchant' ?
+        <div style={{marginTop:"-10px"}} className={clsx('app-navbar-item', itemClass)}>
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0' style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 10, marginRight: 30 }}>
             <KTIcon iconName='wallet' className={btnIconClass} />
 
             <span className='menu-title' style={{ fontWeight: 'bold', marginLeft: 5, }}>{currentWallet} /-</span>
           </div>
         </div>
+        :
+        <h1 style={{position:"relative", top:"15px", right:"8%", fontSize:"18px"}} >
+          Atlys wallet - 
+          <button className='btn btn-success' style={{backgroundColor:"#fff", color:"#000", padding:"5px 10px", marginTop:"-4px", marginLeft:"5px", border:"1px solid #327113"}} >
+            ₹ 2723647263 /-
+          </button>
+          <a title='Refresh' href='#'>
+            <MdRefresh style={{color:"#327113", marginLeft:"12px", fontSize:"20px", marginTop:"-4px"}}/>
+          </a>
+        </h1>
       }
 
       {user_type == "merchant" ?
@@ -121,7 +132,7 @@ const Navbar = () => {
             style={{
               height: "35px",
               width: "35px",
-              marginTop: "17px",
+              marginTop: "10px",
               marginRight: "20px",
             }}
             src={chat}
@@ -133,7 +144,7 @@ const Navbar = () => {
             style={{
               height: "35px",
               width: "35px",
-              marginTop: "17px",
+              marginTop: "10px",
               marginRight: "20px",
             }}
             src={chat}
@@ -149,7 +160,7 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img style={{borderRadius:"50%", width:"40px", height:"40px"}} src={profile.merchant_profile_photo || profile.super_admin_profile_photo} alt='Profile' />
+          <img style={{borderRadius:"50%", width:"40px", height:"40px", marginTop:"-15px"}} src={profile.merchant_profile_photo || profile.super_admin_profile_photo} alt='Profile' />
         </div>
         <HeaderUserMenu profile={profile} />
         

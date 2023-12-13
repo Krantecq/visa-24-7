@@ -118,7 +118,7 @@ const MerchantApplyVisa: React.FC<Props> = ({
   // };
   return (
     <>
-      <Link style={{marginLeft:"50px", fontSize:"16px", fontWeight:"600", color:"#327113"}} to="/merchant/dashboard" ><IoArrowBackOutline style={{marginTop:"-3px", fontSize:"20px"}} /> Go to Dashboard</Link>
+      <Link style={{marginLeft:"50px", fontSize:"16px", fontWeight:"600", color:"#327113", display:"flex", marginTop:"-20px"}} to="/merchant/dashboard" ><IoArrowBackOutline style={{marginTop:"-3px", fontSize:"28px"}} /> Go to Dashboard</Link>
       <div className='d-flex flex-row' >
         <div>
           <img style={{width:"700px", height:"530px", filter: "contrast(130%) drop-shadow(5px 8px 8px #c1d4b8)"}} src={bgl} alt="" />
@@ -694,17 +694,17 @@ const MerchantApplyVisa: React.FC<Props> = ({
                   </label>
                   </div> */}
                   <DatePicker.RangePicker 
-                  style={{backgroundClip:'#fff',color:"#686868",width:400,marginTop:8,border:'2px solid #e5e5e5',borderRadius:10,padding:10,marginLeft:-20}}
-                  onChange={(value)=>{
-                    if (value && value.length === 2) {
-                      var x = value[0]?.format('YYYY-MM-DD');
-                      var y = value[1]?.format('YYYY-MM-DD');
-                      setIssueDate(x);
-                      setExpiryDate(y);
-                    }
-                  }}
-                  disabledDate={disabledDate}
-                  />
+  style={{backgroundClip:'#fff',color:"#686868",width:400,marginTop:8,border:'2px solid #e5e5e5',borderRadius:10,padding:10,marginLeft:-20}}
+  onChange={(value)=>{
+    if (value && value.length === 2) {
+      var x = value[0]?.format('YYYY-MM-DD');
+      var y = value[1]?.format('YYYY-MM-DD');
+      setIssueDate(x);
+      setExpiryDate(y);
+    }
+  }}
+  disabledDate={disabledDate}
+/>
                 </div>
 
               {!visaList && (

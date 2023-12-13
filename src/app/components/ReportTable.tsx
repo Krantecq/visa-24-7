@@ -23,6 +23,7 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [filteredData, setFilteredData] = useState(data as any[]);
   const [datePickerDisabled, setDatePickerDisabled] = useState(true);
   const [downloadCSVDisabled, setDownloadCSVDisabled] = useState(true);
+  const [remainingBalance, setRemainingBalance] = useState("");
 
   const handleDatePickerChange = (value: any) => {
     if (value && value.length === 2) {
@@ -50,7 +51,11 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
       });
       if (response.status === 200) {
         const searchData = response.data.data || [];
+        const searchDataa = response.data || [];
+        console.log('ye hai bidu',response.data.data)
         setFilteredData(searchData);
+        setRemainingBalance(response.data.remaining_balance); // Set remaining balance
+        // console.log('yo hoya', searchDataa)
         setSearchVisible(false); // Hide search after successful search
         setVisible(true); // Show the table
         setDatePickerDisabled(false);
@@ -111,6 +116,7 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const handleFilterClick = (filterType) => {
     setFilter(filterType)
   }
+
   return (
     <div style={{ boxShadow: 'none' }} className={`card ${className}`}>
     {/* begin::Header */}
@@ -118,68 +124,43 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
       <h3 style={{ marginLeft: '10px' }} className='card-title align-items-center flex-row'>
         <span className='card-label fw-bold fs-3 mb-1'>{title}</span>
       </h3>
-      <div className='fv-row' style={{ position: 'relative', right: '0%' }}>
-        <DatePicker.RangePicker
-          style={{
-            backgroundClip: '#fff',
-            width: 400,
-            marginTop: 11,
-            border: '1px solid #808080',
-            borderRadius: 10,
-            padding: 10,
-          }}
-          onChange={handleDatePickerChange}
-          disabled={datePickerDisabled}
-        />
-      </div>
-      <div style={{ gap: '10px', padding: '10px 0px' }} className='dropdown d-flex g-3'>
-        <button
-          style={{
-            fontWeight: '600',
-            right: '0%',
-            padding: '0px 5px',
-            backgroundColor: 'transparent',
-            color: 'black',
-            borderRadius: '10px',
-            border: '1px solid #327113',
-            zIndex: 1,
-            width: '135px',
-          }}
-          onClick={handleDownloadCSVReportTable}
-          disabled={downloadCSVDisabled}
-        >
-          Download CSV
-        </button>
-        <button
-          className='btn btn-secondary dropdown-toggle'
-          type='button'
-          data-bs-toggle='dropdown'
-          aria-expanded='false'
-        >
-          Filter
-        </button>
-        <ul className='dropdown-menu'>
-          <li>
-            <a className='dropdown-item' href='#' onClick={() => handleFilterClick('all')}>
-              All
-            </a>
-          </li>
-          <li>
-            <a
-              className='dropdown-item'
-              href='#'
-              onClick={() => handleFilterClick('waitingForApproval')}
+      {visible && (
+        <>
+          <div className='fv-row' style={{ position: 'relative', right: '0%' }}>
+            <DatePicker.RangePicker
+              style={{
+                backgroundClip: '#fff',
+                width: 400,
+                marginTop: 11,
+                border: '1px solid #808080',
+                borderRadius: 10,
+                padding: 10,
+              }}
+              onChange={handleDatePickerChange}
+              disabled={datePickerDisabled}
+            />
+          </div>
+          <div style={{ gap: '10px', padding: '10px 0px' }} className='dropdown d-flex g-3'>
+            <button
+              style={{
+                fontWeight: '600',
+                right: '0%',
+                padding: '12px 5px',
+                backgroundColor: 'transparent',
+                color: 'black',
+                borderRadius: '10px',
+                border: '1px solid #327113',
+                zIndex: 1,
+                width: '135px',
+              }}
+              onClick={handleDownloadCSVReportTable}
+              disabled={downloadCSVDisabled}
             >
-              Waiting For Approval
-            </a>
-          </li>
-          <li>
-            <a className='dropdown-item' href='#' onClick={() => handleFilterClick('history')}>
-              History
-            </a>
-          </li>
-        </ul>
-      </div>
+              Download CSV
+            </button>
+          </div>
+        </>
+      )}
     </div>
     {/* end::Header */}
     {/* begin::Body */}
@@ -191,7 +172,7 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
           <div style={{display:"flex", gap:"20px"}} >
             <input
               type='text'
-              placeholder='Enter email to get data ...'
+              placeholder={`Enter Merchant's email...`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
@@ -224,23 +205,27 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
     {/* khtm */}
     {visible && (
       <div style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-        <button
-            onClick={handleCancel}
-            style={{
-              fontWeight: '600',
-              backgroundColor: '#d9534f',
-              color: 'white',
-              width:"250px",
-              marginTop:"20px",
-              padding:"10px 15px",
-              borderRadius: '10px',
-              border: '1px solid #d9534f',
-              zIndex: 1,
-              cursor: 'pointer',
-            }}
-          >
-            Search for another
-          </button>
+        <div style={{display:"flex", width:"100%", alignItems:"center", justifyContent:"space-between"}} > 
+            <h1 style={{marginTop:"40px", fontSize:"18px", fontWeight:"500"}} >Remaining Balance : <span style={{fontSize:"18px", color:"#327113", fontWeight:"600", marginLeft:"10px"}}>₹{remainingBalance}</span></h1>
+            <button
+              onClick={handleCancel}
+              style={{
+                fontWeight: '600',
+                backgroundColor: '#d9534f',
+                color: 'white',
+                width:"250px",
+                marginTop:"20px",
+                padding:"10px 15px",
+                borderRadius: '10px',
+                border: '1px solid #d9534f',
+                zIndex: 1,
+                cursor: 'pointer',
+              }}
+            >
+              Search for another
+            </button>
+            
+          </div>
       <table className='table align-middle gs-10 mt-5'>
         {/* begin::Table head */}
         <thead>
@@ -283,10 +268,10 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
                     </td>
                     <td className='text-start'>
                       <span className='text-dark d-block fs-6'>
-                        {item && item.type}
+                        {item && item.remaining_balance}
                       </span>
                     </td>
-                    </tr>
+                  </tr>
             ))}
           </tbody>
         </table>

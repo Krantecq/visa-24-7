@@ -75,10 +75,11 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
       try {
         const user_id = Cookies.get('user_id');
         const response = await axiosInstance.get('/backend/all_user');
-        // console.log('ye rha', response)
+        console.log('ye rha', response)
         const mappedMerchants = response.data.data.map((merchant) => ({
           _id: merchant._id,
           merchant_name: merchant.merchant_name,
+          unreadCount: merchant.unreadCount,
           merchant_profile_photo: merchant.merchant_profile_photo,
         }));
 
@@ -174,11 +175,6 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
   };
 
 
-  const getUnreadMessagesCount = (contactId: string) => {
-    const contact = merchants.find((merchant) => merchant?.data?._id === contactId);
-    return contact?.unreadMessages || 0;
-  };
-
   return (
     <>
       {currentUserImage && currentUserImage && (
@@ -200,9 +196,7 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
                 </div>
                 <div className="username">
                   <h3>{merchantObject.merchant_name}</h3>
-                  {user_type === 'super_admin' && (
-                    <span className="unread-count">{getUnreadMessagesCount(merchantObject._id)}</span>
-                  )}
+                    <span className="unread-count">{merchantObject.unreadCount}</span>
                 </div>
             </div>
           ))}
@@ -258,7 +252,7 @@ const Container = styled.div`
       background-color: #fafafa;
       cursor: pointer;
       width: 100%;
-      padding: 10px 15px;
+      padding: 5px 15px;
       border-top: 1px solid #dadada;
       display: flex;
       gap: 1rem;
@@ -266,18 +260,23 @@ const Container = styled.div`
       transition: 0.5s ease-in-out;
       .avatar {
         img {
-          height: 45px;
-          width: 45px;
+          height: 35px;
+          width: 35px;
           border-radius: 50%;
         }
       }
       .username {
         h3 {
           color: black;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 500;
           margin-top: 5px;
         }
+      .unread-count{
+        color: black;
+        font-size: 14px;
+        font-weight: 500;
+      }
       }
     }
     .selected {
