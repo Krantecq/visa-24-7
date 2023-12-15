@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PasswordResetForm from './PasswordResetForm';
 import { useLocation, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../../helpers/axiosInstance';
 
 const PasswordPage: React.FC = () => {
@@ -85,6 +85,7 @@ const PasswordPage: React.FC = () => {
 
   return (
     <div>
+      <Toaster />
       <PasswordResetForm onSubmit={handlePasswordReset} />
     </div>
   );

@@ -2,7 +2,7 @@ import React, { CSSProperties, useState, useEffect } from 'react';
 import { DatePicker } from 'antd';
 import Papa from 'papaparse';
 import moment from 'moment'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../helpers/axiosInstance'
 import img from '../../_metronic/assets/card/report3.jpg'
 import { Pagination } from 'react-bootstrap';
@@ -45,7 +45,7 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
     setFilteredDataa(filteredData.slice(startIndex, endIndex));
     setActivePage(page);
   };
-
+  const notify = () => toast('Here is your toast.');
   const generatePaginationItems = () => {
     const totalPages = calculateTotalPages();
     const MAX_VISIBLE_PAGES = 7;
@@ -203,6 +203,7 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
 
   return (
     <div style={{ boxShadow: 'none' }} className={`card ${className}`}>
+      <Toaster />
     {/* begin::Header */}
     <div className='card-header border-0 pt-5'>
       <h3 style={{ marginLeft: '10px' }} className='card-title align-items-center flex-row'>

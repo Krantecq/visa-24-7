@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TravelerForm from './TravelerForm'
 import Cookies from 'js-cookie'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../../../helpers/axiosInstance'
 import { CheckCircleOutline, CircleOutlined } from '@mui/icons-material'
 import Loader from '../../../components/Loader'
@@ -250,6 +250,7 @@ const Vertical: React.FC<VerticalProps> = ({
 
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
+      <Toaster />
       <div className='d-flex' style={{ justifyContent: 'space-between', width: '100%' }}>
         <div
           style={{

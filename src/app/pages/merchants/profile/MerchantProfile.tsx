@@ -7,7 +7,7 @@ import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik'
 import { ICreateAccount, inits } from '../../../modules/wizards/components/CreateAccountWizardHelper'
 import axiosInstance from '../../../helpers/axiosInstance'
 import Cookies from 'js-cookie'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import { FaFileCode } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom'
 import { FaMoneyCheckDollar } from "react-icons/fa6";
@@ -1772,6 +1772,7 @@ const renderPageNumbersRevenue = () => {
         paddingTop: 20,
       }}
     >
+      <Toaster />
       <div className='d-flex' style={{ alignItems: 'center', paddingLeft:"1%" }}>
         <img style={{borderRadius:"50%"}} src={formData2.merchant_profile_photo} alt='Profile photo' width={70} height={70} />
         <div className='px-10'>

@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { ICreateAccount, inits } from '../modules/wizards/components/CreateAccountWizardHelper'
 import { CloseOutlined } from '@mui/icons-material'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 function MerchantView({ viewApplication }) {
   // console.log(viewApplication)
   const [initValues] = useState<ICreateAccount>(inits)
@@ -103,7 +103,7 @@ function MerchantView({ viewApplication }) {
   return (
     <div
       className='py-10 px-20'>
-
+        <Toaster />
       <div className='d-flex ' style={{ width: '100%' }}>
 
         <div style={{ width: '40%', marginTop: 70 }}>

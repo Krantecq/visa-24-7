@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../helpers/axiosInstance";
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 
 export function ChangePassword() {
   const [passwordData, setPasswordData] = useState({
@@ -62,6 +62,7 @@ export function ChangePassword() {
 
   return (
     <div className='card mb-5 mb-xl-10'>
+      <Toaster />
       <div id='kt_account_profile_details' className='collapse show'>
         <form noValidate className='form'>
           <div className='card-body border-top p-9'>

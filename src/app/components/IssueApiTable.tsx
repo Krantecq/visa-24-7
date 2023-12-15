@@ -6,7 +6,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import MerchantView from './MerchantView'
 import { CloseOutlined, DeleteOutline } from '@mui/icons-material'
 import axiosInstance from '../helpers/axiosInstance'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 // import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -213,10 +213,11 @@ const handleSaveClick = async () => {
     }
 };
 
-console.log('yo hai', data)
+// console.log('yo hai', data)
 
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
+      <Toaster />
       <div style={{boxShadow:"none"}} className={`card ${className}`}>
         {/* begin::Header */}
         <div className='card-header border-0 pt-5'>

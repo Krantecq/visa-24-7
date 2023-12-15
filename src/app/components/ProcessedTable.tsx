@@ -12,7 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axiosInstance from '../helpers/axiosInstance'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
 import { FcFullTrash } from "react-icons/fc";
@@ -205,6 +205,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
   };
   return (
     <div style={{boxShadow:"none"}} className={`card ${className}`}>
+      <Toaster />
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>

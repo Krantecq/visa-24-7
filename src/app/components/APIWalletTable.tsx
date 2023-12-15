@@ -12,7 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import WalletFormView from './WalletFormView'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../helpers/axiosInstance'
 
 type Props = {
@@ -156,6 +156,7 @@ const APIWalletTable: React.FC<Props> = ({ className, title, data }) => {
   }
   return (
     <div style={{boxShadow:"none"}} className={`card ${className}`}>
+      <Toaster />
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 style={{marginLeft:"10px"}} className='card-title align-items-center flex-row'>

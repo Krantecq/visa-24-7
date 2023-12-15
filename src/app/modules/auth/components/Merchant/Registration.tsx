@@ -10,7 +10,7 @@ import { toAbsoluteUrl } from '../../../../../_metronic/helpers'
 import { PasswordMeterComponent } from '../../../../../_metronic/assets/ts/components'
 import { useAuth } from '../../core/Auth'
 import axiosInstance from '../../../../helpers/axiosInstance'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios'
 import Cookies from 'js-cookie'; 
 
@@ -204,6 +204,7 @@ export function Registration() {
 
   return (
     <div style={{  maxHeight: '100vh', flex: 1 }}>
+      <Toaster />
     <form
       className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
       noValidate

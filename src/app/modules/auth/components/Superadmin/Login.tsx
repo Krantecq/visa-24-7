@@ -9,7 +9,7 @@ import { toAbsoluteUrl } from '../../../../../_metronic/helpers'
 import { useAuth } from '../../core/Auth'
 import axios from 'axios'
 import Cookies from 'js-cookie'; 
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../../../../helpers/axiosInstance'
 import logo from '../../../../../_metronic/assets/logo.png'
 
@@ -89,6 +89,7 @@ export function Login() {
       noValidate
       id='kt_login_signin_form'
     >
+      <Toaster />
       {/* begin::Heading */}
       <div className='text-center mb-11'>
       <img src={logo}

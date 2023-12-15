@@ -6,7 +6,7 @@ import { Languages } from './Languages'
 import { toAbsoluteUrl } from '../../../helpers'
 import Cookies from 'js-cookie';
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../../../../app/helpers/axiosInstance'
 type Props = {
   profile:any;
@@ -54,6 +54,7 @@ const HeaderUserMenu: React.FC<Props> = ({profile}) => {
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
       data-kt-menu='true'
     >
+      <Toaster />
       <div className='menu-item px-3'>
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>

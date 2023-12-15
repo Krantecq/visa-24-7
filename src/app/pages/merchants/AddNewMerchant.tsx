@@ -5,7 +5,7 @@ import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik'
 import { Delete } from '@mui/icons-material';
 import { ICreateAccount, inits } from '../../modules/wizards/components/CreateAccountWizardHelper';
 import axiosInstance from '../../helpers/axiosInstance'
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 import BackIcon from '@mui/icons-material/ArrowBackOutlined'
 
 const inputStyle1 = {
@@ -208,7 +208,7 @@ function AddNewMerchant() {
 
   return (
     <div className='w-full' style={{ backgroundColor: 'white' }}>
-
+      <Toaster />
       <div className='container' style={{ marginTop: -35 }}>
         <div className='d-flex align-items-center pt-3'>
           <Link to='/superadmin/merchants' >

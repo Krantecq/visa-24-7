@@ -4,7 +4,7 @@ import axiosInstance from '../../helpers/axiosInstance';
 import { IssueApiTable } from '../../components/IssueApiTable';
 import { ICreateAccount, inits } from '../../modules/wizards/components/CreateAccountWizardHelper';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 
 const inputStyle = {
   border: '1.5px solid #d3d3d3', // Border width and color
@@ -91,6 +91,7 @@ function ApiSettingWrapper() {
   }, []); // The empty dependency array ensures this effect runs once on mount
   return (
     <div>
+      <Toaster />
       <div className='w-full' style={{ backgroundColor: '#fff', marginTop:"-100px" }}>
 
         <div className='px-10 py-10'>

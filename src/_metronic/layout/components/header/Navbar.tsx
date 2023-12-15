@@ -3,7 +3,7 @@ import { KTIcon, toAbsoluteUrl } from '../../../helpers'
 import { HeaderNotificationsMenu, HeaderUserMenu, Search, ThemeModeSwitcher } from '../../../partials'
 import { useLayout } from '../../core'
 import Cookies from 'js-cookie'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../../../../app/helpers/axiosInstance'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -105,7 +105,7 @@ const Navbar = () => {
   }
   return (
     <div className='app-navbar flex-shrink-0'>
-
+    <Toaster />
       {user_type == 'merchant' ?
         <div style={{marginTop:"-10px"}} className={clsx('app-navbar-item', itemClass)}>
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0' style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 10, marginRight: 30 }}>

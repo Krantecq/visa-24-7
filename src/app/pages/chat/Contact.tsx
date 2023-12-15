@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Logo from "../../../_metronic/assets/icons/logo.png";
 import axiosInstance from '../../../app/helpers/axiosInstance';
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import { io, Socket } from "socket.io-client";
 
 interface ContactsProps {
@@ -177,6 +177,7 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
 
   return (
     <>
+    <Toaster />
       {currentUserImage && currentUserImage && (
         <Container>
           <div className="brand">

@@ -5,7 +5,7 @@ import { KTIcon, toAbsoluteUrl } from '../../../helpers'
 import { useLayout } from '../../core'
 import { Header } from './Header'
 import { Navbar } from './Navbar'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'js-cookie'
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../../../app/helpers/axiosInstance'
@@ -89,6 +89,7 @@ export function HeaderWrapper({ role }: { role: string }) {
   
   return (
     <div id='kt_app_header' className='app-header'>
+      <Toaster />
       <div
         id='kt_app_header_container'
         className={clsx(

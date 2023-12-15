@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {requestPassword} from '../../core/_requests'
 import axiosInstance from '../../../../helpers/axiosInstance'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 
 const initialValues = {
   email: '',
@@ -65,6 +65,7 @@ export function ForgotPassword() {
       id='kt_login_password_reset_form'
       onSubmit={formik.handleSubmit}
     >
+      <Toaster />
       <div className='text-center mb-10'>
         {/* begin::Title */}
         <h1 className='text-dark fw-bolder mb-3'>Forgot Password ?</h1>

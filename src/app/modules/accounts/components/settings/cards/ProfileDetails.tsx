@@ -6,7 +6,7 @@ import { ErrorMessage, Field, Form, Formik, useFormik } from 'formik'
 import axiosInstance from '../../../../../helpers/axiosInstance'
 import Cookies from 'js-cookie'
 import { DatePicker } from 'antd'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 
 const profileDetailsSchema = Yup.object().shape({
   fName: Yup.string().required('First name is required'),
@@ -124,6 +124,7 @@ const ProfileDetails: React.FC = () => {
 
   return (
     <div style={{marginTop:"-100px"}} className='card mb-5 mb-xl-10'>
+      <Toaster />
       <div id='kt_account_profile_details' className='collapse show'>
         <form onSubmit={()=>{}} noValidate className='form'>
           <div className='card-body p-9'>
