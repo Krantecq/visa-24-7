@@ -184,7 +184,7 @@ const MerchantDashboard = () => {
               {sidebarOpen && <><GiAirplaneDeparture style={iconStyle1} /> Apply Visa</>}
             </div>
             <h5 className="py-7" style={{ padding: 8 }}>
-              {sidebarOpen && '───────VISA────────'}
+              {sidebarOpen && '─────VISA──────'}
             </h5>
             <div
               onClick={() => handleTabClick("All")}
