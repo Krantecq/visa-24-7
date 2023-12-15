@@ -1172,6 +1172,7 @@ function MerchantProfile() {
     a.click();
     URL.revokeObjectURL(url);
   }
+  
   const transactionContent = (
     <div
       className='w-full mt-5 mx-10 pt-5'

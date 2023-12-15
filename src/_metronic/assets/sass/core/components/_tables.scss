@@ -201,13 +201,13 @@
         }
       }
 
-      .table.gy#{$infix}-#{$name} {
-        th,
-        td {
-          padding-top: $value;
-          padding-bottom: $value;
-        }
-      }
+      // .table.gy#{$infix}-#{$name} {
+      //   th,
+      //   td {
+      //     padding-top: $value;
+      //     padding-bottom: $value;
+      //   }
+      // }
 
       .table.gx#{$infix}-#{$name} {
         th,

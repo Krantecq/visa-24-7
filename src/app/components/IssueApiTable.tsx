@@ -19,7 +19,7 @@ import { Modal, Button, Toast } from 'react-bootstrap';
 import { FcFullTrash } from "react-icons/fc";
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye } from "react-icons/fa";
-
+import Pagination from 'react-bootstrap/Pagination';
 
 
 type Props = {
@@ -75,6 +75,12 @@ const inputStyle = {
   boxSizing: 'border-box', // Include padding and border in the width calculation
 }
 
+const itemsPerPage = 10; 
+
+const calculateTotalPages = (totalItems: number) => {
+  return Math.ceil(totalItems / itemsPerPage);
+};
+
 
 const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [itemModalVisibility, setItemModalVisibility] = useState<Array<boolean>>(Array(data.length).fill(false));
@@ -88,6 +94,18 @@ const IssueApiTable: React.FC<Props> = ({ className, data, loading }) => {
   const [loadingButton, setloadingButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [activePage, setActivePage] = useState(1);
+
+  const handlePageChange = (pageNumber: number) => {
+    setActivePage(pageNumber);
+  };
+  const totalItems = data.length;
+  const totalPages = calculateTotalPages(totalItems);
+
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = data.slice(startIndex, endIndex);
+
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
@@ -195,6 +213,8 @@ const handleSaveClick = async () => {
     }
 };
 
+console.log('yo hai', data)
+
   return (
     <div style={{ backgroundColor: '#fff' }} className='w-full'>
       <div style={{boxShadow:"none"}} className={`card ${className}`}>
@@ -242,7 +262,7 @@ const handleSaveClick = async () => {
                     {/* end::Table head */}
                     {/* begin::Table body */}
                     <tbody style={{border:"1px solid #cccccc"}} >
-                      {data.map((item, index) => (
+                    {paginatedData.map((item, index) => (
                           <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                           <td style={{paddingLeft:"15px"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
@@ -323,7 +343,7 @@ const handleSaveClick = async () => {
 
 
                           <td className='text-center'>
-                            <span className='text-dark fw-semibold d-block fs-7'>₹ {item.api_wallet_balance}</span>
+                            <span className='text-dark fw-semibold d-block fs-7'>₹ {new Intl.NumberFormat('en-IN').format(Number(item.api_wallet_balance))}</span>
                           </td>
                           <td className='text-center'>
                             <div className='d-flex align-items-center justify-content-center'>
@@ -342,6 +362,19 @@ const handleSaveClick = async () => {
                     {/* end::Table body */}
                   </table>
                 }
+                {totalPages > 1 && (
+                  <Pagination>
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                      <Pagination.Item
+                        key={index}
+                        active={index + 1 === activePage}
+                        onClick={() => handlePageChange(index + 1)}
+                      >
+                        {index + 1}
+                      </Pagination.Item>
+                    ))}
+                  </Pagination>
+                )}
               </div>
               {/* end::Table */}
             </div>

@@ -23,15 +23,33 @@ const VisaTable: React.FC<Props> = ({
   apiData,
   onSelectClick,
 }) => {
+  const [sortedData, setSortedData] = useState<any[]>([]);
   useEffect(() => {
     console.log('apiData in Inner:', apiData);
+    const filteredData = apiData.filter(entry => 
+      entry.description !== "UAE 96 Hours Transit E-Visa" &&
+      entry.description !== "UAE 48 Hours Transit E-Visa" &&
+      entry.entryType.toLowerCase() !== "covid"  // Ignore entries with entryType "covid"
+    );
+    const tempSortedData = filteredData.sort((a, b) => {
+      const priceA = calculateTotalPrice(a);
+      const priceB = calculateTotalPrice(b);
+      return priceA - priceB;
+    });
+    // Set sortedData state
+    setSortedData(tempSortedData);
   }, [apiData]);
-  const handleSelectClick = (entryData) => {
-    onSelectClick(entryData)
-  }
+  const calculateTotalPrice = (entry) => {
+    const visaFees = entry.receipt['Visa Fees'] || 0;
+    const serviceFees = entry.receipt['Service Fees'] || 0;
+    const markupPercentageString = localStorage.getItem('markup_percentage') ?? '1';
+    const markupPercentage = parseFloat(markupPercentageString);
+    const calculatedPrice = Math.ceil((visaFees * (1 + markupPercentage / 100)) + serviceFees);
+    return calculatedPrice;
+  };
 
   const handleApplyNowClick = () => {
-    onSelectClick(apiData[selectedTicket]);
+    onSelectClick(sortedData[selectedTicket]);
   };
 
   const markup_percentage = localStorage.getItem('markup_percentage')??'1';
@@ -49,7 +67,7 @@ const VisaTable: React.FC<Props> = ({
   
   const handleTicketSelection = (ticketIndex) => {
     setSelectedTicket(ticketIndex);
-    const selectedEntry = apiData[ticketIndex];
+    const selectedEntry = sortedData[ticketIndex];
     const visaFees = selectedEntry.receipt['Visa Fees'] || 0;
     const serviceFees = selectedEntry.receipt['Service Fees'] || 0;
     const markupPercentageString = localStorage.getItem('markup_percentage');
@@ -64,7 +82,7 @@ const VisaTable: React.FC<Props> = ({
     <div className="choice">
       <div style={{marginTop:"-45px"}} className="ticket-container" id="ticketContainer">
       <Link style={{marginLeft:"0px", fontSize:"16px", fontWeight:"600", color:"#327113"}} to="/merchant/apply-visa" ><IoArrowBackOutline style={{marginTop:"-3px", fontSize:"20px"}} /> Go Back</Link>
-      {apiData.map((entry: any, index: number) => (
+      {sortedData.map((entry: any, index: number) => (
       <div
       key={index}
       className={`ticket ${selectedTicket === index ? 'selected' : ''}`}
@@ -132,7 +150,7 @@ const VisaTable: React.FC<Props> = ({
                       </div>
                       <div className="travel-to">
                           <h6 className="from">To</h6>
-                          <h2 className="country">UAE</h2>
+                          <h2 className="country">{entry.country_code}</h2>
                       </div>
                   </div>
                   <div className="lower">

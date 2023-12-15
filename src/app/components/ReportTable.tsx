@@ -5,6 +5,7 @@ import moment from 'moment'
 import { toast } from 'react-toastify'
 import axiosInstance from '../helpers/axiosInstance'
 import img from '../../_metronic/assets/card/report3.jpg'
+import { Pagination } from 'react-bootstrap';
 
 type Props = {
   className: string
@@ -12,6 +13,8 @@ type Props = {
   data: any[];
   loading: Boolean
 }
+
+const ITEMS_PER_PAGE = 10;
 
 const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [searchVisible, setSearchVisible] = useState(true);
@@ -24,19 +27,99 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [datePickerDisabled, setDatePickerDisabled] = useState(true);
   const [downloadCSVDisabled, setDownloadCSVDisabled] = useState(true);
   const [remainingBalance, setRemainingBalance] = useState("");
+  const [activePage, setActivePage] = useState<number>(1);
+  const [filteredDataa, setFilteredDataa] = useState(
+    filteredData.slice(0, ITEMS_PER_PAGE)
+  );
+
+  useEffect(() => {
+    setFilteredDataa(filteredData.slice(0, ITEMS_PER_PAGE));
+    setActivePage(1);
+  }, [filteredData]);
+
+  const calculateTotalPages = () => Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+
+  const handlePageChange = (page: number) => {
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    setFilteredDataa(filteredData.slice(startIndex, endIndex));
+    setActivePage(page);
+  };
+
+  const generatePaginationItems = () => {
+    const totalPages = calculateTotalPages();
+    const MAX_VISIBLE_PAGES = 7;
+  
+    if (totalPages <= MAX_VISIBLE_PAGES) {
+      return Array.from({ length: totalPages }).map((_, index) => (
+        <Pagination.Item
+          key={`page-${index + 1}`}
+          active={index + 1 === activePage}
+          onClick={() => handlePageChange(index + 1)}
+        >
+          {index + 1}
+        </Pagination.Item>
+      ));
+    } else {
+      let visiblePages: (number | string)[] = [];
+  
+      const addVisiblePage = (page: number | string) => {
+        visiblePages.push(page);
+      };
+  
+      const addRangeOfPages = (start: number, end: number) => {
+        for (let i = start; i <= end; i++) {
+          addVisiblePage(i);
+        }
+      };
+  
+      if (activePage <= MAX_VISIBLE_PAGES - 3) {
+        addRangeOfPages(1, MAX_VISIBLE_PAGES - 2);
+        addVisiblePage('...');
+        addVisiblePage(totalPages - 1);
+        addVisiblePage(totalPages);
+      } else if (activePage >= totalPages - (MAX_VISIBLE_PAGES - 4)) {
+        addVisiblePage(1);
+        addVisiblePage('...');
+        addRangeOfPages(totalPages - (MAX_VISIBLE_PAGES - 3), totalPages);
+      } else {
+        addVisiblePage(1);
+        addVisiblePage('...');
+        addRangeOfPages(activePage - 1, activePage + 1);
+        addVisiblePage('...');
+        addVisiblePage(totalPages);
+      }
+  
+      return visiblePages.map((page, index) => (
+        <Pagination.Item
+          key={`page-${index}`}
+          active={page === activePage}
+          onClick={() => handlePageChange(typeof page === 'number' ? page : activePage)}
+        >
+          {page === '...' ? (
+            <span style={{ cursor: 'not-allowed' }}>{page}</span>
+          ) : (
+            page
+          )}
+        </Pagination.Item>
+      ));
+    }
+  };
+
 
   const handleDatePickerChange = (value: any) => {
     if (value && value.length === 2) {
-      const startDate = value[0]?.isValid() ? value[0].format('YYYY-MM-DD') : '';
-      const endDate = value[1]?.isValid() ? value[1].format('YYYY-MM-DD') : '';
+      const startDate = value[0]?.isValid() ? value[0].startOf('day').toISOString() : '';
+      const endDate = value[1]?.isValid() ? value[1].endOf('day').toISOString() : '';
+  
       const filtered = (data as any[]).filter((item) => {
-        const transactionDate = item.created_at.split(' ')[0];
+        const transactionDate = moment(item.created_at).toISOString();
         return transactionDate >= startDate && transactionDate <= endDate;
       });
+  
       setIssueDate(startDate);
       setExpiryDate(endDate);
       setFilteredData(filtered);
-      console.log('Filtered Data:', filtered);
       setDatePickerDisabled(false);
     } else {
       setFilteredData(data as any[]);
@@ -54,14 +137,15 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
         const searchDataa = response.data || [];
         console.log('ye hai bidu',response.data.data)
         setFilteredData(searchData);
-        setRemainingBalance(response.data.remaining_balance); // Set remaining balance
-        // console.log('yo hoya', searchDataa)
-        setSearchVisible(false); // Hide search after successful search
-        setVisible(true); // Show the table
+        setRemainingBalance(response.data.remaining_balance); 
+        setSearchVisible(false); 
+        setVisible(true); 
         setDatePickerDisabled(false);
         setDownloadCSVDisabled(false);
       } else {
-        console.error('Error fetching data:', response.data);
+        toast.error(response.data.msg, {
+          position: 'top-center',
+        })
       }
     } catch (error) {
       console.error('API error:', error);
@@ -162,10 +246,6 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
         </>
       )}
     </div>
-    {/* end::Header */}
-    {/* begin::Body */}
-    {/* shuru */}
-
       {searchVisible && (
         <div style={{ gap: '10px', display: 'flex', flexDirection:"column" , marginTop:"40px" , justifyContent:"center", alignItems:"center", height:"50vh" }}>
           <img style={{height:"700px", width:"700px", borderRadius:"20px"}} src={img} alt="" />
@@ -206,7 +286,11 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
     {visible && (
       <div style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
         <div style={{display:"flex", width:"100%", alignItems:"center", justifyContent:"space-between"}} > 
-            <h1 style={{marginTop:"40px", fontSize:"18px", fontWeight:"500"}} >Remaining Balance : <span style={{fontSize:"18px", color:"#327113", fontWeight:"600", marginLeft:"10px"}}>₹{remainingBalance}</span></h1>
+        <h1 style={{ marginTop: "40px", fontSize: "18px", fontWeight: "500" }}>
+          Remaining Balance: <span style={{ fontSize: "18px", color: "#327113", fontWeight: "600", marginLeft: "10px" }}>
+            ₹{new Intl.NumberFormat('en-IN').format(Number(remainingBalance))}
+          </span>
+        </h1>
             <button
               onClick={handleCancel}
               style={{
@@ -239,10 +323,10 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
           </tr>
         </thead>
         <tbody style={{ border: '1px solid #cccccc' }}>
-          {filteredData.map((item, index) => (
+          {filteredDataa.map((item, index) => (
             <tr key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
               <td className='text-start'>
-                <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
+                <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6 '>
                   {item && moment(item.created_at).format('DD MMM YYYY hh:mm a')}
                 </a>
               </td>
@@ -257,24 +341,29 @@ const ReportTable: React.FC<Props> = ({ className, title, data, loading }) => {
                       </span>
                     </td>
                     <td className='text-start'>
-                      {item && item.type === 'Credit' ? (
-                        <span className='text-dark d-block fs-6'>₹ {item.wallet_balance}/-</span>
+                    {item && item.type === 'Credit' ? (
+                        <span className='text-dark d-block fs-6'>₹ {new Intl.NumberFormat('en-IN').format(Number(item.wallet_balance))}/-</span>
                       ) : "-"}
                     </td>
                     <td className='text-start'>
                       {item && item.type === 'Debit' ? (
-                        <span className='text-dark d-block fs-6'>₹ {item.wallet_balance}/-</span>
+                        <span className='text-dark d-block fs-6'>₹ {new Intl.NumberFormat('en-IN').format(Number(item.wallet_balance))}/-</span>
                       ) : "-"}
                     </td>
                     <td className='text-start'>
                       <span className='text-dark d-block fs-6'>
-                        {item && item.remaining_balance}
+                        {item && new Intl.NumberFormat('en-IN').format(Number(item.remaining_balance))}
                       </span>
                     </td>
                   </tr>
             ))}
           </tbody>
         </table>
+        <div className='d-flex justify-content-center mb-3'>
+            <Pagination>
+              {generatePaginationItems()}
+            </Pagination>
+          </div>
         </div>
       )}
     </div>

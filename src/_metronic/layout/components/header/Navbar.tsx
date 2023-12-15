@@ -115,13 +115,13 @@ const Navbar = () => {
           </div>
         </div>
         :
-        <h1 style={{position:"relative", top:"15px", right:"8%", fontSize:"18px"}} >
+        <h1 style={{ position: "relative", top: "15px", right: "8%", fontSize: "18px" }}>
           Atlys wallet - 
-          <button className='btn btn-success' style={{backgroundColor:"#fff", color:"#000", padding:"5px 10px", marginTop:"-4px", marginLeft:"5px", border:"1px solid #327113"}} >
-            ₹ 2723647263 /-
+          <button className='btn btn-success' style={{ backgroundColor: "#fff", color: "#000", padding: "5px 10px", marginTop: "-4px", marginLeft: "5px", border: "1px solid #327113" }}>
+            ₹ {new Intl.NumberFormat('en-IN').format(647263)} /-
           </button>
           <a title='Refresh' href='#'>
-            <MdRefresh style={{color:"#327113", marginLeft:"12px", fontSize:"20px", marginTop:"-4px"}}/>
+            <MdRefresh style={{ color: "#327113", marginLeft: "12px", fontSize: "20px", marginTop: "-4px" }} />
           </a>
         </h1>
       }

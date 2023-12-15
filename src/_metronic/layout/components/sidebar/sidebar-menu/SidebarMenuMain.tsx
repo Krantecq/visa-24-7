@@ -28,7 +28,7 @@ const SidebarMenuMain = () => {
       /> */}
             <div className='menu-item border-4'>
         <div className='menu-content  pt-8 pb-2'>
-        ──────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> Merchants </span>──────
+        ─────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> Merchants </span>─────
         </div>
       </div>
       <SidebarMenuItem
@@ -52,7 +52,7 @@ const SidebarMenuMain = () => {
       {/* <SidebarMenuItem to='/builder' icon='switch' title='Layout Builder' fontIcon='bi-layers' /> */}
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
-        ─────────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> VISA </span>─────────
+        ────────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> VISA </span>────────
         </div>
       </div>
       {/* <SidebarMenuItem
@@ -87,7 +87,7 @@ const SidebarMenuMain = () => {
       />
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
-        ─────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> Transaction </span>─────
+        ────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> Transaction </span>────
         </div>
       </div>
       <SidebarMenuItem
@@ -117,7 +117,7 @@ const SidebarMenuMain = () => {
       /> */}
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
-        ───────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> Settings </span>───────
+        ──────<span style={{fontWeight:"600"}} className='menu-section text-uppercase fs-7 ls-1'> Settings </span>──────
         </div>
       </div>
       <SidebarMenuItem

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DatePicker } from 'antd';
 import Papa from 'papaparse';
 import { Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
-import moment from 'moment'
+import moment from 'moment';
 
 type Props = {
   className: string;
@@ -34,6 +34,8 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
   const [issueDate, setIssueDate] = useState<string | undefined>('');
   const [expiryDate, setExpiryDate] = useState<string | undefined>('');
   const [filteredData, setFilteredData] = useState(data as any[]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleDatePickerChange = (value: any) => {
     if (value && value.length === 2) {
@@ -80,7 +82,22 @@ const RevenueTable: React.FC<Props> = ({ className, title, data, loading }) => {
     a.click();
     URL.revokeObjectURL(url);
   };
-console.log('revenue', data)
+
+  const renderPageNumbers = Array.from({ length: Math.ceil(filteredData.length / itemsPerPage) }, (_, index) => index + 1)
+    .map((number) => (
+      <li
+        key={number}
+        className={`page-item ${number === currentPage ? 'active' : ''}`}
+        onClick={() => setCurrentPage(number)}
+      >
+        <span className="page-link">{number}</span>
+      </li>
+    ));
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div style={{ boxShadow: 'none' }} className={`card ${className}`}>
       {/* begin::Header */}
@@ -157,7 +174,8 @@ console.log('revenue', data)
               </span>
             </div>
           ) : (
-            <table className='table table-row-dashed table-row-gray-300 align-middle'>
+            <>
+              <table className='table table-row-dashed table-row-gray-300 align-middle'>
               {/* begin::Table head */}
               <thead >
               <tr style={{ background: '#f2f2f2', color: '#000', border:"1px solid #000"}} className='fw-bold'>
@@ -178,7 +196,7 @@ console.log('revenue', data)
               {/* end::Table head */}
               {/* begin::Table body */}
               <tbody style={{border:"1px solid #cccccc"}} >
-                {filteredData.map((row, index) => (
+                {currentItems.map((row, index) => (
                   <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                     <td style={{paddingLeft:"10px"}} className='text-center'>
                       <div className='d-flex align-items-center'>
@@ -234,20 +252,20 @@ console.log('revenue', data)
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a className='text-dark text-hover-primary d-block fs-6'>
-                        {row.paid}
+                        ₹ {new Intl.NumberFormat('en-IN').format(Number(row.paid))}
                       </a>
                     </td>
 
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a className='text-dark text-hover-primary d-block fs-6'>
-                        {row.receive}
+                        ₹ {new Intl.NumberFormat('en-IN').format(Number(row.receive))}
                       </a>
                     </td>
                     <td className='text-center'>
                       {/* Location 1 */}
                       <a className='text-dark text-hover-primary d-block fs-6'>
-                        {row.revenue}
+                        ₹ {new Intl.NumberFormat('en-IN').format(Number(row.revenue))}
                       </a>
                     </td>
                   </tr>
@@ -255,6 +273,10 @@ console.log('revenue', data)
               </tbody>
               {/* end::Table body */}
             </table>
+              <ul className="pagination">
+                {renderPageNumbers}
+              </ul>
+            </>
           )}
           {/* end::Table */}
         </div>

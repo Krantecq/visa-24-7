@@ -18,7 +18,7 @@ import Loader from './Loader'
 import { FcFullTrash } from "react-icons/fc";
 import Cookies from 'js-cookie'
 import { FcInfo } from "react-icons/fc";
-import { MdRefresh } from "react-icons/md";
+import Pagination from 'react-bootstrap/Pagination';
 
 type Props = {
   className: string
@@ -63,8 +63,54 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
   const [selectedItem, setSelectedItem] = useState(null);
   const [issueVisaLoader, setissueVisaLoader] = useState(false);
   const [deleteSelectedItem, setDeleteSelectedItem] = useState(null);
-  
   const [open, setOpen] = React.useState(false);
+  
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 10;
+  const MAX_VISIBLE_PAGES = 7; 
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setActivePage(page);
+  };
+
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const visiblePages: (number | string)[] = [];
+
+  const addVisiblePage = (page: number | string) => {
+    visiblePages.push(page);
+  };
+
+  const addRangeOfPages = (start: number, end: number) => {
+    for (let i = start; i <= end; i++) {
+      addVisiblePage(i);
+    }
+  };
+
+  if (totalPages <= MAX_VISIBLE_PAGES) {
+    addRangeOfPages(1, totalPages);
+  } else {
+    if (activePage <= MAX_VISIBLE_PAGES - 3) {
+      addRangeOfPages(1, MAX_VISIBLE_PAGES - 2);
+      addVisiblePage('...');
+      addVisiblePage(totalPages - 1);
+      addVisiblePage(totalPages);
+    } else if (activePage >= totalPages - (MAX_VISIBLE_PAGES - 4)) {
+      addVisiblePage(1);
+      addVisiblePage('...');
+      addRangeOfPages(totalPages - (MAX_VISIBLE_PAGES - 3), totalPages);
+    } else {
+      addVisiblePage(1);
+      addVisiblePage('...');
+      addRangeOfPages(activePage - 1, activePage + 1);
+      addVisiblePage('...');
+      addVisiblePage(totalPages);
+    }
+  }
+
+
 
   const handleApproveClick = async () => {
     try {
@@ -217,7 +263,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
               {/* end::Table head */}
               {/* begin::Table body */}
               <tbody style={{border:"1px solid #cccccc"}} >
-                {data.map((row, index) => (
+                {data.slice(startIndex, endIndex).map((row, index) => (
                   <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                     <td style={{paddingLeft:"15px"}}  className='text-center'>
                       {/* Avatar and Name */}
@@ -271,7 +317,7 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
                     <td className='text-center'>
                       {/* Location 2 */}
                       <a href='#' className='text-dark text-hover-primary d-block fs-6'>
-                        ₹ {row.visa_amount}
+                        ₹ {new Intl.NumberFormat('en-IN').format(Number(row.visa_amount))}
                       </a>
                     </td>
 
@@ -312,6 +358,19 @@ const ProcessedTable: React.FC<Props> = ({ className, title, data,loading }) => 
               {/* end::Table body */}
             </table>
           }
+          <div className="d-flex justify-content-center">
+          <Pagination>
+                {visiblePages.map((page, index) => (
+                  <Pagination.Item
+                    key={index}
+                    active={page === activePage}
+                    onClick={() => handlePageChange(typeof page === 'number' ? page : activePage)}
+                  >
+                    {page}
+                  </Pagination.Item>
+                ))}
+              </Pagination>
+              </div>
           {/* end::Table */}
         </div>
         {/* end::Table container */}

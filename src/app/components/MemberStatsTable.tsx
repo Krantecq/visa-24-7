@@ -1,27 +1,28 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useState, CSSProperties} from 'react'
-import {KTIcon, toAbsoluteUrl} from '../../_metronic/helpers'
-import {Link} from 'react-router-dom'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import MerchantView from './MerchantView'
-import {CloseOutlined, DeleteOutline} from '@mui/icons-material'
-import axiosInstance from '../helpers/axiosInstance'
-import {toast} from 'react-toastify'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import moment from 'moment'
-import { FcInfo } from "react-icons/fc";
-import { FcFullTrash } from "react-icons/fc";
+import React, { useState, CSSProperties } from 'react';
+import { KTIcon, toAbsoluteUrl } from '../../_metronic/helpers';
+import { Link } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import MerchantView from './MerchantView';
+import { CloseOutlined, DeleteOutline } from '@mui/icons-material';
+import axiosInstance from '../helpers/axiosInstance';
+import { toast } from 'react-toastify';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import moment from 'moment';
+import { FcInfo } from 'react-icons/fc';
+import { FcFullTrash } from 'react-icons/fc';
+import Pagination from 'react-bootstrap/Pagination';
 
 type Props = {
-  className: string
-  data: any[]
-  loading: boolean
-}
+  className: string;
+  data: any[];
+  loading: boolean;
+};
+
 
 const overlayStyle: CSSProperties = {
   position: 'fixed',
@@ -44,30 +45,47 @@ const activeOverlayStyle: CSSProperties = {
   visibility: 'visible',
 }
 const contentStyle: CSSProperties = {
-  backgroundColor: '#fff', // Background color for highlighting
-  padding: '10px', // Adjust padding as needed
-  borderRadius: '5px', // Rounded corners for the highlight
-  // textAlign:'center',
+  backgroundColor: '#fff', 
+  padding: '10px',
+  borderRadius: '5px',
   width: '70%',
   height: '70%',
   overflowY: 'auto',
 }
 
-const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
-  const [visible, setVisible] = useState(false)
-  const [selectedItem, setSelectedItem] = useState(null)
-  const [filter, setFilter] = useState('all')
-  const [open, setOpen] = React.useState(false)
-  const [id, setId] = useState(null)
+const itemsPerPage = 10; // Adjust as needed
 
-  console.log(data)
+const calculateTotalPages = (filteredData: any[]) => {
+  const totalItems = filteredData.length;
+  return Math.ceil(totalItems / itemsPerPage);
+};
+
+const MemberStatsTable: React.FC<Props> = ({ className, data, loading }) => {
+  const [visible, setVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [filter, setFilter] = useState('all');
+  const [open, setOpen] = React.useState(false);
+  const [id, setId] = useState(null);
+  const [activePage, setActivePage] = useState(1);
+
+  const handlePageChange = (pageNumber: number) => {
+    setActivePage(pageNumber);
+  };
+
   const getFilteredData = () => {
+    // Your existing filter logic
     if (filter === 'waitingForApproval') {
-      return data.filter((item) => item.merchant_approved === false)
+      return data.filter((item) => item.merchant_approved === false);
     } else {
-      return data // Show all items by default
+      return data; // Show all items by default
     }
-  }
+  };
+
+  const filteredData = getFilteredData();
+
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = filteredData.slice(startIndex, endIndex);
   const handleFilterClick = (filterType) => {
     setFilter(filterType)
   }
@@ -166,8 +184,6 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                 </li>
               </ul>
             </div>
-            {/* <button className='btn btn-success align-self-center'>All</button>
-            <button className='btn btn-warning align-self-center mx-3'>Waiting For Approval</button> */}
             <Link to={'/superadmin/add-new-merchant'}>
               <button style={{backgroundColor:"#327113"}} className='btn btn-success align-self-center'>Add new Retailer</button>
             </Link>
@@ -214,30 +230,14 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                         <th  className='min-w-100px text-center'>Action</th>
                       </tr>
                     </thead>
-
-                    {/* end::Table head */}
-                    {/* begin::Table body */}
                     <tbody style={{border:"1px solid #cccccc"}} >
-                      {getFilteredData().map((item, index) => (
-                        <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+                    {paginatedData.map((item, index) => (
+                        <tr key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
                           <td style={{paddingLeft:"1%"}} className='text-center'>
                             <div className='d-flex flex-row align-items-center symbol symbol-50px me-2'>
-                              {/* <span style={{background:"transparent"}} className='symbol-label'>
-                                <img
-                                  src={item.merchant_profile_photo}
-                                  alt={item.merchant_profile_photo}
-                                  className='align-self-end'
-                                  style={{
-                                    width:"45px",
-                                    height:"45px",
-                                    backgroundSize:"cover",
-                                    borderRadius:"10px",
-                                  }}
-                                />
-                              </span> */}
                               <a
                                 href='#'
-                                className='text-dark  text-hover-primary mb-1 fs-6'
+                                className='text-dark fw-bold text-hover-primary mb-1 fs-6'
                                 style={{
                                   whiteSpace: 'nowrap',
                                   paddingLeft: '0px',
@@ -249,13 +249,13 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                             </div>
                           </td>
                           <td className='text-start'>
-                            <span className='text-muted fw-semibold d-block fs-7'>
+                            <span className='text-dark text-hover-primary mb-1 fs-6'>
                               {item.merchant_email_id}
                             </span>
                           </td>
                           <td className='text-center'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
-                            <span className='text-muted fw-semibold d-block fs-7 '>
+                            <span className='text-dark fw-semibold d-block fs-6 '>
                               {item.merchant_phone_number}
                             </span>
                           </td>
@@ -266,7 +266,7 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                           </td>
                           <td className='text-start'>
                             <span className='text-dark fw-bold d-block fs-5'>{item.company}</span>
-                            <span className='text-muted fw-semibold d-block fs-7 '>
+                            <span className='text-dark fw-semibold d-block fs-6 '>
                               {item.merchant_company_name}
                             </span>
                           </td>
@@ -276,8 +276,8 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                             </span>
                           </td>
                           <td className='text-start'>
-                            <a href='#' className='text-dark  text-hover-primary mb-1 fs-6 '>
-                              ₹ {item.wallet_balance}
+                            <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
+                              ₹ {new Intl.NumberFormat('en-IN').format(Number(item.wallet_balance))}
                             </a>
                           </td>
                           <td className='text-start'>
@@ -325,6 +325,19 @@ const MemberStatsTable: React.FC<Props> = ({className, data, loading}) => {
                     </tbody>
                     {/* end::Table body */}
                   </table>
+                )}
+                {calculateTotalPages(filteredData) > 1 && (
+                  <Pagination>
+                    {Array.from({ length: calculateTotalPages(filteredData) }).map((_, index) => (
+                      <Pagination.Item
+                        key={index}
+                        active={index + 1 === activePage}
+                        onClick={() => handlePageChange(index + 1)}
+                      >
+                        {index + 1}
+                      </Pagination.Item>
+                    ))}
+                  </Pagination>
                 )}
               </div>
               {/* end::Table */}
