@@ -1,7 +1,4 @@
 import React, { useState, useRef, ChangeEvent, useEffect, CSSProperties } from 'react'
-import PersonIcon from '@mui/icons-material/Person'
-import CardIcon from '@mui/icons-material/CreditCard'
-import WalletIcon from '@mui/icons-material/Wallet'
 import BankIcon from '@mui/icons-material/AccountBalance'
 import Uploadicon from '@mui/icons-material/CloudUpload'
 import UpiIcon from '@mui/icons-material/TapAndPlay'
@@ -42,6 +39,10 @@ interface Revenue {
   transaction_time: string;
   application_no: string;
 }
+
+const itemsPerPage = 10;
+const MAX_VISIBLE_PAGES = 5;
+
 function MerchantProfile() {
   const [activeTab, setActiveTab] = useState('Profile')
   const [formData, setFormData] = useState({
@@ -73,12 +74,8 @@ function MerchantProfile() {
       'Dec',
     ]
     const month = monthNames[date.getMonth()]
-
-    // Get the day and year
     const day = date.getDate()
     const year = date.getFullYear()
-
-    // Format the date string
     return `${month} ${day}, ${year}`
   }
   const [formData2, setFormData2] = useState({
@@ -112,7 +109,8 @@ function MerchantProfile() {
   const [checked, setChecked] = React.useState(true);
   const [transaction, setTransaction] = useState<Transaction[]>([]);
   const [revenue, setRevenue] = useState<Revenue[]>([]);
-
+  const [filteredData, setFilteredData] = useState<Transaction[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [commission, setCommission] = useState(0);
   const [upperLimit, setUpperLimit] = useState(0);
@@ -196,28 +194,75 @@ function MerchantProfile() {
       // Handle error (e.g., show an error message)
     }
   }
+  const [currentPageRevenue, setCurrentPageRevenue] = useState(1);
+  const itemsPerPageRevenue = 10; // Adjust the number of items per page as needed
+  
 
   const fetchTransactionData = async () => {
     try {
-      const user_id = Cookies.get('user_id')
+      const user_id = Cookies.get('user_id');
       const postData = {
         merchant_id: user_id,
-      }
-      const response = await axiosInstance.post('/backend/fetch_merchant_transaction', postData)
+      };
+      const response = await axiosInstance.post('/backend/fetch_merchant_transaction', postData);
 
-      if (response.status == 203) {
+      if (response.status === 203) {
         toast.error('Please Logout And Login Again', {
           position: 'top-center',
-        })
+        });
       }
       // Assuming the response contains the profile data, update the state with the data
-      setTransaction(response.data.data)
-      console.log('transaction response', response.data)
+      setTransaction(response.data.data);
+      setFilteredData(response.data.data);
+      console.log('transaction response', response.data);
     } catch (error) {
-      console.error('Error fetching profile data:', error)
+      console.error('Error fetching profile data:', error);
       // Handle error (e.g., show an error message)
     }
+  };
+
+  useEffect(() => {
+    fetchTransactionData();
+  }, []); 
+
+  const handlePageClickRevenue = (page: number | string) => {
+    if (page !== '...' && page !== currentPageRevenue) {
+      setCurrentPageRevenue(page as number);
+    }
+  };
+  const indexOfLastItemRevenue = currentPageRevenue * itemsPerPageRevenue;
+const indexOfFirstItemRevenue = indexOfLastItemRevenue - itemsPerPageRevenue;
+const currentItemsRevenue = revenue.slice(indexOfFirstItemRevenue, indexOfLastItemRevenue);
+const renderPageNumbersRevenue = () => {
+  const totalPagesRevenue = Math.ceil(revenue.length / itemsPerPageRevenue);
+
+  if (totalPagesRevenue <= MAX_VISIBLE_PAGES) {
+    return addRangeOfPages(1, totalPagesRevenue);
+  } else {
+    if (currentPage <= MAX_VISIBLE_PAGES - 3) {
+      return [
+        ...addRangeOfPages(1, MAX_VISIBLE_PAGES - 2),
+        '...',
+        totalPages - 1,
+        totalPages,
+      ];
+    } else if (currentPage >= totalPages - (MAX_VISIBLE_PAGES - 4)) {
+      return [
+        1,
+        '...',
+        ...addRangeOfPages(totalPages - (MAX_VISIBLE_PAGES - 3), totalPages),
+      ];
+    } else {
+      return [
+        1,
+        '...',
+        ...addRangeOfPages(currentPage - 1, currentPage + 1),
+        '...',
+        totalPages,
+      ];
+    }
   }
+};
   const fetchRevenueData = async () => {
     try {
       const user_id = Cookies.get('user_id')
@@ -239,6 +284,60 @@ function MerchantProfile() {
       // Handle error (e.g., show an error message)
     }
   }
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    const addRangeOfPages = (start: number, end: number): (number | string)[] => {
+      const pages: (number | string)[] = [];
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      return pages;
+    };
+    const renderPageNumbers = (): (number | string)[] => {
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    
+      if (totalPages <= MAX_VISIBLE_PAGES) {
+        return addRangeOfPages(1, totalPages);
+      } else {
+        if (currentPage <= MAX_VISIBLE_PAGES - 3) {
+          return [
+            ...addRangeOfPages(1, MAX_VISIBLE_PAGES - 2),
+            '...',
+            totalPages - 1,
+            totalPages,
+          ];
+        } else if (currentPage >= totalPages - (MAX_VISIBLE_PAGES - 4)) {
+          return [
+            1,
+            '...',
+            ...addRangeOfPages(totalPages - (MAX_VISIBLE_PAGES - 3), totalPages),
+          ];
+        } else {
+          return [
+            1,
+            '...',
+            ...addRangeOfPages(currentPage - 1, currentPage + 1),
+            '...',
+            totalPages,
+          ];
+        }
+      }
+    };
+  
+
+  const handlePageClick = (page: number | string) => {
+    // Check if the clicked page is not ellipsis or disabled
+    if (page !== '...' && page !== currentPage && typeof page === 'number') {
+      // Implement the logic to update the current page
+      setCurrentPage(page);
+    }
+  };
+
 
   const saveCommission = async () => {
     setLoading(true);
@@ -1144,15 +1243,32 @@ function MerchantProfile() {
     </div>
   )
 
+    const filterData = (startDate: string, endDate: string) => {
+    const filtered = transaction.filter((item) => {
+      const transactionDate = item.created_at.split(' ')[0];
+      return transactionDate >= startDate && transactionDate <= endDate;
+    });
+    setFilteredData(filtered);
+    setCurrentPage(1); // Reset current page when applying filters
+  };
+
   const handleDatePickerChange = (dates: any, dateStrings: [string, string]) => {
     if (dates && dates.length === 2) {
       var x = dates[0]?.format('YYYY-MM-DD');
       var y = dates[1]?.format('YYYY-MM-DD');
       setIssueDate(x);
       setExpiryDate(y);
+      
+      const filtered = transaction.filter((item: Transaction) => {
+        const transactionDate = moment(item.created_at);
+        return transactionDate.isBetween(x, y, null, '[]');
+      });
+  
+      setFilteredData(filtered);
+      setCurrentPage(1);
     } else {
-      // Date picker cancel hua hai, isliye original data ko set karo
-      setTransaction(transaction);
+      setFilteredData(transaction);
+      setCurrentPage(1);
     }
   };
   const [remainingBalance, setRemainingBalance] = useState("");
@@ -1172,7 +1288,6 @@ function MerchantProfile() {
     a.click();
     URL.revokeObjectURL(url);
   }
-  
   const transactionContent = (
     <div
       className='w-full mt-5 mx-10 pt-5'
@@ -1241,7 +1356,7 @@ function MerchantProfile() {
         {/* end::Table head */}
         {/* begin::Table body */}
         <tbody style={{border:"1px solid #cccccc"}} >
-        {transaction.map((item, index) => (
+        {currentItems.map((item, index) => (
           <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
             <td className='text-start'>
               <a href='#' className='text-dark text-hover-primary mb-1 fs-6 '>
@@ -1279,6 +1394,23 @@ function MerchantProfile() {
         </tbody>
         {/* end::Table body */}
       </table>
+      <ul className='pagination mb-5'>
+        {renderPageNumbers().map((page, index) => (
+          <li
+            key={index}
+            className={`page-item ${page === '...' ? '' : (page === currentPage ? 'active' : '')}`}
+            onClick={() => handlePageClick(page as number)}
+          >
+            {page === '...' ? (
+              <span className="page-link">{page}</span>
+            ) : (
+              <a className="page-link" href="#">
+                {page}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 
@@ -1356,7 +1488,7 @@ function MerchantProfile() {
         {/* end::Table head */}
         {/* begin::Table body */}
         <tbody style={{border:"1px solid #cccccc"}} >
-          {revenue.map((item, index) => (
+        {currentItemsRevenue.map((item, index) => (
 
             <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
               <td className='text-start'>
@@ -1380,43 +1512,29 @@ function MerchantProfile() {
                 </span>
 
               </td>
-              {/* <td className='text-center'>
-                <span className='text-dark fw-semibold d-block fs-6'>
-                <button
-                  style={{
-                    background: '#327113',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius:"50%",
-                    padding:"2px 6px"
-                  }}
-                >
-                  <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="14"
-                  height="14"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{marginBottom:"2px"}}
-                >
-                  
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                </button>
-                </span>
-              </td> */}
             </tr>
            ))} 
 
         </tbody>
         {/* end::Table body */}
       </table>
+      <ul className='pagination mb-5'>
+        {renderPageNumbersRevenue().map((page, index) => (
+          <li
+            key={index}
+            className={`page-item ${page === '...' ? '' : (page === currentPageRevenue ? 'active' : '')}`}
+            onClick={() => handlePageClickRevenue(page as number)}
+          >
+            {page === '...' ? (
+              <span className="page-link">{page}</span>
+            ) : (
+              <a className="page-link" href="#">
+                {page}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 
