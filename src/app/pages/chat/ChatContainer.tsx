@@ -86,12 +86,11 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
         console.log('User ID from Cookies:', userIdFromCookies);
         let receiveMessageRoute = "/backend/get_message";
   
-        if (receiveMessageRoute && currentChat) {
+        if (receiveMessageRoute) {
           // Assuming currentChat._id represents the merchant's ID
-          const toId = currentChat._id;
-  
+          const toId = '6523a9eed9be7d310661ecc4';
+          console.log(currentChat)
           // Update the condition to fetch messages for merchants only
-          if (currentChat.user_type === 'merchant') {
             const messagesResponse = await axiosInstance.post(receiveMessageRoute, {
               from: userIdFromCookies,
               to: toId,
@@ -103,9 +102,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
   
             // Scroll to the bottom when messages are updated
             scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-          } else {
-            console.log('Not fetching messages for non-merchant user.');
-          }
+          
         }
       } catch (error) {
         console.error("Error fetching data:", error);
