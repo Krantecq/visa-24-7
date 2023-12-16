@@ -151,7 +151,7 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 80% 10%;
   gap: 0.1rem;
-  width: 80vw;
+  width: 65vw;
   overflow: hidden;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
@@ -209,17 +209,17 @@ const Container = styled.div`
     
     .sended {
       .content {
+        background-color: #dbfbcc;
+        margin-left: auto;
+        border-radius: 5px 15px 5px 15px;
+      }
+    }
+    
+    .received {
+      .content {
         background-color: #f4f4f4;
         margin-right: auto;
         border-radius: 15px 5px 15px 5px;
-      }
-    }
-  
-    .received {
-      .content {
-        background-color: #dbfbcc;
-        border-radius: 5px 15px 5px 10px;
-        margin-left: auto; // Adjusted line to margin-left
       }
     }
   }

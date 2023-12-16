@@ -32,12 +32,12 @@ const ChatInput: React.FC<ChatInputProps> = ({ handleSendMsg }) => {
 
   return (
     <Container>
-      <div className="button-container">
+      {/* <div className="button-container">
         <div className="emoji">
-          {/* <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
-          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />} */}
+          <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
+          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
-      </div>
+      </div> */}
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
         <input
           type="text"
@@ -56,7 +56,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ handleSendMsg }) => {
 const Container = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 5% 95%;
+  grid-template-columns: 100%;
   background-color: #fff;
   padding: 0 2rem;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
