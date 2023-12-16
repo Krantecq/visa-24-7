@@ -202,14 +202,6 @@ const Contacts: React.FC<ContactsProps> = ({ contacts, changeChat }) => {
             </div>
           ))}
           </div>
-          {/* <div className="current-user">
-            <div className="avatar">
-              <img src={currentUserImage} alt="avatar" />
-            </div>
-            <div className="username">
-              <h2>{currentUserName}</h2>
-            </div>
-          </div> */}
         </Container>
       )}
     </>
@@ -222,8 +214,8 @@ const Container = styled.div`
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
   background-color: #fff;
-  border-radius: 15px;
-  border: 1px solid #327113;
+  border-right: 1px solid #3271131a;
+  padding-right: 30px;
   .brand {
     display: flex;
     align-items: center;
@@ -250,7 +242,7 @@ const Container = styled.div`
       }
     }
     .contact {
-      background-color: #fafafa;
+      background-color: #fff;
       cursor: pointer;
       width: 100%;
       padding: 5px 15px;
@@ -273,15 +265,21 @@ const Container = styled.div`
           font-weight: 500;
           margin-top: 5px;
         }
-      .unread-count{
-        color: black;
-        font-size: 14px;
-        font-weight: 500;
-      }
+        .unread-count{
+          color: black;
+          font-size: 14px;
+          font-weight: 500;
+        }
       }
     }
+
+    .contact:last-child {
+      border-bottom: 1px solid #dadada;
+    }
+    
     .selected {
-      background-color: #bbdcbd;
+      background: linear-gradient(0deg, hsla(0, 0%, 100%, 1) 0%, hsla(124, 32%, 85%, 1) 100%);
+      border-right: 2px solid #327113;
     }
   }
 

@@ -47,7 +47,7 @@ const DashboardPage: FC<Props> = (data) => (
   
   <>
     {/* begin::Row */}
-    <div className='row gx-0 px-5 gy-5'>
+    <div className='row gx-0 gy-5'>
       {/* begin::Col */}
       <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3 '>
         <HomeMainCard
@@ -94,7 +94,7 @@ const DashboardPage: FC<Props> = (data) => (
         />
       </div>
     </div>
-    <div className='row gx-1 px-5 gy-5'>
+    <div className='row gx-1 gy-5'>
     <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
         <HomeMainCard
           className='mb-6 mb-xl-10'
@@ -147,7 +147,7 @@ const DashboardPage: FC<Props> = (data) => (
         fontSize:"19px"
     }}
     >Today's Statistics</h1>
-    <div className='row gx-1 px-5 gy-5'>
+    <div className='row gx-1 gy-5'>
       <div className=' col-md-6 col-lg-4 col-xl-3 col-xxl-3'>
           <HomeMainCard
             className='mb-5 mb-xl-10'

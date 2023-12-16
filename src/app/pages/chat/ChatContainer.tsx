@@ -120,14 +120,14 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ currentChat }) => {
     <Container>
       <div className="chat-header">
         <div className="user-details">
-          <div className="avatar">
-            {/* <img
+          {/* <div className="avatar">
+            <img
               src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
               alt=""
-            /> */}
-          </div>
+            />
+          </div> */}
           <div className="username">
-            {/* <h3>Hello</h3> */}
+            <h3>Chatting With Superadmin !</h3>
           </div>
         </div>
       </div>
@@ -154,14 +154,14 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 80% 10%;
   gap: 0.1rem;
-  width: 50vw;
+  width: 80vw;
   overflow: hidden;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
   }
   .chat-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 0 2rem;
     .user-details {
@@ -175,7 +175,7 @@ const Container = styled.div`
       }
       .username {
         h3 {
-          color: white;
+          color: Black;
         }
       }
     }

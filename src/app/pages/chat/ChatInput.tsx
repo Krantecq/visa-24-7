@@ -34,8 +34,8 @@ const ChatInput: React.FC<ChatInputProps> = ({ handleSendMsg }) => {
     <Container>
       <div className="button-container">
         <div className="emoji">
-          <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
-          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
+          {/* <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
+          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />} */}
         </div>
       </div>
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
@@ -132,7 +132,7 @@ const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #9a86f3;
+      background-color: #327113;
       border: none;
       @media screen and (min-width: 720px) and (max-width: 1080px) {
         padding: 0.3rem 1rem;
